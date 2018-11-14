@@ -106,6 +106,21 @@ namespace DispatchApp
             }
         }
 
+        private void CallAdd(object sender, RoutedEventArgs e)
+        {
+            CallText.Text = CallText.Text + "+";
+        }
+
+        private void ClossBoard(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+        }
+
+        /// <summary>
+        /// 呼叫
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CallKeyBoard(object sender, RoutedEventArgs e)
         {
             if ("0" == mainWindow.callUserCtrl.serverCall)
@@ -138,6 +153,11 @@ namespace DispatchApp
 
         }
 
+        /// <summary>
+        /// 中继呼叫布置电话，查初始状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RelayCallKeyBoard(object sender, RoutedEventArgs e)
         {
             if ("0" == mainWindow.callUserCtrl.serverCall)
@@ -151,6 +171,9 @@ namespace DispatchApp
             else
             {
                 deskTabControl.SelectedIndex = 1;
+
+                ((TabItem)(deskTabControl.Items[0])).Visibility = Visibility.Visible;
+                ((TabItem)(deskTabControl.Items[1])).Visibility = Visibility.Visible;
 
                 RelayList.Items.Clear();
                 for (int Idx = 0; Idx < mainWindow.callUserCtrl.PageRelay.Count; Idx++) // 布置页面按钮
@@ -172,7 +195,10 @@ namespace DispatchApp
             
         }
 
-
+        /// <summary>
+        /// 单击中继号码事件
+        /// </summary>
+        /// <param name="word"></param>
         private void ReLaySigleEvent(string word)
         {
             mainWindow.callUserCtrl.trunkCall = word;
@@ -241,107 +267,6 @@ namespace DispatchApp
 
 
 
-        //private void RelayCommondWord_State(string state, string num)
-        //{
-        //    string trunkNum;
-        //    callRel tempName = new callRel();
-        //    RelayCall temp = new RelayCall();
-
-        //    switch (state)
-        //    {
-        //        case "Ready":
-        //        case "Active":
-        //        case "Progress":
-        //        case "Offline":
-        //        case "Offhook":
-        //            trunkNum = num.ToString();
-        //            FindRelayCall(trunkNum);
-        //            temp.RelaylabelPoleId.Background = Brushes.Yellow;
-        //            //temp.RelaylabelPoleId.Background = state;
-        //            break;
-        //        case "BUSY":
-        //            trunkNum = num.ToString();
-        //            FindRelayCall(trunkNum);
-        //            temp = (RelayCall)RelayList.Items[relayCallStateIdex];
-        //            temp.RelaylabelPoleId.Background = Brushes.Yellow;
-        //            break;
-        //        case "IDLE":
-        //            trunkNum = num.ToString();
-        //            FindRelayCall(trunkNum);
-        //            temp = (RelayCall)RelayList.Items[relayCallStateIdex];
-        //            temp.RelaylabelPoleId.Background = Brushes.Green;
-        //            break;
-        //        case "ONLINE":
-        //            trunkNum = num.ToString();
-        //            FindRelayCall(trunkNum);
-        //            temp = (RelayCall)RelayList.Items[relayCallStateIdex];
-        //            temp.RelaylabelPoleId.Background = Brushes.Green;
-        //            break;
-        //        case "OFFLINE":
-        //            trunkNum = num.ToString();
-        //            FindRelayCall(trunkNum);
-        //            temp = (RelayCall)RelayList.Items[relayCallStateIdex];
-        //            temp.RelaylabelPoleId.Background = Brushes.Gray;
-        //            break;
-        //        case "FAILED":
-        //            tempName = JsonConvert.DeserializeObject<callRel>(num);
-        //            FindRelayCall(tempName.trunkid);
-        //            temp = (RelayCall)RelayList.Items[relayCallStateIdex];
-        //            temp.RelaylabelPoleId.Background = Brushes.Gray;
-        //            break;
-        //        case "BYE":
-        //            tempName = JsonConvert.DeserializeObject<callRel>(num);
-        //            FindRelayCall(tempName.trunkid);
-        //            temp = (RelayCall)RelayList.Items[relayCallStateIdex];
-        //            temp.RelaylabelPoleId.Background = Brushes.Green;
-        //            break;
-        //        case "RING":
-        //            tempName = JsonConvert.DeserializeObject<callRel>(num);
-        //            FindRelayCall(tempName.trunkid);
-        //            temp = (RelayCall)RelayList.Items[relayCallStateIdex];
-        //            temp.RelaylabelPoleId.Background = Brushes.Blue;
-        //            break;
-        //        case "ALERT":
-        //            tempName = JsonConvert.DeserializeObject<callRel>(num);
-        //            FindRelayCall(tempName.trunkid);
-        //            temp = (RelayCall)RelayList.Items[relayCallStateIdex];
-        //            temp.RelaylabelPoleId.Background = Brushes.Blue;
-        //            break;
-        //        case "ANSWER":
-        //            tempName = JsonConvert.DeserializeObject<callRel>(num);
-        //            FindRelayCall(tempName.trunkid);
-        //            temp = (RelayCall)RelayList.Items[relayCallStateIdex];
-        //            temp.RelaylabelPoleId.Background = Brushes.Red;
-        //            break;
-        //        case "ANSWERED":
-        //            tempName = JsonConvert.DeserializeObject<callRel>(num);
-        //            FindRelayCall(tempName.trunkid);
-        //            temp = (RelayCall)RelayList.Items[relayCallStateIdex];
-        //            temp.RelaylabelPoleId.Background = Brushes.Red;
-        //            break;
-        //        default: break;
-        //    }
-        //}
-
-        /// <summary>
-        /// 查找中继电话再界面的位置
-        /// </summary>
-        //public int relayCallStateIdex;
-        //private void FindRelayCall(string callNum)
-        //{
-        //    for (int idex = 0; idex < RelayList.Items.Count; idex++)
-        //    {
-        //        RelayCall temp = (RelayCall)RelayList.Items[idex];
-        //        if (temp.RelaylabelNumFromId.Content.ToString() == callNum)
-        //        {
-        //            relayCallStateIdex = idex;
-        //        }
-        //        else
-        //        {
-        //            continue;
-        //        }
-        //    }
-        //}
 
 
 
@@ -349,16 +274,6 @@ namespace DispatchApp
 
 
 
-
-        private void CallAdd(object sender, RoutedEventArgs e)
-        {
-            CallText.Text = CallText.Text + "+";
-        }
-
-        private void ClossBoard(object sender, RoutedEventArgs e)
-        {
-            this.Hide();
-        }
 
       
 

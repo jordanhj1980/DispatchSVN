@@ -69,42 +69,26 @@ namespace DispatchApp
             {
                 switch (str_value)
                 {
-                    case "Ready":
-                    case "Active":
-                    case "Progress":
-                    case "Offline":
-                    case "Offhook":
-                        img = (new BitmapImage(new Uri("../Resources/PhoneKey.png", UriKind.RelativeOrAbsolute)));
-                        break;
                     case "BUSY":
-                        img = (new BitmapImage(new Uri("../Resources/PhoneKey.png", UriKind.RelativeOrAbsolute)));
-                        break;
-                    case "IDLE":
-                        img = (new BitmapImage(new Uri("../Resources/ThePhone.png", UriKind.RelativeOrAbsolute)));
-                        break;
-                    case "ONLINE":
-                        img = (new BitmapImage(new Uri("../Resources/ThePhone.png", UriKind.RelativeOrAbsolute)));
-                        break;
-                    case "BYE":
-                        img = (new BitmapImage(new Uri("../Resources/ThePhone.png", UriKind.RelativeOrAbsolute)));
-                        break;
-                    case "OFFLINE":
-                        img = (new BitmapImage(new Uri("../Resources/PhoneOut.png", UriKind.RelativeOrAbsolute)));
-                        break;
-                    case "FAILED":
-                        img = (new BitmapImage(new Uri("../Resources/PhoneOut.png", UriKind.RelativeOrAbsolute)));
-                        break;
-                    case "RING":
-                         img = (new BitmapImage(new Uri("../Resources/PhoneKey.png", UriKind.RelativeOrAbsolute)));
+                        img = (new BitmapImage(new Uri("../Resources/dianhuaHung.png", UriKind.RelativeOrAbsolute)));
                         break;
                     case "ALERT":
-                        img =  (new BitmapImage(new Uri("../Resources/PhoneKey.png", UriKind.RelativeOrAbsolute)));
+                    case "RING":
+                        img = (new BitmapImage(new Uri("../Resources/dianhuaHung.png", UriKind.RelativeOrAbsolute)));
+                        //img = (new BitmapImage(new Uri("../Resources/dianhuaRing2.png", UriKind.RelativeOrAbsolute)));
                         break;
                     case "ANSWER":
-                        img = (new BitmapImage(new Uri("../Resources/PhoneIn.png", UriKind.RelativeOrAbsolute)));
-                        break;
                     case "ANSWERED":
-                        img = (new BitmapImage(new Uri("../Resources/PhoneIn.png", UriKind.RelativeOrAbsolute)));
+                        img = (new BitmapImage(new Uri("../Resources/dianhuaCom.png", UriKind.RelativeOrAbsolute)));
+                        break;
+                    case "BYE":
+                    case "IDLE":
+                    case "ONLINE":
+                        img = (new BitmapImage(new Uri("../Resources/dianhuaOn.png", UriKind.RelativeOrAbsolute)));
+                        break;
+                    case "FAILED":
+                    case "OFFLINE":
+                        img = (new BitmapImage(new Uri("../Resources/dianhuaOFF.png", UriKind.RelativeOrAbsolute)));
                         break;
                     default: break;
                 }

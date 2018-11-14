@@ -16,12 +16,12 @@
 
     <Grid>
         <Button x:Name="ButtonRelay" Style="{StaticResource MaterialDesignFloatingActionButton}" BorderThickness="3" BorderBrush="Gray" Width="64" Height="64" MouseDoubleClick="RelayMouseDouble_Click" Click ="RelayStyle_click"  VerticalAlignment="Center" Background="#FF565680" HorizontalAlignment="Left" >
-            <Label x:Name="RelaylabelPoleId" Background="{x:Null}" Width="60" Height="61">
+            <!--<Label x:Name="RelaylabelPoleId" Background="{x:Null}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="60" Height="61">-->
                 <!--<Grid Height="64" Width="64" >-->
-                <TextBox x:Name="RelaylabelNumFromId" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" FontFamily="SimHei" Width="48" Height="54"></TextBox>
+                <!--<TextBox x:Name="RelaylabelNumFromId" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" FontFamily="SimHei" Width="48" Height="54"></TextBox>-->
                 <!--<Label   RenderTransformOrigin="0.443,0.443" Width="59" Height="60"/>-->
                 <!--</Grid>-->
-            </Label>
+            <!--</Label>-->
         </Button>
     </Grid>
 

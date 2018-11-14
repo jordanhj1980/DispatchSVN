@@ -19,18 +19,21 @@
     </Window.Background>
     <!--<Viewbox>-->
     <Grid  HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="400" Height="581" Margin="0,-3,0,-0.667">
-        <Grid  Height="35" VerticalAlignment="Top" Margin="325,25,10,0" >
+        <Grid  Height="35" VerticalAlignment="Top" Margin="325,2,10,0" >
             <Button  Background="{x:Null}" BorderBrush="{x:Null}" Click="ClossBoard" >
                 <Image Source="Resources/closeWhite.png"/>
             </Button>
         </Grid>
-        <TabControl Name="deskTabControl" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Height="581" Margin="0,0,0,-10"  >
-            <TabItem Name="keyBord" BorderBrush="{x:Null}" Visibility="Hidden">
+        <TabControl Name="deskTabControl" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Height="545" Margin="0,35,0,0"  >
+            <TabItem Name="keyBord" BorderBrush="{x:Null}" Visibility="Visible" FontSize="18">
+                <TabItem.Header>
+                    拨号键盘
+                </TabItem.Header>
                 <StackPanel
             			Orientation="Vertical"
             			TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-            			Margin="0,74,-1,16">
-                    <Grid Height="480" Margin="0,0,-0.667,0">
+            			Margin="0,25,-1,-0.667">
+                    <Grid Height="480" Margin="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="40" />
                             <ColumnDefinition Width="75*" />
@@ -122,8 +125,8 @@
         			Style="{StaticResource MaterialDesignRaisedButton}"
         			ToolTip="MaterialDesignFloatingActionButton" Content="呼 叫" Grid.ColumnSpan="2" Margin="28,29.333,0,2" Width="111" Height="Auto" HorizontalAlignment="Left"/>
                         <Button Grid.Row="5" Grid.Column="2" FontSize="20" Click="RelayCallKeyBoard"
-        			Style="{StaticResource MaterialDesignRaisedButton}"
-        			ToolTip="MaterialDesignFloatingActionButton" Content="中继呼叫" Grid.ColumnSpan="2" Margin="67.333,29.333,27.333,2" Height="Auto" Width="110"/>
+        			        Style="{StaticResource MaterialDesignRaisedButton}"
+        			        ToolTip="MaterialDesignFloatingActionButton" Content="中继呼叫" Grid.ColumnSpan="2" Margin="67.333,29.333,27.333,2" Height="Auto" Width="110"/>
                     </Grid>
                 </StackPanel>
                 <!--<Grid Height="295" Width="305" Margin="0,45,0,0">
@@ -177,9 +180,14 @@
                 <TabItem Header="菜单">
 
                 </TabItem>-->
-            <TabItem Name="RelayKeyBoard" Visibility="Hidden">
-                <ListBox x:Name="RelayList" Style="{StaticResource RelayWrapListBoxStyle}" Background="{x:Null}" Width="394" Height="480" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                </ListBox>
+            <TabItem Name="RelayKeyBoard" Visibility="Visible" Margin="0" FontSize="18">
+                <TabItem.Header>
+                    中继电话
+                </TabItem.Header>
+                <StackPanel VerticalAlignment="Bottom"> 
+                    <ListBox x:Name="RelayList" Style="{StaticResource RelayWrapListBoxStyle}" Background="{x:Null}" Width="394" Height="480" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    </ListBox>
+                </StackPanel>
             </TabItem>
         </TabControl>
 

@@ -52,7 +52,8 @@ namespace DispatchApp
         /// <param name="id">输入的参数</param>
         public void setContent(string num)
         {
-            RelaylabelNumFromId.Text = num.ToString();
+            //RelaylabelNumFromId.Text = num.ToString();
+            ButtonRelay.Content = num.ToString();
             phoneNum = num;
         }
 

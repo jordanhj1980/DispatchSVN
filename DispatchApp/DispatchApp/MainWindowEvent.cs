@@ -36,9 +36,10 @@ namespace DispatchApp
             //callBoard.WindowStartupLocation = WindowStartupLocation.Manual;
             //callBoard.Left = 1;
             //callBoard.Top = 3;
+            ((TabItem)(callBoard.deskTabControl.Items[0])).Visibility = Visibility.Hidden;
+            ((TabItem)(callBoard.deskTabControl.Items[1])).Visibility = Visibility.Hidden;
+            callBoard.deskTabControl.SelectedIndex = 0;
             callBoard.ShowDialog();
-            callBoard.deskTabControl.SelectedItem = 0;
-
         }
 
         //private void CallOne(object sender, RoutedEventArgs e)

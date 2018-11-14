@@ -279,6 +279,7 @@ namespace DispatchApp
                     keycall.ImageSouresHandle += new KeyCall.ImageEventHandler(KeyClickEvent);
                     string strMsg = "CMD#GETSTATE#" + keycall.KeyText.Text;  //获取电话初始状态
                     mainWindow.ws.Send(strMsg);
+                    Console.WriteLine("查键权电话状态" + keycall.KeyText.Text);
                     // 清除夜服设置
                     call tellCall = new call();
                     tellCall.fromid = PageKey[i].extid;
@@ -665,75 +666,75 @@ namespace DispatchApp
                 case "Offhook":
                     trunkNum = num.ToString();
                     FindRelayCall(trunkNum);
-                    temp.RelaylabelPoleId.Background = Brushes.Yellow;
+                    temp.ButtonRelay.Background = Brushes.Yellow;
                     //temp.RelaylabelPoleId.Background = state;
                     break;
                 case "BUSY":
                     trunkNum = num.ToString();
                     FindRelayCall(trunkNum);
                     temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.RelaylabelPoleId.Background = Brushes.Yellow;
+                    temp.ButtonRelay.Background = Brushes.Yellow;
                     break;
                 case "IDLE":
                     trunkNum = num.ToString();
                     FindRelayCall(trunkNum);
                     temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.RelaylabelPoleId.Background = Brushes.Green;
+                    temp.ButtonRelay.Background = Brushes.Green;
                     break;
                 case "ONLINE":
                     trunkNum = num.ToString();
                     FindRelayCall(trunkNum);
                     temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.RelaylabelPoleId.Background = Brushes.Green;
+                    temp.ButtonRelay.Background = Brushes.Green;
                     break;
                 case "OFFLINE":
                     trunkNum = num.ToString();
                     FindRelayCall(trunkNum);
                     temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.RelaylabelPoleId.Background = Brushes.Gray;
+                    temp.ButtonRelay.Background = Brushes.Gray;
                     break;
                 case "FAILED":
                     tempName = JsonConvert.DeserializeObject<callRel>(num);
                     FindRelayCall(tempName.trunkid);
                     temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.RelaylabelPoleId.Background = Brushes.Gray;
+                    temp.ButtonRelay.Background = Brushes.Gray;
                     break;
                 case "BYE":
                     tempName = JsonConvert.DeserializeObject<callRel>(num);
                     FindRelayCall(tempName.trunkid);
                     temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.RelaylabelPoleId.Background = Brushes.Green;
+                    temp.ButtonRelay.Background = Brushes.Green;
                     break;
                 case "RING":
                     tempName = JsonConvert.DeserializeObject<callRel>(num);
                     FindRelayCall(tempName.trunkid);
                     temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.RelaylabelPoleId.Background = Brushes.Blue;
+                    temp.ButtonRelay.Background = Brushes.Blue;
                     break;
                 case "ALERT":
                     tempName = JsonConvert.DeserializeObject<callRel>(num);
                     FindRelayCall(tempName.trunkid);
                     temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.RelaylabelPoleId.Background = Brushes.Blue;
+                    temp.ButtonRelay.Background = Brushes.Blue;
                     break;
                 case "ANSWER":
                     tempName = JsonConvert.DeserializeObject<callRel>(num);
                     FindRelayCall(tempName.trunkid);
                     temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.RelaylabelPoleId.Background = Brushes.Red;
+                    temp.ButtonRelay.Background = Brushes.Red;
                     break;
                 case "ANSWERED":
                     tempName = JsonConvert.DeserializeObject<callRel>(num);
                     FindRelayCall(tempName.trunkid);
                     temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.RelaylabelPoleId.Background = Brushes.Red;
+                    temp.ButtonRelay.Background = Brushes.Red;
                     break;
                 default: break;
             }
         }
 
         /// <summary>
-        /// 查找中继电话再界面的位置
+        /// 查找中继电话在界面的位置
         /// </summary>
         public int relayCallStateIdex;
         private void FindRelayCall(string callNum)
@@ -741,7 +742,8 @@ namespace DispatchApp
             for (int idex = 0; idex < mainWindow.callBoard.RelayList.Items.Count; idex++)
             {
                 RelayCall temp = (RelayCall)mainWindow.callBoard.RelayList.Items[idex];
-                if (temp.RelaylabelNumFromId.Text.ToString() == callNum)
+                //if (temp.RelaylabelNumFromId.Text.ToString() == callNum)
+                if (temp.ButtonRelay.Content.ToString() == callNum)
                 {
                     relayCallStateIdex = idex;
                 }
@@ -796,7 +798,8 @@ namespace DispatchApp
 
                     string callNum = temp.labelNumFromId.Content.ToString(); // 读取当前UserCall的本机号码                  
                     // 布置本机号码对应的状态
-                    if ((callNum == clientNum) || (callNum == clientToid))
+                    //if ((callNum == clientNum) || (callNum == clientToid))
+                    if (callNum == clientNum)
                     {
                         temp.CurrentState = state;
                         switch (state)
