@@ -175,22 +175,22 @@ namespace DispatchApp
                 ((TabItem)(deskTabControl.Items[0])).Visibility = Visibility.Visible;
                 ((TabItem)(deskTabControl.Items[1])).Visibility = Visibility.Visible;
 
-                RelayList.Items.Clear();
-                for (int Idx = 0; Idx < mainWindow.callUserCtrl.PageRelay.Count; Idx++) // 布置页面按钮
-                {
-                    string name = mainWindow.callUserCtrl.PageRelay[Idx].extid;
-                    string called = "no";
-                    RelayCall relayCall = new RelayCall();
+                //RelayList.Items.Clear();
+                //for (int Idx = 0; Idx < mainWindow.callUserCtrl.PageRelay.Count; Idx++) // 布置页面按钮
+                //{
+                //    string name = mainWindow.callUserCtrl.PageRelay[Idx].extid;
+                //    string called = "no";
+                //    RelayCall relayCall = new RelayCall();
 
-                    relayCall.setContent(name);                        //Id
-                    //relayCall.SetValue(called);
-                    RelayList.Items.Add(relayCall);
+                //    relayCall.setContent(name);                        //Id
+                //    //relayCall.SetValue(called);
+                //    RelayList.Items.Add(relayCall);
 
-                    relayCall.ImageSouresHandle += new RelayCall.ImageEventHandler(ReLaySigleEvent);
-                    string strMsg = "CMD#GETSTATE#" + name;           //获取电话初始状态
-                    mainWindow.ws.Send(strMsg);
-                    //relayCall.ImageSouresDoubleHandle += new RelayCall.ImageEventHandler(ReLaDoubleEvent);
-                }
+                //    relayCall.ImageSouresHandle += new RelayCall.ImageEventHandler(ReLaySigleEvent);
+                //    string strMsg = "CMD#GETSTATE#" + name;           //获取电话初始状态
+                //    mainWindow.ws.Send(strMsg);
+                //    //relayCall.ImageSouresDoubleHandle += new RelayCall.ImageEventHandler(ReLaDoubleEvent);
+                //}
             }
             
         }
@@ -199,7 +199,7 @@ namespace DispatchApp
         /// 单击中继号码事件
         /// </summary>
         /// <param name="word"></param>
-        private void ReLaySigleEvent(string word)
+        public void ReLaySigleEvent(string word)
         {
             mainWindow.callUserCtrl.trunkCall = word;
             List<RelayCall> pageRelayCall = FindChirldHelper.FindVisualChild<RelayCall>(this);

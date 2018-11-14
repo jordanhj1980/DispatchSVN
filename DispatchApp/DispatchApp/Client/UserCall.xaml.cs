@@ -17,21 +17,6 @@ using System.Windows.Threading;
 
 namespace DispatchApp
 {
-    //public class aa
-    //{
-    //    public Brush _CurrentState;
-    //    public Brush CurrentState
-    //    {
-    //        get { return _CurrentState; }
-    //        set
-    //        {
-    //            _CurrentState = value;
-
-    //        }
-    //        //get;
-    //        //set;
-    //    }
-    //}
 
     /// <summary>
     /// UserControl1.xaml 的交互逻辑

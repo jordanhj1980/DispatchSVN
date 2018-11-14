@@ -820,6 +820,7 @@ namespace DispatchApp
                             case "ONLINE":
                                 break;
                             case "OFFLINE":
+                                temp.ButtonBack.Background = (Brush)new BrushConverter().ConvertFromString("#898B94");
                                 break;
                             case "FAILED":
                                 break;

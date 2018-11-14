@@ -121,13 +121,13 @@ namespace DispatchApp
                 switch (str_value)
                 {
                     // 灰色表示空闲，可操作
-                    case "BUSY":
                     case "BYE":
                     case "IDLE":
                     case "ONLINE":
                         img = (new BitmapImage(new Uri("../Resources/dianhuaNo.png", UriKind.RelativeOrAbsolute)));
                         break;
                     // 黄色表示在呼叫，不可操作
+                    case "BUSY":
                     case "ALERT":
                     case "RING":
                         img = (new BitmapImage(new Uri("../Resources/dianhuaRing.png", UriKind.RelativeOrAbsolute)));
