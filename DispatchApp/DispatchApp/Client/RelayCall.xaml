@@ -1,0 +1,28 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Name="usname" x:Class="DispatchApp.RelayCall" 
+             mc:Ignorable="d" Height="64" Width="64">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/DispatchApp;component/Client/UserlabelResourceDictionary.xaml"/>
+                <ResourceDictionary Source="/MaterialDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Button x:Name="ButtonRelay" Style="{StaticResource MaterialDesignFloatingActionButton}" BorderThickness="3" BorderBrush="Gray" Width="64" Height="64" MouseDoubleClick="RelayMouseDouble_Click" Click ="RelayStyle_click"  VerticalAlignment="Center" Background="#FF565680" HorizontalAlignment="Left" >
+            <Label x:Name="RelaylabelPoleId" Background="{x:Null}" Width="60" Height="61">
+                <!--<Grid Height="64" Width="64" >-->
+                <TextBox x:Name="RelaylabelNumFromId" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" FontFamily="SimHei" Width="48" Height="54"></TextBox>
+                <!--<Label   RenderTransformOrigin="0.443,0.443" Width="59" Height="60"/>-->
+                <!--</Grid>-->
+            </Label>
+        </Button>
+    </Grid>
+
+</UserControl>
