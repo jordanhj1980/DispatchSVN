@@ -78,7 +78,7 @@ namespace DispatchApp
         public string extid { get; set; }
     }
 
-    /* 用于呼入事件 */
+    /* 用于外部呼入事件 */
     public class CallSession
     {
         public string trunkid { get; set; }
@@ -87,8 +87,28 @@ namespace DispatchApp
         public string tonumber { get; set; }
         public string callid { get; set; }
     }
-    /* add by twinkle end */
     
+    public class UI_CallSession : NotifyObject
+    {
+        public string trunkid { get; set; }
+        public string visitorid { get; set; }
+        public string fromnumber { get; set; }
+        public string tonumber { get; set; }
+        public string callid { get; set; }
+
+        /* 呼叫状态 */
+        public string _CurrentState;
+        public string CurrentState
+        {
+            get { return _CurrentState; }
+            set
+            {
+                _CurrentState = value;
+                OnPropertyChanged("CurrentState");
+            }
+        }
+    }
+    /* add by twinkle end */    
 
     /// <summary>
     /// Interaction logic for CallUserControl.xaml
@@ -111,7 +131,7 @@ namespace DispatchApp
         /* add by twinkle 20181106 start  */
         public List<keyphoneinfo> m_keyphone;
         public int m_keyIndex;  /* 确定当前选择的键权电话序号，从0开始 */
-        public ObservableCollection<CallSession> m_callQueue;
+        public ObservableCollection<UI_CallSession> m_callQueue;
         /* add by twinkle 20181106 end  */
 
         public event CtrlSwitchHandler CtrlSwitchEvent;
@@ -148,7 +168,7 @@ namespace DispatchApp
 
             /* 清空呼叫队列 */
             lbCallQueue.Items.Clear();
-            m_callQueue = new ObservableCollection<CallSession>();
+            m_callQueue = new ObservableCollection<UI_CallSession>();
             lbCallQueue.ItemsSource = m_callQueue;
             /* added by twinkle 20181107 end */
         }
@@ -518,10 +538,17 @@ namespace DispatchApp
                 if (cals != null)
                 {
                     //lbCallQueue.Items.Add(cals);
-                    m_callQueue.Add(cals);
+                    UI_CallSession uicall = new UI_CallSession();
+                    uicall.callid = cals.callid;
+                    uicall.trunkid = cals.trunkid;
+                    uicall.visitorid = cals.visitorid;
+                    uicall.fromnumber = cals.fromnumber;
+                    uicall.tonumber = cals.tonumber;
+                    uicall.CurrentState = "IDLE";   /**/
+                    m_callQueue.Add(uicall);
                 }
             }
-            else if (type == "BYE")
+            else if (type == "BYE" || type == "FAIL")   /* 对方挂断电话或者拒接 */
             {
                 call callinstance = JsonConvert.DeserializeObject<call>(data);
                 /* 判断队列中是否有对应号码 */
@@ -537,9 +564,17 @@ namespace DispatchApp
                 }
 
                 // Step2:判断是否为键权电话
+                /**
+                 * 对方挂断电话 STATE#BYE#{"fromid":"18163350377","toid":"220"}
+                 * 217挂断电话 STATE#BYE#{"fromid":"217","toid":"220"}
+                 * 
+                 * 
+                 */
+
                 for (int i = 0; i < m_keyphone.Count; i++)
                 {
-                    if (m_keyphone[i].extid == callinstance.fromid || m_keyphone[i].extid == callinstance.toid )
+                    /*  如果是键权电话挂机，则无holdoff按钮 */
+                    if (m_keyphone[i].extid == callinstance.fromid  )
                     {
                         m_keyphone[i].Status = KeyStatus.IDLE;
                         /* 隐藏 */
@@ -553,6 +588,15 @@ namespace DispatchApp
                             isHolding = false;                            
                             btn_expand();
                         }
+                    }
+                    else if (m_keyphone[i].extid == callinstance.toid) {
+                        /* 如果是对方拒接，或者沟通后挂机，则holdoff */
+                        if (isHolding)
+                        {
+                            Operation_unhold(this, null);
+                        }
+
+                        
                     }
                 }
 
@@ -798,8 +842,7 @@ namespace DispatchApp
 
                     string callNum = temp.labelNumFromId.Content.ToString(); // 读取当前UserCall的本机号码                  
                     // 布置本机号码对应的状态
-                    //if ((callNum == clientNum) || (callNum == clientToid))
-                    if (callNum == clientNum)
+                    if ((callNum == clientNum) || (callNum == clientToid))
                     {
                         temp.CurrentState = state;
                         switch (state)

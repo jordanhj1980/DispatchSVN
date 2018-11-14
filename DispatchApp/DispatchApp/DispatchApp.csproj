@@ -190,6 +190,7 @@
     <Compile Include="Utils\ExpanderListViewModel .cs" />
     <Compile Include="Utils\ExpanderToBooleanConverter.cs" />
     <Compile Include="Utils\INIHelper.cs" />
+    <Compile Include="Utils\NotifyObject.cs" />
     <Compile Include="Utils\PostgreHelper.cs" />
     <Page Include="Client\CallBoardDictionary.xaml">
       <SubType>Designer</SubType>

@@ -56,6 +56,15 @@ namespace DispatchApp
 
         // 用户列表
         ObservableCollection<User> m_UserList;
+        private User _selectedUserItem;
+        public User SelectedUserItem {
+            get { return _selectedUserItem; }
+            set
+            {
+                _selectedUserItem = value;
+                //SetAndNotifyIfChanged("SelectedUserItem", ref _selectedUserItem, value);
+            }
+        }  /* 保存临时的用户item */
 
         // 当对话框打开添加软交换时，临时存储软交换的信息
         public SWDEV swdevobj;
@@ -1763,13 +1772,5 @@ namespace DispatchApp
         {
 
         }
-
-
- 
-
-
-  
-
-
     }
 }

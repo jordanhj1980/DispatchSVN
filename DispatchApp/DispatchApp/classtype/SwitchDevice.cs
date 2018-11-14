@@ -17,7 +17,7 @@ namespace DispatchApp
     }
 
     /* 用户的UI数据结构 */
-    public class User
+    public class User : NotifyObject
     {
         public string sequence { set; get; }
         public int index { set; get; }  // 当前列表的索引号

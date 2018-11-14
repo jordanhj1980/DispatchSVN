@@ -74,7 +74,7 @@
         <!--右侧-->
         <Grid Grid.Column="1" Height="784" HorizontalAlignment="Left" Margin="110,1,0,0" Name="grid1" VerticalAlignment="Top" Width="1602">
             <!--软交换设备上面工具栏-->
-            <Border BorderBrush="Silver" BorderThickness="1"  CornerRadius="5" Height="40" HorizontalAlignment="Left" Margin="0,1,0,1" Name="border1" VerticalAlignment="Top" Width="1590" >
+            <Border BorderBrush="Silver" BorderThickness="1"  CornerRadius="5" Height="60" HorizontalAlignment="Left" Margin="0,1,0,1" Name="border1" VerticalAlignment="Top" Width="1590" >
                 <StackPanel Orientation="Horizontal">
                     <Button Background="{x:Null}" 
                         BorderBrush="{x:Null}" Width="32" Margin="2,2"  Height="32" x:Name="btn_sw_add"  VerticalAlignment="Center"  Click="btn_sw_add_Click"  BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
@@ -90,26 +90,34 @@
 
             <!---->
             <TabControl  Background="{x:Null}" 
-                Height="697" HorizontalAlignment="Left" Margin="33,87,0,0" Name="tabControl_mgt" VerticalAlignment="Top" Width="1557" >
+                Height="697" HorizontalAlignment="Left" Name="tabControl_mgt" VerticalAlignment="Top" Width="1557" >
                 <!--软交换设备展开-->
                 <TabItem Header="tabItem1" Visibility="Collapsed"  Name="tabItem_sw">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="30*" />
+                            <ColumnDefinition Width="70*" />
                             <ColumnDefinition Width="1517*" />
                         </Grid.ColumnDefinitions>
-                        <DataGrid  Background="{x:Null}" Height="465" FontSize="20" Margin="-6,34,1,166" Name="switchGrid" Width="1552" Grid.ColumnSpan="2">
+                        <DataGrid  Height="465" FontSize="24" Margin="-6,34,1,166" Name="switchGrid" Width="1552" Grid.ColumnSpan="2">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding idstr}" Width="400" Header="标识"></DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding name}" Width="300" Header="名称"></DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding type}" Width="300" Header="类别"></DataGridTextColumn>
-                                <DataGridTemplateColumn Header="信息" Width="300">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button Style="{StaticResource GridBtnInfo}" Command="{Binding Path=name}" Content="查看信息" Click="Btn_SWGrid_Click" Tag="{Binding index}" />
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="60">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding Path=IsSelected, 
+                                            UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Binding="{Binding idstr}" Width="400" Header="标识" ElementStyle="{StaticResource dgCell}"></DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding name}" Width="300" Header="名称" ElementStyle="{StaticResource dgCell}"></DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding type}" Width="300" Header="类别" ElementStyle="{StaticResource dgCell}"></DataGridTextColumn>
+                            <DataGridTemplateColumn Header="信息" Width="300">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource GridBtnInfo}" Command="{Binding Path=name}" Content="查看信息" Click="Btn_SWGrid_Click" Tag="{Binding index}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             </DataGrid.Columns>
 
                             <DataGrid.RowDetailsTemplate>
@@ -136,7 +144,8 @@
                             <ColumnDefinition Width="1517*" />
                         </Grid.ColumnDefinitions>
                         <DataGrid  Background="{x:Null}" Height="465" FontSize="20" Margin="-6,34,1,166" 
-                                   Name="userGrid" ItemsSource="{Binding m_UserList}" Width="1552" Grid.ColumnSpan="2">
+                                   Name="userGrid" ItemsSource="{Binding m_UserList}"
+                                   SelectedItem="{Binding SelectedUserItem}" Width="1552" Grid.ColumnSpan="2">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding idstr}" Width="200" Header="标识"></DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding name}" Width="200" Header="名称"></DataGridTextColumn>

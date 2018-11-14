@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:DispatchApp" 
+             xmlns:local="clr-namespace:DispatchApp"
              mc:Ignorable="d" FontSize="18" Height="885" Width="1920">
-    <UserControl.Resources>
+    <UserControl.Resources>        
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Resources/Generic.xaml"/>
@@ -13,6 +13,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
+
     <!--存放呼叫电话-->
     <Grid Margin="0,0,0,-0.333">
         <!--<ScrollViewer Name="scroll" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" ></ScrollViewer>-->
@@ -159,7 +160,7 @@
                         <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="监听" VerticalAlignment="Bottom" Width="80" />
                     </StackPanel>
                 </Button>
-                <Button AllowDrop="False" Background="#FFCBC7C7" BorderThickness="0" Click="Radio_Click" Grid.Column="16" Margin="0.333,0,0,0" Style="{DynamicResource RoundedButton}" HorizontalAlignment="Left" Width="103">
+                <Button AllowDrop="False" Background="#FFCBC7C7" BorderThickness="0" Click="Radio_Click" Grid.Column="16" Margin="0,0,0,0" Style="{DynamicResource RoundedButton}">
                     <StackPanel VerticalAlignment="Top">
                         <Image Height="64" Source="../Resources/photo.png" Width="64" />
                         <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="广播" VerticalAlignment="Bottom" Width="80" />
@@ -201,13 +202,17 @@
         <TabControl HorizontalAlignment="Left" Height="558" VerticalAlignment="Top" Width="284" Background="{x:Null}">
             <TabItem Header="呼叫队列" Margin="0" HorizontalAlignment="Left" Width="132" Height="38" Background="{x:Null}" FontFamily="SimHei" FontSize="24" Foreground="#FFD8D7D7">
                 <Grid Margin="0,0,-1,-4">
-                    <ListBox x:Name="lbCallQueue" HorizontalContentAlignment="Stretch" ItemsSource="{Binding m_callQueue}" Background="{x:Null}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75*"/>
+                        <ColumnDefinition Width="199*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="lbCallQueue" HorizontalContentAlignment="Stretch" ItemsSource="{Binding m_callQueue}" Background="{x:Null}" Grid.ColumnSpan="2" Margin="0,0,0.4,-0.2">
                         <ListBox.Resources>
                             <Style TargetType="{x:Type ListBoxItem}">
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                            <Button Content="{Binding Path=fromnumber}"
+                                            <Button Content="{Binding Path=fromnumber}" Background="{Binding Path=CurrentState, Converter={StaticResource cvtDate}}"
                                                     Tag="{Binding visitorid}" Margin="0,2" Height="35" Click="btn_lbqueue_click"/>
                                         </ControlTemplate>
                                     </Setter.Value>
@@ -229,45 +234,7 @@
             <Grid.Resources>
                 <local:KeyImageConverter x:Key="cvtKeyDate" />
             </Grid.Resources>
-            <!--<Grid.ColumnDefinitions>
-                <ColumnDefinition Width="141*"/>
-                <ColumnDefinition Width="143*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="125*"/>
-                <RowDefinition Height="125*"/>
-                <RowDefinition Height="60*"/>
-            </Grid.RowDefinitions>-->
             <ListBox Style="{StaticResource KeyWrapListBoxStyle}"  Height="260" Width="266" HorizontalAlignment="Left" Name="KeyCallListBox" VerticalAlignment="Top"  Background="{x:Null}" />
-
-            <!--<Canvas Name="Canvas0" Background="{x:Null}" Grid.Row="0" Grid.Column="0"/>
-            <Canvas Name="Canvas1" Background="{x:Null}" Grid.Row="0" Grid.Column="1"/>
-            <Canvas Name="Canvas2" Background="{x:Null}" Grid.Row="1" Grid.Column="0"/>
-            <Canvas Name="Canvas3" Background="{x:Null}" Grid.Row="0" Grid.Column="1"/>-->
-            <!--<Button AllowDrop="False" Background="{x:Null}" BorderThickness="0" Click="Button_Key" Height="120" VerticalAlignment="Top" Margin="20,0,21,0" Tag="{Binding index}">
-                <StackPanel VerticalAlignment="Top">
-                    <Image Name="KeyLeftImage1" Height="80" Source="{Binding Path=CurrentState, Converter={StaticResource cvtKeyDate}}" Width="80" />
-                    <TextBlock x:Name="KeyLeft1" Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" VerticalAlignment="Bottom" Width="80" Foreground="#FFF5ECEC" />
-                </StackPanel>
-            </Button>
-            <Button AllowDrop="False" Background="{x:Null}" BorderThickness="0" Click="Button_Key" Grid.Column="1" Height="120" VerticalAlignment="Top" Margin="22,0,21,0" Tag="{Binding index}">
-                <StackPanel VerticalAlignment="Top">
-                    <Image x:Name="KeyRightImage1" Height="80" Source="{Binding Path=CurrentState, Converter={StaticResource cvtKeyDate}}" Width="80"  />
-                    <TextBlock Name="KeyRight1" Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="1" Height="34" Margin="0,0,0,4" VerticalAlignment="Bottom" Width="80" Foreground="#FFF5ECEC"/>
-                </StackPanel>
-            </Button>
-            <Button AllowDrop="False" Background="{x:Null}" BorderThickness="0" Click="Button_Key" Height="120" VerticalAlignment="Top" Margin="20,0.333,21,0" Grid.Row="1" Tag="{Binding index}">
-                <StackPanel VerticalAlignment="Top">
-                    <Image Name="KeyLeftImage2" Height="80" Source="{Binding Path=CurrentState, Converter={StaticResource cvtKeyDate}}" Width="80"  />
-                    <TextBlock x:Name="KeyLeft2" Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="1" Height="34" Margin="0,0,0,4" VerticalAlignment="Bottom" Width="80" Foreground="#FFF5ECEC"/>
-                </StackPanel>
-            </Button>
-            <Button AllowDrop="False" Background="{x:Null}" BorderThickness="0" Click="Button_Key" Grid.Column="1" Height="120" VerticalAlignment="Top" Margin="22,0.333,21,0" Grid.Row="1" Tag="{Binding index}">
-                <StackPanel VerticalAlignment="Top">
-                    <Image Name="KeyRightImage2" Height="80" Source="{Binding Path=CurrentState, Converter={StaticResource cvtKeyDate}}" Width="80"  />
-                    <TextBlock x:Name="KeyRight2" Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="1" Height="34" Margin="0,0,0,4" VerticalAlignment="Bottom" Width="80" Foreground="#FFF5ECEC"/>
-                </StackPanel>
-            </Button>-->
             <Button x:Name="btn_holdoff" Content="Unhold" HorizontalAlignment="Left" Margin="6,7.333,0,7" Grid.Row="2" VerticalAlignment="Bottom" Width="75" Click="btn_holdoff_click"/>
             <Button x:Name="btn_key"  Grid.ColumnSpan="2" Content="挂断" HorizontalAlignment="Left" Height="38" Margin="42,4.333,0,7" VerticalAlignment="Bottom" Width="191" FontSize="30" FontFamily="SimHei" Background="#FFB40D0D" Foreground="#FFD8D7D7" Click="Button_Click_1" Grid.Row="2"/>
 

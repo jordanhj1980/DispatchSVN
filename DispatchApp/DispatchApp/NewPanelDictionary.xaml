@@ -84,7 +84,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+    
     <Style x:Key="MyWrapPanel"
                TargetType="{x:Type WrapPanel}">
         <Style.Resources>

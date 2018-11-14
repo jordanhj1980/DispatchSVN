@@ -92,6 +92,8 @@ namespace DispatchApp
                     //messageQueue.Enqueue(message);
                     Task.Factory.StartNew(() => messageQueue.Enqueue(message));
                     break;
+
+                    
                 default: 
                     //MessageBox.Show("服务器连接失败！");
                     break;

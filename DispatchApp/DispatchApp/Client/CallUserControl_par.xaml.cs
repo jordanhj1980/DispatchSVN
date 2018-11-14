@@ -65,6 +65,7 @@ namespace DispatchApp
             {
                 return;
             }
+            isHolding = false;
 
             StringBuilder sb = new StringBuilder(100);
             sb.Append("CMD#Unhold#");
@@ -96,7 +97,7 @@ namespace DispatchApp
 
         private void btn_expand()
         {
-            /* 当前的挂断按钮缩小动画 */
+            /* 当前的挂断按钮放大动画 */
             DoubleAnimation widthAnimation = new DoubleAnimation()
             {
                 To = btn_key.Width + 30,
@@ -132,8 +133,8 @@ namespace DispatchApp
             {
                 if (m_callQueue[j].visitorid == visitorid)
                 {
-                    CallSession uics = m_callQueue[j];
-                    //uics.CurrentState = "ANSWER";
+                    UI_CallSession uics = m_callQueue[j];
+                    uics.CurrentState = "ANSWER";
                     m_callQueue.RemoveAt(j);
                     m_callQueue.Insert(0, uics);
                     
@@ -166,12 +167,12 @@ namespace DispatchApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            CallSession cs = new CallSession()
+            UI_CallSession cs = new UI_CallSession()
             {
                 fromnumber = "18163350377",
                 tonumber = "220",
                 visitorid = "86",
-                //CurrentState = "IDLE",
+                CurrentState = "IDLE",
             };
             //lbCallQueue.Items.Add(cs);
             m_callQueue.Add(cs);

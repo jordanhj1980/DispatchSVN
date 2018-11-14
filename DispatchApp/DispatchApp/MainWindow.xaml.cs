@@ -71,7 +71,7 @@ namespace DispatchApp
             // 关闭窗口执行前，触发的可以取消关闭窗口的操作
             this.Closing += Window_Closing;
 
-            
+ 
             // 最小化到系统托盘
             //Initial();
 
@@ -85,7 +85,7 @@ namespace DispatchApp
             //callManagerCtrl.CtrlSwitchEvent += new CtrlSwitchHandler(CtrlSwitch_callManager);
             callBoard = new CallBoard(this);
             //CtrlSwitch_callUser();
- 
+
             // 显示登录界面，验证后返回，未登陆前不会触发Window_Loaded事件
             logwin = new LoginWindow(this);
             logwin.Show();
@@ -521,6 +521,7 @@ namespace DispatchApp
         public void managercontrol_click(object sender, RoutedEventArgs e)
         {
             this.CenterPanel2.Content = callManagerCtrl;
+            /* 打开服务端界面钱首先查询软交换设备、用户列表 */
             callManagerCtrl.querySWDevice();
             callManagerCtrl.queryUSER();
         }
@@ -566,6 +567,16 @@ namespace DispatchApp
 
 
 
+
+        //private void CtrlSwitch_callUser()
+        //{
+        //    Console.WriteLine("OK");
+        //    call tellCall = new call() { fromid = serverCall, toid = clientCall };
+        //    string strMsg = "CMD#Call#" + JsonConvert.SerializeObject(tellCall);
+        //   // ws.Send(strMsg);
+        //    Console.WriteLine(strMsg);
+        //    Console.WriteLine("client is clicked!!!");
+        //}
 
 
 

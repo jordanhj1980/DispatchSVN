@@ -57,6 +57,7 @@ namespace DispatchApp
             DataContext = this;
             CurrentState = "IDLE";
 
+
             // 依赖项属性测试
             //StateBackgroundDependencyProperty test = new StateBackgroundDependencyProperty();
             //Binding binding = new Binding("StateBackground") { Source = Time };
@@ -66,8 +67,8 @@ namespace DispatchApp
 
             //Time.SetBinding(TextBox.BackgroundProperty, new Binding("StateBackground") { Source = test });
             //CurrentState = new SolidColorBrush(Colors.Orange);
-            
-            
+        
+
 
         }
 
@@ -136,6 +137,14 @@ namespace DispatchApp
         /// <param name="e"></param>
         private void timer_Tick(object sender, EventArgs e)
         {
+            //if (CountDown != null)
+            //{
+            //    Time.Text = processCount.GetHour() + ":" + processCount.GetMinute() + ":" + processCount.GetSecond();
+            //}
+            //else
+            //{
+            //    timer.Stop();
+            //}
             if (OnCountDown())
             {
                 if (processCount.GetHour() == "00")
@@ -145,7 +154,7 @@ namespace DispatchApp
                 else
                 {
                     Time.Text = processCount.GetHour() + ":" + processCount.GetMinute() + ":" + processCount.GetSecond();
-                }                
+                }
             }
             else
             {
