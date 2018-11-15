@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:USERSkin.Controls;assembly=USERSkin"
         xmlns:local="clr-namespace:DispatchApp"
         Title="MainWindow" Height="1080" Width="1920" ResizeMode="CanMinimize" mc:Ignorable="d" 
-        Margin="0" Background="#FF242323"
+        Margin="0" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignWidth="1920" Cursor="Arrow" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.IsSharedSizeScope="True" 
         WindowStyle="None" AllowsTransparency="True"
@@ -23,9 +23,9 @@
     </Window.Resources>
 
 
-    <!--<Window.Background>
+    <Window.Background>
         <ImageBrush ImageSource="Resources/main_1920_2.png" Stretch="Fill"/>
-    </Window.Background>-->
+    </Window.Background>
     <Viewbox>
         <Grid HorizontalAlignment ="left" Width="1920" Name="outframe" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5" Height="1080">
             <Grid.RowDefinitions>

@@ -399,6 +399,9 @@ namespace DispatchApp
                     item.KeyButton.BorderBrush = Brushes.Gray;
                 }
             }
+
+            // 指示当前选择的键权电话index
+            m_keyIndex = idex;
         }
 
         /// <summary>
@@ -567,7 +570,7 @@ namespace DispatchApp
                 /**
                  * 对方挂断电话 STATE#BYE#{"fromid":"18163350377","toid":"220"}
                  * 217挂断电话 STATE#BYE#{"fromid":"217","toid":"220"}
-                 * 
+                 * isHolding有针对的对方号码
                  * 
                  */
 

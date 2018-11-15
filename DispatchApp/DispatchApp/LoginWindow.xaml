@@ -33,7 +33,7 @@
                 </TextBlock>
             </materialDesign:Card>
 
-            <materialDesign:Card Grid.Row="1" Width="500" materialDesign:ShadowAssist.ShadowDepth="Depth5">
+            <materialDesign:Card Grid.Row="1" Width="500" Height="680"  materialDesign:ShadowAssist.ShadowDepth="Depth5">
 
                 <Grid>
                     <Grid.RowDefinitions>
@@ -41,8 +41,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Image Source="Resources/startup_1920x1080.jpg" Stretch="Fill" />
                     <TextBox Grid.Row="1" Name="TxUserName" Foreground="WhiteSmoke" FontFamily="Microsoft YaHei" 
@@ -79,7 +78,7 @@
                         </Button>
                     </StackPanel>
                     <materialDesign:Snackbar  
-                        HorizontalAlignment="Stretch" Height="60"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
                         Grid.Row="4"  Background="OrangeRed" Foreground="WhiteSmoke"
                         MessageQueue="{materialDesign:MessageQueue}"
                         x:Name="SnackbarOne" />
