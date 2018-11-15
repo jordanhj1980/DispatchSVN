@@ -871,8 +871,10 @@ namespace DispatchApp
                                 temp.timer_Stop();
                                 temp.labelNumFromId.Content = callNum;
                                 temp.labelNumToId.Content = "no";
+                                temp.ButtonBack.Background = (Brush)new BrushConverter().ConvertFromString("#CACDDA");
                                 break;
                             case "ONLINE":
+                                temp.ButtonBack.Background = (Brush)new BrushConverter().ConvertFromString("#CACDDA");
                                 break;
                             case "OFFLINE":
                                 temp.ButtonBack.Background = (Brush)new BrushConverter().ConvertFromString("#898B94");
