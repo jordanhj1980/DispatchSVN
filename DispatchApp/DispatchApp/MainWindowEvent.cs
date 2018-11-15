@@ -36,28 +36,31 @@ namespace DispatchApp
             //callBoard.WindowStartupLocation = WindowStartupLocation.Manual;
             //callBoard.Left = 1;
             //callBoard.Top = 3;
-            callBoard.deskTabControl.SelectedIndex = 0;
-            ((TabItem)(callBoard.deskTabControl.Items[0])).Visibility = Visibility.Hidden;
-            ((TabItem)(callBoard.deskTabControl.Items[1])).Visibility = Visibility.Hidden;
+            //       
             callBoard.CallText.Text = "";
-            callBoard.RelayList.Items.Clear();
 
-            for (int Idx = 0; Idx < callUserCtrl.PageRelay.Count; Idx++) // 布置页面按钮
+            if (callBoard.RelayList.Items.Count == 0)
             {
-                string name = callUserCtrl.PageRelay[Idx].extid;
-                //string called = "no";
-                RelayCall relayCall = new RelayCall();
+                callBoard.deskTabControl.SelectedIndex = 0;   
+                ((TabItem)(callBoard.deskTabControl.Items[0])).Visibility = Visibility.Hidden;
+                ((TabItem)(callBoard.deskTabControl.Items[1])).Visibility = Visibility.Hidden;
+                callBoard.RelayList.Items.Clear();
+                for (int Idx = 0; Idx < callUserCtrl.PageRelay.Count; Idx++) // 布置页面按钮
+                {
+                    string name = callUserCtrl.PageRelay[Idx].extid;
+                    //string called = "no";
+                    RelayCall relayCall = new RelayCall();
 
-                relayCall.setContent(name);                        //Id
-                //relayCall.SetValue(called);
-                callBoard.RelayList.Items.Add(relayCall);
+                    relayCall.setContent(name);                        //Id
+                    //relayCall.SetValue(called);
+                    callBoard.RelayList.Items.Add(relayCall);
 
-                relayCall.ImageSouresHandle += new RelayCall.ImageEventHandler(callBoard.ReLaySigleEvent);
-                string strMsg = "CMD#GETSTATE#" + name;           //获取电话初始状态
-                ws.Send(strMsg);
-                //relayCall.ImageSouresDoubleHandle += new RelayCall.ImageEventHandler(ReLaDoubleEvent);
+                    relayCall.ImageSouresHandle += new RelayCall.ImageEventHandler(callBoard.ReLaySigleEvent);
+                    string strMsg = "CMD#GETSTATE#" + name;           //获取电话初始状态
+                    ws.Send(strMsg);
+                    //relayCall.ImageSouresDoubleHandle += new RelayCall.ImageEventHandler(ReLaDoubleEvent);
+                }
             }
-
             callBoard.ShowDialog();
         }
 

@@ -401,7 +401,7 @@ namespace DispatchApp
             }
 
             // 指示当前选择的键权电话index
-            m_keyIndex = idex;
+            m_keyIndex = idex - 1;
         }
 
         /// <summary>

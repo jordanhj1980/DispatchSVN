@@ -33,7 +33,7 @@
                 </TextBlock>
             </materialDesign:Card>
 
-            <materialDesign:Card Grid.Row="1" Width="500" Height="680"  materialDesign:ShadowAssist.ShadowDepth="Depth5">
+            <materialDesign:Card Grid.Row="1" Width="500" materialDesign:ShadowAssist.ShadowDepth="Depth5">
 
                 <Grid>
                     <Grid.RowDefinitions>
@@ -81,7 +81,8 @@
                         HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
                         Grid.Row="4"  Background="OrangeRed" Foreground="WhiteSmoke"
                         MessageQueue="{materialDesign:MessageQueue}"
-                        x:Name="SnackbarOne" />
+                        x:Name="SnackbarOne" 
+                        />
                     
                     <Label  Content="" Height="92" HorizontalAlignment="Left" FontSize="16" Width="68" x:Name="label_msg" VerticalAlignment="Top"/>
                 </Grid>

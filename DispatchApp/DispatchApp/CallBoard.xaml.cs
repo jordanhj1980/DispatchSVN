@@ -113,8 +113,8 @@ namespace DispatchApp
 
         private void ClossBoard(object sender, RoutedEventArgs e)
         {
-            deskTabControl.SelectedIndex = 0;
             this.Hide();
+           //deskTabControl.SelectedIndex = 0;
         }
 
         /// <summary>
