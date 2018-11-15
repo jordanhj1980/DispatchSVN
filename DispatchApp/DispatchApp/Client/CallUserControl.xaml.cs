@@ -670,6 +670,14 @@ namespace DispatchApp
                 {
                     item.CurrentState = state;
                     keyCallDateList[i].state = state;
+
+                    // add by twinkle 
+                    // 需要进一步合并
+                    if ("BYE" == state || "FAIL" == state)
+                    {
+                        m_keyphone[m_keyIndex].Status = KeyStatus.IDLE;
+                    }
+
                     if ("BUSY" == state)
                     {
                         KeyClickEvent(clientNum); // 摘机同单击

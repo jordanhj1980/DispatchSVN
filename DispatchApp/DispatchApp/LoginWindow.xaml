@@ -33,7 +33,7 @@
                 </TextBlock>
             </materialDesign:Card>
 
-            <materialDesign:Card Grid.Row="1" Width="500" materialDesign:ShadowAssist.ShadowDepth="Depth5">
+            <materialDesign:Card Grid.Row="1" Width="500" Height="680" materialDesign:ShadowAssist.ShadowDepth="Depth5">
 
                 <Grid>
                     <Grid.RowDefinitions>
