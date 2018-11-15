@@ -113,6 +113,7 @@ namespace DispatchApp
 
         private void ClossBoard(object sender, RoutedEventArgs e)
         {
+            deskTabControl.SelectedIndex = 0;
             this.Hide();
         }
 
@@ -164,35 +165,37 @@ namespace DispatchApp
             {
                 MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
             }
-            if (("" == CallText.Text) || (null == CallText.Text))
-            {
-                MessageBox.Show("当前呼叫电话空\r\n请输入呼叫电话！", "呼叫信息");
-            }
             else
             {
-                deskTabControl.SelectedIndex = 1;
+                if (("" == CallText.Text) || (null == CallText.Text))
+                {
+                    MessageBox.Show("当前呼叫电话空\r\n请输入呼叫电话！", "呼叫信息");
+                }
+                else
+                {
+                    deskTabControl.SelectedIndex = 1;
 
-                ((TabItem)(deskTabControl.Items[0])).Visibility = Visibility.Visible;
-                ((TabItem)(deskTabControl.Items[1])).Visibility = Visibility.Visible;
+                    ((TabItem)(deskTabControl.Items[0])).Visibility = Visibility.Visible;
+                    ((TabItem)(deskTabControl.Items[1])).Visibility = Visibility.Visible;
 
-                //RelayList.Items.Clear();
-                //for (int Idx = 0; Idx < mainWindow.callUserCtrl.PageRelay.Count; Idx++) // 布置页面按钮
-                //{
-                //    string name = mainWindow.callUserCtrl.PageRelay[Idx].extid;
-                //    string called = "no";
-                //    RelayCall relayCall = new RelayCall();
+                    //RelayList.Items.Clear();
+                    //for (int Idx = 0; Idx < mainWindow.callUserCtrl.PageRelay.Count; Idx++) // 布置页面按钮
+                    //{
+                    //    string name = mainWindow.callUserCtrl.PageRelay[Idx].extid;
+                    //    string called = "no";
+                    //    RelayCall relayCall = new RelayCall();
 
-                //    relayCall.setContent(name);                        //Id
-                //    //relayCall.SetValue(called);
-                //    RelayList.Items.Add(relayCall);
+                    //    relayCall.setContent(name);                        //Id
+                    //    //relayCall.SetValue(called);
+                    //    RelayList.Items.Add(relayCall);
 
-                //    relayCall.ImageSouresHandle += new RelayCall.ImageEventHandler(ReLaySigleEvent);
-                //    string strMsg = "CMD#GETSTATE#" + name;           //获取电话初始状态
-                //    mainWindow.ws.Send(strMsg);
-                //    //relayCall.ImageSouresDoubleHandle += new RelayCall.ImageEventHandler(ReLaDoubleEvent);
-                //}
+                    //    relayCall.ImageSouresHandle += new RelayCall.ImageEventHandler(ReLaySigleEvent);
+                    //    string strMsg = "CMD#GETSTATE#" + name;           //获取电话初始状态
+                    //    mainWindow.ws.Send(strMsg);
+                    //    //relayCall.ImageSouresDoubleHandle += new RelayCall.ImageEventHandler(ReLaDoubleEvent);
+                    //}
+                }
             }
-            
         }
 
         /// <summary>

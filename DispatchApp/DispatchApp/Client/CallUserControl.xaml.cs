@@ -842,7 +842,8 @@ namespace DispatchApp
 
                     string callNum = temp.labelNumFromId.Content.ToString(); // 读取当前UserCall的本机号码                  
                     // 布置本机号码对应的状态
-                    if ((callNum == clientNum) || (callNum == clientToid))
+                    //if ((callNum == clientNum) || (callNum == clientToid))
+                    if (callNum == clientNum)
                     {
                         temp.CurrentState = state;
                         switch (state)
