@@ -22,9 +22,6 @@ using System.Runtime.InteropServices;
 using WebSocket4Net;
 using Newtonsoft.Json;
 
-
-
-
 namespace DispatchApp
 {
 
@@ -37,22 +34,41 @@ namespace DispatchApp
     public class TestClassRoom
     {
         public string classroomId { get; set; }
-    }
-
-    
+    }    
 
     /// <summary>
     /// Interaction logic for CallManagerControl.xaml
     /// </summary>
-    public partial class CallManagerControl : UserControl
+    public partial class CallManagerControl : UserControl, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /* propertyName为属性的名称 */
+        public void RaisePropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                //假设属性发生了改变，则触发这个事件
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        protected virtual void SetAndNotifyIfChanged<T>(string propertyName, ref T oldValue, T newValue)
+        {
+            if (oldValue == null && newValue == null) return;
+            if (oldValue != null && oldValue.Equals(newValue)) return;
+            if (newValue != null && newValue.Equals(oldValue)) return;
+            oldValue = newValue;
+            RaisePropertyChanged(propertyName);
+        }
+
         private MainWindow mainWindow; // 20181024 xiaozi
 
         public event CtrlSwitchHandler CtrlSwitchEvent;
         List<TestClass> classlist;
 
         // 软交换设备列表
-        ObservableCollection<SwitchDevice> swList;
+        ObservableCollection<SWDEV> swList;
 
         // 用户列表
         ObservableCollection<User> m_UserList;
@@ -67,7 +83,25 @@ namespace DispatchApp
         }  /* 保存临时的用户item */
 
         // 当对话框打开添加软交换时，临时存储软交换的信息
-        public SWDEV swdevobj;
+        public SWDEV swdevobj;      // 新增软交换
+
+        private SWDEV _selectedSW;  // 列表中当前选中项
+        /// <summary>
+        /// function 列表中选中行的对象
+        /// </summary>
+        public SWDEV SelectedSW
+        {
+            get { return _selectedSW; }
+            set
+            {
+                if (_selectedSW != value)
+                {
+                    _selectedSW = value;
+                    RaisePropertyChanged("SelectedSW");
+                }
+            }
+        }
+
         // 当对话框打开添加用户时，临时存储用户的信息
         public User userobj;
 
@@ -80,6 +114,8 @@ namespace DispatchApp
 
         public CallManagerControl(MainWindow mmainWindow)
         {
+            DataContext = this;
+
             mainWindow = mmainWindow;
             InitializeComponent();
 
@@ -131,13 +167,19 @@ namespace DispatchApp
         public void InitialSwitches()
         {
             swdevobj = new SWDEV();
+            SelectedSW = new SWDEV();
+            SelectedSW.name = "";
+            SelectedSW.ip = "";
+
             userobj = new User();
 
-            swList = new ObservableCollection<SwitchDevice>();
+            swList = new ObservableCollection<SWDEV>();
             m_UserList = new ObservableCollection<User>();
 
             switchGrid.ItemsSource = swList;
-            switchGrid.MouseDown += DataGrid_MouseDown;
+            //switchGrid.MouseDown += DataGrid_MouseDown;
+            switchGrid.SelectionChanged += DataGrid_Click;
+
 
             userGrid.ItemsSource = m_UserList;
             userGrid.MouseDown += DataGrid_MouseDown;
@@ -1191,11 +1233,13 @@ namespace DispatchApp
                         return;
                     }
 
-                    SwitchDevice item = new SwitchDevice();
-                    item.idstr = swdevobj.name;
+                    SWDEV item = new SWDEV();
+                    //item.idstr = swdevobj.name;
                     item.name = swdevobj.name;
-                    item.index = Convert.ToInt16(swdevobj.index);
-                    item.type = Convert.ToInt16(swdevobj.type);
+                    item.ip = swdevobj.ip;
+                    item.port = swdevobj.port;
+                    item.index = swdevobj.index;
+                    item.type = swdevobj.type;
 
                     swList.Add(item);
                 }
@@ -1242,51 +1286,18 @@ namespace DispatchApp
                     return;
                 }
 
-                SwitchDevice item = new SwitchDevice();
-                item.idstr = swdevobj.name;
-                item.name = swdevobj.name;
-                item.index = Convert.ToInt16(swdevobj.index);
-                item.type = Convert.ToInt16(swdevobj.type);
-
-                //swList.Add(item);
                 // 在swList中查询对应的item
                 for (int i = 0; i < swList.Count; i++)
                 {
-                    if (swList[i].index == item.index)
+                    // 根据index来判断
+                    if (swList[i].index == swdevobj.index)
                     {
-                        // 保留之前的展开状态
-                        DataGridRow row; // (DataGridRow)switchGrid.ItemContainerGenerator.ContainerFromIndex(switchGrid.SelectedIndex);
-                        //DataRowView rowview = switchGrid.SelectedItem as DataRowView;
-                        Visibility visib = System.Windows.Visibility.Visible;
-                        if (swList[i].iscp == false)
-                        {
-                            visib = System.Windows.Visibility.Collapsed;
-                        }
-                        else
-                        {
-                            visib = System.Windows.Visibility.Hidden;
-                        }
-                        item.IsDetailsExpanded = (visib == System.Windows.Visibility.Collapsed) ? true : false;
-
-                        swList.RemoveAt(i);
-                        if (i == 0)
-                        {
-                            swList.Insert(0, item);
-                        }
-                        else
-                        {
-                            swList.Insert(i - 1, item);
-                        }
-
-                        // using modified version will not notify the RowDetailsTemplate
-
-                        Trace.WriteLine("current selected index: " + i);
-                        //row = (DataGridRow)switchGrid.ItemContainerGenerator.ContainerFromIndex(i);
-
-                        //switchGrid.Focus();
-                        //switchGrid.CurrentCell = 
-                        switchGrid.SelectedIndex = i;
-
+                        SWDEV dev = swList[i];
+                        // index 不允许更新
+                        dev.name = swdevobj.name;
+                        dev.ip = swdevobj.ip;
+                        dev.port = swdevobj.port;
+                        dev.type = swdevobj.type;
                     }
                 }
             }
@@ -1296,20 +1307,20 @@ namespace DispatchApp
         /* 刷新软交换设备列表 */
         private void freshSwitchDevice(string data)
         {
-            swList.Clear();
+            //swList.Clear();
             SW_QUERYRESULT res = JsonConvert.DeserializeObject<SW_QUERYRESULT>(data);
             if (res != null)
             {
-                ObservableCollection<SwitchDevice> list = new ObservableCollection<SwitchDevice>();
+                ObservableCollection<SWDEV> list = new ObservableCollection<SWDEV>();
                 foreach (SWDEVITEM member in res.switchlist)
                 {
-                    SwitchDevice item = new SwitchDevice();
-                    item.idstr = member.name;
+                    SWDEV item = new SWDEV();
+                    //item.idstr = member.name;
                     item.name = member.name;
-                    item.index = Convert.ToInt16(member.index);
-                    item.type = Convert.ToInt16("0" + member.type);
-                    item.iscp = false;
-                    //item.IsDetailsExpanded = false;
+                    item.index = member.index;
+                    item.type = member.type;
+                    item.ip = member.ip;
+                    item.port = member.port.ToString();
 
                     swList.Add(item);
                 }
@@ -1592,11 +1603,23 @@ namespace DispatchApp
             {
                 Int16 index = Convert.ToInt16(btn.Tag);
                 Trace.WriteLine("update index: " + btn.Tag);
-                DataGridRow dgr = (DataGridRow)switchGrid.ItemContainerGenerator.ContainerFromIndex(switchGrid.SelectedIndex);
-                TextBox temp = FindVisualChildByName<TextBox>(dgr, "detailidstr") as TextBox;
-                BindingExpression be = temp.GetBindingExpression(TextBox.TextProperty);
-                be.UpdateSource();
-                //MainWindow.swList[index].name = switchGrid.
+
+                SWDEV tempDev = new SWDEV();
+                tempDev.sequence = GlobalFunAndVar.sequenceGenerator();
+                tempDev.index = swIndex.Text;
+                tempDev.name = swName.Text;
+                tempDev.ip = swIP.Text;
+                tempDev.port = swPort.Text;
+                tempDev.type = swType.Text;
+
+                /* 向服务器发送更新消息 */
+                StringBuilder sb = new StringBuilder(100);
+                sb.Append("MAN#EDITSW#");
+                sb.Append(JsonConvert.SerializeObject(tempDev));
+
+                Trace.WriteLine("SEND: " + sb.ToString());
+                sendMsg(this, "net", sb.ToString());
+                sendMsg(this, "swdev", tempDev);
             }
         }
 
@@ -1616,15 +1639,35 @@ namespace DispatchApp
             img_collapse.Source = imgSource;
         }
 
+        private void DataGrid_Click(object sender, SelectionChangedEventArgs e)
+        {
+            int index = switchGrid.SelectedIndex;
+
+            if (index >= 0 && index < swList.Count)
+            {
+                //SelectedSW = swList[index];
+            }
+        }
+
         private void DataGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
+                int index = switchGrid.SelectedIndex;
+
+                if (index >= 0 && index < swList.Count)
+                {
+                //    SelectedSW = swList[index];
+                }
+
+                /*
                 var se = switchGrid.SelectedItem;
 
                 FrameworkElement el = switchGrid.Columns[0].GetCellContent(se);
                 DataGridRow row = DataGridRow.GetRowContainingElement(el.Parent as FrameworkElement);
                 row.DetailsVisibility = row.DetailsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+                
+                */
                 //if (objElement != null)
                 //{
                 //    TextBlock objChk = (TextBlock)objElement;
@@ -1632,58 +1675,7 @@ namespace DispatchApp
                 //    Console.WriteLine("MouseDown");
                 //}
             }
-        }
-
-        private void dgCompletedJobs_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            _rowSelectionChanged = true;
-        }
-
-        private void dgCompletedJobsMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            DependencyObject dep = (DependencyObject)e.OriginalSource;
-
-            //navigate up the tree
-            while (dep != null &&
-                !(dep is DataGridCell) &&
-                !(dep is DataGridColumnHeader))
-            {
-                dep = VisualTreeHelper.GetParent(dep);
-            }
-
-            if (dep == null)
-            {
-                return;
-            }
-
-            DataGridCell dgc = dep as DataGridCell;
-            if (dgc != null)
-            {
-                //navigate further up the tree
-                while (dep != null && !(dep is DataGridRow))
-                {
-                    dep = VisualTreeHelper.GetParent(dep);
-                }
-
-                DataGridRow dgr = dep as DataGridRow;
-                DataGrid dg = sender as DataGrid;
-                if (dg != null && dgr != null)
-                {
-                    if (dgr.IsSelected && !_rowSelectionChanged)
-                    {
-                        dg.RowDetailsVisibilityMode =
-                            (dg.RowDetailsVisibilityMode == DataGridRowDetailsVisibilityMode.VisibleWhenSelected)
-                                ? DataGridRowDetailsVisibilityMode.Collapsed
-                                : DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
-                    }
-                    else
-                    {
-                        dg.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
-                    }
-                }
-            }
-            _rowSelectionChanged = false;
-        }
+        }        
 #endregion
 
         // 查看用户信息

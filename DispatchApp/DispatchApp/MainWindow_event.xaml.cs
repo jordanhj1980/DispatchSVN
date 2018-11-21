@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Configuration;
 
 using Npgsql;
 
@@ -46,8 +47,11 @@ namespace DispatchApp
         {
             // 写，保存 
             // User则运行时可更改，Applicatiion则运行时不可更改
-            Properties.Settings.Default.serverip = m_ServerIP;
-            Properties.Settings.Default.Save();
+            //Properties.Settings.Default.serverip = m_ServerIP;
+            //Properties.Settings.Default.Save();
+            Configuration cfa = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            cfa.AppSettings.Settings["serverip"].Value = m_ServerIP;
+            cfa.Save();
         }
 
 
@@ -81,7 +85,6 @@ namespace DispatchApp
         private void menuOpen_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("menu open clicked!");
-
         }
 
     }

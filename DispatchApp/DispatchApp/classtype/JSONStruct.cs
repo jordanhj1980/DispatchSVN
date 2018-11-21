@@ -20,6 +20,7 @@ namespace DispatchApp
         public List<SWDEVITEM> switchlist { get; set; }
     }
 
+    /* 协议中软交换设备数据结构 */
     public class SWDEVITEM
     {
         public string index { get; set; }
@@ -31,16 +32,100 @@ namespace DispatchApp
         public string password { get; set; }
     }
 
-    public class SWDEV
+    /* 协议中软交换设备数据结构 */
+    public class SWDEV: NotifyObject
     {
+        private string _name;
+        public string name {
+            get { return _name; }
+            set 
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged("name");
+                }
+            }
+        }
+
+        private string _ip;
+        public string ip
+        {
+            get { return _ip; }
+            set
+            {
+                if (_ip != value)
+                {
+                    _ip = value;
+                    OnPropertyChanged("ip");
+                }
+            }
+        }
+
+        private string _port;
+        public string port
+        {
+            get { return _port; }
+            set
+            {
+                if (_port != value)
+                {
+                    _port = value;
+                    OnPropertyChanged("port");
+                }
+            }
+        }
+
+        private string _type;
+        public string type
+        {
+            get { return _type; }
+            set
+            {
+                if (_type != value)
+                {
+                    _type = value;
+                    OnPropertyChanged("type");
+                }
+            }
+        }        
+
+        private string _username;
+        public string username
+        {
+            get { return _username; }
+            set
+            {
+                if (_username != value)
+                {
+                    _username = value;
+                    OnPropertyChanged("username");
+                }
+            }
+        }
+
+        private string _password;
+        public string password
+        {
+            get { return _password; }
+            set
+            {
+                if (_password != value)
+                {
+                    _password = value;
+                    OnPropertyChanged("password");
+                }
+            }
+        }
+
         public string sequence { get; set; }
         public string index { get; set; }
-        public string name { get; set; }
-        public string ip { get; set; }
-        public int port { get; set; }
-        public string type { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
+        //public string name { get; set; }
+        //public string ip { get; set; }
+        //public string port { get; set; }
+        //public string type { get; set; }
+        //public string username { get; set; }
+        //public string password { get; set; }
     }
 
     public class SW_ADDRESULT

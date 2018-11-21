@@ -57,6 +57,8 @@ namespace DispatchApp
         private string m_ServerIP;
         private string m_ServerPort;
 
+        private LoadingWindow loadWin;
+
         /* 调度usercontrol */
         //UserControl1 callUserCtrl;//weituo 20181013
         public CallUserControl callUserCtrl;
@@ -100,9 +102,9 @@ namespace DispatchApp
             ShowTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
             ShowTimer.Start();
 
-            //INIHelper.WriteIni("DEV", "port", "80");
-            // 初始化IP
-            // m_ServerIP = Properties.Settings.Default.serverip;
+            // 创建websocket
+            string serverip = "192.168.2.101";
+            string serverport = "1020";
 
             m_ServerIP = ConfigurationManager.AppSettings["serverip"];
             m_ServerPort = ConfigurationManager.AppSettings["serverport"];
@@ -115,7 +117,7 @@ namespace DispatchApp
                 ws = new WebSocket(serveruri);
                 ws.Opened += websocket_Opened;
                 ws.Closed += websocket_Closed;
-                ws.MessageReceived += websocket_MessageReceived;               
+                ws.MessageReceived += websocket_MessageReceived;
             }
             catch (Exception e)
             {
@@ -124,22 +126,6 @@ namespace DispatchApp
 
             // 初始化数据库handle
             dbHelper = new PostgreHelper();
-            Console.WriteLine("Hello PostgreSQL");
-
-            //INIHelper.WriteIni("DEV", "port", "80");
-            // 初始化IP
-            m_ServerIP = Properties.Settings.Default.serverip;
-
-            // Host info
-            string host = "localhost";
-            string user = "xf";
-            string password = "xf";
-            string dbname = "dispatch";
-            var connString = string.Format("Host={0};Port=5432;Username={1};Password={2};Database={3}", host, user, password, dbname);
-            conn = new NpgsqlConnection(connString);
-
-            //在主页面中把usercontrol画出来或者说引用出来
-            //this.CenterPanel.Content = callUserCtrl;
         }
 
 
@@ -224,7 +210,7 @@ namespace DispatchApp
             // 20181010 xf Add
             if (App.isLogin)
             {
-                PeerCallBack.Instance.GetOperationMsg("login");
+                PeerCallBack.Instance.GetOperationMsg("login"); // commented by twinkle
                 App.isLogin = false;
             }
             else
@@ -281,8 +267,14 @@ namespace DispatchApp
 
                 if (msg == "login")
                 {
-                    logwin.Show();
-                    this.Hide();
+                    //logwin.Show();
+                    //this.Hide();
+
+                    // add by twinkle 2018.11.23
+                    // 用户在当前界面，如果网线断开，停留在当前界面，制作动画，并重新连接后台
+                    //loadWin.Show();
+
+                    LoadingWindow.ShowDialog(this);
                 } 
                 else 
                 {

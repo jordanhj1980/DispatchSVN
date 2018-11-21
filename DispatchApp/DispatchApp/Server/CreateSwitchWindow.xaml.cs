@@ -56,7 +56,7 @@ namespace DispatchApp
             swdevobj.sequence = GlobalFunAndVar.sequenceGenerator();
             swdevobj.name = tb_name.Text.Trim();
             swdevobj.ip = tb_ip.Text.Trim();
-            swdevobj.port = Convert.ToInt32(tb_port.Text);
+            swdevobj.port = tb_port.Text.Trim();
 
             //SwitchDeviceType testenum = (SwitchDeviceType)Enum.Parse(typeof(SwitchDeviceType) ,comboBox_type.SelectedItem.ToString() ,false)
             swdevobj.type = comboBox_type.SelectedValue.ToString();

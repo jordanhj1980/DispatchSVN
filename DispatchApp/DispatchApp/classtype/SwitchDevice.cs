@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DispatchApp
 {
+#if false
     /* 软交换的UI数据结构 */
     class SwitchDevice
     {
@@ -15,6 +16,7 @@ namespace DispatchApp
         public bool iscp { set; get; } // 是否展开，隐藏属性
         public bool IsDetailsExpanded { set; get; } // 是否展开，隐藏属性
     }
+#endif 
 
     /* 用户的UI数据结构 */
     public class User : NotifyObject
