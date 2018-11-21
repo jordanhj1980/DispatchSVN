@@ -41,6 +41,7 @@ namespace DispatchApp
     /// </summary>
     public partial class CallManagerControl : UserControl, INotifyPropertyChanged
     {
+        #region 事件通知
         public event PropertyChangedEventHandler PropertyChanged;
 
         /* propertyName为属性的名称 */
@@ -69,26 +70,12 @@ namespace DispatchApp
 
         // 软交换设备列表
         ObservableCollection<SWDEV> swList;
-
-        // 用户列表
-        ObservableCollection<User> m_UserList;
-        private User _selectedUserItem;
-        public User SelectedUserItem {
-            get { return _selectedUserItem; }
-            set
-            {
-                _selectedUserItem = value;
-                //SetAndNotifyIfChanged("SelectedUserItem", ref _selectedUserItem, value);
-            }
-        }  /* 保存临时的用户item */
-
+        /// <summary>
+        /// function 列表中当前选中软交换设备
+        /// </summary>
+        private SWDEV _selectedSW;
         // 当对话框打开添加软交换时，临时存储软交换的信息
         public SWDEV swdevobj;      // 新增软交换
-
-        private SWDEV _selectedSW;  // 列表中当前选中项
-        /// <summary>
-        /// function 列表中选中行的对象
-        /// </summary>
         public SWDEV SelectedSW
         {
             get { return _selectedSW; }
@@ -102,8 +89,27 @@ namespace DispatchApp
             }
         }
 
-        // 当对话框打开添加用户时，临时存储用户的信息
-        public User userobj;
+        // 用户列表
+        ObservableCollection<User> m_UserList;
+        /// <summary>
+        /// function 列表中当前选中用户
+        /// </summary>
+        private User _selectedUser;
+        // 当对话框打开添加软交换时，临时存储软交换的信息
+        public User userobj;      // /* 保存临时的用户item */
+        public User SelectedUser
+        {
+            get { return _selectedUser; }
+            set
+            {
+                if (_selectedUser != value)
+                {
+                    _selectedUser = value;
+                    RaisePropertyChanged("SelectedUser");
+                }
+            }
+        }
+        #endregion
 
         public string ImageSource { get; set; }
         //public Image img_collapse { get; set; }
@@ -646,14 +652,12 @@ namespace DispatchApp
                 {
                     User item = new User();
                     item.index = m_UserList.Count;  // 列表序号，从0开始
-                    item.idstr = member.name;
                     item.name = member.name;
                     item.password = member.password;
-                    item.status = Convert.ToInt16("0" + member.status);
+                    item.status = member.status;
                     item.privilege = member.privilege;
                     item.description = member.description;
                     item.desk = member.desk;
-                    item.IsDetailsExpanded = false;
 
                     m_UserList.Add(item);
                 }
@@ -695,54 +699,25 @@ namespace DispatchApp
                 {
                     Trace.WriteLine(res.reason);
                     return;
-                }
-
-                User item = new User();
-                item.idstr = userobj.name;
-                item.name = userobj.name;
-                item.password = userobj.password;
-                item.privilege = userobj.privilege;
-                item.description = userobj.description;
-                item.role = userobj.role;
-                item.index = userobj.index;
-                item.status = userobj.status;
-                item.desk = userobj.desk;
+                }                
 
                 // 在swList中查询对应的item
                 for (int i = 0; i < m_UserList.Count; i++)
                 {
                     // 用户名来判断
-                    if (m_UserList[i].name == item.name)
+                    if (m_UserList[i].name == userobj.name)
                     {
-                        // 保留之前的展开状态
-                        DataGridRow row;
-                        Visibility visib = System.Windows.Visibility.Visible;
-                        if (m_UserList[i].IsDetailsExpanded == false)
-                        {
-                            visib = System.Windows.Visibility.Collapsed;
-                        }
-                        else
-                        {
-                            visib = System.Windows.Visibility.Hidden;
-                        }
-                        item.IsDetailsExpanded = (visib == System.Windows.Visibility.Collapsed) ? true : false;
-                        // using modified version will not notify the RowDetailsTemplate
-                        m_UserList.RemoveAt(i);
-                        if (i == 0)
-                        {
-                            m_UserList.Insert(0, item);
-                        }
-                        else
-                        {
-                            m_UserList.Insert(i - 1, item);
-                        }
+                        User item = m_UserList[i];
+                        item.name = userobj.name;
+                        item.password = userobj.password;
+                        item.privilege = userobj.privilege;
+                        item.description = userobj.description;
+                        item.role = userobj.role;
+                        item.index = userobj.index;
+                        item.status = userobj.status;
+                        item.desk = userobj.desk;                        
 
-                        Trace.WriteLine("current selected index: " + i);
-                        //row = (DataGridRow)switchGrid.ItemContainerGenerator.ContainerFromIndex(i);
-
-                        //switchGrid.Focus();
-                        //switchGrid.CurrentCell = 
-                        userGrid.SelectedIndex = i;
+                        Trace.WriteLine("current selected name: " + item.name);
                         break;
                     }
                 }
@@ -997,36 +972,25 @@ namespace DispatchApp
                 Int16 index = Convert.ToInt16(btn.Tag);
                 Trace.WriteLine("update index: " + btn.Tag);
 
-                DataGridRow dgr = (DataGridRow)userGrid.ItemContainerGenerator.ContainerFromIndex(userGrid.SelectedIndex);
-
-                TextBox tb_idstr = FindVisualChildByName<TextBox>(dgr, "detailidstr") as TextBox;
-                TextBox tb_name = FindVisualChildByName<TextBox>(dgr, "detailname") as TextBox;
-                TextBox tb_pass = FindVisualChildByName<TextBox>(dgr, "detailpass") as TextBox;
-                TextBox tb_status = FindVisualChildByName<TextBox>(dgr, "detailstatus") as TextBox;
-                TextBox tb_desp = FindVisualChildByName<TextBox>(dgr, "detaildesp") as TextBox;
-                TextBox tb_desk = FindVisualChildByName<TextBox>(dgr, "detaildesk") as TextBox;
-                TextBox tb_role = FindVisualChildByName<TextBox>(dgr, "detailrole") as TextBox;
-                TextBox tb_priv = FindVisualChildByName<TextBox>(dgr, "detailpriv") as TextBox;
-
                 USEREDITITEM tempUser = new USEREDITITEM();
                 tempUser.sequence = GlobalFunAndVar.sequenceGenerator();
-                tempUser.name = tb_name.Text.Trim();
-                tempUser.password = tb_pass.Text.Trim();
-                tempUser.status = tb_status.Text.Trim();
-                tempUser.description = tb_desp.Text.Trim();
-                tempUser.desk = tb_desk.Text.Trim();
-                tempUser.role = tb_role.Text.Trim();
-                tempUser.privilege = tb_priv.Text.Trim();
+                tempUser.name = userName.Text.Trim();
+                tempUser.password = userPass.Text.Trim();
+                tempUser.status = userStatus.Text.Trim();
+                tempUser.description = userDesp.Text.Trim();
+                tempUser.desk = userDesk.Text.Trim();
+                tempUser.role = userRole.Text.Trim();
+                tempUser.privilege = userPriv.Text.Trim();
 
                 // 用于界面显示
                 User uiUser = new User();
                 uiUser.sequence = tempUser.sequence;
                 uiUser.name = tempUser.name;
                 uiUser.password = tempUser.password;
-                uiUser.status = Convert.ToInt16(tempUser.status);
+                uiUser.status = tempUser.status;
                 uiUser.description = tempUser.description;
                 uiUser.desk = tempUser.desk;
-                uiUser.role = Convert.ToInt16(tempUser.role);
+                uiUser.role = tempUser.role;
                 uiUser.privilege = tempUser.privilege;
                 // 保存List的序号
                 uiUser.index = index;

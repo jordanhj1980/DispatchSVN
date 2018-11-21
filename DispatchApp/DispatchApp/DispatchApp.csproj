@@ -140,7 +140,6 @@
     <Compile Include="classtype\JSONStruct.cs" />
     <Compile Include="classtype\PeerCallBack.cs" />
     <Compile Include="classtype\propertyNodeItem.cs" />
-    <Compile Include="classtype\SwitchDevice.cs" />
     <Compile Include="Client\CallUserControl_par.xaml.cs" />
     <Compile Include="Client\Convert.cs" />
     <Compile Include="Client\DependencyPropertyClass.cs" />

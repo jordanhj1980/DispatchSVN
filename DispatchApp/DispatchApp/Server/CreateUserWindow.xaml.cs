@@ -74,17 +74,16 @@ namespace DispatchApp
             //item.desk = comBox_desk.SelectedValue.ToString();
             item.desk = "1";
 
+            /* 临时保存待修改的用户信息 */
             User user = new User();
             user.sequence = item.sequence;
-            user.idstr = item.name;
             user.name = item.name;
             user.password = item.password;
-            user.status = Convert.ToInt16(item.status);
+            user.status = item.status;
             user.privilege = item.privilege;
-            user.role = Convert.ToInt16(item.role);
+            user.role = item.role;
             user.description = item.description;
             user.desk = item.desk;
-            user.IsDetailsExpanded = false;
 
             StringBuilder sb = new StringBuilder(100);
             sb.Append("MAN#ADDUSER#");

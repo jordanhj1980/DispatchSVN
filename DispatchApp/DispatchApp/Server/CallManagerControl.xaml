@@ -123,8 +123,8 @@
                             </DataGridTemplateColumn>
                             </DataGrid.Columns>
                     </DataGrid>
-                    <Border Grid.Row="1" Margin="10" Padding="10" BorderBrush="SteelBlue" BorderThickness="3" CornerRadius="5" HorizontalAlignment="Left">
-                        <GroupBox Header="软交换设备" Height="120" Width="1480"  Name="userinfo" HorizontalAlignment="Left" 
+                    <Border Grid.Row="1" Margin="0,10" Padding="10" BorderBrush="SteelBlue" BorderThickness="3" CornerRadius="5" HorizontalAlignment="Left">
+                        <GroupBox Header="软交换设备" Height="120" Width="1500"  Name="switchinfo" HorizontalAlignment="Left" 
                                   VerticalAlignment="Top" Margin="4,0,0,0" Foreground="White">
                             <Grid Background="#FF489E9C">
                                 <Grid.ColumnDefinitions>
@@ -133,11 +133,11 @@
                                     <ColumnDefinition Width="66*" />
                                     <ColumnDefinition Width="150*" />
                                     <ColumnDefinition Width="66*" />
-                                    <ColumnDefinition Width="150*" />
+                                    <ColumnDefinition Width="130*" />
                                     <ColumnDefinition Width="66*" />
-                                    <ColumnDefinition Width="150*" />
+                                    <ColumnDefinition Width="130*" />
                                     <ColumnDefinition Width="66*" />
-                                    <ColumnDefinition Width="150*" />
+                                    <ColumnDefinition Width="130*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="40*"/>
@@ -158,93 +158,94 @@
                                                 Content="Update" Tag="{Binding SelectedSW.index}" Command="{Binding Path=name}"  Click="Btn_Update_Click" />
                             </Grid>
                         </GroupBox>
-                                    </Border>
+                        </Border>
                     </Grid>
                 </TabItem>
 
                 <!--系统用户展开-->
                 <TabItem  Background="{x:Null}" Header="tabItem2" Visibility="Collapsed"  Name="tabItem_user">
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="30*" />
-                            <ColumnDefinition Width="1517*" />
-                        </Grid.ColumnDefinitions>
-                        <DataGrid  Background="{x:Null}" Height="465" FontSize="20" Margin="-6,34,1,166" 
-                                   Name="userGrid" ItemsSource="{Binding m_UserList}"
-                                   SelectedItem="{Binding SelectedUserItem}" Width="1552" Grid.ColumnSpan="2">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding idstr}" Width="200" Header="标识"></DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding name}" Width="200" Header="名称"></DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding status}" Width="200" Header="状态"></DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding privilege}" Width="100" Header="权限"></DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding role}" Width="100" Header="角色"></DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding description}" Width="300" Header="描述"></DataGridTextColumn>
-                                <DataGridTemplateColumn Header="信息" Width="200">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button Style="{StaticResource GridBtnInfo}" Command="{Binding Path=name}" Content="查看信息" Click="Btn_UserGrid_Click" Tag="{Binding index}" />
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="530"/>
+                        <RowDefinition Height="180"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid Height="530" SelectionUnit="FullRow" FontSize="24" Margin="-6,0,10,0" Name="userGrid" 
+                              ItemsSource="{Binding m_UserList}" IsReadOnly="True" SelectedItem="{Binding SelectedUser}" 
+                              Width="1540" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="60">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource VerticalCheckBox}"  />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Binding="{Binding idstr}" Width="200" Header="标识" ElementStyle="{StaticResource dgCell}"/>
+                            <DataGridTextColumn Binding="{Binding name}" Width="200" Header="名称" ElementStyle="{StaticResource dgCell}"/>
+                            <DataGridTextColumn Binding="{Binding status}" Width="200" Header="状态" ElementStyle="{StaticResource dgCell}"/>
+                            <DataGridTextColumn Binding="{Binding privilege}" Width="100" Header="权限" ElementStyle="{StaticResource dgCell}"/>
+                            <DataGridTextColumn Binding="{Binding role}" Width="100" Header="角色" ElementStyle="{StaticResource dgCell}"/>
+                            <DataGridTextColumn Binding="{Binding description}" Width="300" Header="描述" ElementStyle="{StaticResource dgCell}"/>
+                            <DataGridTemplateColumn Header="信息" Width="200">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource GridBtnInfo}" Command="{Binding Path=name}" Content="查看信息" Click="Btn_UserGrid_Click" Tag="{Binding index}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             </DataGrid.Columns>
-
-                            <DataGrid.RowDetailsTemplate>
-                                <DataTemplate>
-                                    <Border Margin="5" Padding="5" BorderBrush="SteelBlue" BorderThickness="3" CornerRadius="5" Width="1500" HorizontalAlignment="Left">
-                                        <GroupBox Header="用户信息" Height="160" Width="1480"  Name="userinfo" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,0,0,0" Foreground="White">
-                                            <Grid Background="#FF489E9C">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="56" />
-                                                    <ColumnDefinition Width="217*" />
-                                                    <ColumnDefinition Width="56*" />
-                                                    <ColumnDefinition Width="217*" />
-                                                    <ColumnDefinition Width="56*" />
-                                                    <ColumnDefinition Width="217*" />
-                                                    <ColumnDefinition Width="56*" />
-                                                    <ColumnDefinition Width="217*" />
-                                                    <ColumnDefinition Width="56*" />
-                                                    <ColumnDefinition Width="217*" />
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="40*" />
-                                                    <RowDefinition Height="40*" />
-                                                    <RowDefinition Height="40*" />
-                                                    <RowDefinition />
-                                                </Grid.RowDefinitions>
-                                                <Label Grid.Column="0" Content="标识："  FontSize="20" HorizontalAlignment="Right"  VerticalAlignment="Top" Foreground="White"  />
-                                                <TextBox Grid.Column="1" x:Name="detailidstr"  Text="{Binding idstr, Mode=OneWay}" FontSize="20"/>
-                                                <Label Grid.Column="2" Content="用户名："  FontSize="20" HorizontalAlignment="Right"  VerticalAlignment="Top"  Foreground="White"  />
-
-                                                <TextBox Grid.Column="3" x:Name="detailname" Text="{Binding name, Mode=OneWay}" FontSize="20"/>
-                                                <Label Grid.Column="4" Content="密码："  FontSize="20" HorizontalAlignment="Right"  VerticalAlignment="Top" Foreground="White"  />
-
-                                                <TextBox Grid.Column="5" x:Name="detailpass" Text="{Binding password, Mode=OneWay}" FontSize="20"/>
-                                                <Label Grid.Column="6" Content="状态："  FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="White"  />
-                                                <TextBox Grid.Column="7" x:Name="detailstatus" Text="{Binding status, Mode=OneWay}" FontSize="20"/>
-
-                                                <Label Grid.Column="8" Content="权限："  FontSize="20" HorizontalAlignment="Right"  VerticalAlignment="Top"  Foreground="White"  />
-                                                <TextBox Grid.Column="9" x:Name="detailpriv" Text="{Binding privilege, Mode=OneWay}" FontSize="20"/>
-
-                                                <Label Grid.Row="1" Grid.Column="0"  Content="角色："  FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="White"  />
-                                                <TextBox  Grid.Row="1" Grid.Column="1" x:Name="detailrole" Text="{Binding role, Mode=OneWay}" FontSize="20"/>
-                                                <Label Grid.Row="1" Grid.Column="2"  Content="描述："  FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="White"  />
-                                                <TextBox Grid.Row="1" Grid.Column="3" x:Name="detaildesp" Text="{Binding description, Mode=OneWay}" FontSize="20"/>
-                                                <Label Grid.Row="1" Grid.Column="4"  Content="所属调度台："  FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="White"  />
-                                                <TextBox Grid.Row="1" Grid.Column="5" x:Name="detaildesk" Text="{Binding desk, Mode=OneWay}" FontSize="20"/>
-                                                <Button Grid.Row="2" HorizontalAlignment="Right" Grid.Column="9"  FontSize="20" Style="{StaticResource GridBtnInfo}" 
-                                                    Content="Update" Tag="{Binding index}" Command="{Binding Path=name}"  Click="Btn_UserUpdate_Click" />
-                                            </Grid>
-                                        </GroupBox>
-                                    </Border>
-                                </DataTemplate>
-                            </DataGrid.RowDetailsTemplate>
                         </DataGrid>
+
+                    <Border Grid.Row="1" Margin="0,10" Padding="10" BorderBrush="SteelBlue" BorderThickness="3" CornerRadius="5" HorizontalAlignment="Left">
+                            <GroupBox Header="用户信息" Height="120" Width="1500"  Name="userinfo" HorizontalAlignment="Left" 
+                                      VerticalAlignment="Top" Margin="4,0,0,0" Foreground="White">
+                                <Grid Background="#FF489E9C">
+                                    <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="66" />
+                                    <ColumnDefinition Width="110*" />
+                                    <ColumnDefinition Width="60*" />
+                                    <ColumnDefinition Width="110*" />
+                                    <ColumnDefinition Width="60*" />
+                                    <ColumnDefinition Width="110*" />
+                                    <ColumnDefinition Width="60*" />
+                                    <ColumnDefinition Width="110*" />
+                                    <ColumnDefinition Width="60*" />
+                                    <ColumnDefinition Width="110*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40*" />
+                                        <RowDefinition Height="40*" />
+                                        <RowDefinition Height="40*" />
+                                    </Grid.RowDefinitions>
+                                    
+                                <TextBlock Grid.Column="0" Text="标识："  FontSize="20" HorizontalAlignment="Right"  VerticalAlignment="Top"/>
+                                <TextBox Grid.Column="1" x:Name="userStr"  Text="{Binding SelectedUser.idstr, Mode=OneWay}" FontSize="20"/>
+                                <TextBlock Grid.Column="2" Text="用户名："  FontSize="20" HorizontalAlignment="Right"  VerticalAlignment="Top" />
+                                <TextBox Grid.Column="3" x:Name="userName" Text="{Binding SelectedUser.name, Mode=OneWay}" FontSize="20" IsReadOnly="True"/>
+                                <TextBlock Grid.Column="4" Text="密码："  FontSize="20" HorizontalAlignment="Right"  VerticalAlignment="Top" />
+                                <TextBox Grid.Column="5" x:Name="userPass" Text="{Binding SelectedUser.password, Mode=OneWay}" FontSize="20"/>
+                                <TextBlock Grid.Column="6" Text="状态："  FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                                <TextBox Grid.Column="7" x:Name="userStatus" Text="{Binding SelectedUser.status, Mode=OneWay}" FontSize="20"/>
+                                <TextBlock Grid.Column="8" Text="权限："  FontSize="20" HorizontalAlignment="Right"  VerticalAlignment="Top" />
+                                <TextBox Grid.Column="9" x:Name="userPriv" Text="{Binding SelectedUser.privilege, Mode=OneWay}" FontSize="20"/>
+                                
+                                <TextBlock Grid.Row="1" Grid.Column="0"  Text="角色："  FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                                <TextBox  Grid.Row="1" Grid.Column="1" x:Name="userRole" Text="{Binding SelectedUser.role, Mode=OneWay}" FontSize="20"/>
+                                <TextBlock Grid.Row="1" Grid.Column="2"  Text="描述："  FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                                <TextBox Grid.Row="1" Grid.Column="3" x:Name="userDesp" Text="{Binding SelectedUser.description, Mode=OneWay}" FontSize="20"/>
+                                <TextBlock Grid.Row="1" Grid.Column="4"  Text="所属调度台："  FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                                <TextBox Grid.Row="1" Grid.Column="5" x:Name="userDesk" Text="{Binding SelectedUser.desk, Mode=OneWay}" FontSize="20"/>
+                                <Button Grid.Row="2" HorizontalAlignment="Left" Grid.Column="9"  FontSize="20" Style="{StaticResource GridBtnInfo}" 
+                                        Content="Update" Tag="{Binding SelectedUser.index}" Command="{Binding Path=name}"  Click="Btn_UserUpdate_Click" />
+                                </Grid>
+                            </GroupBox>
+                        </Border>                    
                     </Grid>
                 </TabItem>
 
                 <!--调度台展开-->
-                <TabItem  Background="{x:Null}" Header="tabItem3" Visibility="Collapsed"  Name="tabItem_desk"
-                            Height="697" HorizontalAlignment="Left" Margin="0,0,0,0"  VerticalAlignment="Top" Width="1557">
+                <TabItem Background="{x:Null}" Header="tabItem3" Visibility="Collapsed"  Name="tabItem_desk"
+                         Height="697" HorizontalAlignment="Left" Margin="0,0,0,0"  VerticalAlignment="Top" Width="1557">
                 <Grid>
                    <TreeView x:Name="tvProperty" HorizontalAlignment="Left" Height="697" Margin="0,0,0,0" VerticalAlignment="Top" Width="345" Grid.Column="0">
                         <!--设置treeview背景-->
