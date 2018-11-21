@@ -89,7 +89,7 @@ namespace DispatchApp
             sb.Append("MAN#ADDUSER#");
             sb.Append(JsonConvert.SerializeObject(item));
 
-            Trace.WriteLine("SEND: " + sb.ToString());
+            Debug.WriteLine("SEND: " + sb.ToString());
 
             /* 发送网络信息 */
             if (msgevent != null)

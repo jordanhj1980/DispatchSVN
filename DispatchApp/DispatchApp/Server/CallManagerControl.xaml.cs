@@ -266,7 +266,8 @@ namespace DispatchApp
             }              
         }
         /// ==============================================================
-        /// 
+        
+
         /// <summary>
         /// 删除调度键盘
         /// </summary>
@@ -381,7 +382,7 @@ namespace DispatchApp
             sb.Append("MAN#QUERYSW#");
             sb.Append(JsonConvert.SerializeObject(swquery));
 
-            Trace.WriteLine("SEND: " + sb.ToString());
+            Debug.WriteLine("SEND: " + sb.ToString());
             sendMsg(this, "net", sb.ToString());
         }
 
@@ -395,7 +396,7 @@ namespace DispatchApp
             sb.Append("MAN#DELSW#");
             sb.Append(JsonConvert.SerializeObject(swquery));
 
-            Trace.WriteLine("SEND: " + sb.ToString());
+            Debug.WriteLine("SEND: " + sb.ToString());
             sendMsg(this, "net", sb.ToString());
         }
 
@@ -409,7 +410,7 @@ namespace DispatchApp
             sb.Append(JsonConvert.SerializeObject(sequence));
             sb.Append("}");
 
-            Trace.WriteLine("SEND: " + sb.ToString());
+            Debug.WriteLine("SEND: " + sb.ToString());
             sendMsg(this, "net", sb.ToString());
         }
 
@@ -423,7 +424,7 @@ namespace DispatchApp
             sb.Append("MAN#DELUSER#");
             sb.Append(JsonConvert.SerializeObject(req));
 
-            Trace.WriteLine("SEND: " + sb.ToString());
+            Debug.WriteLine("SEND: " + sb.ToString());
             sendMsg(this, "net", sb.ToString());
             /* 临时保存用户名 */
             userobj.name = name;
@@ -438,7 +439,7 @@ namespace DispatchApp
             sb.Append("MAN#GETALLKEYBOARD#");
             sb.Append(JsonConvert.SerializeObject(searchDesk));
 
-            Trace.WriteLine("SEND：" + sb.ToString());
+            Debug.WriteLine("SEND：" + sb.ToString());
             sendMsg(this, "net", sb.ToString());
 
         }
@@ -456,7 +457,7 @@ namespace DispatchApp
             sb.Append("MAN#DELKEYBOARD#");
             sb.Append(JsonConvert.SerializeObject(req));
 
-            Trace.WriteLine("SEND：" + sb.ToString());
+            Debug.WriteLine("SEND：" + sb.ToString());
             sendMsg(this, "net", sb.ToString());
         }
 
@@ -519,7 +520,7 @@ namespace DispatchApp
                 {
                     if (res.result == "Failed")
                     {
-                        Trace.WriteLine(res.reason);
+                        Debug.WriteLine(res.reason);
                         return;
                     }
 
@@ -536,7 +537,7 @@ namespace DispatchApp
             }
             catch (System.Exception e)
             {
-                Trace.WriteLine(e);
+                Debug.WriteLine(e);
             }
         }
 
@@ -548,7 +549,7 @@ namespace DispatchApp
             {
                 if (res.result == "Failed")
                 {
-                    Trace.WriteLine(res.reason);
+                    Debug.WriteLine(res.reason);
                     return;
                 }
 
@@ -572,7 +573,7 @@ namespace DispatchApp
             {
                 if (res.result == "Failed")
                 {
-                    Trace.WriteLine(res.reason);
+                    Debug.WriteLine(res.reason);
                     return;
                 }
 
@@ -627,7 +628,7 @@ namespace DispatchApp
             {
                 if (res.result == "Failed")
                 {
-                    Trace.WriteLine(res.reason);
+                    Debug.WriteLine(res.reason);
                     return;
                 }
 
@@ -674,7 +675,7 @@ namespace DispatchApp
             {
                 if (res.result == "Failed")
                 {
-                    Trace.WriteLine(res.reason);
+                    Debug.WriteLine(res.reason);
                     return;
                 }
 
@@ -697,9 +698,9 @@ namespace DispatchApp
             {
                 if (res.result == "Failed")
                 {
-                    Trace.WriteLine(res.reason);
+                    Debug.WriteLine(res.reason);
                     return;
-                }                
+                }
 
                 // 在swList中查询对应的item
                 for (int i = 0; i < m_UserList.Count; i++)
@@ -708,14 +709,14 @@ namespace DispatchApp
                     if (m_UserList[i].name == userobj.name)
                     {
                         User item = m_UserList[i];
-                        item.name = userobj.name;
-                        item.password = userobj.password;
-                        item.privilege = userobj.privilege;
-                        item.description = userobj.description;
-                        item.role = userobj.role;
-                        item.index = userobj.index;
-                        item.status = userobj.status;
-                        item.desk = userobj.desk;                        
+                item.name = userobj.name;
+                item.password = userobj.password;
+                item.privilege = userobj.privilege;
+                item.description = userobj.description;
+                item.role = userobj.role;
+                item.index = userobj.index;
+                item.status = userobj.status;
+                item.desk = userobj.desk;
 
                         Trace.WriteLine("current selected name: " + item.name);
                         break;
@@ -790,7 +791,7 @@ namespace DispatchApp
         private void btn_sw_delete_Click(object sender, RoutedEventArgs e)
         {
             int index = tabControl_mgt.SelectedIndex;
-            Trace.WriteLine(index);
+            Debug.WriteLine(index);
             /* 删除软交换页面 */
             if (0 == index)
             {
@@ -831,7 +832,7 @@ namespace DispatchApp
             if (btn != null)
             {
                 Int16 index = Convert.ToInt16(btn.Tag);
-                Trace.WriteLine("current index: " + index);
+                Debug.WriteLine("current index: " + index);
             }
         }     
 
@@ -876,7 +877,7 @@ namespace DispatchApp
             if (btn != null)
             {
                 Int16 index = Convert.ToInt16(btn.Tag);
-                Trace.WriteLine("update index: " + btn.Tag);
+                Debug.WriteLine("update index: " + btn.Tag);
 
                 SWDEV tempDev = new SWDEV();
                 tempDev.sequence = GlobalFunAndVar.sequenceGenerator();
@@ -891,7 +892,7 @@ namespace DispatchApp
                 sb.Append("MAN#EDITSW#");
                 sb.Append(JsonConvert.SerializeObject(tempDev));
 
-                Trace.WriteLine("SEND: " + sb.ToString());
+                Debug.WriteLine("SEND: " + sb.ToString());
                 sendMsg(this, "net", sb.ToString());
                 sendMsg(this, "swdev", tempDev);
             }
@@ -946,7 +947,7 @@ namespace DispatchApp
                 //{
                 //    TextBlock objChk = (TextBlock)objElement;
                 //    //objChk.IsChecked = !objChk.IsChecked;
-                //    Console.WriteLine("MouseDown");
+                //    Debug.WriteLine("MouseDown");
                 //}
             }
         }
@@ -970,7 +971,7 @@ namespace DispatchApp
             {
                 // 获取当前的list序号
                 Int16 index = Convert.ToInt16(btn.Tag);
-                Trace.WriteLine("update index: " + btn.Tag);
+                Debug.WriteLine("update index: " + btn.Tag);
 
                 USEREDITITEM tempUser = new USEREDITITEM();
                 tempUser.sequence = GlobalFunAndVar.sequenceGenerator();
@@ -1001,7 +1002,7 @@ namespace DispatchApp
                 sb.Append("MAN#EDITUSER#");
                 sb.Append(JsonConvert.SerializeObject(tempUser));
 
-                Trace.WriteLine("SEND: " + sb.ToString());
+                Debug.WriteLine("SEND: " + sb.ToString());
                 sendMsg(this, "net", sb.ToString());
                 sendMsg(this, "user", uiUser);
                 /*

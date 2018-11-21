@@ -17,6 +17,9 @@ using WebSocket4Net;
 using System.Windows.Threading;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics;
+
+
 namespace DispatchApp
 {
     /// <summary>
@@ -72,7 +75,7 @@ namespace DispatchApp
                     }
                     else
                     {
-                        Console.WriteLine("App.isLogin");
+                        Debug.WriteLine("App.isLogin");
                     }
                     break;
                 case "Wrong":

@@ -22,6 +22,7 @@ using System.Runtime.InteropServices;
 using WebSocket4Net;
 using Newtonsoft.Json;
 
+
 namespace DispatchApp
 {
     public partial class CallManagerControl : UserControl
@@ -158,7 +159,7 @@ namespace DispatchApp
 
         //    // 根据信息进行页面布置
 
-        //    // Console.WriteLine("keyBoard" + getDesk);
+        //    // Debug.WriteLine("keyBoard" + getDesk);
         //}
         /// =====================
         /// 
@@ -170,13 +171,13 @@ namespace DispatchApp
         {
             AnsAddKeyBoard ans = JsonConvert.DeserializeObject<AnsAddKeyBoard>(date);
             getDesk.keyboardlist[keyBoardNum.index - 1].index = ans.index;
-            Console.WriteLine("添加应答：" + ans);
+            Debug.WriteLine("添加应答：" + ans);
         }
 
         private void AnsDelKeyBoard(string date)
         {
             AnsDelKeyBoard ans = JsonConvert.DeserializeObject<AnsDelKeyBoard>(date);
-            Console.WriteLine(ans);
+            Debug.WriteLine(ans);
         }
 
         /// <summary>
@@ -191,9 +192,9 @@ namespace DispatchApp
 
             /* 调度台查询到的信息 */
             getDesk = JsonConvert.DeserializeObject<GetDesk>(date); // 一个调度台
-            Console.WriteLine("********查询的调度台消息:" + date);
+            Debug.WriteLine("********查询的调度台消息:" + date);
             keyBoardNum.count = getDesk.keyboardlist.Count;         // 调度台里的调度键盘个数
-            Console.WriteLine("********查询的调度键盘个数:" + keyBoardNum.count);
+            Debug.WriteLine("********查询的调度键盘个数:" + keyBoardNum.count);
             // 遍历所有的调度键盘
             for (int idex = 0; idex < keyBoardNum.count; idex++)
             {
@@ -382,7 +383,7 @@ namespace DispatchApp
             }
             catch (System.Exception e)
             {
-                //Trace.WriteLine(e);
+                //Debug.WriteLine(e);
                 MessageBox.Show(e.Message + "c");
             }
         }
@@ -414,7 +415,7 @@ namespace DispatchApp
             }
             catch (System.Exception e)
             {
-                //Trace.WriteLine(e);
+                //Debug.WriteLine(e);
                 MessageBox.Show(e.Message + "d");
             }
         }
@@ -661,7 +662,8 @@ namespace DispatchApp
                             }
                                 
                         }
-                        Console.WriteLine("*********线路已添加ans=" + ans);
+                    
+                        Debug.WriteLine("*********线路已添加ans=" + ans);
 
                         // 对未添加的线路进行添加
                         if (ans == "true")
@@ -697,12 +699,11 @@ namespace DispatchApp
         {
             string sendMsg = JsonConvert.SerializeObject(getDesk);
             DeskImage(sendMsg);
-            Console.WriteLine("完成新界面" + sendMsg);
+            Debug.WriteLine("完成新界面" + sendMsg);
 
             sendMsg = JsonConvert.SerializeObject(getDesk.keyboardlist[keyBoardNum.index - 1]);
             string strMsg = "MAN#ADDKEYBOARD#" + sendMsg;
             mainWindow.ws.Send(strMsg);
-            //tabControl1.SelectedIndex = 2;  // 跳转到键盘的列表
             tabControl_mgt.SelectedIndex = 2;  // 跳转到键盘的树
         }
 

@@ -65,7 +65,7 @@ namespace DispatchApp
             sb.Append("MAN#ADDSW#");
             sb.Append(JsonConvert.SerializeObject(swdevobj));
 
-            Trace.WriteLine(sb.ToString());
+            Debug.WriteLine(sb.ToString());
 
             /* 发送网络信息 */
             if (msgevent != null)

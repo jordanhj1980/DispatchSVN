@@ -108,7 +108,7 @@ namespace DispatchApp
 
             m_ServerIP = ConfigurationManager.AppSettings["serverip"];
             m_ServerPort = ConfigurationManager.AppSettings["serverport"];
-            Console.WriteLine("serverip = " + m_ServerIP);
+            Debug.WriteLine("serverip = " + m_ServerIP);
 
             // 创建websocket
             string serveruri = "ws://" + m_ServerIP + ":" + m_ServerPort.Trim();
@@ -121,7 +121,7 @@ namespace DispatchApp
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                Debug.WriteLine(e.ToString());
             }
 
             // 初始化数据库handle
@@ -163,7 +163,7 @@ namespace DispatchApp
             //实际代码
             MessageReceivedEventArgs responseMsg = (MessageReceivedEventArgs)e; //接收服务端发来的消息
             string strMsg = responseMsg.Message;
-            Console.WriteLine("接收" + strMsg);
+            Debug.WriteLine("接收" + strMsg);
             this.Dispatcher.Invoke(new Action(delegate
             {
                 typedata(strMsg);
@@ -173,10 +173,10 @@ namespace DispatchApp
 
         private void typedata(Object date)
         {
-            //Console.WriteLine("typedata接收" + date);
+            //Debug.WriteLine("typedata接收" + date);
             // lets see the thread id 20181010 xf Add
             int id = Thread.CurrentThread.ManagedThreadId;
-            Trace.WriteLine("Run thread: " + id);
+            Debug.WriteLine("Run thread: " + id);
 
             // 实际代码
             List<GroupData> temp = new List<GroupData>();
@@ -206,7 +206,8 @@ namespace DispatchApp
         private void websocket_Closed(object sender, EventArgs e)
         {
             //websocket.Send("一个客户端 下线");
-            Console.WriteLine("client is closed!!!");
+            Debug.WriteLine("client is closed!!!");
+            //Debug.WriteLine("client is closed!!!");
             // 20181010 xf Add
             if (App.isLogin)
             {
@@ -234,7 +235,7 @@ namespace DispatchApp
             {
                 // let's see the thread id
                 int id = Thread.CurrentThread.ManagedThreadId;
-                Trace.WriteLine("mToolStripButtonThreads_Click thread: " + id);
+                Debug.WriteLine("mToolStripButtonThreads_Click thread: " + id);
 
                 logwin.Delog(msg);
 
@@ -242,12 +243,12 @@ namespace DispatchApp
                 if ("Admin" == logwin.logIn)
                 {
                     CtrlSwitch_callUser();
-                    Console.WriteLine("用户界面" + logwin.logIn);
+                    Debug.WriteLine("用户界面" + logwin.logIn);
                 }
                 else
                 {
                     CtrlSwitch_callManager();
-                    Console.WriteLine("用户界面" + logwin.logIn);
+                    Debug.WriteLine("用户界面" + logwin.logIn);
                 }
             }
             catch (System.Exception exc)
@@ -263,7 +264,7 @@ namespace DispatchApp
             {
                 // let's see the thread id
                 int id = Thread.CurrentThread.ManagedThreadId;
-                Trace.WriteLine("mToolStripButtonThreads_Click thread: " + id);
+                Debug.WriteLine("mToolStripButtonThreads_Click thread: " + id);
 
                 if (msg == "login")
                 {
@@ -471,12 +472,12 @@ namespace DispatchApp
 
         //private void CtrlSwitch_callUser()
         //{
-        //    Console.WriteLine("OK");
+        //    Debug.WriteLine("OK");
         //    call tellCall = new call() { fromid = serverCall, toid = clientCall };
         //    string strMsg = "CMD#Call#" + JsonConvert.SerializeObject(tellCall);
         //   // ws.Send(strMsg);
-        //    Console.WriteLine(strMsg);
-        //    Console.WriteLine("client is clicked!!!");
+        //    Debug.WriteLine(strMsg);
+        //    Debug.WriteLine("client is clicked!!!");
         //}
 
 

@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Windows.Media.Animation;   // animation
 
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace DispatchApp
 {
@@ -45,8 +46,8 @@ namespace DispatchApp
             /* 发送网络消息 */
             mainWindow.ws.Send(strMsg);
 
-            Console.WriteLine("send Hold Command");
-            Console.WriteLine(strMsg);
+            Debug.WriteLine("send Hold Command");
+            Debug.WriteLine(strMsg);
 
             /* 缩小显示键权按钮 */
             btn_shrink();
@@ -75,8 +76,8 @@ namespace DispatchApp
             /* 发送网络消息 */
             mainWindow.ws.Send(strMsg);
 
-            Console.WriteLine("send Unhold Command");
-            Console.WriteLine(strMsg);
+            Debug.WriteLine("send Unhold Command");
+            Debug.WriteLine(strMsg);
 
             btn_expand();
             btn_holdoff.Visibility = Visibility.Hidden;
@@ -161,8 +162,8 @@ namespace DispatchApp
             /* 发送网络消息 */
             mainWindow.ws.Send(strMsg);
 
-            Console.WriteLine("send Visitor Command");
-            Console.WriteLine(strMsg);
+            Debug.WriteLine("send Visitor Command");
+            Debug.WriteLine(strMsg);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using System.Configuration;
 
 using Npgsql;
+using System.Diagnostics;
 
 namespace DispatchApp
 {
@@ -84,7 +85,7 @@ namespace DispatchApp
 
         private void menuOpen_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("menu open clicked!");
+            Debug.WriteLine("menu open clicked!");
         }
 
     }

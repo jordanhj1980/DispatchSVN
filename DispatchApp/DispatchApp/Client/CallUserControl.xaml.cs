@@ -22,6 +22,7 @@ using WebSocket4Net;
 using Newtonsoft.Json;
 
 using System.Threading;
+using System.Diagnostics;
 
 // 终端用户界面
 namespace DispatchApp
@@ -210,7 +211,7 @@ namespace DispatchApp
             foreach (var item in queryResuilts)
             {
                 groupName.Add(item);
-                //Console.WriteLine(item);
+                //Debug.WriteLine(item);
             }
 
             // 组的总数
@@ -299,7 +300,7 @@ namespace DispatchApp
                     keycall.ImageSouresHandle += new KeyCall.ImageEventHandler(KeyClickEvent);
                     string strMsg = "CMD#GETSTATE#" + keycall.KeyText.Text;  //获取电话初始状态
                     mainWindow.ws.Send(strMsg);
-                    Console.WriteLine("查键权电话状态" + keycall.KeyText.Text);
+                    Debug.WriteLine("查键权电话状态" + keycall.KeyText.Text);
                     // 清除夜服设置
                     call tellCall = new call();
                     tellCall.fromid = PageKey[i].extid;
@@ -410,7 +411,7 @@ namespace DispatchApp
         private void ImageEvent(string word)
         {
             clientCall = word;
-            Console.WriteLine("clientCall" + clientCall);
+            Debug.WriteLine("clientCall" + clientCall);
 
             List<UserCall> firstPageUserCall = FindChirldHelper.FindVisualChild<UserCall>(this);
 
