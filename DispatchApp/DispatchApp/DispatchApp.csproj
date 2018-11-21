@@ -85,10 +85,8 @@
       <HintPath>..\packages\SuperSocket.ClientEngine.Core.0.10.0\lib\net40-client\SuperSocket.ClientEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SuperSocket.ClientEngine.Protocol">
-      <HintPath>..\..\DispatchApp\packages\SuperSocket.ClientEngine.Protocol.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -103,7 +101,7 @@
     <Reference Include="UIAutomationProvider" />
     <Reference Include="USERSkin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\DispatchApp\DispatchApp\bin\Debug\USERSkin.dll</HintPath>
+      <HintPath>..\..\USERSkin\bin\Release\USERSkin.dll</HintPath>
     </Reference>
     <Reference Include="WebSocket4Net, Version=0.15.2.11, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
       <HintPath>..\packages\WebSocket4Net.0.15.2\lib\net40\WebSocket4Net.dll</HintPath>

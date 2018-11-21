@@ -33,6 +33,8 @@ namespace DispatchApp
             {
                 e.Cancel = false;
                 saveUserOption();
+
+                Environment.Exit(0);
             }
             else
             {

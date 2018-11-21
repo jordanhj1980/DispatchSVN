@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Threading;
 using System.Windows.Forms;
+using System.Configuration;
 
 using Npgsql;
 
@@ -24,8 +25,6 @@ using System.Runtime.InteropServices;
 using WebSocket4Net;
 using Newtonsoft.Json;
 using System.Diagnostics;
-
-
 
 public struct GroupData
 {
@@ -56,6 +55,7 @@ namespace DispatchApp
         private LoginWindow logwin;
         public CallBoard callBoard;
         private string m_ServerIP;
+        private string m_ServerPort;
 
         /* 调度usercontrol */
         //UserControl1 callUserCtrl;//weituo 20181013
@@ -100,123 +100,22 @@ namespace DispatchApp
             ShowTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
             ShowTimer.Start();
 
-            // 创建websocket
-            string serverip = "192.168.2.101";
-            string serverport = "1020";
+            //INIHelper.WriteIni("DEV", "port", "80");
+            // 初始化IP
+            // m_ServerIP = Properties.Settings.Default.serverip;
 
-            string serveruri = "ws://" + serverip + ":" + serverport.Trim();
+            m_ServerIP = ConfigurationManager.AppSettings["serverip"];
+            m_ServerPort = ConfigurationManager.AppSettings["serverport"];
+            Console.WriteLine("serverip = " + m_ServerIP);
+
+            // 创建websocket
+            string serveruri = "ws://" + m_ServerIP + ":" + m_ServerPort.Trim();
             try
             {
                 ws = new WebSocket(serveruri);
                 ws.Opened += websocket_Opened;
                 ws.Closed += websocket_Closed;
-                ws.MessageReceived += websocket_MessageReceived;
-
-                //不联网时测试代码，联网注释
-                //List<GroupData> temp = new List<GroupData>();
-                //List<GroupData> DateJsonCon = new List<GroupData>();
-                //GroupData group1 = new GroupData() { groupid = "动力科室", extid = "204" };
-                //GroupData group2 = new GroupData() { groupid = "动力科室", extid = "205" };
-                //GroupData group3 = new GroupData() { groupid = "动力科室", extid = "206" };
-                //GroupData group4 = new GroupData() { groupid = "动力科室", extid = "207" };
-                //GroupData group5 = new GroupData() { groupid = "动力科室", extid = "208" };
-                //GroupData group6 = new GroupData() { groupid = "运输部门", extid = "209" };
-                //GroupData group7 = new GroupData() { groupid = "运输部门", extid = "210" };
-                //GroupData group8 = new GroupData() { groupid = "运输部门", extid = "211" };
-                //GroupData group9 = new GroupData() { groupid = "运输部门", extid = "220" };
-                //GroupData group10 = new GroupData() { groupid = "运输部门", extid = "213" };
-                //GroupData group11 = new GroupData() { groupid = "调度中心", extid = "214" };
-                //GroupData group12 = new GroupData() { groupid = "调度中心", extid = "215" };
-                //GroupData group13 = new GroupData() { groupid = "调度中心", extid = "211" };
-                //GroupData group14 = new GroupData() { groupid = "调度中心", extid = "217" };
-                //GroupData group15 = new GroupData() { groupid = "调度中心", extid = "218" };
-                //GroupData group16 = new GroupData() { groupid = "调度中心", extid = "219" };
-                //GroupData group17 = new GroupData() { groupid = "调度中心", extid = "220" };
-                //GroupData group18 = new GroupData() { groupid = "调度中心", extid = "221" };
-                //GroupData group19 = new GroupData() { groupid = "调度中心", extid = "222" };
-
-                //DateJsonCon.Add(group1);
-                //DateJsonCon.Add(group2);
-                //DateJsonCon.Add(group3);
-                //DateJsonCon.Add(group4);
-                //DateJsonCon.Add(group5);
-                //DateJsonCon.Add(group6);
-                //DateJsonCon.Add(group7);
-                //DateJsonCon.Add(group8);
-                //DateJsonCon.Add(group9);
-                //DateJsonCon.Add(group10);
-                //DateJsonCon.Add(group11);
-                //DateJsonCon.Add(group12);
-                //DateJsonCon.Add(group13);
-                //DateJsonCon.Add(group14);
-                //DateJsonCon.Add(group15);
-                //DateJsonCon.Add(group16);
-                //DateJsonCon.Add(group17);
-                //DateJsonCon.Add(group18);
-                //DateJsonCon.Add(group19);
-               
-
-                //string strMsg = "GroupExt#" + JsonConvert.SerializeObject(DateJsonCon);
-                //Console.WriteLine(group1.extid);
-                //Console.WriteLine(group2.extid);
-                //typedata(strMsg);
-                //string strword = "STATE#BUSY#220";
-                //typedata(strword);
-
-                //call ringcall = new call() { fromid = "215", toid = "214" };
-                //string strring = "STATE#RING#" + JsonConvert.SerializeObject(ringcall); ;
-                //typedata(strring);
-
-                //服务端调度台页面布置
-                //Member member1 = new Member() { callno = "212", type = "", name = "", level = "", description = "" };
-                //Member member2 = new Member() { callno = "213", type = "", name = "", level = "", description = "" };
-                //Member member3 = new Member() { callno = "214", type = "", name = "", level = "", description = "" };
-                //Member member4 = new Member() { callno = "215", type = "", name = "", level = "", description = "" };
-                //Member member5 = new Member() { callno = "220", type = "", name = "", level = "", description = "" };
-                //Member member6 = new Member() { callno = "221", type = "", name = "", level = "", description = "" };
-                //Member member7 = new Member() { callno = "204", type = "", name = "", level = "", description = "" };
-                //List<Member> memberList1 = new List<Member>();
-                //memberList1.Add(member1);
-                //memberList1.Add(member2);
-                //memberList1.Add(member3);
-                //memberList1.Add(member4);
-                //memberList1.Add(member5);
-                //memberList1.Add(member6);
-                //Group group1 = new Group() { index = "1", groupname = "test1", column = "1", description = "11111", memberlist = memberList1 };
-                //List<Member> memberList2 = new List<Member>();
-                //memberList2.Add(member5);
-                //memberList2.Add(member2);
-                //Group group2 = new Group() { index = "2", groupname = "test2", column = "2", description = "22222", memberlist = memberList2 };
-                //List<Group> groupList1 = new List<Group>();
-                //List<Group> groupList2 = new List<Group>();
-                //groupList1.Add(group1);
-                //groupList1.Add(group2);
-                //Hotline hotline1 = new Hotline() { callno = "204", type = "", name = "", level = "", description = "" };
-                //List<Hotline> hotlineList1 = new List<Hotline>();
-                //hotlineList1.Add(hotline1);
-                //KeyBoard keyBoard1 = new KeyBoard() { index = "1", name = "keyboard", mac = "", ip = "", grouplist = groupList1, hotlinelist = hotlineList1 };
-                //List<KeyBoard> keyBoardList = new List<KeyBoard>();
-                //keyBoardList.Add(keyBoard1);
-
-
-                //List<Member> memberList3 = new List<Member>();
-                //memberList3.Add(member7);
-                //memberList3.Add(member5);
-                //memberList3.Add(member2);
-                //Group group3 = new Group() { index = "3", groupname = "test3", column = "1", description = "33333", memberlist = memberList3 };
-                //groupList2.Add(group3);
-                //Hotline hotline2 = new Hotline() { callno = "204", type = "", name = "", level = "", description = "" };
-                //List<Hotline> hotlineList2 = new List<Hotline>();
-                //hotlineList1.Add(hotline2);
-                //KeyBoard keyBoard2 = new KeyBoard() { index = "2", name = "keyboard", mac = "", ip = "", grouplist = groupList2, hotlinelist = hotlineList2 };
-                //keyBoardList.Add(keyBoard2);
-
-                //GetDesk getDesk1 = new GetDesk() { sequence = "1", keyboardlist = keyBoardList };
-                //string strsing = "MAN#GETALLKEYBOARD#" + JsonConvert.SerializeObject(getDesk1); ;
-                //typedata(strsing);
-
-                // 联网注释
-                
+                ws.MessageReceived += websocket_MessageReceived;               
             }
             catch (Exception e)
             {
