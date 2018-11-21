@@ -34,7 +34,7 @@ namespace DispatchApp
     public class TestClassRoom
     {
         public string classroomId { get; set; }
-    }    
+    }
 
     /// <summary>
     /// Interaction logic for CallManagerControl.xaml
@@ -162,7 +162,7 @@ namespace DispatchApp
         }
        
         /// <summary>
-        /// 初始化软交换设备列表
+        /// 接收信息
         /// </summary>
         public void InitialSwitches()
         {
@@ -185,27 +185,6 @@ namespace DispatchApp
             userGrid.MouseDown += DataGrid_MouseDown;
         }
 
-        // =======================发送查询调度台信息指令====================
-        /// 20181024 xiaozi Add
-        /// <summary>
-        /// 查询调度键盘 20181024 xiaozi
-        /// </summary>
-        public void InitialDeskes()
-        {
-            // 查询调度键盘
-            SearchDesk searchDesk = new SearchDesk() { sequence = GlobalFunAndVar.sequenceGenerator() };
-            string strMsg = "MAN#GETALLKEYBOARD#" + JsonConvert.SerializeObject(searchDesk);
-            mainWindow.ws.Send(strMsg);
-            // 查询所有注册的电话
-            searchAllRegest.sequence = GlobalFunAndVar.sequenceGenerator();
-            string searchAllCallNum = "MAN#GETALLREGISTERDEV#" + JsonConvert.SerializeObject(searchAllRegest);
-            mainWindow.ws.Send(searchAllCallNum);
-            // 当前组的序列 和 组总数
-            keyBoardNum.groupNum.index = keyBoardNum.groupNum.count + 1;
-            keyBoardNum.groupNum.count++;           
-        }
-        //==================================================================
-
         /// =======================获取查询的调度台信息======================
         /// 20181024 xiaozi Add
         /// <summary>
@@ -225,12 +204,11 @@ namespace DispatchApp
 
             //判断命令字 
             CommondWord_State(type, data);
-            
         }
 
        
         /// <summary>
-        /// 
+        /// 获取管理界面状态
         /// </summary>
         /// <param name="state"></param>
         /// <param name="num"></param>
@@ -245,8 +223,6 @@ namespace DispatchApp
                     break;
                 case "GETALLKEYBOARD":
                     DeskImage(data);
-                    //AddDeskDecice(date);
-                    //AddDesk(date);
                     break;
                 case "DELALLKEYBOARD":
                     AnsDelKeyBoard(data);
@@ -276,347 +252,15 @@ namespace DispatchApp
                     editUser(data);
                     break;
                 case "GETALLREGISTERDEV":
-                    //ShowGroupMember(date);
+                    ShowGroupMember(data); 
                     showGroupDate = data;
                     break;
                 default: 
                     break;
             }              
         }
-
-
-        /// =====================
-        /// 用page实现分层功能
-        ///
-        //private void AddDesk(string date)
-        //{
-        //    // step1 调度台
-        //    getDesk = JsonConvert.DeserializeObject<GetDesk>(date);
-        //    // step2 一个调度台管理的所有调度键盘
-        //    int keyBoardCount = getDesk.keyboardlist.Count;
-        //    for (int idex = 0; idex < keyBoardCount; idex++)
-        //    {
-        //        KeyBoard keyBoard = getDesk.keyboardlist[idex]; // 一个调度键盘
-        //        //////////////////////////////////// 加入页面超链接
-        //        TextBlock textBlock = new TextBlock();
-        //        Hyperlink hyperlink = new Hyperlink();
-        //        Run run = new Run();
-        //        run.Text = keyBoard.name;
-        //        hyperlink.Inlines.Add(run);
-        //        textBlock.Inlines.Add(hyperlink);
-        //        hyperlink.Name = "name" + idex.ToString();
-        //        hyperlink.MouseEnter += new MouseEventHandler(link_MouseEnter);//为超链接文本添加鼠标进入触发事件
-        //        hyperlink.MouseLeave += new MouseEventHandler(link_MouseLeave);//为超链接文本添加鼠标离开触发时间                     
-        //        //NavigationService.GetNavigationService(this).Navigate(new PageKeyBoard(keyBoard));
-        //        hyperlink.Click += new RoutedEventHandler(link_Click);//为超链接文本添加鼠标单击事件   
-        //        boardStep1.Children.Add(textBlock);
-        //        ////////////////////////////////////
-
-        //        // step3 一个调度键盘下的所有组
-        //        int grouplistCount = keyBoard.grouplist.Count;
-        //        for (int inex = 0; inex < grouplistCount; inex++)
-        //        {
-        //            Group group = keyBoard.grouplist[inex];
-        //            // step4 一个组下的所有成员
-        //            int memberListCount = group.memberlist.Count;
-        //            for (int ikex = 0; ikex < memberListCount; ikex++)
-        //            {
-        //                Member member = group.memberlist[ikex];
-        //            }
-        //        }
-        //        // step3 一个调度键盘下的所有线路
-        //        int hotlinelistCount = keyBoard.hotlinelist.Count;
-        //        for (int iqex = 0; iqex < hotlinelistCount; iqex++)
-        //        {
-        //            Hotline holine = keyBoard.hotlinelist[iqex];
-        //        }
-        //    }
-        //}
-
-
-        //private void link_MouseEnter(object sender, MouseEventArgs e)
-        //{
-        //    Hyperlink link = (Hyperlink)e.OriginalSource;
-        //    link.Foreground = System.Windows.Media.Brushes.Red;
-        //}
-
-        //private void link_MouseLeave(object sender, MouseEventArgs e)
-        //{
-        //    Hyperlink link = (Hyperlink)e.OriginalSource;
-        //    link.Foreground = System.Windows.Media.Brushes.White;
-        //}
-
-        //private void link_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Hyperlink hyperlink = sender as Hyperlink;
-
-        //    for (int i=0; i<getDesk.keyboardlist.Count; i++)
-        //    {
-        //        if (hyperlink.Name==("name" + i.ToString()))
-        //        {
-        //            PageKeyBoard pageKeyBoard = new PageKeyBoard(getDesk.keyboardlist[i]);
-        //            keyBoardPage.Content = pageKeyBoard;
-        //        }
-        //    }
-         
-        //    //怎么切页面。
-        //    //NavigationService.GetNavigationService(this).Navigate(new PageKeyBoard(keyBoard));
-        //}
-      
-
-        /// <summary>
-        /// 用treeview实现分层功能
-        /// </summary>
-        /// <param name="date"></param>
-        //private void AddDeskDecice(string date)
-        //{
-        //    TreeView treeView = new TreeView();
-        //    List<propertyNodeItem> listItem = new List<propertyNodeItem>();
-        //    // step1 调度台
-        //    getDesk = JsonConvert.DeserializeObject<GetDesk>(date);
-
-        //    // step2 一个调度台管理的所有调度键盘
-        //    int keyBoardCount = getDesk.keyboardlist.Count;
-        //    for (int idex = 0; idex < keyBoardCount; idex++)
-        //    {
-        //        KeyBoard keyBoard = getDesk.keyboardlist[idex]; // 一个调度键盘
-
-        //        TabItem ti = new TabItem();
-        //        ti.Header = keyBoard.index;
-
-        //        List<TextBlock> dataGrid = new List<TextBlock>();
-        //        ti.Content = dataGrid;
-        //        //KeyBoardTab.Items.Add(ti);
-
-        //        propertyNodeItem keyBoardNode = new propertyNodeItem() { DisplayName = keyBoard.name };
-        //        listItem.Add(keyBoardNode);
-
-        //        propertyNodeItem keyBoardNameNode = new propertyNodeItem() { DisplayName = "MAC:" + keyBoard.name };
-        //        propertyNodeItem keyBoardIpNode = new propertyNodeItem() { DisplayName = "IP:" + keyBoard.ip };
-        //        propertyNodeItem keyBoardMacNode = new propertyNodeItem() { DisplayName = "MAC:" + keyBoard.mac };
-        //        propertyNodeItem keyBoardSeqNode = new propertyNodeItem() { DisplayName = "Sequence:" + keyBoard.sequence };
-        //        propertyNodeItem keyBoardGroNode = new propertyNodeItem() { DisplayName = "Grouplist:" };
-        //        propertyNodeItem keyBoardHotNode = new propertyNodeItem() { DisplayName = "Hotlinelist:" };
-        //        keyBoardNode.Children.Add(keyBoardNameNode);
-        //        keyBoardNode.Children.Add(keyBoardIpNode);
-        //        keyBoardNode.Children.Add(keyBoardMacNode);
-        //        keyBoardNode.Children.Add(keyBoardSeqNode);
-        //        keyBoardNode.Children.Add(keyBoardGroNode);
-        //        keyBoardNode.Children.Add(keyBoardHotNode);
-
-        //        // step3 一个调度键盘下的所有组
-        //        int grouplistCount = keyBoard.grouplist.Count;
-        //        for (int inex = 0; inex < grouplistCount; inex++)
-        //        {
-        //            Group group = keyBoard.grouplist[inex];
-
-        //            propertyNodeItem groupNode = new propertyNodeItem() { DisplayName = "Group:" + group.index };
-        //            keyBoardGroNode.Children.Add(groupNode);
-
-        //            propertyNodeItem groupIndexNode = new propertyNodeItem() { DisplayName = "Index:" + group.index };
-        //            propertyNodeItem groupDesNode = new propertyNodeItem() { DisplayName = "Description:" + group.description };
-        //            propertyNodeItem groupColNode = new propertyNodeItem() { DisplayName = "Column:" + group.column };
-        //            propertyNodeItem groupNamNode = new propertyNodeItem() { DisplayName = "Groupname:" + group.groupname };
-        //            propertyNodeItem groupMemNode = new propertyNodeItem() { DisplayName = "memberlist:" };
-        //            groupNode.Children.Add(groupIndexNode);
-        //            groupNode.Children.Add(groupDesNode);
-        //            groupNode.Children.Add(groupColNode);
-        //            groupNode.Children.Add(groupNamNode);
-        //            groupNode.Children.Add(groupMemNode);
-
-        //            // step4 一个组下的所有成员
-        //            int memberListCount = group.memberlist.Count;
-        //            for (int ikex = 0; ikex < memberListCount; ikex++)
-        //            {
-        //                Member member = group.memberlist[ikex];
-        //                propertyNodeItem memberNode = new propertyNodeItem() { DisplayName = "Member:" + member.callno };
-        //                groupMemNode.Children.Add(memberNode);
-
-        //                propertyNodeItem memberCalNode = new propertyNodeItem() { DisplayName = "CallNum:" + member.callno };
-        //                propertyNodeItem memberDesNode = new propertyNodeItem() { DisplayName = "Description:" + member.description };
-        //                propertyNodeItem memberLevelNode = new propertyNodeItem() { DisplayName = "Level:" + member.level };
-        //                propertyNodeItem memberNameNode = new propertyNodeItem() { DisplayName = "Name:" + member.name };
-        //                propertyNodeItem memberTypeNode = new propertyNodeItem() { DisplayName = "Type:" + member.type };
-        //                memberNode.Children.Add(memberCalNode);
-        //                memberNode.Children.Add(memberDesNode);
-        //                memberNode.Children.Add(memberLevelNode);
-        //                memberNode.Children.Add(memberNameNode);
-        //                memberNode.Children.Add(memberTypeNode);
-        //            }
-
-        //        }
-        //        // step3 一个调度键盘下的所有线路
-        //        int hotlinelistCount = keyBoard.hotlinelist.Count;
-        //        for (int iqex = 0; iqex < hotlinelistCount; iqex++)
-        //        {
-        //            Hotline holine = keyBoard.hotlinelist[iqex];
-
-        //            propertyNodeItem holineNode = new propertyNodeItem() { DisplayName = holine.callno };
-        //            keyBoardHotNode.Children.Add(holineNode);
-
-        //            propertyNodeItem holineCallNode = new propertyNodeItem() { DisplayName = "CallNum:" + holine.callno };
-        //            propertyNodeItem holineDesNode = new propertyNodeItem() { DisplayName = "Description:" + holine.description };
-        //            propertyNodeItem holineLevelNode = new propertyNodeItem() { DisplayName = "Level:" + holine.level };
-        //            propertyNodeItem holineTypeNode = new propertyNodeItem() { DisplayName = "Name:" + holine.type };
-        //            propertyNodeItem holineNameNode = new propertyNodeItem() { DisplayName = "Type:" + holine.name };
-        //            holineNode.Children.Add(holineCallNode);
-        //            holineNode.Children.Add(holineDesNode);
-        //            holineNode.Children.Add(holineLevelNode);
-        //            holineNode.Children.Add(holineTypeNode);
-        //            holineNode.Children.Add(holineNameNode);
-        //        }
-        //    }
-        //    this.tvProperty.ItemsSource = listItem;
-
-        //    // 根据信息进行页面布置
-
-        //    // Console.WriteLine("keyBoard" + getDesk);
-        //}
-        /// =====================
+        /// ==============================================================
         /// 
-
-        /// <summary>
-        /// 添加调度键盘的应答
-        /// </summary>
-        private void AnsAddKeyBoard(string date)
-        {
-            AnsAddKeyBoard ans = JsonConvert.DeserializeObject<AnsAddKeyBoard>(date);
-            Console.WriteLine(ans);
-        }
-
-        private void AnsDelKeyBoard(string date)
-        {
-            AnsDelKeyBoard ans = JsonConvert.DeserializeObject<AnsDelKeyBoard>(date);
-        }
-
-        public GetDesk getDesk = new GetDesk();
-        public KeyBoardNum keyBoardNum = new KeyBoardNum();
-        private void DeskImage(string date)
-        {
-            // 一棵树
-            List<propertyNodeItem> listItem = new List<propertyNodeItem>();
-
-            /* 调度台查询到的信息 */ 
-            getDesk = JsonConvert.DeserializeObject<GetDesk>(date); // 一个调度台
-            keyBoardNum.count = getDesk.keyboardlist.Count;         // 调度台里的调度键盘个数
-
-            // 遍历所有的调度键盘
-            for (int idex = 0; idex < keyBoardNum.count; idex++)
-            {
-                // 第一级树枝名称
-                KeyBoard keyBoard = getDesk.keyboardlist[idex];
-                propertyNodeItem keyBoardNode = new propertyNodeItem() { DisplayName = keyBoard.name, Tag = idex + 1};
-                // 第一级树枝加入树中
-                listItem.Add(keyBoardNode);
-            }
-            this.tvProperty.ItemsSource = listItem;
-        }
-
-        private void TreeView_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            TextBlock newTextBlock = sender as TextBlock;
-
-            Int16 index = Convert.ToInt16(newTextBlock.Tag); // 查找到该键盘的序号
-            keyBoardNum.index = index;
-            keyBoardNum.groupNum.count = getDesk.keyboardlist[keyBoardNum.index - 1].grouplist.Count;       // 该键盘下组员个数
-            keyBoardNum.hotlineNum.count = getDesk.keyboardlist[keyBoardNum.index - 1].hotlinelist.Count;   // 该键盘下线路个数
-
-            // 该键盘基础信息
-            biaoshitext.Text = getDesk.keyboardlist[keyBoardNum.index - 1].sequence;
-            xulietext.Text = getDesk.keyboardlist[keyBoardNum.index - 1].index;
-            IPtext.Text = getDesk.keyboardlist[keyBoardNum.index-1].ip;
-            MACtext.Text = getDesk.keyboardlist[keyBoardNum.index-1].mac;
-
-            GroupShowGrid.ItemsSource = getDesk.keyboardlist[keyBoardNum.index-1].grouplist;
-            LineShowGrid.ItemsSource = getDesk.keyboardlist[keyBoardNum.index - 1].hotlinelist;
-
-            // 初始化该键盘组内信息
-            List<DeskDevice> deskList = new List<DeskDevice>();
-            for (int i = 0; i < keyBoardNum.groupNum.count; i++)
-            {
-                DeskDevice tmp = new DeskDevice();
-                tmp.index = i + 1;
-                tmp.groupname = getDesk.keyboardlist[keyBoardNum.index - 1].grouplist[i].groupname;
-                tmp.memberlist = getDesk.keyboardlist[keyBoardNum.index - 1].grouplist[i].memberlist;
-                tmp.description = getDesk.keyboardlist[keyBoardNum.index - 1].grouplist[i].description;
-                deskList.Add(tmp);
-            }
-            GroupShowGrid.ItemsSource = deskList;
-
-            // 初始化该线路信息
-            List<DeskDevice> deskLineList = new List<DeskDevice>();
-            for (int i = 0; i < keyBoardNum.hotlineNum.count; i++)
-            {
-                DeskDevice tmp = new DeskDevice();
-                tmp.index = i + 1;
-                tmp.name = getDesk.keyboardlist[keyBoardNum.index - 1].hotlinelist[i].name;
-                tmp.callno = getDesk.keyboardlist[keyBoardNum.index - 1].hotlinelist[i].callno;
-                tmp.description = getDesk.keyboardlist[keyBoardNum.index - 1].hotlinelist[i].description;
-                deskLineList.Add(tmp);
-            }
-            LineShowGrid.ItemsSource = deskList;
-            ShowLineMember(showGroupDate);
-
-            Console.WriteLine("打开某个键盘" + getDesk);
-
-            tabControl_mgt.SelectedIndex = 3;  // 跳转到键盘的详细信息
-        }
-        //==================================================================
-        private void NewAddGroupShow()
-        {
-            RegesterStack.Items.Clear();
-            AddCallStack.Items.Clear();
-            newGroupNameText.Text = "";
-            newGroupIdexText.Text = "";
-            newGroupDesText.Text = "";
-        }
-
-        private void ClearKeyBoardShow()
-        {
-            // 调度键盘基本信息
-            biaoshitext.Text = "";
-            xulietext.Text = "";
-            IPtext.Text = "";
-            MACtext.Text = "";
-            queding.Background = Brushes.Wheat;
-            // 分组信息
-            GroupShowGrid.ItemsSource = "";
-            NewAddGroupShow();
-            // 线路信息
-            ShowLineMember(showGroupDate);
-            LineShowGrid.ItemsSource = "";
-        }
-        /// ============================初始化界面信息======================
-        
-        //==================================================================
-
-
-        /// ====================增加删除修改的调度键盘信息==================
-        /// <summary>
-        /// 添加调度键盘的按键，跳转到添加界面
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btn_desk_add_Click(object sender, RoutedEventArgs e)
-        {
-            KeyBoard newKeyBoard = new KeyBoard();
-            getDesk.keyboardlist.Add(newKeyBoard);      // 新键盘加入调度台中
-            keyBoardNum.index = keyBoardNum.count + 1;  // 当前所在键盘的序号
-            keyBoardNum.count++;                        // 当前键盘的总和
-            keyBoardNum.groupNum.count = 0;             // 当前所在键盘组的总数
-            keyBoardNum.groupNum.index = 0;             // 当前所在键盘组的序号
-            keyBoardNum.hotlineNum.count = 0;           // 当前所在键盘线路的总数
-            keyBoardNum.hotlineNum.index = 0;           // 当前所在键盘线路的序号
-
-            // 初始化分组和线路参数
-            getDesk.keyboardlist[keyBoardNum.index-1].grouplist = new List<Group>();
-            getDesk.keyboardlist[keyBoardNum.index-1].hotlinelist = new List<Hotline>();
-            // 新键盘信息为空
-            ClearKeyBoardShow();
-            // 跳到新键盘详细信息界面
-            tabControl_mgt.SelectedIndex = 3;
-        }
-
         /// <summary>
         /// 删除调度键盘
         /// </summary>
@@ -645,397 +289,6 @@ namespace DispatchApp
             }
         }
 
-        /// <summary>
-        /// 新调度键盘基础信息，确认键
-        /// </summary>
-        
-        private void MakeSure(object sender, RoutedEventArgs e)
-        {
-            queding.Background = Brushes.Red;
-            getDesk.keyboardlist[keyBoardNum.index - 1].name = mingchengtext.Text;
-            getDesk.keyboardlist[keyBoardNum.index - 1].sequence = biaoshitext.Text;
-            getDesk.keyboardlist[keyBoardNum.index - 1].index = xulietext.Text;
-            getDesk.keyboardlist[keyBoardNum.index - 1].ip = IPtext.Text;
-            getDesk.keyboardlist[keyBoardNum.index - 1].mac = MACtext.Text;
-        }
-
-        /// <summary>
-        /// 分组添加键
-        /// </summary>
-        public SearcheAllRegister searchAllRegest = new SearcheAllRegister();
-        private void btn_group_add_Click(object sender, RoutedEventArgs e)
-        {                      
-            // 加新组
-            Group newGroup = new Group();
-            getDesk.keyboardlist[keyBoardNum.index - 1].grouplist.Add(newGroup);
-            keyBoardNum.groupNum.index = keyBoardNum.groupNum.count + 1;
-            keyBoardNum.groupNum.count++;
-
-            // 添加新组前添加界面信息清零
-            NewAddGroupShow();
-            // 添加界面显示所有可添加号码
-            ShowGroupMember(showGroupDate);
-            // 跳转到添加界面
-            GroupTabCtrl.SelectedIndex = 1;
-        }
-
-        /// <summary>
-        /// 添加分组左侧页面
-        /// </summary>
-        //public List<DevList> resAddDevList = new List<DevList>();
-        public GetAllRegister getAllRegister = new GetAllRegister();
-        private void ShowGroupMember(String date)
-        {
-            try
-            {
-                /* 比较临时存储的obj的sequence是否一致 */
-                getAllRegister = JsonConvert.DeserializeObject<GetAllRegister>(date);   // 查到的所有注册电话
-                if (getAllRegister.sequence == searchAllRegest.sequence)
-                {
-                    RegesterStack.Items.Clear();
-                    // 将查到的注册电话添加到界面中
-                    List<DevList> resDevList = new List<DevList>();
-                    resDevList = getAllRegister.devlist;
-                    int devNum = resDevList.Count;
-                    for (int idex = 0; idex < devNum; idex++)
-                    {
-                        CheckBox checkBox = new CheckBox();
-                        checkBox.Style = this.FindResource("MyCheckBox") as Style;
-                        checkBox.Content = resDevList[idex].callno;
-                        RegesterStack.Items.Add(checkBox);
-                    } 
-                }
-            }
-            catch (System.Exception e)
-            {
-                //Trace.WriteLine(e);
-                MessageBox.Show(e.Message + "c");
-            }
-        }
-
-        private void ShowLineMember(String date)
-        {
-            try
-            {
-                /* 比较临时存储的obj的sequence是否一致 */
-                getAllRegister = JsonConvert.DeserializeObject<GetAllRegister>(date);   // 查到的所有注册电话
-                if (getAllRegister.sequence == searchAllRegest.sequence)
-                {
-                    CallLine.Items.Clear();
-                    // 将查到的注册电话添加到界面中
-                    List<DevList> resDevList = new List<DevList>();
-                    resDevList = getAllRegister.devlist;
-                    int devNum = resDevList.Count;
-                    for (int idex = 0; idex < devNum; idex++)
-                    {
-                        CheckBox checkBox = new CheckBox();
-                        checkBox.Style = this.FindResource("MyCheckBox") as Style;
-                        checkBox.Content = resDevList[idex].callno;
-                        CallLine.Items.Add(checkBox);
-                    } 
-                }
-            }
-            catch (System.Exception e)
-            {
-                //Trace.WriteLine(e);
-                MessageBox.Show(e.Message + "d");
-            }
-        }
-
-        
-
-        /// <summary>
-        /// 添加注册设备
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TurnRight(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (getAllRegister.sequence == searchAllRegest.sequence)
-                {
-                    int itemNum = RegesterStack.Items.Count;
-                    for (int idex = 0; idex < itemNum; )
-                    {
-                        CheckBox item = RegesterStack.Items[idex] as CheckBox;
-                        item.Style = this.FindResource("MyCheckBox") as Style;
-                        if (item.IsChecked == true)
-                        {
-                            //RegesterStack.Items.Remove(item);
-                            CheckBox itemNow = new CheckBox();
-                            itemNow.Style = this.FindResource("MyCheckBox") as Style;
-                            itemNow.Content = item.Content;
-                            AddCallStack.Items.Add(itemNow);
-                            //DevList devIrem = getAllRegister.devlist.Find((DevList s) => s.callno == item.Content.ToString());
-                            //resAddDevList.Add(devIrem);
-                            //itemNum--;
-                            idex++;
-                        }
-                        else 
-                        {
-                            idex++;
-                        }
-                    }
-                }
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.Message + "e");
-            }
-
-        }
-
-        /// <summary>
-        /// 删除选定的注册设备
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TurnLeft(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (getAllRegister.sequence == searchAllRegest.sequence)
-                {
-                    int itemNum = AddCallStack.Items.Count;
-                    for (int idex = 0; idex < itemNum; )
-                    {
-                        CheckBox item = AddCallStack.Items[idex] as CheckBox;
-                        item.Style = this.FindResource("MyCheckBox") as Style;
-                        if (item.IsChecked == true)
-                        {
-                            AddCallStack.Items.Remove(item);
-                            foreach (CheckBox itemBox in RegesterStack.Items)
-                            {
-                                if (itemBox.Content == item.Content)
-                                {
-                                    itemBox.IsChecked = false;
-                                }
-                            }
-                            string checkName = "name" + item.Content.ToString();
-                            //DevList devIrem = getAllRegister.devlist.Find((DevList s) => s.callno == item.Content.ToString());
-                            //resAddDevList.Remove(devIrem);
-                            itemNum--;
-                        }
-                        else
-                        {
-                            idex++;
-                        }
-                    }
-                }
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.Message + "f");
-            }
-
-        }
-
-        //public List<Group> newGroupList = new List<Group>();
-        //public List<Member> newMemberList = new List<Member>();
-        private void GroupSure(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (getAllRegister.sequence == searchAllRegest.sequence)
-                {
-                    // 组基本信息
-                    getDesk.keyboardlist[keyBoardNum.index - 1].grouplist[keyBoardNum.groupNum.index-1].groupname = newGroupNameText.Text;
-                    getDesk.keyboardlist[keyBoardNum.index - 1].grouplist[keyBoardNum.groupNum.index - 1].column = newGroupIdexText.Text;
-                    getDesk.keyboardlist[keyBoardNum.index - 1].grouplist[keyBoardNum.groupNum.index - 1].description = newGroupDesText.Text;
-                    getDesk.keyboardlist[keyBoardNum.index - 1].grouplist[keyBoardNum.groupNum.index - 1].memberlist = new List<Member>();
-                    
-                    // 组含有的电话号码个数
-                    keyBoardNum.groupNum.memberNum.count = AddCallStack.Items.Count;
-
-                    // 将分组号码加入组中
-                    foreach (DevList item in getAllRegister.devlist)
-                    {
-                        foreach (CheckBox chek in AddCallStack.Items)
-                        {
-                            if (item.callno == chek.Content.ToString())
-                            {
-                                Member newMember = new Member();
-                                newMember.callno = item.callno;
-                                newMember.description = item.callno;
-                                newMember.level = item.level;
-                                newMember.name = item.name;
-                                newMember.type = item.type;
-                                getDesk.keyboardlist[keyBoardNum.index - 1].grouplist[keyBoardNum.groupNum.index - 1].memberlist.Add(newMember);
-                            }
-                        }
-                    }
-
-                    // 该键盘组内信息
-                    List<DeskDevice> deskList = new List<DeskDevice>();
-                    for (int i = 0; i < keyBoardNum.groupNum.count; i++)
-                    {
-                        DeskDevice tmp = new DeskDevice();
-                        tmp.index = i + 1;
-                        tmp.groupname = getDesk.keyboardlist[keyBoardNum.index - 1].grouplist[i].groupname;
-                        tmp.memberlist = getDesk.keyboardlist[keyBoardNum.index - 1].grouplist[i].memberlist;
-                        tmp.description = getDesk.keyboardlist[keyBoardNum.index - 1].grouplist[i].description;
-                        deskList.Add(tmp);
-                    }
-                    GroupShowGrid.ItemsSource = deskList;
-
-
-                    // 跳转回之前的页面
-                    GroupTabCtrl.SelectedIndex = 0;
-                }
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.Message + "g");
-            }
-        }
-
-        private void Btn_Bianji_Click(object sender, RoutedEventArgs e)
-        {
-            // 跳转到编辑页面
-            Button btn = sender as Button;
-            if (btn != null)
-            {
-                Int16 index = Convert.ToInt16(btn.Tag); // 查找到该组的序号
-                keyBoardNum.groupNum.index = index;
-               
-                // 布置编辑界面
-                newGroupNameText.Text = getDesk.keyboardlist[keyBoardNum.index - 1].grouplist[keyBoardNum.groupNum.index - 1].groupname;
-                newGroupIdexText.Text = getDesk.keyboardlist[keyBoardNum.index - 1].grouplist[keyBoardNum.groupNum.index - 1].column;
-                newGroupDesText.Text = getDesk.keyboardlist[keyBoardNum.index - 1].grouplist[keyBoardNum.groupNum.index - 1].description;
-                List<Member> memberList = new List<Member>();
-                memberList = getDesk.keyboardlist[keyBoardNum.index - 1].grouplist[keyBoardNum.groupNum.index - 1].memberlist;// 选中的成员
-
-                int mumberNum = memberList.Count;                           
-                AddCallStack.Items.Clear();
-                // 选中的成员加入右侧栏中
-                for (int idex = 0; idex < mumberNum; idex++)
-                {
-                    CheckBox itemNow = new CheckBox();
-                    itemNow.Style = this.FindResource("MyCheckBox") as Style;
-                    itemNow.Content = memberList[idex].callno;
-                    itemNow.IsChecked = true;
-                    AddCallStack.Items.Add(itemNow);
-                }
-                
-                // 左侧栏中原始查询的数据
-                foreach (CheckBox item in RegesterStack.Items)              
-                {
-                    foreach (CheckBox itemAdd in AddCallStack.Items)
-                    {
-                        if (item.Content == itemAdd.Content)
-                        {
-                            if (item.IsChecked != true)
-                            {
-                                item.IsChecked = true;
-                            }
-                        }
-                        else
-                        {
-                            if (item.IsChecked == true)
-                            {
-                                item.IsChecked = false;
-                            }
-                        }
-                    }
-                }
-            }
-            // 跳转到修改页面
-            GroupTabCtrl.SelectedIndex = 1;
-        }
-
-        private void btn_group_delete_Click(object sender, RoutedEventArgs e)
-        {
-            if (Brushes.Red == queding.Background)
-            {
-                
-            }
-
-        }
-
-
-
-
-        private void LineAdd(object sender, RoutedEventArgs e)
-        {
-            // 跳转到编辑页面
-            Button btn = sender as Button;
-            if (btn != null)
-            {
-                getDesk.keyboardlist[keyBoardNum.index - 1].hotlinelist = new List<Hotline>();
-                keyBoardNum.hotlineNum.index = 0;
-                keyBoardNum.hotlineNum.count = 0;
-                //keyBoardNum.hotlineNum.index = keyBoardNum.hotlineNum.count + 1;
-                //keyBoardNum.hotlineNum.count++;
-                //Int16 index = Convert.ToInt16(btn.Tag); // 查找到该组的序号
-                //keyBoardNum.hotlineNum.index = index;
-
-                // 页面显示
-                int idex = 0;
-                List<DeskDevice> deskList = new List<DeskDevice>();
-                foreach (CheckBox item in CallLine.Items)
-                {
-                    if (item.IsChecked == true)
-                    {
-                        DeskDevice tmp = new DeskDevice();
-                        tmp.index = idex + 1;
-                        tmp.name = getAllRegister.devlist[idex].name;
-                        tmp.callno = getAllRegister.devlist[idex].callno;
-                        tmp.description = getAllRegister.devlist[idex].description;
-                        deskList.Add(tmp);
-                    }
-                    idex++;
-                }
-                LineShowGrid.ItemsSource = deskList;
-
-                // 键盘信息改变
-                foreach (DevList item in getAllRegister.devlist)
-                {
-                    foreach (CheckBox chek in CallLine.Items)
-                    {
-                        if (item.callno == chek.Content.ToString())
-                        {
-                            if (chek.IsChecked == true)
-                            { 
-                                keyBoardNum.hotlineNum.index = keyBoardNum.hotlineNum.count + 1;
-                                keyBoardNum.hotlineNum.count++;
-                                Hotline newMember = new Hotline();
-                                newMember.callno = item.callno;
-                                newMember.description = item.callno;
-                                newMember.level = item.level;
-                                newMember.name = item.name;
-                                newMember.type = item.type;
-                                getDesk.keyboardlist[keyBoardNum.index - 1].hotlinelist.Add(newMember);
-                                //getDesk.keyboardlist[keyBoardNum.index - 1].hotlinelist[keyBoardNum.hotlineNum.index - 1] = newMember;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        private void FinishDeskChange(object sender, RoutedEventArgs e)
-        {
-            string sendMsg = JsonConvert.SerializeObject(getDesk);
-            DeskImage(sendMsg);
-            Console.WriteLine("完成新界面" + sendMsg);
-
-            string strMsg = "MAN#ADDKEYBOARD#" + sendMsg;
-            mainWindow.ws.Send(strMsg);
-            //tabControl1.SelectedIndex = 2;  // 跳转到键盘的列表
-            tabControl_mgt.SelectedIndex = 2;  // 跳转到键盘的树
-        }
-
-        private void btn_hotline_delete_Click(object sender, RoutedEventArgs e)
-        {
-            
-
-        }
-
-        //==================================================================
-
-
-
 
         public CreateDeskWindow myprofile = new CreateDeskWindow();
         private void GetDeskMouseDown(object sender, MouseButtonEventArgs e)
@@ -1047,8 +300,6 @@ namespace DispatchApp
                 //FrameworkElement el = switchGrid.Columns[0].GetCellContent(se);
                 //DataGridRow row = DataGridRow.GetRowContainingElement(el.Parent as FrameworkElement);
                 //row.DetailsVisibility = row.DetailsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-
-                
 
                 //MyProfile myprofile = new MyProfile();
                 //myprofile.ShowDialog();
@@ -1145,7 +396,6 @@ namespace DispatchApp
         public void queryUSER()
         {
             /* 向服务器请求列表 */
-
             string sequence = GlobalFunAndVar.sequenceGenerator();
             StringBuilder sb = new StringBuilder(100);
 
@@ -1172,6 +422,40 @@ namespace DispatchApp
             /* 临时保存用户名 */
             userobj.name = name;
         }
+
+        // 查询调度键盘 未用
+        public void queryDesk()
+        {
+            SearchDesk searchDesk = new SearchDesk();
+            searchDesk.sequence = GlobalFunAndVar.sequenceGenerator();
+            StringBuilder sb = new StringBuilder(100);
+            sb.Append("MAN#GETALLKEYBOARD#");
+            sb.Append(JsonConvert.SerializeObject(searchDesk));
+
+            Trace.WriteLine("SEND：" + sb.ToString());
+            sendMsg(this, "net", sb.ToString());
+
+        }
+
+        /// <summary>
+        /// 向服务器请求删除第index调度键盘
+        /// </summary>
+        /// <param name="index"></param>
+        public void delDeskReq(string index)
+        {
+            DelKeyBoard req = new DelKeyBoard();
+            req.index = index;
+            req.sequence = GlobalFunAndVar.sequenceGenerator();
+            StringBuilder sb = new StringBuilder(100);
+            sb.Append("MAN#DELKEYBOARD#");
+            sb.Append(JsonConvert.SerializeObject(req));
+
+            Trace.WriteLine("SEND：" + sb.ToString());
+            sendMsg(this, "net", sb.ToString());
+        }
+
+
+
 
         public void recvNetMsg(string msg)
         {
@@ -1291,7 +575,7 @@ namespace DispatchApp
                 {
                     // 根据index来判断
                     if (swList[i].index == swdevobj.index)
-                    {
+                        {
                         SWDEV dev = swList[i];
                         // index 不允许更新
                         dev.name = swdevobj.name;
@@ -1515,6 +799,16 @@ namespace DispatchApp
                 cuw.msgevent += new CreateUserWindow.CWHandler(sendMsg);
                 cuw.ShowDialog();
             }
+            else
+            {
+                desk_add_Click();
+                //tabControl_mgt.SelectedIndex = index;
+            }
+            //else
+            //{
+            //    CreateDeskWindow cdw = new CreateDeskWindow();
+            //    cdw.ShowDialog();
+            //}
         }
 
         /* 响应删除按钮事件  */
@@ -1540,6 +834,11 @@ namespace DispatchApp
                 {
                     delUserReq(m_UserList[i].name);
                 }
+            }
+            else
+            {
+                delDeskReq(getDesk.keyboardlist[keyBoardNum.index - 1].index.ToString());
+                desk_delete_Click();
             }
         }
         
@@ -1675,7 +974,7 @@ namespace DispatchApp
                 //    Console.WriteLine("MouseDown");
                 //}
             }
-        }        
+        }
 #endregion
 
         // 查看用户信息

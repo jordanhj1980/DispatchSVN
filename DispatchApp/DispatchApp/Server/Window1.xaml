@@ -2,8 +2,10 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          WindowStyle="None" AllowsTransparency="True"
-        Title="Window1" Height="550" Width="394">
+        Title="Window1" Height="697" Width="1557">
     <Grid>
+
+     
         <!--<Grid>
             <Grid.Background>
                 <ImageBrush ImageSource="/DispatchApp;component/Resources/login.png"/>

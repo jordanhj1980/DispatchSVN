@@ -20,7 +20,7 @@ namespace DispatchApp
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string str_value = value.ToString();
-            Brush bru_return = (Brush)new BrushConverter().ConvertFromString("#585F80");
+            Brush bru_return = (Brush)new BrushConverter().ConvertFromString("#4D4D4F");
 
             switch (str_value)
             {
@@ -42,7 +42,7 @@ namespace DispatchApp
                     bru_return = ((Brush)new BrushConverter().ConvertFromString("#E60416"));
                     break;
                 case "OFFLINE":
-                    bru_return = ((Brush)new BrushConverter().ConvertFromString("#4D4D4F"));
+                    bru_return = ((Brush)new BrushConverter().ConvertFromString("#4D4D4F"));//
                     break;
                 default: break;
             }

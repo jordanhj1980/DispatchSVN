@@ -22,6 +22,7 @@ namespace DispatchApp
     public struct AnsAddKeyBoard
     {
         public string sequence;
+        public string index;
         public string result;
         public string reason;
     }
@@ -32,6 +33,11 @@ namespace DispatchApp
     /// <summary>
     /// 删除调度键盘的应答
     /// </summary>
+    public struct DelKeyBoard
+    {
+        public string sequence;
+        public string index;
+    }
     public struct AnsDelKeyBoard
     {
         public string sequence;
@@ -69,7 +75,7 @@ namespace DispatchApp
     /// <summary>
     /// 线路（键权电话）
     /// </summary>
-    public struct Hotline
+    public class Hotline
     {
         public string callno;
         public string name;

@@ -318,9 +318,7 @@ namespace DispatchApp
                     keycall.KeyText.Text = "null";
                 }
 
-                KeyCallListBox.Items.Add(keycall);
-                
-                
+                KeyCallListBox.Items.Add(keycall);  
             }
                 
 
@@ -329,7 +327,8 @@ namespace DispatchApp
 
 
             /* add by twinkle start */
-            int keyphoneNum = PageKey.Count;
+            //int keyphoneNum = PageKey.Count;
+            int keyphoneNum = 4;
             for (int i = 0; i < keyphoneNum; i++)
             {
                 m_keyphone[i].extid = PageKey[i].extid;
@@ -494,12 +493,6 @@ namespace DispatchApp
         //============================================================
 
 
-
-
-
-
-
-
         /// =====================STATE命令字接收事件==================
         /// <summary>
         /// 
@@ -571,7 +564,6 @@ namespace DispatchApp
                  * 对方挂断电话 STATE#BYE#{"fromid":"18163350377","toid":"220"}
                  * 217挂断电话 STATE#BYE#{"fromid":"217","toid":"220"}
                  * isHolding有针对的对方号码
-                 * 
                  */
 
                 for (int i = 0; i < m_keyphone.Count; i++)
@@ -592,17 +584,15 @@ namespace DispatchApp
                             btn_expand();
                         }
                     }
-                    else if (m_keyphone[i].extid == callinstance.toid) {
+                    else if (m_keyphone[i].extid == callinstance.toid) 
+                    {
                         /* 如果是对方拒接，或者沟通后挂机，则holdoff */
                         if (isHolding)
                         {
                             Operation_unhold(this, null);
                         }
-
-                        
                     }
                 }
-
                 // Step3:判断是否为内部电话
             }
             /* add by twinkle end */
@@ -631,11 +621,11 @@ namespace DispatchApp
             {
                 RelayCommondWord_State(type, data);
             }
-            else
-            {
+            //else
+            //{
                 //判断命令字 20181010 xiaozi add,终端电话状态判断
                 CommondWord_State(type, data);
-            }
+            //}
         }
 
       

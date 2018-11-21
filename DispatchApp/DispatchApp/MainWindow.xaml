@@ -105,7 +105,7 @@
                     <controls:USERSystemCloseButton
                         USERSystemButtonForeground="White"
                         USERSystemButtonHoverForeground="White"
-                        USERSystemButtonSize="38" />
+                        USERSystemButtonSize="38" Click="USERSystemCloseButton_Click" />
                 </WrapPanel>
             </Grid>
 
