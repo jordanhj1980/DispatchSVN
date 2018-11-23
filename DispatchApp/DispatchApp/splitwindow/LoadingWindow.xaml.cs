@@ -63,6 +63,7 @@ namespace DispatchApp
             MainWindow win = Owner as MainWindow;
             if (win != null)
             {
+                App.isLogin = false;
                 win.showLogWin();
             }
         }

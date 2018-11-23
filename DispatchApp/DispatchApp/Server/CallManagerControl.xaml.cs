@@ -638,7 +638,7 @@ namespace DispatchApp
         /* 刷新软交换设备列表 */
         private void freshSwitchDevice(string data)
         {
-            //swList.Clear();
+            swList.Clear();
             SW_QUERYRESULT res = JsonConvert.DeserializeObject<SW_QUERYRESULT>(data);
             if (res != null)
             {
@@ -1014,7 +1014,8 @@ namespace DispatchApp
                 tempUser.password = userPass.Text.Trim();
                 tempUser.status = userStatus.Text.Trim();
                 tempUser.description = userDesp.Text.Trim();
-                tempUser.desk = userDesk.SelectedValue.ToString(); //userDesk.Text.Trim();
+                int ind = userDesk.SelectedIndex;
+                tempUser.desk = deskList[ind].id.ToString();// userDesk.SelectedValue.ToString(); //userDesk.Text.Trim();
                 tempUser.role = userRole.Text.Trim();
                 tempUser.privilege = userPriv.Text.Trim();
 

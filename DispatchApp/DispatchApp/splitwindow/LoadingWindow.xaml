@@ -151,9 +151,9 @@
                         Click="BtnClick_reconnect">
                         重连
                     </Button>
-                    <Button Style="{StaticResource ColorButton}" Margin="20,0,0,0" Width="100" 
+                <Button Style="{StaticResource ColorButton}" Margin="20,0,0,0" Width="100" 
                         Height="35" FontSize="16" Click="Button_Click"
-                        Background="White" Foreground="{StaticResource MainColor}">取消</Button>
+                        Background="White" Foreground="{StaticResource MainColor}">退出</Button>
                 </StackPanel>
             </StackPanel>
         </Grid>

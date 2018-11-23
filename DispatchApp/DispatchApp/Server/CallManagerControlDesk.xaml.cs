@@ -196,7 +196,7 @@ namespace DispatchApp
                 // 首先清空调度台的列表
                 deskList.Clear();
                 // 增加一个空白项
-                deskList.Add(new UserStatus(0, ""));
+                //deskList.Add(new UserStatus(0, ""));
             }
 
             /* 调度台查询到的信息 */

@@ -211,8 +211,9 @@ namespace DispatchApp
             // 20181010 xf Add
             if (App.isLogin)
             {
+                // 网络断开连接
                 PeerCallBack.Instance.GetOperationMsg("login"); // commented by twinkle
-                App.isLogin = false;
+                //App.isLogin = false;
             }
             else
             {
@@ -275,7 +276,9 @@ namespace DispatchApp
                     // 用户在当前界面，如果网线断开，停留在当前界面，制作动画，并重新连接后台
                     //loadWin.Show();
 
-                    LoadingWindow.ShowDialog(this);
+                    if (App.isLogin) { 
+                        LoadingWindow.ShowDialog(this);
+                    }
                 } 
                 else 
                 {
@@ -400,7 +403,8 @@ namespace DispatchApp
             logwin.Show();
             this.Hide();
 
-            // 20181010 xf Add            
+            // 20181010 xf Add  
+            App.isLogin = false;    // 用户主动选择登出
             ws.Close();
         }
 
