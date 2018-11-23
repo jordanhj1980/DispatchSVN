@@ -103,9 +103,6 @@ namespace DispatchApp
             ShowTimer.Start();
 
             // 创建websocket
-            string serverip = "192.168.2.101";
-            string serverport = "1020";
-
             m_ServerIP = ConfigurationManager.AppSettings["serverip"];
             m_ServerPort = ConfigurationManager.AppSettings["serverport"];
             Debug.WriteLine("serverip = " + m_ServerIP);
@@ -213,7 +210,6 @@ namespace DispatchApp
             {
                 // 网络断开连接
                 PeerCallBack.Instance.GetOperationMsg("login"); // commented by twinkle
-                //App.isLogin = false;
             }
             else
             {
@@ -476,8 +472,14 @@ namespace DispatchApp
             Environment.Exit(0);
         }
 
-
-
+        /* 重新登陆 */
+        public void reLogin()
+        {
+            if (!App.isLogin)
+            {
+                ws.Open();
+            }
+        }
 
         //private void CtrlSwitch_callUser()
         //{

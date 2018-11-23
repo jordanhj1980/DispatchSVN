@@ -146,7 +146,7 @@
                 </Grid.Triggers>
             </Grid>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20,10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="35,10">
                     <Button Style="{StaticResource ColorButton}" Width="100" Height="35" FontSize="16"
                         Click="BtnClick_reconnect">
                         重连

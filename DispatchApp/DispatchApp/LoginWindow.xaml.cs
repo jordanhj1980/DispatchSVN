@@ -105,11 +105,11 @@ namespace DispatchApp
 
 
         /// <summary>
-        /// 确认按钮
+        /// 登陆按钮
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtLogin_Click(object sender, RoutedEventArgs e)
+        public void BtLogin_Click(object sender, RoutedEventArgs e)
         {
             /* 尝试连接远程服务器 */
             //2018101 xf Add

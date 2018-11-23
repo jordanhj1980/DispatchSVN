@@ -68,9 +68,15 @@ namespace DispatchApp
             }
         }
 
+        /* 点击重连按钮,触发重新连接 */
         private void BtnClick_reconnect(object sender, RoutedEventArgs e)
         {
-
+            MainWindow win = Owner as MainWindow;
+            if (win != null)
+            {
+                App.isLogin = false;
+                win.reLogin();
+            }
         }
     }
 }
