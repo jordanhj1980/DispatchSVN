@@ -397,10 +397,10 @@ namespace DispatchApp
 
         private void Btn_logOut(object sender, RoutedEventArgs e)
         {
-            //logwin.Show();
-            //this.Hide();
+            logwin.Show();
+            this.Hide();
 
-            // 20181010 xf Add
+            // 20181010 xf Add            
             ws.Close();
         }
 
