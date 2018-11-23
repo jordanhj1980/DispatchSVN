@@ -404,6 +404,11 @@ namespace DispatchApp
             ws.Close();
         }
 
+        public void showLogWin()
+        {
+            logwin.Show();
+            this.Hide();
+        }
 
         public void usercontrol_click(object sender, RoutedEventArgs e)
         {

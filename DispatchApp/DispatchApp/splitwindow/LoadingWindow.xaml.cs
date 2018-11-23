@@ -60,7 +60,11 @@ namespace DispatchApp
         {
 
             this.Close();
-
+            MainWindow win = Owner as MainWindow;
+            if (win != null)
+            {
+                win.showLogWin();
+            }
         }
 
         private void BtnClick_reconnect(object sender, RoutedEventArgs e)

@@ -332,7 +332,16 @@ namespace DispatchApp
             int keyphoneNum = 4;
             for (int i = 0; i < keyphoneNum; i++)
             {
-                m_keyphone[i].extid = PageKey[i].extid;
+                if (i < KeyNum)
+                {
+                    m_keyphone[i].extid = PageKey[i].extid;
+                }
+                else
+                {
+                    m_keyphone[i].extid = "";
+                }
+
+                
                 m_keyphone[i].Status = KeyStatus.IDLE;
             }
             /* add by twinkle end */

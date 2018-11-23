@@ -190,6 +190,15 @@ namespace DispatchApp
             // 一棵树
             List<propertyNodeItem> listItem = new List<propertyNodeItem>();
 
+            // add by twinkle 20181123
+            if (tabControl_mgt.SelectedIndex == 1)
+            {
+                // 首先清空调度台的列表
+                deskList.Clear();
+                // 增加一个空白项
+                deskList.Add(new UserStatus(0, ""));
+            }
+
             /* 调度台查询到的信息 */
             getDesk = JsonConvert.DeserializeObject<GetDesk>(date); // 一个调度台
             Debug.WriteLine("********查询的调度台消息:" + date);
@@ -203,8 +212,21 @@ namespace DispatchApp
                 propertyNodeItem keyBoardNode = new propertyNodeItem() { DisplayName = keyBoard.name, Tag = idex + 1 };
                 // 第一级树枝加入树中
                 listItem.Add(keyBoardNode);
+
+                // 添加调度台信息  add by twinkle 20181122 
+                // 如果当前的界面是添加用户界面，才执行下面操作
+                if (tabControl_mgt.SelectedIndex == 1) { 
+                    UserStatus us = new UserStatus(Convert.ToInt16(keyBoard.index), keyBoard.name);
+                    deskList.Add(us);
+                }
             }
+
             this.tvProperty.ItemsSource = listItem;
+            if (deskList.Count > 0)
+            {
+                cuw.freshDeskCombox(deskList.ToList<UserStatus>());
+            }
+
         }
 
         private void TreeView_MouseDown(object sender, MouseButtonEventArgs e)
@@ -347,7 +369,8 @@ namespace DispatchApp
         {
             queding.Background = Brushes.Red;
             getDesk.keyboardlist[keyBoardNum.index - 1].name = mingchengtext.Text;
-            getDesk.keyboardlist[keyBoardNum.index - 1].sequence = biaoshitext.Text;
+            // modified by twinkle 20181122
+            getDesk.keyboardlist[keyBoardNum.index - 1].sequence = GlobalFunAndVar.sequenceGenerator(); // biaoshitext.Text; 
             getDesk.keyboardlist[keyBoardNum.index - 1].index = xulietext.Text;
             getDesk.keyboardlist[keyBoardNum.index - 1].ip = IPtext.Text;
             getDesk.keyboardlist[keyBoardNum.index - 1].mac = MACtext.Text;
@@ -697,13 +720,17 @@ namespace DispatchApp
 
         private void FinishDeskChange(object sender, RoutedEventArgs e)
         {
+            // modified by twinkle 1122
+            // 按完成键保存调度台信息
+            MakeSure(this, null);
+
             string sendMsg = JsonConvert.SerializeObject(getDesk);
             DeskImage(sendMsg);
-            Debug.WriteLine("完成新界面" + sendMsg);
 
             sendMsg = JsonConvert.SerializeObject(getDesk.keyboardlist[keyBoardNum.index - 1]);
             string strMsg = "MAN#ADDKEYBOARD#" + sendMsg;
             mainWindow.ws.Send(strMsg);
+            Debug.WriteLine("完成新界面" + strMsg); // change order by twinkle 20181122
             tabControl_mgt.SelectedIndex = 2;  // 跳转到键盘的树
         }
 

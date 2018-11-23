@@ -24,6 +24,9 @@ namespace DispatchApp
         public delegate void CWHandler(object sender, string msg, object obj);
         public event CWHandler msgevent;
 
+        /* 调度键盘绑定 */
+        private List<UserStatus> deskList;
+
         public CreateUserWindow()
         {
             InitializeComponent();
@@ -52,6 +55,17 @@ namespace DispatchApp
             comBox_privilege.SelectedValuePath = "id";
             comBox_privilege.SelectedIndex = 0;
 
+            // 调度键盘列表
+            deskList = new List<UserStatus>();
+            comBox_desk.ItemsSource = deskList;
+            comBox_desk.DisplayMemberPath = "description";
+            comBox_desk.SelectedValuePath = "id";
+            comBox_desk.SelectedIndex = 0;
+        }
+
+        public void freshDeskCombox(List<UserStatus> list)
+        {
+            comBox_desk.ItemsSource = list;
         }
 
         private void bt_Click_apply(object sender, RoutedEventArgs e)
@@ -71,8 +85,7 @@ namespace DispatchApp
             item.privilege = comBox_privilege.SelectedValue.ToString();
             item.description = tb_description.Text.Trim();
             // 需要从调度台列表中查询
-            //item.desk = comBox_desk.SelectedValue.ToString();
-            item.desk = "1";
+            item.desk = comBox_desk.SelectedValue.ToString();
 
             /* 临时保存待修改的用户信息 */
             User user = new User();
@@ -111,5 +124,16 @@ namespace DispatchApp
             Close();
         }
 
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
+
+            tb_id.Text = "";
+            tb_name.Text = "";
+            tb_pass.Text = "";
+            tb_passure.Text = "";
+            tb_description.Text = "";
+        }
     }
 }

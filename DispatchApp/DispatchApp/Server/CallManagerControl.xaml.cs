@@ -115,8 +115,24 @@ namespace DispatchApp
         //public Image img_collapse { get; set; }
 
         public bool isCollapse;
-        // 标识当前行是否为选中
-        private bool _rowSelectionChanged;
+
+        // 新建用户窗口，可以反复打开
+        CreateUserWindow cuw;
+        // 添加调度台信息  add by twinkle 20181122 
+        private ObservableCollection<UserStatus> deskList;
+        /*
+        public List<UserStatus> deskList
+        {
+            get { return _deskList; }
+            set
+            {
+                if (_deskList != value)
+                {
+                    _deskList = value;
+                    RaisePropertyChanged("deskList");
+                }
+            }
+        }*/
 
         public CallManagerControl(MainWindow mmainWindow)
         {
@@ -145,7 +161,16 @@ namespace DispatchApp
             //StackPanelLeft.Children.Add(exp);
 
             // 初始化软交换设备列表
-            InitialSwitches();
+            InitialSwitches();            
+
+            // 新建用户
+            cuw = new CreateUserWindow();
+            // 传递消息事件
+            cuw.msgevent += new CreateUserWindow.CWHandler(sendMsg);
+
+            deskList = new ObservableCollection<UserStatus>();
+            // 绑定数据
+            userDesk.ItemsSource = deskList;
         }
 
         public void ToolTipTestWindow()
@@ -185,7 +210,6 @@ namespace DispatchApp
             switchGrid.ItemsSource = swList;
             //switchGrid.MouseDown += DataGrid_MouseDown;
             switchGrid.SelectionChanged += DataGrid_Click;
-
 
             userGrid.ItemsSource = m_UserList;
             userGrid.MouseDown += DataGrid_MouseDown;
@@ -359,6 +383,10 @@ namespace DispatchApp
                     break;
                 case "user":
                     tabControl_mgt.SelectedIndex = 1;
+
+                    /* 发送调度台查询命令 */
+                    queryDesk();
+
                     break;
                 case "desk":
                     tabControl_mgt.SelectedIndex = 2;
@@ -518,11 +546,23 @@ namespace DispatchApp
                 SW_ADDRESULT res = JsonConvert.DeserializeObject<SW_ADDRESULT>(data);
                 if (res != null && swdevobj.sequence == res.sequence)
                 {
-                    if (res.result == "Failed")
+                    if (res.result == "Fail")
                     {
                         Debug.WriteLine(res.reason);
                         return;
                     }
+
+                    // 收到添加成功消息，通知服务器添加调度电话
+                    SWQUERY tempDev = new SWQUERY();
+                    tempDev.sequence = GlobalFunAndVar.sequenceGenerator();
+                    tempDev.index = res.index;
+
+                    StringBuilder sb = new StringBuilder(100);
+                    sb.Append("MAN#QUERYALLDEV#");
+                    sb.Append(JsonConvert.SerializeObject(tempDev));
+
+                    Debug.WriteLine("SEND: " + sb.ToString());
+                    sendMsg(this, "net", sb.ToString());
 
                     SWDEV item = new SWDEV();
                     //item.idstr = swdevobj.name;
@@ -547,7 +587,7 @@ namespace DispatchApp
             SW_ADDRESULT res = JsonConvert.DeserializeObject<SW_ADDRESULT>(data);
             if (res != null /* && swdevobj.sequence == res.sequence */)
             {
-                if (res.result == "Failed")
+                if (res.result == "Fail")
                 {
                     Debug.WriteLine(res.reason);
                     return;
@@ -571,7 +611,7 @@ namespace DispatchApp
             SW_ADDRESULT res = JsonConvert.DeserializeObject<SW_ADDRESULT>(data);
             if (res != null && swdevobj.sequence == res.sequence)
             {
-                if (res.result == "Failed")
+                if (res.result == "Fail")
                 {
                     Debug.WriteLine(res.reason);
                     return;
@@ -626,7 +666,7 @@ namespace DispatchApp
             USER_ADDRESULT res = JsonConvert.DeserializeObject<USER_ADDRESULT>(data);
             if (res != null && userobj.sequence == res.sequence)
             {
-                if (res.result == "Failed")
+                if (res.result == "Fail")
                 {
                     Debug.WriteLine(res.reason);
                     return;
@@ -673,7 +713,7 @@ namespace DispatchApp
             SW_ADDRESULT res = JsonConvert.DeserializeObject<SW_ADDRESULT>(data);
             if (res != null /* && swdevobj.sequence == res.sequence */)
             {
-                if (res.result == "Failed")
+                if (res.result == "Fail")
                 {
                     Debug.WriteLine(res.reason);
                     return;
@@ -696,7 +736,7 @@ namespace DispatchApp
             SW_ADDRESULT res = JsonConvert.DeserializeObject<SW_ADDRESULT>(data);
             if (res != null && userobj.sequence == res.sequence)
             {
-                if (res.result == "Failed")
+                if (res.result == "Fail")
                 {
                     Debug.WriteLine(res.reason);
                     return;
@@ -761,19 +801,14 @@ namespace DispatchApp
             {
                 // 新建软交换服务设备
                 CreateSwitchWindow csw = new CreateSwitchWindow();
-
                 // 传递消息事件
                 csw.msgevent += new CreateSwitchWindow.CWHandler(sendMsg);
+
                 csw.ShowDialog();
             }
             else if (1 == index)  // 创建用户页面
             {
-                // 新建用户
-                CreateUserWindow cuw = new CreateUserWindow();
-
-                // 传递消息事件
-                cuw.msgevent += new CreateUserWindow.CWHandler(sendMsg);
-                cuw.ShowDialog();
+                cuw.ShowDialog();                
             }
             else
             {
@@ -979,7 +1014,7 @@ namespace DispatchApp
                 tempUser.password = userPass.Text.Trim();
                 tempUser.status = userStatus.Text.Trim();
                 tempUser.description = userDesp.Text.Trim();
-                tempUser.desk = userDesk.Text.Trim();
+                tempUser.desk = userDesk.SelectedValue.ToString(); //userDesk.Text.Trim();
                 tempUser.role = userRole.Text.Trim();
                 tempUser.privilege = userPriv.Text.Trim();
 

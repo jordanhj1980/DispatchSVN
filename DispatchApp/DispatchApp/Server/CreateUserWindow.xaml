@@ -33,7 +33,8 @@
                         <TextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="tb_name" VerticalAlignment="Center" Width="218" />
                         <TextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Name="tb_pass" VerticalAlignment="Center" Width="217" />
                         <TextBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Name="tb_passure" VerticalAlignment="Center" Width="217" />
-                        <ComboBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Name="comBox_status" VerticalAlignment="Center" Width="215" DataContext="{Binding}">
+                        <ComboBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Name="comBox_status" VerticalAlignment="Center" Width="215" 
+                                  DataContext="{Binding}">
                             
                         </ComboBox>
                         <ComboBox Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Name="comBox_privilege" VerticalAlignment="Center" Width="215" />

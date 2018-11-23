@@ -15,6 +15,9 @@
     </UserControl.Resources>
     
     <Grid>
+        <Grid.Resources>
+            <local:MyPrivilegeToVisibilityConverter x:Key="MyValToVisibilityConverter" />
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="214*" />
             <ColumnDefinition Width="1716*" />
@@ -185,7 +188,9 @@
                             <DataGridTextColumn Binding="{Binding status}" Width="200" Header="状态" ElementStyle="{StaticResource dgCell}"/>
                             <DataGridTextColumn Binding="{Binding privilege}" Width="100" Header="权限" ElementStyle="{StaticResource dgCell}"/>
                             <DataGridTextColumn Binding="{Binding role}" Width="100" Header="角色" ElementStyle="{StaticResource dgCell}"/>
+                            <DataGridTextColumn Binding="{Binding desk}" Width="150" Header="所属调度台" ElementStyle="{StaticResource dgCell}"/>
                             <DataGridTextColumn Binding="{Binding description}" Width="300" Header="描述" ElementStyle="{StaticResource dgCell}"/>
+                            
                             <DataGridTemplateColumn Header="信息" Width="200">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -233,11 +238,16 @@
                                 <TextBox  Grid.Row="1" Grid.Column="1" x:Name="userRole" Text="{Binding SelectedUser.role, Mode=OneWay}" FontSize="20"/>
                                 <TextBlock Grid.Row="1" Grid.Column="2"  Text="描述："  FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" />
                                 <TextBox Grid.Row="1" Grid.Column="3" x:Name="userDesp" Text="{Binding SelectedUser.description, Mode=OneWay}" FontSize="20"/>
-                                <TextBlock Grid.Row="1" Grid.Column="4"  Text="所属调度台："  FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" />
-                                <TextBox Grid.Row="1" Grid.Column="5" x:Name="userDesk" Text="{Binding SelectedUser.desk, Mode=OneWay}" FontSize="20"/>
+                                <TextBlock Grid.Row="1" Grid.Column="4"  Text="所属调度台：" 
+                                           Visibility="{Binding SelectedUser.privilege, Mode=OneWay, Converter={StaticResource MyValToVisibilityConverter}}"  FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                                <ComboBox Grid.Row="1" Grid.Column="5" x:Name="userDesk" ItemsSource="{Binding deskList}" 
+                                          Visibility="{Binding SelectedUser.privilege, Mode=OneWay, Converter={StaticResource MyValToVisibilityConverter}}"                                          
+                                          SelectedValuePath="id" DisplayMemberPath="description" 
+                                          SelectedValue="{Binding SelectedUser.desk, Mode=OneWay}" FontSize="20"/>
                                 <Button Grid.Row="2" HorizontalAlignment="Left" Grid.Column="9"  FontSize="20" Style="{StaticResource GridBtnInfo}" 
                                         Content="Update" Tag="{Binding SelectedUser.index}" Command="{Binding Path=name}"  Click="Btn_UserUpdate_Click" />
                                 </Grid>
+                            <!-- Text="{Binding SelectedUser.desk, Mode=OneWay}" --> 
                             </GroupBox>
                         </Border>                    
                     </Grid>

@@ -208,6 +208,7 @@
     <Compile Include="Utils\ExpanderListViewModel .cs" />
     <Compile Include="Utils\ExpanderToBooleanConverter.cs" />
     <Compile Include="Utils\INIHelper.cs" />
+    <Compile Include="Utils\MyPrivilegeToVisibilityConverter.cs" />
     <Compile Include="Utils\NotifyObject.cs" />
     <Compile Include="Utils\PostgreHelper.cs" />
     <Page Include="Client\CallBoardDictionary.xaml">
@@ -336,7 +337,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Design\projectGuides.guides" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

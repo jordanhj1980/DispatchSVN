@@ -8,7 +8,7 @@
         Foreground="#444"
         Closed="LoadingWindow_Closed"
         ShowInTaskbar="False"
-        WindowStyle="None"
+        WindowStyle="None" AllowsTransparency="True"
         WindowStartupLocation="CenterOwner"
         Title="LoadingWindow" Height="300" Width="300" >
         <Window.Resources>
@@ -46,7 +46,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
-                <TextBlock Text="新建歌单" FontSize="18" Margin="10"/>
+                <TextBlock Text="通信连接断开" FontSize="18" Margin="10" HorizontalAlignment="Center"/>
                 <Border BorderBrush="#A7A7A7" BorderThickness="0.3"/>
             </StackPanel>
             <StackPanel Grid.Row="1">
