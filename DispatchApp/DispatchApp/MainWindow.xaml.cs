@@ -46,16 +46,15 @@ namespace DispatchApp
     public partial class MainWindow 
     {
         private DispatcherTimer ShowTimer;
-        NpgsqlConnection conn;
-        DBHelper dbHelper;
+        public DispatcherTimer HeartBeatTimer;
 
-        //private WebSocket ws;
         public WebSocket ws;
         private NotifyIcon _notifyIcon = null;
         private LoginWindow logwin;
         public CallBoard callBoard;
         private string m_ServerIP;
         private string m_ServerPort;
+        private int m_HeartBeat;
 
         private LoadingWindow loadWin;
 
@@ -93,18 +92,11 @@ namespace DispatchApp
             logwin.Show();
             this.Hide();
 
-            // 创建socket和ui交互机制 // 20181010 xf Add
-            PeerCallBack.Instance = new PeerCallBack(SynchronizationContext.Current, this);    
-
-            ShowTime();    //在这里窗体加载的时候不执行文本框赋值，窗体上不会及时的把时间显示出来，而是等待了片刻才显示了出来
-            ShowTimer = new DispatcherTimer();
-            ShowTimer.Tick += new EventHandler(ShowCurTimer);//起个Timer一直获取当前时间
-            ShowTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
-            ShowTimer.Start();
-
             // 创建websocket
             m_ServerIP = ConfigurationManager.AppSettings["serverip"];
             m_ServerPort = ConfigurationManager.AppSettings["serverport"];
+            string heartbeat = ConfigurationManager.AppSettings["heartbeat"];
+            m_HeartBeat = Convert.ToInt16(heartbeat);
             Debug.WriteLine("serverip = " + m_ServerIP);
 
             // 创建websocket
@@ -121,8 +113,18 @@ namespace DispatchApp
                 Debug.WriteLine(e.ToString());
             }
 
-            // 初始化数据库handle
-            dbHelper = new PostgreHelper();
+            // 创建socket和ui交互机制 // 20181010 xf Add
+            PeerCallBack.Instance = new PeerCallBack(SynchronizationContext.Current, this);
+
+            ShowCurTimer(this, null);    //在这里窗体加载的时候不执行文本框赋值，窗体上不会及时的把时间显示出来，而是等待了片刻才显示了出来
+            ShowTimer = new DispatcherTimer();
+            ShowTimer.Tick += new EventHandler(ShowCurTimer);//起个Timer一直获取当前时间
+            ShowTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
+            ShowTimer.Start();
+
+            HeartBeatTimer = new DispatcherTimer();
+            HeartBeatTimer.Tick += new EventHandler(HeartBeat);//开启监听
+            HeartBeatTimer.Interval = new TimeSpan(0, 0, m_HeartBeat);             
         }
 
 
@@ -210,6 +212,8 @@ namespace DispatchApp
             {
                 // 网络断开连接
                 PeerCallBack.Instance.GetOperationMsg("login"); // commented by twinkle
+                // 当用户已经登录的时候，才停止定时器
+                HeartBeatTimer.Stop();
             }
             else
             {
@@ -221,7 +225,7 @@ namespace DispatchApp
         void websocket_Opened(object sender, EventArgs e)
         {
             //用登陆界面登陆
-            PeerCallBack.Instance.GetLoginFeedBack(Convert.ToInt32(WINDOWTYPE.LOGINWIN), "connected");
+            PeerCallBack.Instance.GetLoginFeedBack(Convert.ToInt32(WINDOWTYPE.LOGINWIN), "connected");            
         }
         //============================================================
 
@@ -236,7 +240,7 @@ namespace DispatchApp
 
                 logwin.Delog(msg);
 
-                // 进入用户界面
+                /* 进入用户界面
                 if ("Admin" == logwin.logIn)
                 {
                     CtrlSwitch_callUser();
@@ -246,7 +250,7 @@ namespace DispatchApp
                 {
                     CtrlSwitch_callManager();
                     Debug.WriteLine("用户界面" + logwin.logIn);
-                }
+                }*/
             }
             catch (System.Exception exc)
             {
@@ -372,24 +376,25 @@ namespace DispatchApp
         }
         //============================================================
 
-
-
-        /// =======================时间======================
+        /// ======================= 定时器 ======================
         /// <summary>        
         /// </summary>     
         public void ShowCurTimer(object sender, EventArgs e)
-        {
-            ShowTime();
-        }
-
-
-        //ShowTime方法
-        private void ShowTime()
         {
             //获得年月日
             this.label_Date.Content = DateTime.Now.ToString("yyyy-MM-dd");   //yyyy/MM/dd
             //获得时分秒
             this.label_Time.Content = DateTime.Now.ToString("HH:mm:ss");
+        }
+
+
+        //heartBeat方法
+        private void HeartBeat(object sender, EventArgs e)
+        {
+            if (ws.State == WebSocketState.Open) {
+                ws.Send("BEAT");
+                Debug.WriteLine("heartbeat packet");
+            }
         }
         //============================================================
 
@@ -413,29 +418,20 @@ namespace DispatchApp
         public void usercontrol_click(object sender, RoutedEventArgs e)
         {
             this.CenterPanel2.Content = callUserCtrl;
+            // 启动心跳
+            HeartBeatTimer.Start();
         }
 
         public void managercontrol_click(object sender, RoutedEventArgs e)
         {
             this.CenterPanel2.Content = callManagerCtrl;
+            // 启动心跳
+            HeartBeatTimer.Start();
+
             /* 打开服务端界面钱首先查询软交换设备、用户列表 */
             callManagerCtrl.querySWDevice();
             callManagerCtrl.queryUSER();
-        }
-
-        #region 跨页面间的 事件委托
-        public void CtrlSwitch_callUser()
-        {
-            this.CenterPanel2.Content = callManagerCtrl;
-        }
-
-        public void CtrlSwitch_callManager()
-        {
-            this.CenterPanel2.Content = callUserCtrl;
-        }
-        #endregion
-
-        
+        } 
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -477,7 +473,39 @@ namespace DispatchApp
         {
             if (!App.isLogin)
             {
-                ws.Open();
+                try {
+                    // 先断开之前的连接
+                    ws.Close();
+
+                    ws.Open();
+                }
+                catch (System.Exception exc)
+                {
+                    System.Windows.MessageBox.Show(exc.Message + "xixirelogin");
+                }
+            }
+        }
+
+        /* 关闭重连窗口 */
+        public void closeLoadingWin()
+        {
+            // 如果之前为离线状态，并且当前的界面显示为mainwindow
+            if (!App.isLogin && this.Visibility == Visibility.Visible)
+            {
+                //容器Grid
+                Grid grid = this.Content as Grid;
+                if (grid != null)
+                {
+                    //父级窗体原来的内容
+                    UIElement original = VisualTreeHelper.GetChild(grid, 0) as UIElement;
+                    if (original != null)
+                    {
+                        //将父级窗体原来的内容在容器Grid中移除
+                        grid.Children.Remove(original);
+                        //赋给父级窗体
+                        this.Content = original;
+                    }
+                }
             }
         }
 

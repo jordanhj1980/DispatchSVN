@@ -44,6 +44,13 @@ namespace DispatchApp
         {
             var messageQueue = SnackbarOne.MessageQueue;
             string message;
+
+            /* 如果登陆成功 */
+            if (data.StartsWith("Success"))
+            {
+                m_mainWindow.closeLoadingWin();
+            }
+
             switch (data)
             {
                 case "Success#Control":
@@ -115,26 +122,21 @@ namespace DispatchApp
             //2018101 xf Add
             if (!App.isLogin)
             {
-                m_mainWindow.ws.Open();
+                try
+                {
+                    m_mainWindow.ws.Open();
+                }
+                catch (System.Exception exc)
+                {
+                    //System.Windows.MessageBox.Show(exc.Message, Title);
+                    System.Windows.MessageBox.Show(exc.Message + "BtLogin_Click");
+                }
             }
-
-            //本地登陆
-            //if (TxUserName.Text == "admin" && TxPassword.Text == "admin")
-            //{
-            //    //this.DialogResult = Convert.ToBoolean(1);                
-            //    //this.Close();      
-            //    this.Hide();
-            //    m_mainWindow.Show();
-            //}
-            //else
-            //{
-            //    MessageBox.Show("账号或密码错误！");
-            //}
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            e.Cancel = true;  // cancels the window close    
+            e.Cancel = true;  // cancels the window close
             //this.Hide();      // Programmatically hides the window
             System.Windows.Application.Current.Shutdown();
         }

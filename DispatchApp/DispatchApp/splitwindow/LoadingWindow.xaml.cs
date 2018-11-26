@@ -44,16 +44,18 @@ namespace DispatchApp
             ca.ShowDialog();
         }
 
-        private void LoadingWindow_Closed(object sender, EventArgs e)
+        public void LoadingWindow_Closed(object sender, EventArgs e)
         {
             //容器Grid
             Grid grid = this.Owner.Content as Grid;
-            //父级窗体原来的内容
-            UIElement original = VisualTreeHelper.GetChild(grid, 0) as UIElement;
-            //将父级窗体原来的内容在容器Grid中移除
-            grid.Children.Remove(original);
-            //赋给父级窗体
-            this.Owner.Content = original;
+            if (grid != null) { 
+                //父级窗体原来的内容
+                UIElement original = VisualTreeHelper.GetChild(grid, 0) as UIElement;
+                //将父级窗体原来的内容在容器Grid中移除
+                grid.Children.Remove(original);
+                //赋给父级窗体
+                this.Owner.Content = original;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -78,5 +80,12 @@ namespace DispatchApp
                 win.reLogin();
             }
         }
+
+        /*
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
+        }*/
     }
 }
