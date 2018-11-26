@@ -6,10 +6,10 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="180"/>
-                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
 
-                <ContentPresenter x:Name="HeaderContent" Grid.Column="0" Margin="4,0,0,0" ContentSource="Content"/>
+                <ContentPresenter x:Name="HeaderContent" VerticalAlignment="Center" Grid.Column="0" Margin="4,0,0,0" ContentSource="Content"/>
                 <Image Name="image" Grid.Column="1" Source="../Resources/icon_downarrow.png" />
 
             </Grid>
@@ -44,7 +44,7 @@
                 <ControlTemplate TargetType="Expander">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Name="HeaderRow" Height="auto" />
+                            <RowDefinition Name="HeaderRow" Height="50" />
                             <RowDefinition Name="ContentRow" Height="0" />
                         </Grid.RowDefinitions>
                         <Border Name="Border" Grid.Row="0" BorderThickness="1" CornerRadius="2,2,0,0">
@@ -59,7 +59,6 @@
 
                                 </ToggleButton>
                                 <ContentPresenter Grid.Row="1" Margin="4" ContentSource="Header" Visibility="Collapsed" RecognizesAccessKey="True"/>
-
                             </Grid>
                         </Border>
                         <Border Name="Content" Grid.Row="1" CornerRadius="0,0,2,2">
@@ -78,9 +77,10 @@
     </Style>
 
     <Style x:Key="McRadioButton" TargetType="RadioButton" >
-        <Setter Property="FontSize" Value="14"></Setter>
-        <Setter Property="Height" Value="36"></Setter>
+        <Setter Property="FontSize" Value="24"></Setter>
+        <Setter Property="Height" Value="50"></Setter>
         <Setter Property="Foreground" Value="#444"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"/>
         <!--radiobutton上的文字颜色-->
         <!--<Setter Property="Background" Value="Transparent"/>-->
         <Setter Property="Template" >
@@ -171,6 +171,7 @@
         <Setter Property="Foreground" Value="#FF0a0a0a"/>
         <Setter Property="RowHeight" Value="50"></Setter>
         <Setter Property="VerticalScrollBarVisibility" Value="Visible"></Setter>
+        <Setter Property="AlternationCount" Value="2"/>
     </Style>
 
     <LinearGradientBrush x:Key="GrayBlueGradientBrush"     StartPoint="0,0" EndPoint="0,1">
@@ -225,6 +226,7 @@
     <!--设置文字居中-->
     <Style x:Key="dgCell" TargetType="TextBlock">
         <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Foreground" Value="#FF0a0a0a"/>
     </Style>
 
@@ -261,8 +263,17 @@
 
     <!--DataGrid单元格样式-->
     <Style TargetType="DataGridRow">
-        <Setter Property="Background" Value="{x:Null}" />
+        <Style.Triggers>
+            <!--隔行换色-->
+            <Trigger Property="AlternationIndex" Value="0" >
+                <Setter Property="Background" Value="#e7e7e7" />
+            </Trigger>
+            <Trigger Property="AlternationIndex" Value="1" >
+                <Setter Property="Background" Value="{x:Null}" />
+            </Trigger>
+        </Style.Triggers>
         <Setter Property="Foreground" Value="#FFF" />
+        <!-- <Setter Property="Background" Value="{x:Null}" /> -->
     </Style>
 
     <!--DataGrid按钮样式 蓝-->

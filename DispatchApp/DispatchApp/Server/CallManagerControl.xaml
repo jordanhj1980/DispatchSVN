@@ -61,7 +61,7 @@
                     <local:ExpanderToBooleanConverter x:Key="ExpanderToBooleanConverter" />
                 </StackPanel.Resources>
 
-                <Expander Header="资源管理"  FontSize="20" IsExpanded="{Binding SelectedExpander, Mode=TwoWay, Converter={StaticResource ExpanderToBooleanConverter}, ConverterParameter=3}">
+                <Expander Header="资源管理"  FontSize="24" IsExpanded="{Binding SelectedExpander, Mode=TwoWay, Converter={StaticResource ExpanderToBooleanConverter}, ConverterParameter=3}">
                     <Expander.Content>
                         <StackPanel>
                             <RadioButton Name="sw"  Style="{StaticResource McRadioButton}" Click="radioBtn_man_click" Checked="sw_Checked">软交换设备</RadioButton>
@@ -117,7 +117,7 @@
                             <DataGridTextColumn Binding="{Binding ip}" Width="300" Header="IP地址" ElementStyle="{StaticResource dgCell}"></DataGridTextColumn>
                             <DataGridTextColumn Binding="{Binding port}" Width="100" Header="端口" ElementStyle="{StaticResource dgCell}"></DataGridTextColumn>
                             <DataGridTextColumn Binding="{Binding username}" Width="200" Header="用户名" ElementStyle="{StaticResource dgCell}"></DataGridTextColumn>
-                            <DataGridTemplateColumn Header="信息" Width="300">
+                            <DataGridTemplateColumn Header="信息" Width="300*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Style="{StaticResource GridBtnInfo}" Command="{Binding Path=name}" Content="查看信息" Click="Btn_SWGrid_Click" Tag="{Binding index}" />
@@ -191,7 +191,7 @@
                             <DataGridTextColumn Binding="{Binding desk}" Width="150" Header="所属调度台" ElementStyle="{StaticResource dgCell}"/>
                             <DataGridTextColumn Binding="{Binding description}" Width="300" Header="描述" ElementStyle="{StaticResource dgCell}"/>
                             
-                            <DataGridTemplateColumn Header="信息" Width="200">
+                            <DataGridTemplateColumn Header="信息" Width="200*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Style="{StaticResource GridBtnInfo}" Command="{Binding Path=name}" Content="查看信息" Click="Btn_UserGrid_Click" Tag="{Binding index}" />
