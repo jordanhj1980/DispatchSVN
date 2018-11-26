@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:DispatchApp"
         mc:Ignorable="d"
         Foreground="#444"
-        Closed="LoadingWindow_Closed"
         ShowInTaskbar="False"
         WindowStyle="None" AllowsTransparency="True"
         WindowStartupLocation="CenterOwner"

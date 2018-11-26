@@ -400,6 +400,7 @@
     <Content Include="Resources\house_512x512.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="USERSkin.dll" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\1.ico">
