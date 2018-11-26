@@ -56,14 +56,12 @@ namespace DispatchApp
         private string m_ServerPort;
         private int m_HeartBeat;
 
-        private LoadingWindow loadWin;
+        private LoadingWindow loadingWin;
 
         /* 调度usercontrol */
         //UserControl1 callUserCtrl;//weituo 20181013
         public CallUserControl callUserCtrl;
         CallManagerControl callManagerCtrl;
-
-
 
         public MainWindow()
         {
@@ -124,10 +122,11 @@ namespace DispatchApp
 
             HeartBeatTimer = new DispatcherTimer();
             HeartBeatTimer.Tick += new EventHandler(HeartBeat);//开启监听
-            HeartBeatTimer.Interval = new TimeSpan(0, 0, m_HeartBeat);             
+            HeartBeatTimer.Interval = new TimeSpan(0, 0, m_HeartBeat);  
+           
+            // 初始化loading界面
+            loadingWin = new LoadingWindow();
         }
-
-
 
         /// <summary>
         ///     初始化信息显示标签界面
@@ -277,7 +276,7 @@ namespace DispatchApp
                     //loadWin.Show();
 
                     if (App.isLogin) { 
-                        LoadingWindow.ShowDialog(this);
+                        loadingWin.ShowDialog(this);
                     }
                 } 
                 else 
@@ -492,20 +491,7 @@ namespace DispatchApp
             // 如果之前为离线状态，并且当前的界面显示为mainwindow
             if (!App.isLogin && this.Visibility == Visibility.Visible)
             {
-                //容器Grid
-                Grid grid = this.Content as Grid;
-                if (grid != null)
-                {
-                    //父级窗体原来的内容
-                    UIElement original = VisualTreeHelper.GetChild(grid, 0) as UIElement;
-                    if (original != null)
-                    {
-                        //将父级窗体原来的内容在容器Grid中移除
-                        grid.Children.Remove(original);
-                        //赋给父级窗体
-                        this.Content = original;
-                    }
-                }
+                loadingWin.reloginOk();
             }
         }
 

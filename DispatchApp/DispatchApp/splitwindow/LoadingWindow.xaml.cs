@@ -26,8 +26,10 @@ namespace DispatchApp
             //m_mainWindow = mainWindow;
         }
 
-        public static void ShowDialog(Window owner)
+        public void ShowDialog(Window owner)
         {
+            Owner = owner;
+
             //蒙板
             Grid layer = new Grid() { Background = new SolidColorBrush(Colors.White), Opacity = 0.3 };
             //父级窗体原来的内容
@@ -40,8 +42,7 @@ namespace DispatchApp
             //将装有原来内容和蒙板的容器赋给父级窗体
             owner.Content = container;
 
-            LoadingWindow ca = new LoadingWindow() { Owner = owner };
-            ca.ShowDialog();
+            ShowDialog();
         }
 
         public void LoadingWindow_Closed(object sender, EventArgs e)
@@ -56,6 +57,11 @@ namespace DispatchApp
                 //赋给父级窗体
                 this.Owner.Content = original;
             }
+        }
+
+        public void reloginOk()
+        {
+            this.Close();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
