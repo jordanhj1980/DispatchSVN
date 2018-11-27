@@ -172,12 +172,36 @@ namespace DispatchApp
             AnsAddKeyBoard ans = JsonConvert.DeserializeObject<AnsAddKeyBoard>(date);
             getDesk.keyboardlist[keyBoardNum.index - 1].index = ans.index;
             Debug.WriteLine("添加应答：" + ans);
+           
+            // 添加成功则跳转界面
+            if (ans.result == "Success")
+            {
+                tabControl_mgt.SelectedIndex = 2;  // 跳转到键盘的树
+            }
+            else
+            {
+                MessageBox.Show("添加调度键盘失败", "提示信息");
+            }
+            
         }
 
         private void AnsDelKeyBoard(string date)
         {
             AnsDelKeyBoard ans = JsonConvert.DeserializeObject<AnsDelKeyBoard>(date);
             Debug.WriteLine(ans);
+
+            if (ans.result == "Success")
+            {
+                getDesk.keyboardlist.Remove(getDesk.keyboardlist[keyBoardNum.index - 1]);
+                keyBoardNum.count--;
+                string sendMsg = JsonConvert.SerializeObject(getDesk);
+                DeskImage(sendMsg);
+                tabControl_mgt.SelectedIndex = 2;  // 跳转到键盘的树
+            }
+            else 
+            {
+                MessageBox.Show("删除调度键盘失败","提示信息");
+            }
         }
 
         /// <summary>
@@ -331,35 +355,6 @@ namespace DispatchApp
             ClearKeyBoardShow();
             // 跳到新键盘详细信息界面
             tabControl_mgt.SelectedIndex = 3;
-        }
-
-        /// <summary>
-        /// 删除调度键盘
-        /// </summary>
-        private void desk_delete_Click()
-        {
-            try
-            {
-                // 删除调度键盘协议赋值，并发送删除指令
-                //DelKeyBoard delKeyBoard = new DelKeyBoard();
-                //delKeyBoard.sequence = getDesk.sequence;
-                //delKeyBoard.index = getDesk.keyboardlist[keyBoardNum.index - 1].index;
-                //string strMsg = "MAN#DELKEYBOARD#" + JsonConvert.SerializeObject(delKeyBoard);
-                //mainWindow.ws.Send(strMsg);
-
-                // 调度键盘结构体更新
-                getDesk.keyboardlist.Remove(getDesk.keyboardlist[keyBoardNum.index - 1]);
-                keyBoardNum.count--;
-
-                // 调度键盘主界面更新
-                string sendMsg = JsonConvert.SerializeObject(getDesk);
-                DeskImage(sendMsg);
-                tabControl_mgt.SelectedIndex = 2;  // 跳转到键盘的树
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.Message + "b");
-            }
         }
 
         /// <summary>
@@ -731,7 +726,6 @@ namespace DispatchApp
             string strMsg = "MAN#ADDKEYBOARD#" + sendMsg;
             mainWindow.ws.Send(strMsg);
             Debug.WriteLine("完成新界面" + strMsg); // change order by twinkle 20181122
-            tabControl_mgt.SelectedIndex = 2;  // 跳转到键盘的树
         }
 
         private void btn_hotline_delete_Click(object sender, RoutedEventArgs e)
