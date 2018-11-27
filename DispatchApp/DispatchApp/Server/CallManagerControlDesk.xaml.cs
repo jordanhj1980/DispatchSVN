@@ -22,7 +22,6 @@ using System.Runtime.InteropServices;
 using WebSocket4Net;
 using Newtonsoft.Json;
 
-
 namespace DispatchApp
 {
     public partial class CallManagerControl : UserControl
@@ -167,11 +166,14 @@ namespace DispatchApp
         /// <summary>
         /// 添加调度键盘的应答
         /// </summary>
-        private void AnsAddKeyBoard(string date)
+        private void AnsAddKeyBoard(string data)
         {
-            AnsAddKeyBoard ans = JsonConvert.DeserializeObject<AnsAddKeyBoard>(date);
-            getDesk.keyboardlist[keyBoardNum.index - 1].index = ans.index;
-            Debug.WriteLine("添加应答：" + ans);
+            AnsAddKeyBoard ans = JsonConvert.DeserializeObject<AnsAddKeyBoard>(data);
+            //getDesk.keyboardlist[keyBoardNum.index - 1].index = ans.index;
+            Debug.WriteLine("添加键盘应答：" + data);
+            SearchDesk searchDesk = new SearchDesk() { sequence = GlobalFunAndVar.sequenceGenerator() };
+            string strMsg = "MAN#GETALLKEYBOARD#" + JsonConvert.SerializeObject(searchDesk);
+            mainWindow.ws.Send(strMsg);
            
             // 添加成功则跳转界面
             if (ans.result == "Success")
@@ -185,10 +187,13 @@ namespace DispatchApp
             
         }
 
-        private void AnsDelKeyBoard(string date)
+        private void AnsDelKeyBoard(string data)
         {
-            AnsDelKeyBoard ans = JsonConvert.DeserializeObject<AnsDelKeyBoard>(date);
-            Debug.WriteLine(ans);
+            AnsDelKeyBoard ans = JsonConvert.DeserializeObject<AnsDelKeyBoard>(data);
+            Debug.WriteLine("删除键盘应答："+data);
+            SearchDesk searchDesk = new SearchDesk() { sequence = GlobalFunAndVar.sequenceGenerator() };
+            string strMsg = "MAN#GETALLKEYBOARD#" + JsonConvert.SerializeObject(searchDesk);
+            mainWindow.ws.Send(strMsg);
 
             if (ans.result == "Success")
             {
@@ -209,6 +214,8 @@ namespace DispatchApp
         /// </summary>
         public GetDesk getDesk = new GetDesk();
         public KeyBoardNum keyBoardNum = new KeyBoardNum();
+        public AllKeyBoard allkeydata = new AllKeyBoard();//hj 2018.11.26
+        //public KeyBoardManageViewModel keyboardmanagedata = new KeyBoardManageViewModel();
         private void DeskImage(string date)
         {
             // 一棵树
@@ -225,6 +232,9 @@ namespace DispatchApp
 
             /* 调度台查询到的信息 */
             getDesk = JsonConvert.DeserializeObject<GetDesk>(date); // 一个调度台
+            allkeydata = JsonConvert.DeserializeObject<AllKeyBoard>(date);//hj 2018.11.26获取所有调度键盘
+            keyboardmanagetab.keyboardmanagedata.KeyboardList = allkeydata.keyboardlist;
+
             Debug.WriteLine("********查询的调度台消息:" + date);
             keyBoardNum.count = getDesk.keyboardlist.Count;         // 调度台里的调度键盘个数
             Debug.WriteLine("********查询的调度键盘个数:" + keyBoardNum.count);
@@ -377,12 +387,26 @@ namespace DispatchApp
         /// 添加分组左侧页面
         /// </summary>
         public GetAllRegister getAllRegister = new GetAllRegister();
+        public AllDev alldev = new AllDev();
         private void ShowGroupMember(String date)
         {
             try
             {
                 /* 比较临时存储的obj的sequence是否一致 */
                 getAllRegister = JsonConvert.DeserializeObject<GetAllRegister>(date);   // 查到的所有注册电话
+                alldev = JsonConvert.DeserializeObject<AllDev>(date);  //hj 2018.11.26获取所有注册电话
+                List<ExtDevice> alldevlist = new List<ExtDevice>( alldev.DevList.ToList());
+                
+                List<ExtDevice> allphonelist = alldevlist.FindAll(delegate(ExtDevice ext) { return ext.type.Equals("ext"); });
+                allphonelist = allphonelist.OrderBy(e => e.callno).ToList();
+                List<ExtDevice> alltrunklist = alldevlist.FindAll(delegate(ExtDevice ext) { return ext.type.Equals("trunk"); });
+                alltrunklist = alltrunklist.OrderBy(e => e.callno).ToList();
+                
+                //keyboardmanagetab.keyboardmanagedata.AllDevList = alldev.DevList;
+
+                keyboardmanagetab.keyboardmanagedata.AllDevList = new ObservableCollection<ExtDevice>(alldevlist);
+                keyboardmanagetab.keyboardmanagedata.AllPhoneList = new ObservableCollection<ExtDevice>(allphonelist);
+
                 if (getAllRegister.sequence == searchAllRegest.sequence)
                 {
                     RegesterStack.Items.Clear();

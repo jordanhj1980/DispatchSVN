@@ -134,13 +134,17 @@ namespace DispatchApp
                 }
             }
         }*/
-
+        //public KeyBoardManageViewModel keyboardmanagedata; //调度键盘界面数据
+        KeyBoardManage keyboardmanagetab;
         public CallManagerControl(MainWindow mmainWindow)
         {
             DataContext = this;
 
             mainWindow = mmainWindow;
+            //keyboardmanagetab.keyboardmanagedata = new KeyBoardManageViewModel();
             InitializeComponent();
+            keyboardmanagetab = new KeyBoardManage(mainWindow);
+            this.keymanage.Content = keyboardmanagetab;
 
             // 初始化左侧资源服务列表
             //ToolTipTestWindow();
@@ -360,8 +364,10 @@ namespace DispatchApp
 
                     break;
                 case "desk":
-                    tabControl_mgt.SelectedIndex = 2;
+                    //tabControl_mgt.SelectedIndex = 2;
+                    tabControl_mgt.SelectedIndex = 4;
                     // 查询调度键盘 20181024 xiaozi
+                    //keyboardmanagetab.DataContext = keyboardmanagedata;
                     InitialDeskes();
                     break;
                 default:

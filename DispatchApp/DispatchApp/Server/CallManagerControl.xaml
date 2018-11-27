@@ -460,6 +460,9 @@
            
                         </Grid>
                     </TabItem>
+            <TabItem x:Name="keymanage" Background="{x:Null}" Header="tabItem4" Visibility="Collapsed"  >
+                <!--<local:KeyBoardManage x:Name="keyboardmanagetab" />-->
+            </TabItem>
             </TabControl>
             
             

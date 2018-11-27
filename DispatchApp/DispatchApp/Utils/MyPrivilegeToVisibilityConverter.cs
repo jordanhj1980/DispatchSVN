@@ -24,7 +24,7 @@ namespace DispatchApp
                 return Visibility.Visible;
             }
 
-            return (value.ToString() == parameter.ToString());
+            //return (value.ToString() == parameter.ToString());
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
