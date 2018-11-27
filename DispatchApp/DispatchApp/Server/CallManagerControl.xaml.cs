@@ -64,9 +64,10 @@ namespace DispatchApp
         }
 
         private MainWindow mainWindow; // 20181024 xiaozi
-
+        
         public event CtrlSwitchHandler CtrlSwitchEvent;
         List<TestClass> classlist;
+
 
         // 软交换设备列表
         ObservableCollection<SWDEV> swList;
@@ -208,7 +209,6 @@ namespace DispatchApp
             m_UserList = new ObservableCollection<User>();
 
             switchGrid.ItemsSource = swList;
-            //switchGrid.MouseDown += DataGrid_MouseDown;
             switchGrid.SelectionChanged += DataGrid_Click;
 
             userGrid.ItemsSource = m_UserList;
@@ -254,7 +254,7 @@ namespace DispatchApp
                 case "GETALLKEYBOARD":
                     DeskImage(data);
                     break;
-                case "DELALLKEYBOARD":
+                case "DELKEYBOARD":
                     AnsDelKeyBoard(data);
                     break;
                 case "ADDSW":
@@ -291,35 +291,6 @@ namespace DispatchApp
         }
         /// ==============================================================
         
-
-        /// <summary>
-        /// 删除调度键盘
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btn_desk_delete_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                getDesk.keyboardlist.Remove(getDesk.keyboardlist[keyBoardNum.index - 1]);
-                keyBoardNum.count--;
-
-                string sendMsg = JsonConvert.SerializeObject(getDesk);
-                DeskImage(sendMsg);
-
-                string strMsg = "MAN#DELKEYBOARD#" + sendMsg;
-                mainWindow.ws.Send(strMsg);
-
-
-                //tabControl1.SelectedIndex = 2;  // 跳转到键盘的树
-                tabControl_mgt.SelectedIndex = 2;  // 跳转到键盘的树
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.Message + "b");
-            }
-        }
-
 
         public CreateDeskWindow myprofile = new CreateDeskWindow();
         private void GetDeskMouseDown(object sender, MouseButtonEventArgs e)
@@ -849,7 +820,7 @@ namespace DispatchApp
             else
             {
                 delDeskReq(getDesk.keyboardlist[keyBoardNum.index - 1].index.ToString());
-                desk_delete_Click();
+                //desk_delete_Click();
             }
         }
         
