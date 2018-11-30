@@ -128,14 +128,24 @@
     <Compile Include="classtype\JSONStruct.cs" />
     <Compile Include="classtype\PeerCallBack.cs" />
     <Compile Include="classtype\propertyNodeItem.cs" />
+    <Compile Include="Client\CallUserControlOther.cs" />
     <Compile Include="Client\CallUserControl_par.xaml.cs" />
     <Compile Include="Client\Convert.cs" />
     <Compile Include="Client\DependencyPropertyClass.cs" />
+    <Compile Include="Client\Drawers.xaml.cs">
+      <DependentUpon>Drawers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\OutLine.xaml.cs">
+      <DependentUpon>OutLine.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Client\LogWindow.xaml.cs">
       <DependentUpon>LogWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="CallBoard.xaml.cs">
       <DependentUpon>CallBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\NightServerCloseBtn.xaml.cs">
+      <DependentUpon>NightServerCloseBtn.xaml</DependentUpon>
     </Compile>
     <Compile Include="Client\RelayCall.xaml.cs">
       <DependentUpon>RelayCall.xaml</DependentUpon>
@@ -143,6 +153,7 @@
     <Compile Include="Client\KeyCall.xaml.cs">
       <DependentUpon>KeyCall.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Client\OutLineViewModel.cs" />
     <Compile Include="Server\KeyBoardManage.xaml.cs">
       <DependentUpon>KeyBoardManage.xaml</DependentUpon>
     </Compile>
@@ -189,9 +200,6 @@
     <Compile Include="Server\Window2.xaml.cs">
       <DependentUpon>Window2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Server\Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Splitwindow\CreateAlbum.xaml.cs">
       <DependentUpon>CreateAlbum.xaml</DependentUpon>
     </Compile>
@@ -214,6 +222,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\Drawers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Client\OutLine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Client\LogWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -221,6 +237,10 @@
     <Page Include="CallBoard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Client\NightServerCloseBtn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Client\RelayCall.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -303,10 +323,6 @@
     <Page Include="Server\Window2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Server\Window1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Splitwindow\CreateAlbum.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -405,6 +421,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\house_512x512.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\optionWhite.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="USERSkin.dll" />

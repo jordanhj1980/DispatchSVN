@@ -23,6 +23,7 @@ using Newtonsoft.Json;
 
 using System.Threading;
 using System.Diagnostics;
+using MaterialDesignThemes.Wpf.Transitions;
 
 // 终端用户界面
 namespace DispatchApp
@@ -118,16 +119,16 @@ namespace DispatchApp
     {
         private MainWindow mainWindow;
 
+        public CallBoard callBoard;
+        //public OutLine outLine;
+
         public string serverCall = "0";
         public string clientCall = "0";
         public string nightId = "213";
         public string trunkCall;
-        public List<GroupData> PageKey = new List<GroupData>();     // 键权电话
-        public List<GroupData> PageRelay = new List<GroupData>();   // 中继电话
-        public List<GroupData> PageRadio = new List<GroupData>();   // 广播电话
+        
 
         public List<KeyCallDate> keyCallDateList = new List<KeyCallDate>(); // 存所有键权电话信息
-
         public RelayState relayState = new RelayState();
         /* add by twinkle 20181106 start  */
         public List<keyphoneinfo> m_keyphone;
@@ -139,9 +140,17 @@ namespace DispatchApp
         public LogWindow logWindow;
 
 
+
+        /* add by xiaozi 20181128 start  */
+        public OutLineCall outLineCall;
+        /* add by xiaozi 20181128 end  */
+
+
         public CallUserControl(MainWindow mmainWindow)
         {
             mainWindow = mmainWindow;
+            callBoard = new CallBoard(this);
+            //outLine = new OutLine();
             InitializeComponent();
 
             DataContext = this;
@@ -172,6 +181,14 @@ namespace DispatchApp
             m_callQueue = new ObservableCollection<UI_CallSession>();
             lbCallQueue.ItemsSource = m_callQueue;
             /* added by twinkle 20181107 end */
+
+            /* add by xiaozi 20181128 start  */
+            outLineCall = new OutLineCall();
+            /* add by xiaozi 20181128 end  */
+
+
+
+
         }
 
         private void ClossCDR()
@@ -203,6 +220,7 @@ namespace DispatchApp
         {
             System.Windows.Application.Current.Dispatcher.Invoke(new outputDelegate(getButtons), msg);
         }
+
         private void getButtons(List<GroupData> clickpage)
         {
             // 查询各组名称
@@ -211,125 +229,48 @@ namespace DispatchApp
             foreach (var item in queryResuilts)
             {
                 groupName.Add(item);
-                //Debug.WriteLine(item);
             }
 
-            // 组的总数
-            int groupNum = groupName.Count;
-            
-            // 给各组电话重排序
-            List<List<GroupData>> PageChange = new List<List<GroupData>>();
-            // 确认键权电话所在的组
-            int k0 = 0;
-            // 确认中继电话所在的组
-            int kT = 0;
-            // 确认广播电话所在的组
-            int kB = 0;
-            // 查找键权电话/中继电话/广播电话所在的位置
-            for (int i = 0; i < groupNum; i++)
+            KeyCallListBox.Items.Clear();           // 清理键权电话区
+            tabCtrl_User.Items.Clear();             // 清理直呼键区
+
+            // 找到键权电话/中继电话/广播电话/用户电话
+            foreach (string name in groupName)
             {
-                PageChange.Add(clickpage.FindAll((GroupData s) => s.groupid == groupName[i]));
-                if (groupName[i] == "0")  // 重要：键权电话组的组名为“0”，可能需要改
+                List<GroupData> item = clickpage.FindAll((GroupData s) => s.groupid == name);
+                switch (name)
                 {
-                    k0 = i;
-                }
-                else
-                {
-                    if (groupName[i] == "T")
-                    {
-                        kT = i;
-                        
-                    }
-                    else
-                    {
-                        if (groupName[i] == "B")
-                        {
-                            kB = i;
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                        
-                    }
+                    case "0":
+                        PageKey = item;
+                        c_callTypeInfo.status = e_CallType.Key;
+                        SetKeyCall();
+                        break;
+                    case "T":
+                        PageRelay = item;
+                        c_callTypeInfo.status = e_CallType.RELAY;
+                        SetRelayCall();
+                        break;
+                    case "B":
+                        PageRadio = item;
+                        c_callTypeInfo.status = e_CallType.RADIO;
+                        SetRadioCall();
+                        break;
+                    default:
+                        s_ListUser user = new s_ListUser();
+                        user.GroupUser = item;
+                        user.Header = name;
+                        PageUser.Add(user);
+                        c_callTypeInfo.status = e_CallType.USER;
+                        SetUserCall();
+                        break;
                 }
             }
-            
-            int iK = 3;
-            for (int i = 0; i < groupNum; i++)
-            {
-                if (k0 == i)// 将键权电话放在第一组,中继电话放在第二组
-                {
-                    PageChange[0] = clickpage.FindAll((GroupData s) => s.groupid == groupName[i]);
-                }
-                else
-                {
-                    if (kT == i)// 将中继电话放在第二组
-                    {
-                        PageChange[1] = clickpage.FindAll((GroupData s) => s.groupid == groupName[i]);
-                    }
-                    else
-                    {
-                        if (kB == i)// 将广播电话放在第三组
-                        {
-                            PageChange[2] = clickpage.FindAll((GroupData s) => s.groupid == groupName[i]);
-                            PageRadio = PageChange[2];
-                        }
-                        else
-                        {
-                            PageChange[iK] = clickpage.FindAll((GroupData s) => s.groupid == groupName[i]);
-                            iK++;
-                        }                     
-                    }
-                }
-            }
-           
-                    
-            //第一组电话  键权电话
-            //PageKey = clickpage.FindAll((GroupData s) => s.groupid == groupName[0]);
-            PageKey = PageChange[0];
+        
             int KeyNum = PageKey.Count;            // 键权电话个数
-            KeyCallListBox.Items.Clear();
-            for (int i = 0; i < 4; i++ )
-            {
-                KeyCall keycall = new KeyCall();
-                if (i < KeyNum)
-                {
-                    keycall.KeyText.Text = PageKey[i].extid;
-                    keycall.index = i + 1;
-                    keycall.ImageSouresHandle += new KeyCall.ImageEventHandler(KeyClickEvent);
-                    string strMsg = "CMD#GETSTATE#" + keycall.KeyText.Text;  //获取电话初始状态
-                    mainWindow.ws.Send(strMsg);
-                    Debug.WriteLine("查键权电话状态" + keycall.KeyText.Text);
-                    // 清除夜服设置
-                    call tellCall = new call();
-                    tellCall.fromid = PageKey[i].extid;
-                    tellCall.toid = nightId;
-                    strMsg = "CMD#NightServiceOff#" + JsonConvert.SerializeObject(tellCall);
-                    mainWindow.ws.Send(strMsg);
-                    // 记录键权电话信息。
-                    KeyCallDate keyCallDate = new KeyCallDate();
-                    keyCallDate.id = PageKey[i].extid;
-                    keyCallDate.index = i + 1;
-                    keyCallDate.nightId = nightId;
-                    keyCallDateList.Add(keyCallDate);
-                }
-                else
-                {
-                    keycall.KeyText.Text = "null";
-                }
-
-                KeyCallListBox.Items.Add(keycall);  
-            }
-                
-
-            // 第二组电话 中继电话
-            PageRelay = PageChange[1];
-
-
+            
             /* add by twinkle start */
             //int keyphoneNum = PageKey.Count;
-            int keyphoneNum = 4;
+            int keyphoneNum = 2;
             for (int i = 0; i < keyphoneNum; i++)
             {
                 if (i < KeyNum)
@@ -345,160 +286,6 @@ namespace DispatchApp
                 m_keyphone[i].Status = KeyStatus.IDLE;
             }
             /* add by twinkle end */
-
-            tabCtrl_User.Items.Clear();
-            //其余组作为终端电话
-            for (int i = 3; i < groupNum; i++)
-            {
-                TabItem ti = new TabItem(); //造一个新选项卡
-                ti.Header = groupName[i];   //新选项卡的名字
-                tabCtrl_User.Items.Add(ti); //将造好的新选项卡扔进TabControl1里
-
-                List<GroupData> PageNow = new List<GroupData>();  
-                //PageNow = clickpage.FindAll((GroupData s) => s.groupid == groupName[i]);//把相同组的用户放在同一页面
-                PageNow = PageChange[i];
-                int buttonNum = PageNow.Count;            //当前页面用户总数
-
-                ListBox MyWrapPanel2 = new ListBox();
-                MyWrapPanel2.Style = FindResource("WrapListBoxStyle") as Style;     // 设定ListBox样式为定义好的样式 WrapListBoxStyle
-
-                for (int Idx = 0; Idx < buttonNum; Idx++) // 布置页面按钮
-                {
-                    string name = PageNow[Idx].extid;
-                    string called = "no";
-                    UserCall userCall = new UserCall();
-
-                    userCall.setContent(name);                        //Id
-                    userCall.SetValue(called);                        //被叫号码
-                    MyWrapPanel2.Items.Add(userCall);
-               
-                    userCall.ImageSouresHandle += new UserCall.ImageEventHandler(ImageEvent);
-                    userCall.ImageSouresDoubleHandle += new UserCall.ImageEventHandler(ImageDoubleEvent);
-                    string strMsg = "CMD#GETSTATE#" + name;           //获取电话初始状态
-                    //Thread.Sleep(100);
-                    mainWindow.ws.Send(strMsg);
-                }
-
-                ti.Content = MyWrapPanel2;
-                // 每造一个新窗口便默认突出显示为新窗口
-                tabCtrl_User.SelectedIndex = 0;
-            }
-        }
-
-        /// <summary>
-        /// 键权电话单击事件
-        /// </summary>
-        /// <param name="word"></param>
-        private void KeyClickEvent(string word)
-        {
-            serverCall = word;
-            int idex = 0;
-
-            //单击高亮
-            List<KeyCall> pageKeyCall = FindChirldHelper.FindVisualChild<KeyCall>(this);
-            foreach (var item in pageKeyCall)
-            {
-                if (word == item.KeyText.Text)
-                {
-                    item.KeyButton.BorderBrush = Brushes.Yellow;
-                    idex = item.index;
-                }
-                else
-                {
-                    item.KeyButton.BorderBrush = Brushes.Gray;
-                }
-            }
-
-            // 指示当前选择的键权电话index
-            m_keyIndex = idex-1;
-        }
-
-        /// <summary>
-        /// 点击事件进行传用户号码
-        /// 对控件高亮，其余变暗
-        /// </summary>
-        private void ImageEvent(string word)
-        {
-            clientCall = word;
-            Debug.WriteLine("clientCall" + clientCall);
-
-            List<UserCall> firstPageUserCall = FindChirldHelper.FindVisualChild<UserCall>(this);
-
-            //string upName = "name" + word;
-            foreach (var item in firstPageUserCall)
-            {
-                //UserCall btn = new UserCall();
-                if (word == item.phoneNum)
-                {
-                    item.ButtonBack.BorderBrush = Brushes.Yellow;
-                }
-                else
-                {
-                    item.ButtonBack.BorderBrush = Brushes.Gray;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 遍历容器内控件
-        /// </summary>
-        public static class FindChirldHelper
-        {
-            public static List<T> FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
-            {
-                try
-                {
-                    List<T> TList = new List<T> { };
-                    for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
-                    {
-                        DependencyObject child = VisualTreeHelper.GetChild(obj, i);
-                        if (child != null && child is T)
-                        {
-                            TList.Add((T)child);
-                            List<T> childOfChildren = FindVisualChild<T>(child);
-                            if (childOfChildren != null)
-                            {
-                                TList.AddRange(childOfChildren);
-                            }
-                        }
-                        else
-                        {
-                            List<T> childOfChildren = FindVisualChild<T>(child);
-                            if (childOfChildren != null)
-                            {
-                                TList.AddRange(childOfChildren);
-                            }
-                        }
-                    }
-                    return TList;
-                }
-                catch (Exception ee)
-                {
-                    MessageBox.Show(ee.Message + "a");
-                    return null;
-                }
-            }
-        }
-
-        private void ImageDoubleEvent(string word)
-        {
-            if ("0" == serverCall)
-            {
-                MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
-            }
-            else
-            {
-                if ("0" == clientCall)
-                {
-                    MessageBox.Show("当前终端电话空\r\n请点击终端电话！", "呼叫信息");
-                }
-                else
-                {
-                    call tellCall = new call() { fromid = serverCall, toid = clientCall };
-                    string strMsg = "CMD#Call#" + JsonConvert.SerializeObject(tellCall);
-                    mainWindow.ws.Send(strMsg);
-                }
-            }
         }
         //============================================================
 
@@ -663,28 +450,35 @@ namespace DispatchApp
             }
 
             KeyCall item = new KeyCall();
-            for (int i = 0; i < 4; i++ )
+            for (int i = 0; i < 2; i++ )
             {
                 item = (KeyCall)KeyCallListBox.Items[i];
                 if (clientNum == item.KeyText.Text)
                 {
                     item.CurrentState = state;
+                    mainWindow.CurrentState = state;
                     keyCallDateList[i].state = state;
                     if ("BUSY" == state)
                     {
                         KeyClickEvent(clientNum); // 摘机同单击
-                        //keyCallDateList[i].nightId = "213";
-                        //serverCall = clientNum;                 // 摘机即获得键权电话
-                        if ("CMD#NightServiceOn#" == keyCallDateList[i].nightState)
-                        {
-                            call tellCall = new call() { fromid = "0", toid = "0" };
-                            tellCall.fromid = keyCallDateList[i].id;
-                            tellCall.toid = keyCallDateList[i].nightId;
-                            string strMsg = "CMD#NightServiceOff#" + JsonConvert.SerializeObject(tellCall);
-                            mainWindow.ws.Send(strMsg);
-                            MessageBox.Show("键权话机" + keyCallDateList[i].id + "\r\n" + "夜服关闭" + "夜服信息");
-                        }
-                        keyCallDateList[i].nightState = "CMD#NightServiceOff#";
+
+                        nightServerCloseBtn.NightServerClose.Command.Execute(nightServerCloseBtn.NightServerClose.CommandTarget);           // 自动触发button命令事件。 
+                        //CommandBtn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));  // 自动触发button单击事件。
+                    }
+
+                    if ("ALERT" == state)
+                    {
+                        mainWindow.ShowKeyLabel.Content = "键权电话" + tempName.fromid + "呼叫" + tempName.toid;
+                        mainWindow.ShowKeyLabel.Foreground = Brushes.Red;
+                    }
+                    else if ("RING" == state)
+                    {
+                        mainWindow.ShowKeyLabel.Content = "来电显示：" + tempName.toid + "呼叫" + tempName.fromid;
+                        mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                    }
+                    else
+                    {
+                        mainWindow.ShowKeyLabel.Content = "";
                     }
                 }
                 else
@@ -701,83 +495,92 @@ namespace DispatchApp
         /// <param name="num"></param>
         private void RelayCommondWord_State(string state, string num)
         {
-            string trunkNum;
-            callRel tempName = new callRel();
-            RelayCall temp = new RelayCall();
-            switch (state)
+            foreach(RelayNum item in mainWindow.outLine.outLineViewModel.outLineCall.relayNumList)
             {
-                case "Ready":
-                case "Active":
-                case "Progress":
-                case "Offline":
-                case "Offhook":
-                    trunkNum = num.ToString();
-                    FindRelayCall(trunkNum);
-                    temp.ButtonRelay.Background = Brushes.Yellow;
-                    //temp.RelaylabelPoleId.Background = state;
-                    break;
-                case "BUSY":
-                    trunkNum = num.ToString();
-                    FindRelayCall(trunkNum);
-                    temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.ButtonRelay.Background = Brushes.Yellow;
-                    break;
-                case "IDLE":
-                    trunkNum = num.ToString();
-                    FindRelayCall(trunkNum);
-                    temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.ButtonRelay.Background = Brushes.Green;
-                    break;
-                case "ONLINE":
-                    trunkNum = num.ToString();
-                    FindRelayCall(trunkNum);
-                    temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.ButtonRelay.Background = Brushes.Green;
-                    break;
-                case "OFFLINE":
-                    trunkNum = num.ToString();
-                    FindRelayCall(trunkNum);
-                    temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.ButtonRelay.Background = Brushes.Gray;
-                    break;
-                case "FAILED":
-                    tempName = JsonConvert.DeserializeObject<callRel>(num);
-                    FindRelayCall(tempName.trunkid);
-                    temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.ButtonRelay.Background = Brushes.Gray;
-                    break;
-                case "BYE":
-                    tempName = JsonConvert.DeserializeObject<callRel>(num);
-                    FindRelayCall(tempName.trunkid);
-                    temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.ButtonRelay.Background = Brushes.Green;
-                    break;
-                case "RING":
-                    tempName = JsonConvert.DeserializeObject<callRel>(num);
-                    FindRelayCall(tempName.trunkid);
-                    temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.ButtonRelay.Background = Brushes.Blue;
-                    break;
-                case "ALERT":
-                    tempName = JsonConvert.DeserializeObject<callRel>(num);
-                    FindRelayCall(tempName.trunkid);
-                    temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.ButtonRelay.Background = Brushes.Blue;
-                    break;
-                case "ANSWER":
-                    tempName = JsonConvert.DeserializeObject<callRel>(num);
-                    FindRelayCall(tempName.trunkid);
-                    temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.ButtonRelay.Background = Brushes.Red;
-                    break;
-                case "ANSWERED":
-                    tempName = JsonConvert.DeserializeObject<callRel>(num);
-                    FindRelayCall(tempName.trunkid);
-                    temp = (RelayCall)mainWindow.callBoard.RelayList.Items[relayCallStateIdex];
-                    temp.ButtonRelay.Background = Brushes.Red;
-                    break;
-                default: break;
+                if (item.relayNum == num)
+                {
+                    item.strRelayState = state;
+                    Debug.WriteLine("中继电话"+num+"状态："+state);
+                }
             }
+            
+            //string trunkNum;
+            //callRel tempName = new callRel();
+            //RelayCall temp = new RelayCall();
+            //switch (state)
+            //{
+            //    case "Ready":
+            //    case "Active":
+            //    case "Progress":
+            //    case "Offline":
+            //    case "Offhook":
+            //        trunkNum = num.ToString();
+            //        FindRelayCall(trunkNum);
+            //        //temp.ButtonRelay.Background = Brushes.Yellow;
+            //        //temp.RelaylabelPoleId.Background = state;
+            //        break;
+            //    case "BUSY":
+            //        trunkNum = num.ToString();
+            //        FindRelayCall(trunkNum);
+            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
+            //        temp.ButtonRelay.Background = Brushes.Yellow;
+            //        break;
+            //    case "IDLE":
+            //        trunkNum = num.ToString();
+            //        FindRelayCall(trunkNum);
+            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
+            //        temp.ButtonRelay.Background = Brushes.Green;
+            //        break;
+            //    case "ONLINE":
+            //        trunkNum = num.ToString();
+            //        FindRelayCall(trunkNum);
+            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
+            //        temp.ButtonRelay.Background = Brushes.Green;
+            //        break;
+            //    case "OFFLINE":
+            //        trunkNum = num.ToString();
+            //        FindRelayCall(trunkNum);
+            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
+            //        temp.ButtonRelay.Background = Brushes.Gray;
+            //        break;
+            //    case "FAILED":
+            //        tempName = JsonConvert.DeserializeObject<callRel>(num);
+            //        FindRelayCall(tempName.trunkid);
+            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
+            //        temp.ButtonRelay.Background = Brushes.Gray;
+            //        break;
+            //    case "BYE":
+            //        tempName = JsonConvert.DeserializeObject<callRel>(num);
+            //        FindRelayCall(tempName.trunkid);
+            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
+            //        temp.ButtonRelay.Background = Brushes.Green;
+            //        break;
+            //    case "RING":
+            //        tempName = JsonConvert.DeserializeObject<callRel>(num);
+            //        FindRelayCall(tempName.trunkid);
+            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
+            //        temp.ButtonRelay.Background = Brushes.Blue;
+            //        break;
+            //    case "ALERT":
+            //        tempName = JsonConvert.DeserializeObject<callRel>(num);
+            //        FindRelayCall(tempName.trunkid);
+            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
+            //        temp.ButtonRelay.Background = Brushes.Blue;
+            //        break;
+            //    case "ANSWER":
+            //        tempName = JsonConvert.DeserializeObject<callRel>(num);
+            //        FindRelayCall(tempName.trunkid);
+            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
+            //        temp.ButtonRelay.Background = Brushes.Red;
+            //        break;
+            //    case "ANSWERED":
+            //        tempName = JsonConvert.DeserializeObject<callRel>(num);
+            //        FindRelayCall(tempName.trunkid);
+            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
+            //        temp.ButtonRelay.Background = Brushes.Red;
+            //        break;
+            //    default: break;
+            //}
         }
 
         /// <summary>
@@ -786,9 +589,9 @@ namespace DispatchApp
         public int relayCallStateIdex;
         private void FindRelayCall(string callNum)
         {
-            for (int idex = 0; idex < mainWindow.callBoard.RelayList.Items.Count; idex++)
+            for (int idex = 0; idex < callBoard.RelayList.Items.Count; idex++)
             {
-                RelayCall temp = (RelayCall)mainWindow.callBoard.RelayList.Items[idex];
+                RelayCall temp = (RelayCall)callBoard.RelayList.Items[idex];
                 //if (temp.RelaylabelNumFromId.Text.ToString() == callNum)
                 if (temp.ButtonRelay.Content.ToString() == callNum)
                 {
@@ -849,6 +652,7 @@ namespace DispatchApp
                     if (callNum == clientNum)
                     {
                         temp.CurrentState = state;
+
                         switch (state)
                         {
                             case "Ready":
@@ -922,11 +726,11 @@ namespace DispatchApp
             {
                 case "GETCDR":
                     List<DateCDR> itemList = JsonConvert.DeserializeObject<List<DateCDR>>(data);
+                    tabCtrl_User.Visibility = Visibility.Collapsed;
                     tabCtrl_CDR.Items.Clear();
                     logWindow.DetialMsg.ItemsSource = itemList;
                     tabCtrl_CDR.Items.Add(logWindow);
-                    tabCtrl_CDR.Visibility = System.Windows.Visibility.Visible;
-                    //logWin.Show();
+                    tabCtrl_CDR.Visibility = Visibility.Visible;
                     break;
                 default:
                     break;
@@ -1000,15 +804,6 @@ namespace DispatchApp
                     call tellCall = new call() { fromid = serverCall, toid = clientCall };
                     string strMsg = "CMD#Call#" + JsonConvert.SerializeObject(tellCall);
                     mainWindow.ws.Send(strMsg);
-                    //if (MessageBox.Show("主叫：" + serverCall + "\r\n" + "被叫：" + clientCall, "呼叫信息", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
-                    //{
-                    //    mainWindow.ws.Send(strMsg);
-                       
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show("请点击“确认”键后输入正确的键权电话和终端电话", "呼叫信息");
-                    //}
                 }
             }
         }
@@ -1043,10 +838,6 @@ namespace DispatchApp
             }
         }
 
-        //private void Button_I(object sender, RoutedEventArgs e)
-        //{
-
-        //}
 
         private void Button_Hold(object sender, RoutedEventArgs e)
         {
@@ -1070,14 +861,6 @@ namespace DispatchApp
                     call insertCall = new call() { fromid = serverCall, toid = clientCall };
                     string strMsg = "CMD#Bargein#" + JsonConvert.SerializeObject(insertCall);
                     mainWindow.ws.Send(strMsg);
-                    //if (MessageBox.Show("键权电话：" + serverCall + "\r\n" + "被叫：" + clientCall, "强插信息", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
-                    //{
-                    //    mainWindow.ws.Send(strMsg);
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show("请点击“确认”键后输入正确的键权电话和终端电话", "强插信息");
-                    //}
                 }
             }
         }
@@ -1098,14 +881,6 @@ namespace DispatchApp
                 {
                     string strMsg = "CMD#Clear#" + clientCall;
                     mainWindow.ws.Send(strMsg);
-                    //if (MessageBox.Show("强拆终端：" + clientCall, "强拆信息", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
-                    //{
-                    //    mainWindow.ws.Send(strMsg);
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show("请点击“确认”键后输入正确的终端电话", "强拆信息");
-                    //}
                 }
             }
         }
@@ -1131,15 +906,7 @@ namespace DispatchApp
                 {
                     call monitorCall = new call() { fromid = serverCall, toid = clientCall };
                     string strMsg = "CMD#Monitor#" + JsonConvert.SerializeObject(monitorCall);
-                    mainWindow.ws.Send(strMsg);
-                    //if (MessageBox.Show("键权电话：" + serverCall + "\r\n" + "被监听电话：" + clientCall, "强拆信息", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
-                    //{
-                    //    mainWindow.ws.Send(strMsg);
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show("请点击“确认”键后输入正确的键权电话和终端电话", "监听信息");
-                    //}
+                    mainWindow.ws.Send(strMsg);        
                 }
             }
         }
@@ -1159,71 +926,80 @@ namespace DispatchApp
 
         }
 
-
-        //private void Button_KeyRightCallFirst(object sender, RoutedEventArgs e)
-        //{
-        //    serverCall = KeyLeft1.Text;
-        //    KeyCallState.id = KeyLeft1.Text;
-        //    KeyCallState.nightId = "215";
-        //    KeyCallState.index = 0;
-        //    KeyLeftImage1.Source = (new BitmapImage(new Uri("../Resources/phone_on.png", UriKind.RelativeOrAbsolute)));
-        //}
-
-        //private void Button_KeyRightCallSecond(object sender, RoutedEventArgs e)
-        //{
-        //    serverCall = KeyRight1.Text;
-        //    KeyCallState.id = KeyRight1.Text;
-        //    KeyCallState.nightId = "215";
-        //    KeyCallState.index = 1;
-        //    KeyRightImage1.Source = (new BitmapImage(new Uri("../Resources/phone_on.png", UriKind.RelativeOrAbsolute)));
-        //}
-
-        //private void Button_KeyRightCallThird(object sender, RoutedEventArgs e)
-        //{
-        //    serverCall = KeyLeft2.Text;
-        //    KeyCallState.id = KeyLeft2.Text;
-        //    KeyCallState.nightId = "215";
-        //    KeyCallState.index = 2;
-        //    KeyLeftImage2.Source = (new BitmapImage(new Uri("../Resources/phone_on.png", UriKind.RelativeOrAbsolute)));
-        //}
-        //private void Button_KeyRightCallSFourth(object sender, RoutedEventArgs e)
-        //{
-        //    serverCall = KeyRight2.Text;
-        //    KeyCallState.id = KeyRight2.Text;
-        //    KeyCallState.nightId = "215";
-        //    KeyCallState.index = 3;
-        //    KeyRightImage2.Source = (new BitmapImage(new Uri("../Resources/phone_on.png", UriKind.RelativeOrAbsolute)));
-        //}
-
         
-        private void Night_Click(object sender, RoutedEventArgs e)
-        {
-            call tellCall = new call() { fromid = serverCall, toid = clientCall };
+        //private void Night_Click(object sender, RoutedEventArgs e)
+        //{
+        //    DialogTab.SelectedIndex = 0;
+        //    call tellCall = new call() { fromid = serverCall, toid = clientCall };
+        //    string strState = "";
 
+        //    foreach (var item in keyCallDateList)
+        //    {
+        //        if ((serverCall == item.id) && ("0" != item.nightId) && (null != item.nightId))
+        //        {
+        //            strState = "True";
+        //        }
+        //    }
+
+        //    if (strState == "True")
+        //    {
+        //        foreach (var item in keyCallDateList)
+        //        {
+        //            item.nightState = "CMD#NightServiceOn#";     // 键权电话的夜服开启状态
+        //            tellCall.fromid = item.id;
+        //            tellCall.toid = item.nightId;
+        //            string strMsg = "CMD#NightServiceOn#" + JsonConvert.SerializeObject(tellCall);
+        //            mainWindow.ws.Send(strMsg);
+
+        //            mainWindow.ShowKeyLabel.Content = "夜服已开启";
+        //            // MessageBox.Show("键权话机" + item.id + "\r\n" + "夜服开启" + "\r\n" + "呼转至" + item.nightId, "夜服信息");     
+        //        }               
+        //    }
+
+        //    //foreach (var item in keyCallDateList)
+        //    //{
+        //    //    if ((serverCall == item.id) && ("0" != item.nightId) && (null != item.nightId))
+        //    //    { 
+        //    //        //if ("CMD#NightServiceOn#" == item.nightState)
+        //    //        //{
+        //    //        //    tellCall.fromid = item.id;
+        //    //        //    tellCall.toid = item.nightId;
+        //    //        //    item.nightState = "CMD#NightServiceOff#";
+        //    //        //    string strMsg = "CMD#NightServiceOff#" + JsonConvert.SerializeObject(tellCall);
+        //    //        //    mainWindow.ws.Send(strMsg);
+        //    //        //    MessageBox.Show("键权话机" + item.id + "\r\n" + "夜服关闭", "夜服信息");
+        //    //        //    //NightService.Background = ((Brush)new BrushConverter().ConvertFromString("#FFCBC7C7"));
+        //    //        //}
+        //    //        //else
+        //    //        //{    
+        //    //            item.nightState = "CMD#NightServiceOn#";     // 键权电话的夜服开启状态
+        //    //            tellCall.fromid = item.id;
+        //    //            tellCall.toid = item.nightId;
+        //    //            string strMsg = "CMD#NightServiceOn#" + JsonConvert.SerializeObject(tellCall);
+        //    //            mainWindow.ws.Send(strMsg);
+        //    //            MessageBox.Show("键权话机" + item.id + "\r\n" + "夜服开启" + "\r\n" + "呼转至" + item.nightId, "夜服信息");                  
+        //    //        //}
+        //    //    }
+        //    //}
+        //}
+
+        public void CloseNightServer(object sender, RoutedEventArgs e)
+        {
+            call tellCall = new call() { fromid = serverCall, toid = clientCall };  
             foreach (var item in keyCallDateList)
             {
-                if ((serverCall == item.id) && ("0" != item.nightId) && (null != item.nightId))
-                { 
-                    if ("CMD#NightServiceOn#" == item.nightState)
-                    {
-                        tellCall.fromid = item.id;
-                        tellCall.toid = item.nightId;
-                        item.nightState = "CMD#NightServiceOff#";
-                        string strMsg = "CMD#NightServiceOff#" + JsonConvert.SerializeObject(tellCall);
-                        mainWindow.ws.Send(strMsg);
-                        MessageBox.Show("键权话机" + item.id + "\r\n" + "夜服关闭", "夜服信息");
-                        //NightService.Background = ((Brush)new BrushConverter().ConvertFromString("#FFCBC7C7"));
-                    }
-                    else
-                    {    
-                        //NightService.Background = Brushes.Green;              // 夜服按键背景颜色变红
-                        item.nightState = "CMD#NightServiceOn#";     // 键权电话的夜服开启状态
-                        tellCall.fromid = item.id;
-                        tellCall.toid = item.nightId;
-                        string strMsg = "CMD#NightServiceOn#" + JsonConvert.SerializeObject(tellCall);
-                        mainWindow.ws.Send(strMsg);
-                        MessageBox.Show("键权话机" + item.id + "\r\n" + "夜服开启" + "\r\n" + "呼转至" + item.nightId, "夜服信息");                  
-                    }
+                if ("CMD#NightServiceOn#" == item.nightState)
+                {
+                    tellCall.fromid = item.id;
+                    tellCall.toid = item.nightId;
+                    item.nightState = "CMD#NightServiceOff#";
+                    string strMsg = "CMD#NightServiceOff#" + JsonConvert.SerializeObject(tellCall);
+                    mainWindow.ws.Send(strMsg);
+
+                    mainWindow.ShowKeyLabel.Content = "";
+                    mainWindow.ShowKeyLabel.Foreground = Brushes.Red;
+                    //MessageBox.Show("键权话机" + item.id + "\r\n" + "夜服关闭", "夜服信息");
+                    //NightService.Background = ((Brush)new BrushConverter().ConvertFromString("#FFCBC7C7"));
                 }
             }
         }
@@ -1282,9 +1058,9 @@ namespace DispatchApp
         //public int radioState = 0; 
         private void Radio_Click(object sender, RoutedEventArgs e)
         {
-            call callRadio = new call();
+            tabCtrl_User.SelectedIndex = PageRadioIndex;        // 直呼区跳转广播界面
 
-            //if (0 == radioState)
+            call callRadio = new call();          
             foreach (GroupData item in PageRadio)
             {
                 callRadio.fromid = "1";
@@ -1294,10 +1070,66 @@ namespace DispatchApp
             }
         }
 
+        /// <summary>
+        /// 中继直呼
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Relay_Click(object sender, RoutedEventArgs e)
+        {
+            tabCtrl_User.SelectedIndex = PageRelayIndex;        // 直呼区跳转中继直呼界面
+        }
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
 
         }
+
+        /// <summary>
+        /// 外线按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_CallKeyBord(object sender, RoutedEventArgs e)
+        {
+            //DialogTab.SelectedIndex = 1;
+            //card.Children.Clear();
+            //card.Children.Add(exteriorLine);
+            
+            
+            //callBoard.CallText.Text = "";
+
+            //if (callBoard.RelayList.Items.Count == 0)
+            //{
+            //    callBoard.deskTabControl.SelectedIndex = 0;   
+            //    ((TabItem)(callBoard.deskTabControl.Items[0])).Visibility = Visibility.Hidden;
+            //    ((TabItem)(callBoard.deskTabControl.Items[1])).Visibility = Visibility.Hidden;
+            //    callBoard.RelayList.Items.Clear();
+            //    for (int Idx = 0; Idx < PageRelay.Count; Idx++) // 布置页面按钮
+            //    {
+            //        string name = PageRelay[Idx].extid;
+            //        //string called = "no";
+            //        RelayCall relayCall = new RelayCall();
+
+            //        relayCall.setContent(name);                        //Id
+            //        //relayCall.SetValue(called);
+            //        callBoard.RelayList.Items.Add(relayCall);
+
+            //        relayCall.ImageSouresHandle += new RelayCall.ImageEventHandler(callBoard.ReLaySigleEvent);
+            //        string strMsg = "CMD#GETSTATE#" + name;           //获取电话初始状态
+            //        mainWindow.ws.Send(strMsg);
+            //        //relayCall.ImageSouresDoubleHandle += new RelayCall.ImageEventHandler(ReLaDoubleEvent);
+            //    }
+            //}
+            //callBoard.ShowDialog();
+        }
+
+
+
+
+
+
+
 
 
         //=========================================================================

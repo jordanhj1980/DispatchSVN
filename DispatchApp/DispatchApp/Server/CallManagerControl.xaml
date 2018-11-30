@@ -281,7 +281,7 @@
                 <TabItem  Background="{x:Null}" Header="tabItem4" Visibility="Collapsed"  Name="tabAdd_desk"
                     Height="697" HorizontalAlignment="Left" Margin="0,0,0,0"  VerticalAlignment="Top" Width="1557">
                         <Grid>
-                            <GroupBox Header="调度键盘" Height="230" Width="1540" Name="groupjianpan" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,0,0,0" Foreground="White">
+                            <GroupBox Header="调度键盘" Height="130" Width="1540" Name="groupjianpan" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,0,0,0" Foreground="White">
                                 <Grid Background="#FF489E9C" >
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="56" />
@@ -326,7 +326,7 @@
                                 </Grid>
                             </GroupBox>
                             
-                            <GroupBox Header="分组" Height="230" Width="1540" Name="groupfenzu" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,230,0,0" Foreground="White">
+                            <GroupBox Header="分组" Height="330" Width="1540" Name="groupfenzu" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,130,0,0" Foreground="White">
                                 <Grid Background="#FF9E9A6B" >
                                     <TabControl Name="GroupTabCtrl" Background="#FF536F75">
                                         <!--显示界面-->

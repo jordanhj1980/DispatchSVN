@@ -21,13 +21,12 @@ namespace DispatchApp
     /// </summary>
     public partial class CallBoard : Window
     {
-        private MainWindow mainWindow;
+        private CallUserControl callUserCtrl;
 
-        public CallBoard(MainWindow mm)
+        public CallBoard(CallUserControl mm)
         {
-            mainWindow = mm;
+            callUserCtrl = mm;
             InitializeComponent();
-            //WindowStartupLocation = WindowStartupLocation.Manual;
         }
 
         private void CallOne(object sender, RoutedEventArgs e)
@@ -122,37 +121,37 @@ namespace DispatchApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CallKeyBoard(object sender, RoutedEventArgs e)
-        {
-            if ("0" == mainWindow.callUserCtrl.serverCall)
-            {
-                MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
-            }
-            else
-            {
-                //if ((null == mainWindow.callUserCtrl.trunkCall) || ("" == mainWindow.callUserCtrl.trunkCall))
-                //{
-                //    MessageBox.Show("当前中继电话空\r\n请输入中继电话！", "呼叫信息");
-                //}
-                //else if ("" == CallText.Text)
-                //{
-                //    MessageBox.Show("当前呼叫电话空\r\n请输入呼叫电话！", "呼叫信息");
-                //}
-                if ("" == CallText.Text)
-                {
-                    MessageBox.Show("当前呼叫电话空\r\n请输入呼叫电话！", "呼叫信息");
-                }
-                else
-                {
-                    callRel tellCall = new callRel() { fromid = mainWindow.callUserCtrl.serverCall, toid = CallText.Text, trunkid = mainWindow.callUserCtrl.trunkCall };
-                    string strMsg = "CMD#CallOut#" + JsonConvert.SerializeObject(tellCall);
-                    mainWindow.ws.Send(strMsg);
-                    this.Hide();
-                }  
-            }
+        //private void CallKeyBoard(object sender, RoutedEventArgs e)
+        //{
+        //    if ("0" == callUserCtrl.serverCall)
+        //    {
+        //        MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
+        //    }
+        //    else
+        //    {
+        //        //if ((null == mainWindow.callUserCtrl.trunkCall) || ("" == mainWindow.callUserCtrl.trunkCall))
+        //        //{
+        //        //    MessageBox.Show("当前中继电话空\r\n请输入中继电话！", "呼叫信息");
+        //        //}
+        //        //else if ("" == CallText.Text)
+        //        //{
+        //        //    MessageBox.Show("当前呼叫电话空\r\n请输入呼叫电话！", "呼叫信息");
+        //        //}
+        //        if ("" == CallText.Text)
+        //        {
+        //            MessageBox.Show("当前呼叫电话空\r\n请输入呼叫电话！", "呼叫信息");
+        //        }
+        //        else
+        //        {
+        //            callRel tellCall = new callRel() { fromid = callUserCtrl.serverCall, toid = CallText.Text, trunkid = callUserCtrl.trunkCall };
+        //            string strMsg = "CMD#CallOut#" + JsonConvert.SerializeObject(tellCall);
+        //            mainWindow.ws.Send(strMsg);
+        //            this.Hide();
+        //        }  
+        //    }
 
 
-        }
+        //}
 
         /// <summary>
         /// 中继呼叫布置电话，查初始状态
@@ -161,7 +160,7 @@ namespace DispatchApp
         /// <param name="e"></param>
         private void RelayCallKeyBoard(object sender, RoutedEventArgs e)
         {
-            if ("0" == mainWindow.callUserCtrl.serverCall)
+            if ("0" == callUserCtrl.serverCall)
             {
                 MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
             }
@@ -204,7 +203,7 @@ namespace DispatchApp
         /// <param name="word"></param>
         public void ReLaySigleEvent(string word)
         {
-            mainWindow.callUserCtrl.trunkCall = word;
+            callUserCtrl.trunkCall = word;
             List<RelayCall> pageRelayCall = FindChirldHelper.FindVisualChild<RelayCall>(this);
 
             foreach (var item in pageRelayCall)
@@ -220,9 +219,9 @@ namespace DispatchApp
                 }
             }
 
-            callRel tellCall = new callRel() { fromid = mainWindow.callUserCtrl.serverCall, toid = CallText.Text, trunkid = mainWindow.callUserCtrl.trunkCall };
+            callRel tellCall = new callRel() { fromid = callUserCtrl.serverCall, toid = CallText.Text, trunkid = callUserCtrl.trunkCall };
             string strMsg = "CMD#CallOut#" + JsonConvert.SerializeObject(tellCall);
-            mainWindow.ws.Send(strMsg);
+            //mainWindow.ws.Send(strMsg);
             this.Hide();
         }
 

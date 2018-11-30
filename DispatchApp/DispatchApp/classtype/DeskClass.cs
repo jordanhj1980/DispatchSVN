@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace DispatchApp
 {
@@ -195,5 +196,156 @@ namespace DispatchApp
     }
     //============================================================
 
+    /// ========================外线呼叫参数======================
+    public class OutLineCall : NotifyObject
+    {
+        public OutLineCall()
+        {
+            relayNumList = new ObservableCollection<RelayNum>();
+        }
+
+        /// <summary>
+        /// 键权电话号码
+        /// </summary>
+        private string _serverNum;
+        public string serverNum
+        {
+            get { return _serverNum ; }
+            set
+            {
+                if (_serverNum != value)
+                {
+                    _serverNum = value;
+                    OnPropertyChanged("serverNum");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 外线号码
+        /// </summary>
+        private string _outLineNum;
+        public string outLineNum
+        {
+            get { return _outLineNum; }
+            set
+            {
+                if (_outLineNum != value)
+                {
+                    _outLineNum = value;
+                    OnPropertyChanged("outLineNum");
+                }
+            }
+        }
+
+        private ObservableCollection<RelayNum> _relayNumList;
+        public ObservableCollection<RelayNum> relayNumList
+        {
+
+            get { return _relayNumList; }
+            set
+            {
+                SetAndNotifyIfChanged("relayNumList", ref _relayNumList, value);
+            }
+        }
+    }
+
+
+    public class RelayNum : NotifyObject
+    {
+        /// <summary>
+        /// 中继号码
+        /// </summary>
+        private string _relayNum;
+        public string relayNum
+        {
+            get { return _relayNum; }
+            set
+            {
+                if (_relayNum != value)
+                {
+                    _relayNum = value;
+                    OnPropertyChanged("relayNum");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 选中标志
+        /// </summary>
+        private bool _ischecked = false;
+        public bool isSelected
+        {
+            get { return _ischecked; }
+            set
+            {
+                if (_ischecked != value)
+                {
+                    _ischecked = value;
+                    OnPropertyChanged("isSelected");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 选中button的背景所对应的状态
+        /// </summary>
+        private string _relayState;
+        public string strRelayState
+        {
+            get { return _relayState; }
+            set
+            {
+                if (_relayState != value)
+                {
+                    _relayState = value;
+                    OnPropertyChanged("strRelayState");
+                }
+            }
+
+        }
+    }
+
+
+
+    /// <summary>
+    /// 外线拨号记录
+    /// </summary>
+    public class CallLog : NotifyObject
+    {
+        /// <summary>
+        /// 姓名
+        /// </summary>
+        private string _name;
+        public string name
+        {
+            get { return _name; }
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged("name");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 号码
+        /// </summary>
+        private string _num;
+        public string num
+        {
+            get { return _num; }
+            set
+            {
+                if (_num != value)
+                {
+                    _num = value;
+                    OnPropertyChanged("num");
+                }
+            }
+        }
+    }
     /// ==========================查询日志========================
 }

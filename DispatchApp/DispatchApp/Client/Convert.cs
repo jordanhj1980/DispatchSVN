@@ -36,13 +36,13 @@ namespace DispatchApp
                 case "BYE":
                 case "IDLE":
                 case "ONLINE":     
-                    bru_return = ((Brush)new BrushConverter().ConvertFromString("#585F80"));
+                    bru_return = ((Brush)new BrushConverter().ConvertFromString("#585F80"));//
                     break;
                 case "FAILED":
                     bru_return = ((Brush)new BrushConverter().ConvertFromString("#E60416"));
                     break;
                 case "OFFLINE":
-                    bru_return = ((Brush)new BrushConverter().ConvertFromString("#4D4D4F"));//
+                    bru_return = ((Brush)new BrushConverter().ConvertFromString("#4D4D4F"));
                     break;
                 default: break;
             }
@@ -152,6 +152,45 @@ namespace DispatchApp
             {
                 return new BitmapImage();
             }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+
+    /// <summary>
+    /// 来电显示区颜色信息，没用
+    /// </summary>
+    public class ComeCallConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string str_value = value.ToString();
+            Brush bru_return = (Brush)new BrushConverter().ConvertFromString("#4D4D4F");
+
+            switch (str_value)
+            {
+                case "ALERT":
+                    bru_return = ((Brush)new BrushConverter().ConvertFromString("Black"));
+                    break;
+                case "RING":
+                    bru_return = ((Brush)new BrushConverter().ConvertFromString("Red"));
+                    break;
+                case "BUSY":
+                case "ANSWER":
+                case "ANSWERED":
+                case "BYE":
+                case "IDLE":
+                case "ONLINE":                  
+                case "FAILED":                  
+                case "OFFLINE":
+                    break;
+                default: break;
+            }
+            return (bru_return);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

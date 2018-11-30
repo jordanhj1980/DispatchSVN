@@ -25,6 +25,8 @@ using System.Runtime.InteropServices;
 using WebSocket4Net;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.ComponentModel;
+
 
 public struct GroupData
 {
@@ -45,13 +47,15 @@ namespace DispatchApp
     /// </summary>
     public partial class MainWindow 
     {
+        public OutLine outLine;
+
         private DispatcherTimer ShowTimer;
         public DispatcherTimer HeartBeatTimer;
 
         public WebSocket ws;
         private NotifyIcon _notifyIcon = null;
         private LoginWindow logwin;
-        public CallBoard callBoard;
+        
         private string m_ServerIP;
         private string m_ServerPort;
         private int m_HeartBeat;
@@ -63,6 +67,28 @@ namespace DispatchApp
         public CallUserControl callUserCtrl;
         CallManagerControl callManagerCtrl;
 
+        // 状态转换器参数绑定
+        public event PropertyChangedEventHandler PropertyChanged;
+        public string _CurrentState;
+        public string CurrentState
+        {
+            get { return _CurrentState; }
+            set
+            {
+                _CurrentState = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("CurrentState"));
+            }
+        }
+
+        public void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            if (PropertyChanged != null)
+            {
+                //假设属性发生了改变，则触发这个事件
+                PropertyChanged(this, e);
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -70,6 +96,8 @@ namespace DispatchApp
             // 关闭窗口执行前，触发的可以取消关闭窗口的操作
             this.Closing += Window_Closing;
 
+            DataContext = this;
+            CurrentState = "RING";
  
             // 最小化到系统托盘
             //Initial();
@@ -82,7 +110,7 @@ namespace DispatchApp
             //callUserCtrl.CtrlSwitchEvent += new CtrlSwitchHandler(CtrlSwitch_callUser);
             callManagerCtrl = new CallManagerControl(this);
             //callManagerCtrl.CtrlSwitchEvent += new CtrlSwitchHandler(CtrlSwitch_callManager);
-            callBoard = new CallBoard(this);
+            outLine = new OutLine(this);
             //CtrlSwitch_callUser();
 
             // 显示登录界面，验证后返回，未登陆前不会触发Window_Loaded事件
@@ -123,7 +151,7 @@ namespace DispatchApp
             HeartBeatTimer = new DispatcherTimer();
             HeartBeatTimer.Tick += new EventHandler(HeartBeat);//开启监听
             HeartBeatTimer.Interval = new TimeSpan(0, 0, m_HeartBeat);  
-           
+
             // 初始化loading界面
             loadingWin = new LoadingWindow();
         }
@@ -224,7 +252,7 @@ namespace DispatchApp
         void websocket_Opened(object sender, EventArgs e)
         {
             //用登陆界面登陆
-            PeerCallBack.Instance.GetLoginFeedBack(Convert.ToInt32(WINDOWTYPE.LOGINWIN), "connected");            
+            PeerCallBack.Instance.GetLoginFeedBack(Convert.ToInt32(WINDOWTYPE.LOGINWIN), "connected");
         }
         //============================================================
 
@@ -250,7 +278,7 @@ namespace DispatchApp
                     CtrlSwitch_callManager();
                     Debug.WriteLine("用户界面" + logwin.logIn);
                 }*/
-            }
+                }
             catch (System.Exception exc)
             {
                 //System.Windows.MessageBox.Show(exc.Message, Title);
@@ -430,7 +458,7 @@ namespace DispatchApp
             /* 打开服务端界面钱首先查询软交换设备、用户列表 */
             callManagerCtrl.querySWDevice();
             callManagerCtrl.queryUSER();
-        } 
+        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -476,8 +504,8 @@ namespace DispatchApp
                     // 先断开之前的连接
                     ws.Close();
 
-                    ws.Open();
-                }
+                ws.Open();
+            }
                 catch (System.Exception exc)
                 {
                     System.Windows.MessageBox.Show(exc.Message + "xixirelogin");
@@ -495,6 +523,8 @@ namespace DispatchApp
             }
         }
 
+
+
         //private void CtrlSwitch_callUser()
         //{
         //    Debug.WriteLine("OK");
@@ -504,8 +534,5 @@ namespace DispatchApp
         //    Debug.WriteLine(strMsg);
         //    Debug.WriteLine("client is clicked!!!");
         //}
-
-
-
     }
 }

@@ -44,7 +44,7 @@ namespace DispatchApp
         {
             keyboardmanagedata.SelectedKey = new KeyBoardNew();
             keyboardmanagedata.SelectedKey.name = "新增键盘";
-            keyboardview.Visibility = System.Windows.Visibility.Visible;
+            //keyboardview.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void addgroup_Click(object sender, RoutedEventArgs e)
@@ -65,16 +65,16 @@ namespace DispatchApp
                 var modelkey = tvi.Header as KeyBoardNew;
                 //testdata.SelectedKey = modelkey;
                 keyboardmanagedata.SelectedKey = ObjectCopier.Clone<KeyBoardNew>(modelkey);
-                groupview.Visibility = System.Windows.Visibility.Hidden;
-                keyboardview.Visibility = System.Windows.Visibility.Visible;
+                //groupview.Visibility = System.Windows.Visibility.Hidden;
+                //keyboardview.Visibility = System.Windows.Visibility.Visible;
             }
             else if (tvi.Header is GroupNew)
             {
                 var modelgroup = tvi.Header as GroupNew;
                 //testdata.SelectedGroup = modelgroup;
                 keyboardmanagedata.SelectedGroup = ObjectCopier.Clone<GroupNew>(modelgroup);
-                keyboardview.Visibility = System.Windows.Visibility.Hidden;
-                groupview.Visibility = System.Windows.Visibility.Visible;
+                //keyboardview.Visibility = System.Windows.Visibility.Hidden;
+                //groupview.Visibility = System.Windows.Visibility.Visible;
 
                 var tv = VisualTreeHelper.GetParent(tvi);
                 System.Windows.Controls.StackPanel tvpanel = tv as StackPanel;

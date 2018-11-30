@@ -120,12 +120,6 @@ namespace DispatchApp
 
         public string sequence { get; set; }
         public string index { get; set; }
-        //public string name { get; set; }
-        //public string ip { get; set; }
-        //public string port { get; set; }
-        //public string type { get; set; }
-        //public string username { get; set; }
-        //public string password { get; set; }
     }
 
     public class SW_ADDRESULT

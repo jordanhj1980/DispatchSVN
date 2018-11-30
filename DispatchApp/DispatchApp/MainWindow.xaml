@@ -6,18 +6,18 @@
         xmlns:local="clr-namespace:DispatchApp"
         Title="MainWindow" Height="1080" Width="1920" ResizeMode="CanMinimize" mc:Ignorable="d" 
         Margin="0" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignWidth="1920" Cursor="Arrow" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.IsSharedSizeScope="True" 
-        WindowStyle="None" AllowsTransparency="True"
-    >
-    <!--Background="#FF242323"-->
-    <!--DMWindowShadowColor="{Binding DMWindowShadowColor}"
-        DMWindowShadowOpacity="0.8"
-        DMWindowShadowSize="15" >-->
+        WindowStyle="None" AllowsTransparency="True">
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Generic.xaml"/>
+                <ResourceDictionary Source="MaterialDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -27,24 +27,18 @@
         <ImageBrush ImageSource="Resources/main_1920_2.png" Stretch="Fill"/>
     </Window.Background>
     <Viewbox>
+
+        <!--顶部-->
         <Grid HorizontalAlignment ="left" Width="1920" Name="outframe" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5" Height="1080">
+            <Grid.Resources>
+                <local:ComeCallConverter x:Key="comeCallDate" />
+            </Grid.Resources>
             <Grid.RowDefinitions>
                 <RowDefinition Height="38" />
                 <RowDefinition Height="100*" />
-                <RowDefinition Height="403*" />
-                <RowDefinition Height="323*" />
-                <RowDefinition Height="150*"/>
+                <RowDefinition Height="876*" />
                 <RowDefinition Height="39*"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="277*"/>
-                <ColumnDefinition Width="379*"/>
-                <ColumnDefinition Width="417*" />
-                <ColumnDefinition Width="182*"/>
-                <ColumnDefinition Width="177*"/>
-                <ColumnDefinition Width="371*"/>
-                <ColumnDefinition Width="117*"/>
-            </Grid.ColumnDefinitions>
 
             <Grid Background="#000000" Grid.Row="0" Margin="0,0,10,0"  Grid.ColumnSpan="7">
                 <TextBlock Foreground="White"
@@ -53,10 +47,18 @@
                     VerticalAlignment="Center"
                     FontSize="20"
                     Text="调度台LOGO"/>
+                <Label Content="Label"  
+                       Margin="169,0,1587.667,4"
+                       Name="label_Date" 
+                       HorizontalContentAlignment="Center" 
+                       FontSize="20"
+                       RenderTransformOrigin="0.511,1.75" 
+                       Height="32" 
+                       VerticalAlignment="Bottom" />
                 <WrapPanel Height="38"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
-                    Orientation="Horizontal"  Margin="0,0,0,0" Width="351">
+                    Orientation="Horizontal"  Margin="0,0,-0.333,0" Width="443">
                     <Menu Background="#000" Foreground="White" FontSize="20" VerticalAlignment="Center" Visibility="Hidden">
                         <MenuItem Header="系统">
                             <!--菜单项为MenuItem，文字使用属性 Header-->
@@ -73,230 +75,51 @@
                 </WrapPanel>
             </Grid>
 
-            <!--<Button>
-                <Button.Resources>
-                    <ResourceDictionary Source="MaterialDictionary.xaml"/>
-                </Button.Resources>
-            </Button>-->
-            <Label Grid.Row="1" Height="100" HorizontalAlignment="Left" Name="label1" VerticalAlignment="Top" Grid.ColumnSpan="7" Width="1920" Margin="0,0,0,0">
-                <Label.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FFCCCCCC" Offset="0" />
-                        <GradientStop Color="#FFCCCCCC" Offset="1" />
-                        <GradientStop Color="#FFDFDFDF" Offset="0.521" />
-                    </LinearGradientBrush>
-                </Label.Background>
+            <!--菜单栏-->
+            <Label Name="label1"
+                Height="100" Width="1920" 
+                Grid.Row="1" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Grid.ColumnSpan="7" 
+                Background="{DynamicResource PrimaryHueDarkBrush}">
+                <StackPanel
+                    Orientation="Horizontal" 
+                    Width="1920">
+                    <Label Name="label_Time"
+                        Content="Label"  
+                        FontSize="46"
+                        HorizontalContentAlignment="Center"  VerticalContentAlignment="Center"                          
+                        HorizontalAlignment="Left" Width="285" />
+                    <Label Name="ShowKeyLabel" 
+                        VerticalContentAlignment="Center" 
+                        FontSize="46" 
+                        Height="98" Width="1354" 
+                        VerticalAlignment="Bottom"/>                        
+                    <!--Foreground="{Binding Path=CurrentState, Converter={StaticResource comeCallDate}}"-->
+                    <Image Name="image_photo"
+                        Height="84" Width="84"
+                        HorizontalAlignment="Left"  
+                        Stretch="Fill" 
+                        VerticalAlignment="Center"  
+                        Source="/DispatchApp;component/Resources/photo.png" />
+                    <Button x:Name="button3_Copy"
+                        Content="注销" FontSize="30" FontFamily="SimHei"
+                        Click="Btn_logOut"
+                        Height="44" Width="100"
+                        HorizontalAlignment="Left"  VerticalAlignment="Center"    
+                        BorderBrush="{x:Null}" Background="{x:Null}" />
+                </StackPanel>
             </Label>
-
-
-            <!--<StackPanel Grid.ColumnSpan="3" Grid.Column="1" 
-                HorizontalAlignment="Stretch" Grid.RowSpan="5" Orientation="Vertical" Margin="72.667,5,175.333,149">
-                <StackPanel.Resources>
-                    <ResourceDictionary Source="MaterialDictionary.xaml"/>
-                </StackPanel.Resources>
-                <Expander Background="{x:Null}" MouseDown="ExpanderClick">
-                    <Expander.Header>
-                        <StackPanel>
-                            <Image Source="Resources/option.png" Height="44" Margin="0,0,0,0" />
-                            <TextBlock
-            					Text="拨号键盘"
-            					RenderTransformOrigin=".5,.5" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="SimHei" Margin="108,0,66,0" Width="130"/>
-                        </StackPanel>
-                        -->
-            <!----><!--
-            		</Expander.Header>
-            		<StackPanel
-            			Orientation="Vertical"
-            			TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-            			Margin="24,0,25,0" Height="517" Background="#FFAB8080">
-            			<Grid Height="512" Margin="0,29,-0.333,0">
-            				<Grid.ColumnDefinitions>
-            					<ColumnDefinition Width="40" />
-            					<ColumnDefinition Width="75*" />
-            					<ColumnDefinition Width="75*" />
-            					<ColumnDefinition Width="75*"/>
-            					<ColumnDefinition Width="40*" />
-            				</Grid.ColumnDefinitions>
-            				<Grid.RowDefinitions>
-            					<RowDefinition Height="70" />
-            					<RowDefinition Height="70" />
-            					<RowDefinition Height="70" />
-            					<RowDefinition Height="70" />
-            					<RowDefinition Height="70" />
-            					<RowDefinition Height="60" />
-            					<RowDefinition Height="60" />
-            					-->
-            <!--<RowDefinition />-->
-            <!--
-                        </Grid.RowDefinitions>
-                        <Button Grid.Row="0" Grid.Column="1" Content="1" Click="CallOne"
-            					Style="{StaticResource MaterialDesignFloatingActionButton}"
-            					ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
-                        <Button Grid.Row="0" Grid.Column="2" Content="2" Click="CallTwo"
-            					Style="{StaticResource MaterialDesignFloatingActionButton}"
-            					ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
-                        <Button Grid.Row="0" Grid.Column="3" Content="3" Click="CallThree"
-            					Style="{StaticResource MaterialDesignFloatingActionButton}"
-            					ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
-                        <Button Grid.Row="1" Grid.Column="1" Content="4" Click="CallFour"
-            					Style="{StaticResource MaterialDesignFloatingActionButton}"
-            					ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
-                        <Button Grid.Row="1" Grid.Column="2" Content="5" Click="CallFive"
-            					Style="{StaticResource MaterialDesignFloatingActionButton}"
-            					ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
-                        <Button Grid.Row="1" Grid.Column="3" Content="6" Click="CallSix"
-            					Style="{StaticResource MaterialDesignFloatingActionButton}"
-            					ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
-                        <Button Grid.Row="2" Grid.Column="1" Content="7" Click="CallSeven"
-            					Style="{StaticResource MaterialDesignFloatingActionButton}"
-            					ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
-                        <Button Grid.Row="2" Grid.Column="2" Content="8" Click="CallEight"
-            					Style="{StaticResource MaterialDesignFloatingActionButton}"
-            					ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
-                        <Button Grid.Row="2" Grid.Column="3" Content="9" Click="CallNine"
-            					Style="{StaticResource MaterialDesignFloatingActionButton}"
-            					ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
-                        <Button Grid.Row="3" Grid.Column="1" Content="*" Click="CallStar" 
-            					Style="{StaticResource MaterialDesignFloatingActionButton}"
-            					ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
-                        <Button Grid.Row="3" Grid.Column="2" Content="0" Click="CallZero"
-            					Style="{StaticResource MaterialDesignFloatingActionButton}"
-            					ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
-                        <Button Grid.Row="3" Grid.Column="3" Content="#" Click="CallAlarm"
-            					Style="{StaticResource MaterialDesignFloatingActionButton}"
-            					ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
-                        <Button Grid.Row="4" Grid.Column="1" Content="&lt;" Click="CallBackspace" 
-            					Style="{StaticResource MaterialDesignFloatingActionButton}"
-            					ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
-                        <Button Grid.Row="4" Grid.Column="2" Content="+" Click="CallAdd"
-            					Style="{StaticResource MaterialDesignFloatingActionButton}"
-            					ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
-                        <Button Grid.Row="4" Grid.Column="3" Content="C" Click="CallClear"
-            					Style="{StaticResource MaterialDesignFloatingActionButton}"
-            					ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
-                        <TextBox x:Name="CallText" Grid.Row="5" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Grid.Column="1" FontSize="24" Height="40" Width="215" Grid.ColumnSpan="3" FontFamily="SimHei" Foreground="#FFD8D7D7" Background="{x:Null}" BorderBrush="#FF707070"/>
-                        <Button Grid.Row="6" Grid.Column="1" FontSize="20" 
-            					Style="{StaticResource MaterialDesignRaisedButton}"
-            					ToolTip="Resource name: MaterialDesignRaisedButton" Grid.ColumnSpan="3" Height="Auto" Margin="23,20,23,-4.667" Content="呼 叫"/>
+            
+            <!--底部-->
+            <StackPanel Grid.Row="3">
+                <Label Content="服务器IP:" Foreground="#FFD8D7D7" FontSize="22" HorizontalAlignment="Left" Width="277"/>
+            </StackPanel>
+            
+            <!--界面内容容器-->
+            <ContentControl Name="CenterPanel2" Grid.Row="2"  />
+            
         </Grid>
-        </StackPanel>
-        </Expander>
-        </StackPanel>-->
-
-            <!--<Button Grid.Column="5" Grid.Row="1" Height="35" HorizontalAlignment="Right" Click="buttoncha_Click" Padding="3" Name="buttoncha" Margin="0,232,218.333,135.667">查询</Button>
-        <ScrollViewer Name="scroll" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="2" Margin="13,43,24.667,9.667" Grid.Row="1" >
-            <WrapPanel x:Name="MyWrapPanel2" Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Width="360">
-            </WrapPanel>
-        </ScrollViewer>-->
-
-            <ContentControl Grid.Row="2" Height="899" HorizontalAlignment="Left" Margin="0,0.333,0,0" Name="CenterPanel2" VerticalAlignment="Top" Width="1920" Grid.ColumnSpan="7" Grid.RowSpan="3"/>
-
-            <!--Left Server Tool-->
-            <Grid Height="100" Grid.Row="1" HorizontalAlignment="Left" Margin="247,0,0,0" Name="grid_server1" VerticalAlignment="Top" Width="420" Grid.ColumnSpan="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="140*" />
-                    <ColumnDefinition Width="140*" />
-                    <ColumnDefinition Width="140*"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Width="84" Margin="28,0" Opacity="0.3" BorderBrush="{x:Null}">
-                    <StackPanel Height="100" Width="84">
-                        <Image Source="Resources/homepage.png" Height="64" Width="64"  VerticalAlignment="Top"/>
-                        <TextBlock Block.TextAlignment="Center"  Width="80" Text="主页" HorizontalAlignment="Center" Margin="0,0,0,4" FontSize="30" FontFamily="SimHei" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-                <Button Grid.Column="1" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Width="84" Margin="28,0" Opacity="0.3" BorderBrush="{x:Null}">
-                    <StackPanel Height="100" Width="84">
-                        <Image Source="Resources/camera.png" Height="64" Width="64"  VerticalAlignment="Top"/>
-                        <TextBlock Block.TextAlignment="Center"  Width="80" Text="视频" HorizontalAlignment="Center" Margin="0,0,0,4" FontSize="30" FontFamily="SimHei" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-                <Button Grid.Column="2" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Width="84" Margin="28,0" Opacity="0.3" BorderBrush="{x:Null}">
-                    <StackPanel Height="100" Width="84">
-                        <Image Source="Resources/map.png" Height="64" Width="64"  VerticalAlignment="Top"/>
-                        <TextBlock Block.TextAlignment="Center"  Width="80" Text="地图" HorizontalAlignment="Center" Margin="0,0,0,4" FontSize="30" FontFamily="SimHei" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-            </Grid>
-
-            <!--Separator Line1-->
-            <Separator VerticalAlignment="Bottom" Margin="331.667,0,368.667,37.667" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Visible" Height="29"  Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" >
-                <Separator.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform ScaleX="-1" ScaleY="-1"/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Separator.RenderTransform>
-            </Separator>
-
-            <!--Right Server Tool-->
-            <Grid Grid.Row="1"  Height="100" Margin="8,0,179.667,0" Name="grid_server2" VerticalAlignment="Top" Grid.Column="2" Grid.ColumnSpan="2" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="140*" />
-                    <ColumnDefinition Width="140*" />
-                    <ColumnDefinition Width="140*"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Width="84" Margin="28,0" Opacity="0.3" BorderBrush="{x:Null}">
-                    <StackPanel Height="100" Width="84">
-                        <Image Source="Resources/settings.png" Height="64" Width="64"  VerticalAlignment="Top"/>
-                        <TextBlock Block.TextAlignment="Center"  Width="80" Text="设置" HorizontalAlignment="Center" Margin="0,0,0,4" FontSize="30" FontFamily="SimHei" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-                <Button Grid.Column="1" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Width="84" Margin="28,0" Opacity="0.3" BorderBrush="{x:Null}">
-                    <StackPanel Height="100" Width="84">
-                        <Image Source="Resources/exit.png" Height="64" Width="64"  VerticalAlignment="Top"/>
-                        <TextBlock Block.TextAlignment="Center"  Width="80" Text="退出" HorizontalAlignment="Center" Margin="0,0,0,4" FontSize="30" FontFamily="SimHei" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-                <Button Grid.Column="2" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Width="84" Margin="28,0" Opacity="0.3" BorderBrush="{x:Null}">
-                    <StackPanel Height="100" Width="84">
-                        <Image Source="Resources/lock_open.png" Height="64" Width="64"  VerticalAlignment="Top"/>
-                        <TextBlock Block.TextAlignment="Center"  Width="80" Text="锁定" HorizontalAlignment="Center" Margin="0,0,0,4" FontSize="30" FontFamily="SimHei" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-            </Grid>
-
-            <!--Separator Line2-->
-            <Separator VerticalAlignment="Bottom" Margin="361,0,139.667,34.667" RenderTransformOrigin="0.485,2.006" ScrollViewer.HorizontalScrollBarVisibility="Visible" Height="25"  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" >
-                <Separator.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform ScaleX="-1" ScaleY="-1"/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90"/>
-                        <TranslateTransform X="45.189" Y="-42.159"/>
-                    </TransformGroup>
-                </Separator.RenderTransform>
-            </Separator>
-
-            <!--Time And Date-->
-            <!--<Label Grid.Row="1" Content="Label" Grid.Column="5" HorizontalAlignment="Left" Margin="239.667,10,0,39.667" Name="label_Time" Width="182" HorizontalContentAlignment="Center" FontSize="30" FontWeight="Bold" Grid.ColumnSpan="2" />
-            <Label Grid.Row="1" Content="Label" Grid.Column="5" HorizontalAlignment="Left" Margin="269.667,60,0,9.667" Name="label_Date" Width="120" HorizontalContentAlignment="Center" FontSize="20" RenderTransformOrigin="0.511,1.75" Grid.ColumnSpan="2" />-->
-            <!--User-->
-            <Image Grid.Row="1" Grid.Column="5" Height="84" HorizontalAlignment="Left" Margin="167.667,7,0,0" Name="image_photo" Stretch="Fill" VerticalAlignment="Top" Width="84" Source="/DispatchApp;component/Resources/photo.png" />
-            <Button Grid.Row="1" Grid.Column="5" Content="注销" Height="44" HorizontalAlignment="Left" x:Name="button3_Copy" VerticalAlignment="Top" Width="87" Click="Btn_logOut" Margin="260.667,33,0,0" FontSize="30" FontFamily="SimHei" BorderBrush="{x:Null}" Background="{x:Null}" />
-            <!--Option-->
-            <Button Grid.Row="1" Grid.Column="4" Height="84" HorizontalAlignment="Left" Margin="164.667,7,0,0" Click="Button_CallKeyBord" Name="image_option" VerticalAlignment="Top" Width="84" BorderBrush="{x:Null}" Background="{x:Null}" Grid.ColumnSpan="2">
-                <Image Source="Resources/option.png" />
-            </Button>
-
-            <Grid Grid.Row="5" Grid.ColumnSpan="7" Margin="0,0,0.667,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="373*"/>
-                    <ColumnDefinition Width="11*"/>
-                </Grid.ColumnDefinitions>
-                <Label Content="服务器IP:" Margin="0,0,1755,0" Foreground="#FFD8D7D7" FontSize="22"/>
-                <Label Margin="150,0,1510,0" Foreground="#FFD8D7D7" FontSize="22"/>
-                <Label Content="Label"  Margin="1670,5,0,0" Name="label_Time" HorizontalContentAlignment="Center" Foreground="#FFD8D7D7" FontSize="20" HorizontalAlignment="Left" Width="112" />
-                <Label Content="Label"  Margin="1790,0,10,0" Name="label_Date" Width="120" HorizontalContentAlignment="Center" Foreground="#FFD8D7D7" FontSize="20" RenderTransformOrigin="0.511,1.75" Height="35" VerticalAlignment="Bottom" Grid.ColumnSpan="2" />
-            </Grid>
-
-            <!--<Image Grid.Row="1" Grid.Column="5" Height="84" HorizontalAlignment="Left" Margin="263,10,0,0" Name="image_option" Stretch="Fill" VerticalAlignment="Top" Width="84" Source="Resources/option.png" />-->
-            <!--<Button Grid.Row="1" Content="用户界面" Height="23" HorizontalAlignment="Left" Margin="22,41,0,0" Name="button2" VerticalAlignment="Top" Width="75" Click="usercontrol_click" />
-            <Button Grid.Row="1" Content="管理界面" Height="23" HorizontalAlignment="Left" Margin="130,41,0,0" Name="button3" VerticalAlignment="Top" Width="75" Click="managercontrol_click" />-->
-
-            <!--<Canvas x:Name="demoUserControl" Grid.Column="1" HorizontalAlignment="Left" Height="362" Margin="55,43,0,0" Grid.Row="1" VerticalAlignment="Top" Width="362" Grid.RowSpan="2"/>-->
-        </Grid>
-        <!--</local:DpiDecorator>-->
     </Viewbox>
 </Window>

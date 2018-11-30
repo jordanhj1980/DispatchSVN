@@ -48,8 +48,11 @@
                        Margin="0,2,0,14">
                     <!--Converter={StaticResource cvtDate}-->
                     <Grid VerticalAlignment="Top" Height="64">
-                        <Label x:Name="labelNumFromId" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Top" Width="157" Height="32" Foreground="White" Background="{x:Null}" BorderBrush="#FF359F28" FontSize="18" />
-                        <!--<Image Source="../Resources/jiantou-r.png"/>-->
+                        <Label x:Name="labelNumFromId" 
+                               HorizontalContentAlignment="Left" 
+                               VerticalContentAlignment="Center" 
+                               HorizontalAlignment="Right" VerticalAlignment="Top" Width="157" Height="32" Foreground="White" Background="{x:Null}" BorderBrush="#FF359F28" FontSize="18" />
+                        
                         <Label x:Name="labelNumToId" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Top" Width="157" Background="{x:Null}" Height="32" Foreground="White" Margin="0,32,0,-32" FontSize="18" />
                     </Grid>
                 </Label>

@@ -55,7 +55,7 @@ namespace DispatchApp
         {
             InitializeComponent();
             DataContext = this;
-            CurrentState = "IDLE";
+            CurrentState = "OFFLINE";
 
 
             // 依赖项属性测试

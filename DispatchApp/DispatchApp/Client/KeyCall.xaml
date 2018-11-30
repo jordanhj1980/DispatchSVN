@@ -5,7 +5,7 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Name="usname" x:Class="DispatchApp.KeyCall"  
             xmlns:local="clr-namespace:DispatchApp" 
-    mc:Ignorable="d" Height="120" Width="90">
+    mc:Ignorable="d" Height="120" Width="110">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -19,7 +19,7 @@
         <Grid.Resources>
             <local:KeyImageConverter x:Key="cvtKeyDate" />
         </Grid.Resources>
-        <Button Name="KeyButton" AllowDrop="False" Background="{x:Null}" BorderThickness="3" Click="Button_Key" Width="90" Height="120" VerticalAlignment="Top" Tag="{Binding index}">
+        <Button Name="KeyButton" AllowDrop="False" Background="{x:Null}" BorderThickness="3" Click="Button_Key" Width="110" Height="120" VerticalAlignment="Top" Tag="{Binding index}">
             <StackPanel VerticalAlignment="Top">
                 <Image Name="KeyImage" Height="80" Source="{Binding Path=CurrentState, Converter={StaticResource cvtKeyDate}}" Width="80" />
                 <TextBlock x:Name="KeyText" Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" VerticalAlignment="Bottom" Width="80" Foreground="#FFF5ECEC" />

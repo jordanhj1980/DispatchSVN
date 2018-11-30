@@ -121,12 +121,12 @@
             					    Style="{StaticResource MaterialDesignFloatingActionButton}"
             					    ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>-->
                         <TextBox x:Name="CallText" Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Grid.Column="1" FontSize="24" Height="40" Width="215" Grid.ColumnSpan="3" FontFamily="SimHei" Foreground="#FFD8D7D7" Background="{x:Null}" BorderBrush="#FF707070"/>
-                        <Button Grid.Row="5" Grid.Column="1" FontSize="20" Click="CallKeyBoard" 
-        			Style="{StaticResource MaterialDesignRaisedButton}"
-        			ToolTip="MaterialDesignFloatingActionButton" Content="呼 叫" Grid.ColumnSpan="2" Margin="28,29.333,0,2" Width="111" Height="Auto" HorizontalAlignment="Left"/>
-                        <Button Grid.Row="5" Grid.Column="2" FontSize="20" Click="RelayCallKeyBoard"
+                        <!--<Button Grid.Row="5" Grid.Column="1" FontSize="20" Click="CallKeyBoard" 
         			        Style="{StaticResource MaterialDesignRaisedButton}"
-        			        ToolTip="MaterialDesignFloatingActionButton" Content="中继呼叫" Grid.ColumnSpan="2" Margin="67.333,29.333,27.333,2" Height="Auto" Width="110"/>
+        			        ToolTip="MaterialDesignFloatingActionButton" Content="呼 叫" Grid.ColumnSpan="2" Margin="28,29.333,0,2" Width="111" Height="Auto" HorizontalAlignment="Left"/>-->
+                        <Button Grid.Row="5" Grid.Column="2" FontSize="20" Click="RelayCallKeyBoard"
+        			        Style="{StaticResource MaterialDesignFloatingActionButton}"
+        			        ToolTip="MaterialDesignFloatingActionButton" Content="呼叫" />
                     </Grid>
                 </StackPanel>
                 <!--<Grid Height="295" Width="305" Margin="0,45,0,0">
