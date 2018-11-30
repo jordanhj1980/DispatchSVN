@@ -127,7 +127,7 @@
         
         <!--键盘详细信息-->
         <materialDesign:Card x:Name="keyboardview" Grid.Column="1" Height="690" Margin="10"
-            materialDesign:ShadowAssist.ShadowDepth="Depth5" 
+            materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Hidden"   
             Padding="0"
             UniformCornerRadius="6"
             Width="600">
@@ -145,7 +145,7 @@
                         Background="{DynamicResource PrimaryHueDarkBrush}"
                         Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                         UniformCornerRadius="6" FontSize="24"
-                                     >
+                                  >
                     <Grid>
                         <StackPanel Grid.Row="1" Margin="10" Width="300" >
                             <TextBlock Text="调度键盘详细信息" HorizontalAlignment="Center" 
@@ -172,6 +172,7 @@
                                 <TextBlock Text="{Binding SelectedKey.hotlinelist, Converter={StaticResource cvtMemberlist}, Mode=OneWay}" 
                            MinWidth="100" VerticalAlignment="Center"/>
                                 <Button Content="选择成员" Command="{Binding HotlineListViewDialogCommand}" />
+                                <!--<Button Content="选择成员" Click="Button_Click" />-->
                             </DockPanel>
                         </StackPanel>
                     </Grid>
@@ -194,8 +195,7 @@
                             </DataGrid>-->
                     <ListView x:Name="grouplistgrid" ItemsSource="{Binding SelectedKey.grouplist}" FontSize="16" 
                                       SelectedItem="{Binding SelectedGroup}" SelectionChanged="grouplistgrid_Selected"
-                                      MaxHeight="300"
-                                      >
+                                      MaxHeight="300">
                                 <!--<ListView.Template>
                                     <ControlTemplate TargetType="{x:Type ListView}">
                                         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
@@ -315,8 +315,8 @@
                 </ScrollViewer>
             </Grid>
         </materialDesign:Card>
-        <materialDesign:DialogHost Grid.Column="0" Grid.ColumnSpan="3" Identifier="RootDialog" DialogClosing="KeyBoardManage_OnDialogClosing" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+        <!--<materialDesign:DialogHost Grid.Column="0" Grid.ColumnSpan="3" Identifier="RootDialog" DialogClosing="KeyBoardManage_OnDialogClosing" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
 
-        </materialDesign:DialogHost>
+        </materialDesign:DialogHost>-->
     </Grid>
 </UserControl>

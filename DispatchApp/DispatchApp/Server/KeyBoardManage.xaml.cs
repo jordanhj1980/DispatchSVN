@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using MaterialDesignThemes.Wpf;
 using Newtonsoft.Json;
 namespace DispatchApp
 {
@@ -202,10 +202,35 @@ namespace DispatchApp
             }          
         }
 
-        private void grouplistgrid_Selected(object sender, RoutedEventArgs e)
+        private void grouplistgrid_Selected(object sender, SelectionChangedEventArgs e)
         {
             memberlistcard.Visibility = System.Windows.Visibility.Visible;
         }
+
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ListViewDialogViewModel data = new ListViewDialogViewModel();
+        //    ExtDevice temp = new ExtDevice();
+        //    for(int i =0;i<10;i++)
+        //    {
+        //        temp.callno=i.ToString();
+        //        data.AllDevList.Add(temp);
+        //    }
+
+
+        //    var view = new ListViewDialog();
+        //    view.DataContext = data;
+
+
+        //    //show the dialog
+        //    var result = DialogHost.Show(view, "RootDialog", HotlineListViewClosingEventHandler);
+
+
+        //}
+        //private void HotlineListViewClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        //{
+        //    Console.WriteLine("You can intercept the closing event, and cancel here.");
+        //}
 
     }
 }

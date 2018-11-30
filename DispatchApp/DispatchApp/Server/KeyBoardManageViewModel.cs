@@ -17,6 +17,8 @@ namespace DispatchApp
             AllDevList = new ObservableCollection<ExtDevice>();
             AllPhoneList = new ObservableCollection<ExtDevice>();
         }
+
+
         private MyCommand _RunListViewDialogCommand;
 
         public MyCommand RunListViewDialogCommand

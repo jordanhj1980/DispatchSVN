@@ -41,7 +41,6 @@
                 </ListView.Template>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-
                         <ToggleButton Content="{Binding callno}"
                             Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
                             ToolTip="MaterialDesignFlatPrimaryToggleButton"
