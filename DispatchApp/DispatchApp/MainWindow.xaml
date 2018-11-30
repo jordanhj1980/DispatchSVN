@@ -2,8 +2,7 @@
         x:Class="DispatchApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:USERSkin="clr-namespace:USERSkin;assembly=USERSkin"
-        xmlns:controls="clr-namespace:USERSkin.Controls;assembly=USERSkin"
+
         xmlns:local="clr-namespace:DispatchApp"
         Title="MainWindow" Height="1080" Width="1920" ResizeMode="CanMinimize" mc:Ignorable="d" 
         Margin="0" 
@@ -70,42 +69,7 @@
                         <MenuItem Header="高级"></MenuItem>
                         <MenuItem Header="帮助"></MenuItem>
                     </Menu>
-                    <!--<controls:USERSystemButton
-                        USERSystemButtonForeground="White"
-                        USERSystemButtonHoverForeground="White"
-                        USERSystemButtonSize="38"
-                        Icon="M832 128 192 128C139.072 128 96 171.072 96 224l0 512c0 52.928 43.072 96 96 96l210.752 0 86.624 86.624C495.616 924.864 503.808 928 512 928s16.384-3.136 22.624-9.376L621.248 832 832 832c52.928 0 96-43.072 96-96L928 224C928 171.072 884.928 128 832 128zM336 512C309.536 512 288 490.464 288 464S309.536 416 336 416s48 21.536 48 48S362.464 512 336 512zM528 512c-26.464 0-48-21.536-48-48s21.536-48 48-48 48 21.536 48 48S554.464 512 528 512zM720 512c-26.464 0-48-21.536-48-48s21.536-48 48-48 48 21.536 48 48S746.464 512 720 512z"
-                        IconHeight="17"
-                        IconWidth="19"
-                        ToolTip="Message" />
-                    <controls:USERSystemButton
-                        USERSystemButtonForeground="White"
-                        USERSystemButtonHoverForeground="White"
-                        USERSystemButtonSize="38"
-                        Icon="M512 65.4c-327 0-448 285.2-448 445.1 0 159.9 116.3 448 438.5 448 0 0 80.1 1.4 80.1-70.6s-36-49-36-100.8c0-51.9 36-74.9 53.3-74.9 17.3 0 131.1 8.6 194.5-15.9C857.7 671.9 960 594.1 960 461.6c0-116.7-121-396.2-448-396.2zM238.9 512c-43 0-77.8-34.8-77.8-77.8s34.8-77.8 77.8-77.8 77.8 34.8 77.8 77.8c-0.1 43-34.9 77.8-77.8 77.8z m146.7-192.5c-43 0-77.8-34.8-77.8-77.8s34.8-77.8 77.8-77.8c42.9 0 77.8 34.8 77.8 77.8s-34.8 77.8-77.8 77.8z m249.5 0c-42.9 0-77.8-34.8-77.8-77.8s34.8-77.8 77.8-77.8c42.9 0 77.8 34.8 77.8 77.8s-34.8 77.8-77.8 77.8zM783.2 512c-42.9 0-77.8-34.8-77.8-77.8s34.8-77.8 77.8-77.8 77.8 34.8 77.8 77.8c0.1 43-34.8 77.8-77.8 77.8z"
-                        IconHeight="17"
-                        IconWidth="19"
-                        ToolTip="换肤" />
-                    <controls:USERSystemButton
-                        USERSystemButtonForeground="White"
-                        USERSystemButtonHoverForeground="White"
-                        USERSystemButtonSize="38"
-                        Icon="{StaticResource Icon_Skin_001}"
-                        IconHeight="17"
-                        IconWidth="19"
-                        ToolTip="主题" />-->
-                    <controls:USERSystemMinButton
-                        USERSystemButtonForeground="White"
-                        USERSystemButtonHoverForeground="White"
-                        USERSystemButtonSize="38" />
-                    <!--<controls:USERSystemMaxButton
-                        USERSystemButtonForeground="White"
-                        USERSystemButtonHoverForeground="White"
-                        USERSystemButtonSize="38" />-->
-                    <controls:USERSystemCloseButton
-                        USERSystemButtonForeground="White"
-                        USERSystemButtonHoverForeground="White"
-                        USERSystemButtonSize="38" Click="USERSystemCloseButton_Click" />
+                    
                 </WrapPanel>
             </Grid>
 

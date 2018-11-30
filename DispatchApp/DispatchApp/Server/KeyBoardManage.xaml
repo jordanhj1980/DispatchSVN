@@ -30,6 +30,8 @@
             </ResourceDictionary.MergedDictionaries>
             <local:MemberlistConverter x:Key="cvtMemberlist" />
             <local:BoolToIsCheckedConverter x:Key="cvtBoolToIschecked" />
+            <local:TrunklistConverter x:Key="cvtTrunklist" />
+            <local:BroadcastlistConverter x:Key="cvtBroadcast" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -174,6 +176,14 @@
                                 <Button Content="选择成员" Command="{Binding HotlineListViewDialogCommand}" />
                                 <!--<Button Content="选择成员" Click="Button_Click" />-->
                             </DockPanel>
+                            <DockPanel Margin="0,5,0,0">
+                                <TextBlock Text="中继电话:" Width="110" VerticalAlignment="Center"
+                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+                                <TextBlock Text="{Binding SelectedKey.trunklist, Converter={StaticResource cvtTrunklist}, Mode=OneWay}" 
+                           MinWidth="100" VerticalAlignment="Center"/>
+                                <Button Content="选择成员" Command="{Binding TrunklistViewDialogCommand}" />
+                                <!--<Button Content="选择成员" Click="Button_Click" />-->
+                            </DockPanel>
                         </StackPanel>
                     </Grid>
                 </materialDesign:Card>
@@ -195,7 +205,7 @@
                             </DataGrid>-->
                     <ListView x:Name="grouplistgrid" ItemsSource="{Binding SelectedKey.grouplist}" FontSize="16" 
                                       SelectedItem="{Binding SelectedGroup}" SelectionChanged="grouplistgrid_Selected"
-                                      MaxHeight="300">
+                                      MaxHeight="150">
                                 <!--<ListView.Template>
                                     <ControlTemplate TargetType="{x:Type ListView}">
                                         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
@@ -237,12 +247,58 @@
                             <DockPanel Margin="5">
                                 <Button Content="添加分组" Click="addgroup_Click" Width="100" Margin="10,0,20,0"/>
                                 <Button Content="删除分组" Click="delgroup_Click" Width="100" />
-                                
-                                <Button Command="{Binding RunListViewDialogCommand}" HorizontalAlignment="Right"
+
+                        <Button Command="{Binding RunGroupMemberDialogCommand}" HorizontalAlignment="Right"
                             Margin="0,0,10,0" Width="100">
                                     选择成员
                                 </Button>
                             </DockPanel>
+                    <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                    <ListView x:Name="broadcastlistgrid" ItemsSource="{Binding SelectedKey.broadcastlist}" FontSize="16" 
+                                      SelectedItem="{Binding SelectedBroadcast}" SelectionChanged="broadcastlistgrid_Selected"
+                                      MaxHeight="150">
+                        <!--<ListView.Template>
+                                    <ControlTemplate TargetType="{x:Type ListView}">
+                                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                                            <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
+                                        </ScrollViewer>
+                                    </ControlTemplate>
+                                </ListView.Template>-->
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <materialDesign:Card Margin="10"
+                                    Background="{DynamicResource PrimaryHueLightBrush}"
+                                    Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                                    UniformCornerRadius="6" 
+                                     >
+                                    <Grid>
+                                        <StackPanel x:Name="broadcastview" Margin="10" Width="500" >
+
+                                            <DockPanel Margin="0,10,0,0">
+                                                <TextBlock Text="名称:" Width="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
+
+                                                <TextBox Text="{Binding name}" 
+                                                            MinWidth="20" VerticalAlignment="Center"/>
+                                                
+                                                <TextBlock Text="成员:" Width="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                                <TextBox Text="{Binding bmemberlist, Converter={StaticResource cvtBroadcast}, Mode=OneWay}" 
+                                                            MinWidth="20" VerticalAlignment="Center"/>
+                                            </DockPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </materialDesign:Card>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <DockPanel Margin="5">
+                        <Button Content="添加广播" Click="addbroadcast_Click" Width="100" Margin="10,0,20,0"/>
+                        <Button Content="删除广播" Click="delbroadcast_Click" Width="100" />
+
+                        <Button Command="{Binding BroadcastViewDialogCommand}" HorizontalAlignment="Right"
+                            Margin="0,0,10,0" Width="100">
+                            选择成员
+                        </Button>
+                    </DockPanel>
                     <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
                     <Button Content="更新" Click="Update_Click" VerticalAlignment="Bottom" Width="100"/>
                 </StackPanel>             
@@ -315,8 +371,19 @@
                 </ScrollViewer>
             </Grid>
         </materialDesign:Card>
-        <!--<materialDesign:DialogHost Grid.Column="0" Grid.ColumnSpan="3" Identifier="RootDialog" DialogClosing="KeyBoardManage_OnDialogClosing" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+        <materialDesign:DialogHost Grid.Column="0" Grid.ColumnSpan="3" Identifier="RootDialogHotline" 
+                                   DialogClosing="RootDialogHotline_OnDialogClosing"/>
 
-        </materialDesign:DialogHost>-->
+
+        <materialDesign:DialogHost Grid.Column="0" Grid.ColumnSpan="3" Identifier="RootDialogGroupMember" 
+                                   DialogClosing="RootDialogGroupMember_OnDialogClosing"/>
+
+
+        <materialDesign:DialogHost Grid.Column="0" Grid.ColumnSpan="3" Identifier="RootDialogTrunk" 
+                                   DialogClosing="RootDialogTrunk_OnDialogClosing"/>
+
+        <materialDesign:DialogHost Grid.Column="0" Grid.ColumnSpan="3" Identifier="RootDialogBroadcast" 
+                                   DialogClosing="RootDialogBroadcast_OnDialogClosing"/>
+
     </Grid>
 </UserControl>

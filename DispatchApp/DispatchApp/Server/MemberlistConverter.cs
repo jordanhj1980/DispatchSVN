@@ -23,6 +23,34 @@ namespace DispatchApp
             return null;
         }
     }
+    public class TrunklistConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return null;
+            ObservableCollection<TrunkDev> date = (ObservableCollection<TrunkDev>)value;
+            return date.Count;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+    public class BroadcastlistConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return null;
+            ObservableCollection<BroadcastMember> date = (ObservableCollection<BroadcastMember>)value;
+            return date.Count;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
     public class SelectedGroupConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

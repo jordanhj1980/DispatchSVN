@@ -13,11 +13,7 @@
                 <!--  样式分离 不用的可以不引用 减少内存暂用  -->
 
                 <!--  DMSKin内置转换器 配色  -->
-                <ResourceDictionary Source="pack://application:,,,/USERSkin;Component/Styles/USERSkin.xaml" />
-                <!--  DMSKin内置按钮  -->
-                <ResourceDictionary Source="pack://application:,,,/USERSkin;component/Styles/USERButton.xaml" />
-                <!--  DMSKin内置SVG图标  -->
-                <ResourceDictionary Source="pack://application:,,,/USERSkin;component/Styles/USERIcon.xaml" />
+
             </ResourceDictionary.MergedDictionaries>
     	</ResourceDictionary>
     </Application.Resources>

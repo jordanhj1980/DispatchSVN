@@ -13,35 +13,37 @@ namespace DispatchApp
         {
             SelectedKey = new KeyBoardNew();
             SelectedGroup = new GroupNew();
+            SelectedBroadcast = new Broadcast();
             KeyboardList = new ObservableCollection<KeyBoardNew>();
             AllDevList = new ObservableCollection<ExtDevice>();
             AllPhoneList = new ObservableCollection<ExtDevice>();
+            AllTrunkList = new ObservableCollection<ExtDevice>();
         }
 
 
-        private MyCommand _RunListViewDialogCommand;
+        private MyCommand _RunGroupMemberDialogCommand;
 
-        public MyCommand RunListViewDialogCommand
+        public MyCommand RunGroupMemberDialogCommand
         {
             get
             {
-                if (_RunListViewDialogCommand == null)
-                    _RunListViewDialogCommand = new MyCommand(new Action<object>
+                if (_RunGroupMemberDialogCommand == null)
+                    _RunGroupMemberDialogCommand = new MyCommand(new Action<object>
                     (
                         o =>
                         {
-                            ExecuteRunListViewDialog(o);
+                            ExecuteGroupMemberDialog(o);
                         }
                     ),
                     new Func<object, bool>(o => this.SelectedGroup != null));
-                return _RunListViewDialogCommand;
+                return _RunGroupMemberDialogCommand;
             }
         }
         /// <summary>
         /// 分组成员选择窗口
         /// </summary>
         /// <param name="o"></param>
-        private async void ExecuteRunListViewDialog(object o)
+        private async void ExecuteGroupMemberDialog(object o)
         {
             //let's set up a little MVVM, cos that's what the cool kids are doing:
             ListViewDialogViewModel data = new ListViewDialogViewModel();
@@ -74,7 +76,7 @@ namespace DispatchApp
 
 
             //show the dialog
-            var result = await DialogHost.Show(view, "RootDialog", ListViewClosingEventHandler);
+            var result = await DialogHost.Show(view, "RootDialogGroupMember", ListViewClosingEventHandler);
 
             //check the result...
             Console.WriteLine("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
@@ -139,7 +141,7 @@ namespace DispatchApp
 
 
             //show the dialog
-            var result = await DialogHost.Show(view, "RootDialog", HotlineListViewClosingEventHandler);
+            var result = await DialogHost.Show(view, "RootDialogHotline", HotlineListViewClosingEventHandler);
 
             //check the result...
             Console.WriteLine("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
@@ -148,6 +150,139 @@ namespace DispatchApp
         {
             Console.WriteLine("You can intercept the closing event, and cancel here.");
         }
+
+        private MyCommand _TrunkListViewDialogCommand;
+
+        public MyCommand TrunklistViewDialogCommand
+        {
+            get
+            {
+                if (_TrunkListViewDialogCommand == null)
+                    _TrunkListViewDialogCommand = new MyCommand(new Action<object>
+                    (
+                        o =>
+                        {
+                            ExecuteTrunkListViewDialog(o);
+                        }
+                    ));
+                return _TrunkListViewDialogCommand;
+            }
+        }
+        /// <summary>
+        /// 中继电话选择窗口
+        /// </summary>
+        /// <param name="o"></param>
+        private async void ExecuteTrunkListViewDialog(object o)
+        {
+            //let's set up a little MVVM, cos that's what the cool kids are doing:
+            ListViewDialogViewModel data = new ListViewDialogViewModel();
+            List<TrunkDev> selectedkeyboardtrunklist = new List<TrunkDev>(this.SelectedKey.trunklist.ToList());
+            List<ExtDevice> alltrunklist = new List<ExtDevice>(this.AllTrunkList.ToList());
+
+            //选中已有成员
+            foreach (ExtDevice e in alltrunklist)
+            {
+                TrunkDev temp = selectedkeyboardtrunklist.Find(c => c.name.Equals(e.callno));
+                if (temp == null)
+                {
+                    e.DevSelected = false;
+                }
+                else
+                {
+                    e.DevSelected = true;
+                }
+            }
+            //成员排序
+            var queryresults =
+                from n in alltrunklist
+                orderby n.DevSelected descending, n.callno
+                select n;
+            alltrunklist = queryresults.ToList();
+            this.AllTrunkList = new ObservableCollection<ExtDevice>(alltrunklist);
+            data.AllDevList = this.AllTrunkList;
+
+            var view = new ListViewDialog();
+            view.DataContext = data;
+
+
+            //show the dialog
+            var result = await DialogHost.Show(view, "RootDialogTrunk", TrunkListViewClosingEventHandler);
+
+            //check the result...
+            Console.WriteLine("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
+        }
+        private void TrunkListViewClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        {
+            Console.WriteLine("You can intercept the closing event, and cancel here.");
+        }
+
+        private MyCommand _BroadcastViewDialogCommand;
+
+        public MyCommand BroadcastViewDialogCommand
+        {
+            get
+            {
+                if (_BroadcastViewDialogCommand == null)
+                    _BroadcastViewDialogCommand = new MyCommand(new Action<object>
+                    (
+                        o =>
+                        {
+                            ExecuteBroadcastViewDialog(o);
+                        }
+                    ),
+                    new Func<object, bool>(o => this.SelectedBroadcast != null));
+                return _BroadcastViewDialogCommand;
+            }
+        }
+        /// <summary>
+        /// 中继电话选择窗口
+        /// </summary>
+        /// <param name="o"></param>
+        private async void ExecuteBroadcastViewDialog(object o)
+        {
+            //let's set up a little MVVM, cos that's what the cool kids are doing:
+            ListViewDialogViewModel data = new ListViewDialogViewModel();
+            List<BroadcastMember> selectedbroadcastmemberlist = new List<BroadcastMember>(this.SelectedBroadcast.bmemberlist.ToList());
+            List<ExtDevice> allphonelist = new List<ExtDevice>(this.AllPhoneList.ToList());
+
+            //选中已有成员
+            foreach (ExtDevice e in allphonelist)
+            {
+                BroadcastMember temp = selectedbroadcastmemberlist.Find(c => c.callno.Equals(e.callno));
+                if (temp == null)
+                {
+                    e.DevSelected = false;
+                }
+                else
+                {
+                    e.DevSelected = true;
+                }
+            }
+            //成员排序
+            var queryresults =
+                from n in allphonelist
+                orderby n.DevSelected descending, n.callno
+                select n;
+            allphonelist = queryresults.ToList();
+            this.AllPhoneList = new ObservableCollection<ExtDevice>(allphonelist);
+            data.AllDevList = this.AllPhoneList;
+
+            var view = new ListViewDialog();
+            view.DataContext = data;
+
+
+            //show the dialog
+            var result = await DialogHost.Show(view, "RootDialogBroadcast", BroadcastViewClosingEventHandler);
+
+            //check the result...
+            Console.WriteLine("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
+        }
+        private void BroadcastViewClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        {
+            Console.WriteLine("You can intercept the closing event, and cancel here.");
+        }
+
+
         private KeyBoardNew _selectedkey;
         public KeyBoardNew SelectedKey
         {
@@ -171,6 +306,19 @@ namespace DispatchApp
                 {
                     _selectedgroup = value;
                     OnPropertyChanged("SelectedGroup");
+                }
+            }
+        }
+        private Broadcast _selectedbroadcast;
+        public Broadcast SelectedBroadcast
+        {
+            get { return _selectedbroadcast; }
+            set
+            {
+                if (_selectedbroadcast != value)
+                {
+                    _selectedbroadcast = value;
+                    OnPropertyChanged("SelectedBroadcast");
                 }
             }
         }
@@ -295,6 +443,16 @@ namespace DispatchApp
             set
             {
                 SetAndNotifyIfChanged("AllPhoneList", ref _allphonelist, value);
+            }
+        }
+
+        private ObservableCollection<ExtDevice> _alltrunklist;
+        public ObservableCollection<ExtDevice> AllTrunkList
+        {
+            get { return _alltrunklist; }
+            set
+            {
+                SetAndNotifyIfChanged("AllTrunkList", ref _alltrunklist, value);
             }
         }
     }

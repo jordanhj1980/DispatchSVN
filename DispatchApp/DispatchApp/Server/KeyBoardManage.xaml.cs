@@ -172,10 +172,23 @@ namespace DispatchApp
         //    keyboardmanagedata.SelectedKey.OnPropertyChanged("hotlinelist");
         //}
 
-        private void KeyBoardManage_OnDialogClosing(object sender, MaterialDesignThemes.Wpf.DialogClosingEventArgs eventArgs)
+        private void RootDialogHotline_OnDialogClosing(object sender, MaterialDesignThemes.Wpf.DialogClosingEventArgs eventArgs)
         {
-            Console.WriteLine("成员选择完毕！！！");
-            if (this.keyboardmanagedata.SelectedGroup!=null)
+            Console.WriteLine("hotline选择完毕！！！");
+            this.keyboardmanagedata.SelectedKey.hotlinelist.Clear();
+            foreach (ExtDevice t in this.keyboardmanagedata.AllPhoneList)
+            {
+                if (t.DevSelected == true)
+                {
+                    this.keyboardmanagedata.SelectedKey.hotlinelist.Add(t);
+                }
+            }
+            this.keyboardmanagedata.SelectedKey.OnPropertyChanged("hotlinelist");       
+        }
+        private void RootDialogGroupMember_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            Console.WriteLine("groupmember选择完毕！！！");
+            if (this.keyboardmanagedata.SelectedGroup != null)
             {
                 this.keyboardmanagedata.SelectedGroup.memberlist.Clear();
                 foreach (ExtDevice t in this.keyboardmanagedata.AllDevList)
@@ -187,50 +200,58 @@ namespace DispatchApp
                 }
                 this.keyboardmanagedata.SelectedGroup.OnPropertyChanged("memberlist");
             }
-
-            else
+        }
+        private void RootDialogTrunk_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            Console.WriteLine("trunklist选择完毕！！！");
+            this.keyboardmanagedata.SelectedKey.trunklist.Clear();
+            foreach (ExtDevice t in this.keyboardmanagedata.AllTrunkList)
             {
-                this.keyboardmanagedata.SelectedKey.hotlinelist.Clear();
-                foreach (ExtDevice t in this.keyboardmanagedata.AllPhoneList)
+                if (t.DevSelected == true)
                 {
-                    if (t.DevSelected == true)
-                    {
-                        this.keyboardmanagedata.SelectedKey.hotlinelist.Add(t);
-                    }
+                    TrunkDev member = new TrunkDev();
+                    member.trunkid = t.callno;
+                    member.name = t.name;
+                    this.keyboardmanagedata.SelectedKey.trunklist.Add(member);
                 }
-                this.keyboardmanagedata.SelectedKey.OnPropertyChanged("hotlinelist");
-            }          
+            }
+            this.keyboardmanagedata.SelectedKey.OnPropertyChanged("trunklist");   
         }
 
+        private void RootDialogBroadcast_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            Console.WriteLine("broadcastmember选择完毕！！！");
+            this.keyboardmanagedata.SelectedBroadcast.bmemberlist.Clear();
+            foreach (ExtDevice t in this.keyboardmanagedata.AllPhoneList)
+            {
+                if (t.DevSelected == true)
+                {
+                    BroadcastMember member = new BroadcastMember ();
+                    member.callno = t.callno;
+                    member.name = t.name;
+                    this.keyboardmanagedata.SelectedBroadcast.bmemberlist.Add(member);
+                }
+            }
+            this.keyboardmanagedata.SelectedBroadcast.OnPropertyChanged("bmemberlist");   
+        }
         private void grouplistgrid_Selected(object sender, SelectionChangedEventArgs e)
         {
             memberlistcard.Visibility = System.Windows.Visibility.Visible;
         }
 
-        //private void Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ListViewDialogViewModel data = new ListViewDialogViewModel();
-        //    ExtDevice temp = new ExtDevice();
-        //    for(int i =0;i<10;i++)
-        //    {
-        //        temp.callno=i.ToString();
-        //        data.AllDevList.Add(temp);
-        //    }
+        private void broadcastlistgrid_Selected(object sender, SelectionChangedEventArgs e)
+        {
 
+        }
 
-        //    var view = new ListViewDialog();
-        //    view.DataContext = data;
+        private void addbroadcast_Click(object sender, RoutedEventArgs e)
+        {
+            keyboardmanagedata.SelectedKey.broadcastlist.Add(new Broadcast());
+        }
 
-
-        //    //show the dialog
-        //    var result = DialogHost.Show(view, "RootDialog", HotlineListViewClosingEventHandler);
-
-
-        //}
-        //private void HotlineListViewClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
-        //{
-        //    Console.WriteLine("You can intercept the closing event, and cancel here.");
-        //}
-
+        private void delbroadcast_Click(object sender, RoutedEventArgs e)
+        {
+            keyboardmanagedata.SelectedKey.broadcastlist.Remove(keyboardmanagedata.SelectedBroadcast);
+        }
     }
 }

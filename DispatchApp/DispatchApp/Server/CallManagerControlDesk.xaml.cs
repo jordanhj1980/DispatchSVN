@@ -406,6 +406,7 @@ namespace DispatchApp
 
                 keyboardmanagetab.keyboardmanagedata.AllDevList = new ObservableCollection<ExtDevice>(alldevlist);
                 keyboardmanagetab.keyboardmanagedata.AllPhoneList = new ObservableCollection<ExtDevice>(allphonelist);
+                keyboardmanagetab.keyboardmanagedata.AllTrunkList = new ObservableCollection<ExtDevice>(alltrunklist);
 
                 if (getAllRegister.sequence == searchAllRegest.sequence)
                 {
