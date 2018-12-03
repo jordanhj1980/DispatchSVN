@@ -1,0 +1,140 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:lo="clr-namespace:AdvPanel.Controls">
+
+    <Style x:Key="DefaultItemContainerStyle"
+               TargetType="{x:Type ListBoxItem}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    </Style>
+
+    <Style x:Key="FillWrapListBoxStyle"
+               TargetType="{x:Type ListBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <lo:FillWrapPanel 
+                        RowMargin="5"
+                        ItemMargin="300"
+                        MinItemWidth="180"
+                        MaxItemWidth="200"
+                        FloorItemWidth="True"
+                        Margin="0,2,2,2"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Visible"/>
+        <Setter Property="ItemContainerStyle"
+                    Value="{StaticResource DefaultItemContainerStyle}"/>
+    </Style>
+
+    <Style x:Key="WrapListBoxStyle"
+               TargetType="{x:Type ListBox}">
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightBlue" Opacity=".4"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="LightBlue" Opacity=".4"/>
+        </Style.Resources>
+        <!--<Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" Value="Red"/>
+                <Setter Property="Foreground" Value="Red"/>
+            </Trigger>
+            <Trigger Property="IsFocused" Value="true">
+                <Setter Property="Background" Value="Coral"/>
+                <Setter Property="Foreground" Value="Red"/>
+            </Trigger>
+        </Style.Triggers>-->
+
+        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+ 
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel Name="aa" ItemWidth="200"
+                                   Margin="0,2,2,2" Style="{DynamicResource MyWrapPanel}"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle"
+                    Value="{StaticResource DefaultItemContainerStyle}"/>
+    </Style>
+
+    <Style x:Key="RelayWrapListBoxStyle"
+               TargetType="{x:Type ListBox}"
+                BasedOn="{StaticResource WrapListBoxStyle}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel Name="aa" ItemWidth="90"
+                                   Margin="0,2,2,2" Style="{DynamicResource MyWrapPanel}"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="KeyWrapListBoxStyle"
+               TargetType="{x:Type ListBox}"
+                BasedOn="{StaticResource WrapListBoxStyle}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel Name="aa" ItemWidth="120"
+                                   Margin="10,2,2,2" Style="{DynamicResource MyWrapPanel}"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="MyWrapPanel"
+               TargetType="{x:Type WrapPanel}">
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightBlue" Opacity=".4"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="LightBlue" Opacity=".4"/>
+        </Style.Resources>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <!--<Setter TargetName="aa" Property="Visibility" Value="Collapsed"></Setter>-->
+
+                <!--<Setter Property="Background" Value="Red"/>
+                <Setter Property="Opacity" Value="1"/>-->
+            </Trigger>
+            <Trigger Property="IsFocused" Value="true">
+                <Setter Property="Background" Value="Coral"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+
+
+
+    <Style x:Key="UniformListBoxStyle"
+               TargetType="{x:Type ListBox}">
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <UniformGrid Margin="0,2,2,2"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle"
+                    Value="{StaticResource DefaultItemContainerStyle}"/>
+    </Style>
+
+    <!--居中文本的TextBox 文字不能输入-->
+    <Style x:Key="Test_TextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border x:Name="border" Width="Auto" Height="Auto" BorderThickness="1" BorderBrush="#FF7F9DB9">
+                        <Grid x:Name="grid" Background="{TemplateBinding Background}">
+                            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center" HorizontalAlignment="Center"/> 
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

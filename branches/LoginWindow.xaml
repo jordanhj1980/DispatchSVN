@@ -1,0 +1,93 @@
+﻿<Window x:Class="DispatchApp.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        WindowStyle="None" AllowsTransparency="True"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="LoginWindow" Height="1080" Width="1920">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MaterialDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Viewbox>
+        <Grid Height="1080" Width="1920">            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="3*" />
+
+            </Grid.RowDefinitions>
+
+            <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5"
+                  Background="{DynamicResource PrimaryHueDarkBrush}"
+                  Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                  Height="150" Width="1920"
+                  Padding="8"
+                  UniformCornerRadius="0">
+                <TextBlock FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Microsoft YaHei">
+                    智 能 调 度 台 客 户 端
+                </TextBlock>
+            </materialDesign:Card>
+
+            <materialDesign:Card Grid.Row="1" Width="500" Height="680" materialDesign:ShadowAssist.ShadowDepth="Depth5">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="300" />
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="Resources/startup_1920x1080.jpg" Stretch="Fill" />
+                    <TextBox Grid.Row="1" Name="TxUserName" Foreground="WhiteSmoke" FontFamily="Microsoft YaHei" 
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Margin="100,20,100,0"
+                    VerticalAlignment="Top"
+                    Height="80"
+                    AcceptsReturn="True"
+                    VerticalScrollBarVisibility="Auto"
+                    materialDesign:HintAssist.Hint="用户名" FontSize="25"
+                    />
+
+                    <PasswordBox Grid.Row="2" Name="TxPassword" Foreground="WhiteSmoke" FontFamily="Microsoft YaHei"
+                    Margin="100,20,100,0"
+                    Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                    VerticalAlignment="Bottom"
+                    Height="80"
+                    materialDesign:HintAssist.Hint="密码" FontSize="25"
+                    />
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,40,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                        <Button  Margin="0,0,45,0" materialDesign:ShadowAssist.ShadowDepth="Depth5"               
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Click="BtLogin_Click"
+                            IsDefault="True"
+                            Height="50" Width="100" FontSize="25" FontFamily="Microsoft YaHei">
+                            登录
+                        </Button>
+                        
+                        <Button materialDesign:ShadowAssist.ShadowDepth="Depth5" Margin="45,0,0,0"          
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Click="BtExit_Click"
+                            Height=" 50" Width="100" FontSize="25" FontFamily="Microsoft YaHei" >
+                            退出
+                        </Button>
+                    </StackPanel>
+                    <materialDesign:Snackbar  
+                        HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
+                        Grid.Row="4"  Background="OrangeRed" Foreground="WhiteSmoke"
+                        MessageQueue="{materialDesign:MessageQueue}"
+                        x:Name="SnackbarOne" 
+                        />
+                    
+                    <Label  Content="" Height="92" HorizontalAlignment="Left" FontSize="16" Width="68" x:Name="label_msg" VerticalAlignment="Top"/>
+                </Grid>
+            </materialDesign:Card>
+
+        </Grid>
+    </Viewbox>
+</Window>

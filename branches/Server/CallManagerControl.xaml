@@ -1,0 +1,471 @@
+﻿<UserControl x:Class="DispatchApp.CallManagerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DispatchApp"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1920" Background="Black">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/DispatchApp;component/Server/ManageStyleResource.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.Resources>
+            <local:MyPrivilegeToVisibilityConverter x:Key="MyValToVisibilityConverter" />
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="214*" />
+            <ColumnDefinition Width="1716*" />
+        </Grid.ColumnDefinitions>     
+        <Grid Height="788" HorizontalAlignment="Left" Margin="0,0,0,0" Name="leftPanel" VerticalAlignment="Top" Width="300" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>                
+                <RowDefinition Height="40"/>                
+                <RowDefinition Height="500*"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="44" />
+                <ColumnDefinition Width="200*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="Black" BorderThickness="1" CornerRadius="5" BorderBrush="#FFCFCFCF">
+                <StackPanel Orientation="Horizontal">
+                    <Button Background="{x:Null}" 
+                            BorderBrush="{x:Null}" Margin="1" Height="36" x:Name="btn_collapse"  VerticalAlignment="Center"  Width="36" Click="btn_expOrCollapse_Click"  BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                        <Button.Template>
+                            <!-- 去掉按钮按下时的高亮显示 -->
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}">
+                                    <ContentPresenter/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Image x:Name="img_collapse" Source="../Resources/expand.png" />                     
+                    </Button>
+                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Name="searchBox" Margin="4,4,4,4" FontSize="26" Width="200" Background="White" VerticalContentAlignment="Center" />
+                    <Button  Height="40"  VerticalAlignment="Center"  Width="40" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                       <Image Source="../Resources/search.png" />
+                    </Button>
+                </StackPanel>                
+            </Border>           
+            
+            <!--<ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.Column="1" Margin="10,0,0,0">
+                <ListBoxItem > -->
+            <StackPanel Name="StackPanelLeft" Margin="0,2"  Grid.Row="1"  Grid.Column="0" Background="White" Grid.ColumnSpan="2">
+                <StackPanel.Resources>
+                    <local:ExpanderToBooleanConverter x:Key="ExpanderToBooleanConverter" />
+                </StackPanel.Resources>
+
+                <Expander Header="资源管理"  FontSize="24" IsExpanded="{Binding SelectedExpander, Mode=TwoWay, Converter={StaticResource ExpanderToBooleanConverter}, ConverterParameter=3}">
+                    <Expander.Content>
+                        <StackPanel>
+                            <RadioButton Name="sw"  Style="{StaticResource McRadioButton}" Click="radioBtn_man_click" Checked="sw_Checked">软交换设备</RadioButton>
+                            <RadioButton Name="user" Style="{StaticResource McRadioButton}" Click="radioBtn_man_click">系统用户</RadioButton>
+                            <RadioButton Name="desk" Style="{StaticResource McRadioButton}" Click="radioBtn_man_click" Checked="desk_Checked">调度台</RadioButton>
+                        </StackPanel>
+                    </Expander.Content>
+                </Expander>
+                
+            </StackPanel>
+        </Grid>
+        
+        <!--右侧-->
+        <Grid Grid.Column="1" Height="784" HorizontalAlignment="Left" Margin="110,1,0,0" Name="grid1" VerticalAlignment="Top" Width="1602">
+            <!--软交换设备上面工具栏-->
+            <Border BorderBrush="Silver" BorderThickness="1"  CornerRadius="5" Height="60" HorizontalAlignment="Left" Margin="0,1,0,1" Name="border1" VerticalAlignment="Top" Width="1590" >
+                <StackPanel Orientation="Horizontal">
+                    <Button Background="{x:Null}" 
+                        BorderBrush="{x:Null}" Width="32" Margin="2,2"  Height="32" x:Name="btn_sw_add"  VerticalAlignment="Center"  Click="btn_sw_add_Click"  BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                        <Image x:Name="img_add" Source="../Resources/icon_add.png" />
+                    </Button>
+                    <Button Background="{x:Null}" 
+                        BorderBrush="{x:Null}" Width="32" Margin="2,2"  Height="32" x:Name="btn_sw_delete"  VerticalAlignment="Center"  Click="btn_sw_delete_Click"  BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+
+                        <Image x:Name="img_delete" Source="../Resources/icon_delete.png" />
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <!---->
+            <TabControl  Background="{x:Null}" 
+                Height="720" HorizontalAlignment="Left" Name="tabControl_mgt" VerticalAlignment="Bottom" Width="1557" >
+                <!--软交换设备展开-->
+                <TabItem Header="tabItem1" Visibility="Collapsed"  Name="tabItem_sw">
+                    <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="530"/>
+                        <RowDefinition Height="180"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid Grid.Row="0"  Height="530" SelectionUnit="FullRow" SelectedItem="{Binding SelectedSW}"
+                              FontSize="24" Margin="-6,0,10,0" Name="switchGrid" Width="1540" IsReadOnly="True" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="60">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource VerticalCheckBox}"  />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <!--<DataGridTextColumn Binding="{Binding idstr}" Width="400" Header="标识" ElementStyle="{StaticResource dgCell}"></DataGridTextColumn>-->
+                            <DataGridTextColumn Binding="{Binding name}" Width="300" Header="名称" ElementStyle="{StaticResource dgCell}"></DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding type}" Width="100" Header="类别" ElementStyle="{StaticResource dgCell}"></DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding ip}" Width="300" Header="IP地址" ElementStyle="{StaticResource dgCell}"></DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding port}" Width="100" Header="端口" ElementStyle="{StaticResource dgCell}"></DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding username}" Width="200" Header="用户名" ElementStyle="{StaticResource dgCell}"></DataGridTextColumn>
+                            <DataGridTemplateColumn Header="信息" Width="300*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource GridBtnInfo}" Command="{Binding Path=name}" Content="查看信息" Click="Btn_SWGrid_Click" Tag="{Binding index}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                    </DataGrid>
+                    <Border Grid.Row="1" Margin="0,10" Padding="10" BorderBrush="SteelBlue" BorderThickness="3" CornerRadius="5" HorizontalAlignment="Left">
+                        <GroupBox Header="软交换设备" Height="120" Width="1500"  Name="switchinfo" HorizontalAlignment="Left" 
+                                  VerticalAlignment="Top" Margin="4,0,0,0" Foreground="White">
+                            <Grid Background="#FF489E9C">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="66" />
+                                    <ColumnDefinition Width="150*" />
+                                    <ColumnDefinition Width="66*" />
+                                    <ColumnDefinition Width="150*" />
+                                    <ColumnDefinition Width="66*" />
+                                    <ColumnDefinition Width="130*" />
+                                    <ColumnDefinition Width="66*" />
+                                    <ColumnDefinition Width="130*" />
+                                    <ColumnDefinition Width="66*" />
+                                    <ColumnDefinition Width="130*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40*"/>
+                                    <RowDefinition Height="40*"/>
+                                    <RowDefinition Height="40*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Column="0" Text="名称：" FontSize="20" HorizontalAlignment="Right"  VerticalAlignment="Top" Foreground="White"  />
+                                <TextBox Grid.Column="1" x:Name="swName" Text="{Binding Path=SelectedSW.name, Mode=OneWay}" FontSize="20"/>
+                                <TextBlock Grid.Column="2" Text="IP地址：" FontSize="20" HorizontalAlignment="Right"  VerticalAlignment="Top"  Foreground="White"  />
+                                <TextBox Grid.Column="3" x:Name="swIP" Text="{Binding SelectedSW.ip, Mode=OneWay}" FontSize="20"/>
+                                <TextBlock Grid.Column="4" Text="端口号："  FontSize="20" HorizontalAlignment="Right"  VerticalAlignment="Top" Foreground="White"  />
+                                <TextBox Grid.Column="5" x:Name="swPort" Text="{Binding Path=SelectedSW.port, Mode=OneWay}" FontSize="20"/>
+                                <TextBlock Grid.Column="6" Text="类型："  FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="White"  />
+                                <TextBox Grid.Column="7" x:Name="swType" Text="{Binding Path=SelectedSW.type, Mode=OneWay}" FontSize="20"/>
+                                <TextBox Grid.Row="1" Grid.Column="0" x:Name="swIndex" Text="{Binding Path=SelectedSW.index, Mode=OneWay}" Visibility="Hidden" FontSize="20"/>
+
+                                <Button Grid.Row="1" HorizontalAlignment="Left" Grid.Column="9"  FontSize="20" Style="{StaticResource GridBtnInfo}" 
+                                                Content="Update" Tag="{Binding SelectedSW.index}" Command="{Binding Path=name}"  Click="Btn_Update_Click" />
+                            </Grid>
+                        </GroupBox>
+                        </Border>
+                    </Grid>
+                </TabItem>
+
+                <!--系统用户展开-->
+                <TabItem  Background="{x:Null}" Header="tabItem2" Visibility="Collapsed"  Name="tabItem_user">
+                    <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="530"/>
+                        <RowDefinition Height="180"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid Height="530" SelectionUnit="FullRow" FontSize="24" Margin="-6,0,10,0" Name="userGrid" 
+                              ItemsSource="{Binding m_UserList}" IsReadOnly="True" SelectedItem="{Binding SelectedUser}" 
+                              Width="1540" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="60">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource VerticalCheckBox}"  />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Binding="{Binding idstr}" Width="200" Header="标识" ElementStyle="{StaticResource dgCell}"/>
+                            <DataGridTextColumn Binding="{Binding name}" Width="200" Header="名称" ElementStyle="{StaticResource dgCell}"/>
+                            <DataGridTextColumn Binding="{Binding status}" Width="200" Header="状态" ElementStyle="{StaticResource dgCell}"/>
+                            <DataGridTextColumn Binding="{Binding privilege}" Width="100" Header="权限" ElementStyle="{StaticResource dgCell}"/>
+                            <DataGridTextColumn Binding="{Binding role}" Width="100" Header="角色" ElementStyle="{StaticResource dgCell}"/>
+                            <DataGridTextColumn Binding="{Binding desk}" Width="150" Header="所属调度台" ElementStyle="{StaticResource dgCell}"/>
+                            <DataGridTextColumn Binding="{Binding description}" Width="300" Header="描述" ElementStyle="{StaticResource dgCell}"/>
+                            
+                            <DataGridTemplateColumn Header="信息" Width="200*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource GridBtnInfo}" Command="{Binding Path=name}" Content="查看信息" Click="Btn_UserGrid_Click" Tag="{Binding index}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    <Border Grid.Row="1" Margin="0,10" Padding="10" BorderBrush="SteelBlue" BorderThickness="3" CornerRadius="5" HorizontalAlignment="Left">
+                            <GroupBox Header="用户信息" Height="120" Width="1500"  Name="userinfo" HorizontalAlignment="Left" 
+                                      VerticalAlignment="Top" Margin="4,0,0,0" Foreground="White">
+                                <Grid Background="#FF489E9C">
+                                    <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="66" />
+                                    <ColumnDefinition Width="110*" />
+                                    <ColumnDefinition Width="60*" />
+                                    <ColumnDefinition Width="110*" />
+                                    <ColumnDefinition Width="60*" />
+                                    <ColumnDefinition Width="110*" />
+                                    <ColumnDefinition Width="60*" />
+                                    <ColumnDefinition Width="110*" />
+                                    <ColumnDefinition Width="60*" />
+                                    <ColumnDefinition Width="110*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40*" />
+                                        <RowDefinition Height="40*" />
+                                        <RowDefinition Height="40*" />
+                                    </Grid.RowDefinitions>
+                                    
+                                <TextBlock Grid.Column="0" Text="标识："  FontSize="20" HorizontalAlignment="Right"  VerticalAlignment="Top"/>
+                                <TextBox Grid.Column="1" x:Name="userStr"  Text="{Binding SelectedUser.idstr, Mode=OneWay}" FontSize="20"/>
+                                <TextBlock Grid.Column="2" Text="用户名："  FontSize="20" HorizontalAlignment="Right"  VerticalAlignment="Top" />
+                                <TextBox Grid.Column="3" x:Name="userName" Text="{Binding SelectedUser.name, Mode=OneWay}" FontSize="20" IsReadOnly="True"/>
+                                <TextBlock Grid.Column="4" Text="密码："  FontSize="20" HorizontalAlignment="Right"  VerticalAlignment="Top" />
+                                <TextBox Grid.Column="5" x:Name="userPass" Text="{Binding SelectedUser.password, Mode=OneWay}" FontSize="20"/>
+                                <TextBlock Grid.Column="6" Text="状态："  FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                                <TextBox Grid.Column="7" x:Name="userStatus" Text="{Binding SelectedUser.status, Mode=OneWay}" FontSize="20"/>
+                                <TextBlock Grid.Column="8" Text="权限："  FontSize="20" HorizontalAlignment="Right"  VerticalAlignment="Top" />
+                                <TextBox Grid.Column="9" x:Name="userPriv" Text="{Binding SelectedUser.privilege, Mode=OneWay}" FontSize="20"/>
+                                
+                                <TextBlock Grid.Row="1" Grid.Column="0"  Text="角色："  FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                                <TextBox  Grid.Row="1" Grid.Column="1" x:Name="userRole" Text="{Binding SelectedUser.role, Mode=OneWay}" FontSize="20"/>
+                                <TextBlock Grid.Row="1" Grid.Column="2"  Text="描述："  FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                                <TextBox Grid.Row="1" Grid.Column="3" x:Name="userDesp" Text="{Binding SelectedUser.description, Mode=OneWay}" FontSize="20"/>
+                                <TextBlock Grid.Row="1" Grid.Column="4"  Text="所属调度台：" 
+                                           Visibility="{Binding SelectedUser.privilege, Mode=OneWay, Converter={StaticResource MyValToVisibilityConverter}}"  FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                                <ComboBox Grid.Row="1" Grid.Column="5" x:Name="userDesk" ItemsSource="{Binding deskList}" 
+                                          Visibility="{Binding SelectedUser.privilege, Mode=OneWay, Converter={StaticResource MyValToVisibilityConverter}}"                                          
+                                          SelectedValuePath="id" DisplayMemberPath="description" 
+                                          SelectedValue="{Binding SelectedUser.desk, Mode=OneWay}" FontSize="20"/>
+                                <Button Grid.Row="2" HorizontalAlignment="Left" Grid.Column="9"  FontSize="20" Style="{StaticResource GridBtnInfo}" 
+                                        Content="Update" Tag="{Binding SelectedUser.index}" Command="{Binding Path=name}"  Click="Btn_UserUpdate_Click" />
+                                </Grid>
+                            <!-- Text="{Binding SelectedUser.desk, Mode=OneWay}" --> 
+                            </GroupBox>
+                        </Border>                    
+                    </Grid>
+                </TabItem>
+
+                <!--调度台展开-->
+                <TabItem Background="{x:Null}" Header="tabItem3" Visibility="Collapsed"  Name="tabItem_desk"
+                         Height="697" HorizontalAlignment="Left" Margin="0,0,0,0"  VerticalAlignment="Top" Width="1557">
+                <Grid>
+                   <TreeView x:Name="tvProperty" HorizontalAlignment="Left" Height="697" Margin="0,0,0,0" VerticalAlignment="Top" Width="345" Grid.Column="0">
+                        <!--设置treeview背景-->
+                        <TreeView.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFF05F5F" Offset="0"/>
+                                <GradientStop Color="#FFF0A3A3" Offset="1"/>
+                            </LinearGradientBrush>
+                        </TreeView.Background>
+                        <!--加载treeview数据-->
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate DataType="{x:Type local:propertyNodeItem}" ItemsSource="{Binding Path=Children}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding DisplayName}" Foreground="White" FontSize="14" MouseDown="TreeView_MouseDown" Tag = "{Binding Tag}"/>
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                </Grid>
+            </TabItem>
+           
+                <!--添加调度键盘-->
+                <TabItem  Background="{x:Null}" Header="tabItem4" Visibility="Collapsed"  Name="tabAdd_desk"
+                    Height="697" HorizontalAlignment="Left" Margin="0,0,0,0"  VerticalAlignment="Top" Width="1557">
+                        <Grid>
+                            <GroupBox Header="调度键盘" Height="130" Width="1540" Name="groupjianpan" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,0,0,0" Foreground="White">
+                                <Grid Background="#FF489E9C" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="56" />
+                                        <ColumnDefinition Width="217*" />
+                                        <ColumnDefinition Width="56*" />
+                                        <ColumnDefinition Width="217*" />
+                                        <ColumnDefinition Width="56*" />
+                                        <ColumnDefinition Width="217*" />
+                                        <ColumnDefinition Width="56*" />
+                                        <ColumnDefinition Width="217*" />
+                                        <ColumnDefinition Width="56*" />
+                                        <ColumnDefinition Width="217*" />
+
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="28" />
+                                        <RowDefinition Height="28" />
+                                        <RowDefinition Height="28" />
+                                        <RowDefinition Height="28" />
+                                        <RowDefinition Height="28" />
+                                        <RowDefinition Height="90" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Label Content="标识：" HorizontalAlignment="Right"  Name="biaoshi" Height="26" VerticalAlignment="Top" Margin="0,0,0,0" Width="46" Grid.Column="0"/>
+                                    <TextBox Height="24" HorizontalAlignment="Left" Name="biaoshitext" VerticalAlignment="Center"  Width="217" Margin="0,0,0,0" Grid.Column="1" />
+
+                                    <Label Content="名称：" Height="28" HorizontalAlignment="Right" Name="mingcheng" VerticalAlignment="Top" Grid.Row="0" Grid.Column="2" Margin="0,0,0,0" Width="46" />
+                                    <TextBox  Height="24" HorizontalAlignment="Left" Name="mingchengtext" VerticalAlignment="Center" Width="218" Grid.Row="0" Grid.Column="3" Margin="0,0,0,0"/>
+
+                                    <Label Content="序列：" Height="28" HorizontalAlignment="Center" Name="diaodudengji" VerticalAlignment="Top" Grid.Row="0" Grid.Column="4" Margin="0,0,0,0" Width="46" />
+                                    <TextBox  Height="24" HorizontalAlignment="Left" Name="xulietext" VerticalAlignment="Center" Width="218" Grid.Row="0" Grid.Column="5" Margin="0,0,0,0" />
+
+                                    <Label Content="IP：" Height="28" HorizontalAlignment="Center" Name="ip" VerticalAlignment="Top" Grid.Row="0" Grid.Column="6" Margin="0,0,0,0" Width="32" />
+                                    <TextBox  Height="24" HorizontalAlignment="Left" Margin="0,0,0,0" Name="IPtext" VerticalAlignment="Top" Width="217" Grid.Row="0" Grid.Column ="7" />
+
+                                    <Label Content="MAC：" Height="28" HorizontalAlignment="Center" Name="MAC" VerticalAlignment="Bottom" Width="62" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Grid.Row="0"  Grid.Column="8" Margin="0,0,0,0" />
+                                    <TextBox Height="24" HorizontalAlignment="Left" Margin="0,0,0,0" Name="MACtext" VerticalAlignment="Top" Width="217" Grid.Row="0"  Grid.Column ="9" />
+                                   
+                                    <Button Grid.Row="1" Content="确定" Name="queding" Margin="0,0,0,0" Click="MakeSure"/>
+                                    <!--<Button Grid.Row="2" Content="下一步" Name="xiayibu" Margin="0,0,0,0" Click="NextStepKey"/>-->
+                                </Grid>
+                            </GroupBox>
+                            
+                            <GroupBox Header="分组" Height="330" Width="1540" Name="groupfenzu" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,130,0,0" Foreground="White">
+                                <Grid Background="#FF9E9A6B" >
+                                    <TabControl Name="GroupTabCtrl" Background="#FF536F75">
+                                        <!--显示界面-->
+                                        <TabItem>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="135*" />
+                                                    <ColumnDefinition Width="135*" />
+                                                    <ColumnDefinition Width="136*"/>
+                                                    <ColumnDefinition Width="134*"/>
+                                                    <ColumnDefinition Width="136*"/>
+                                                    <ColumnDefinition Width="85*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <DataGrid  Background="{x:Null}" Height="176" FontSize="20" Margin="0,10,10,10" Name="GroupShowGrid" Width="1370" HorizontalAlignment="Left"  Grid.ColumnSpan="6">
+                                                    <DataGrid.Columns>
+                                                        <DataGridTextColumn Width="270" Header="序列" Binding="{Binding index}"></DataGridTextColumn>
+                                                        <DataGridTextColumn Binding="{Binding groupname}" Width="270" Header="名称"></DataGridTextColumn>
+                                                        <DataGridTextColumn Binding="{Binding memberlist}" Width="270" Header="成员"></DataGridTextColumn>
+                                                        <DataGridTextColumn Binding="{Binding description}" Width="270" Header="描述"></DataGridTextColumn>
+                                                        <DataGridTemplateColumn Header="操作" Width="270">
+                                                            <DataGridTemplateColumn.CellTemplate>
+                                                                <DataTemplate>
+                                                                    <Button Style="{StaticResource GridBtnInfo}" Command="{Binding Path=name}" Content="编辑" Click="Btn_Bianji_Click" Tag="{Binding index}" />
+                                                                </DataTemplate>
+                                                            </DataGridTemplateColumn.CellTemplate>
+                                                        </DataGridTemplateColumn>
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
+                                                <StackPanel Grid.Column="5">
+                                                    <Button Background="{x:Null}" BorderBrush="{x:Null}" Width="32" Margin="2,2"  Height="32" x:Name="btn_group_add"  VerticalAlignment="Top"  Click="btn_group_add_Click"  BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                                                        <Image x:Name="imgGroup_add" Source="../Resources/icon_add.png" />
+                                                    </Button>
+                                                    <Button Background="{x:Null}" BorderBrush="{x:Null}" Width="32" Margin="2,2"  Height="32" x:Name="btn_group_delete"  VerticalAlignment="Center"  Click="btn_group_delete_Click"  BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                                                        <Image x:Name="imgGroup_delete" Source="../Resources/icon_delete.png" />
+                                                    </Button>
+                                                </StackPanel>
+                                            </Grid>
+                                        </TabItem>
+
+                                        <!--添加界面-->
+                                        <TabItem>
+                                            <StackPanel>
+                                                <Grid Height="196">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="98" />
+                                                        <ColumnDefinition Width="637*" />
+                                                        <ColumnDefinition Width="98*" />
+                                                        <ColumnDefinition Width="631*" />
+                                                        <ColumnDefinition Width="3*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="33.333" />
+                                                        <RowDefinition Height="118.667"/>
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <TextBox Text="注册设备" Grid.Row="0" Grid.Column="1" Margin="439,9,169.667,6.333" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" />
+                                                    <TextBox Text="添加设备" Grid.Row="0" Grid.Column="3" Margin="206.333,5,395.667,10.333" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" />
+                                                    <GroupBox Header="基本信息" Grid.ColumnSpan="2" Margin="0,10,228.667,0" Grid.RowSpan="3" Foreground="White" >
+                                                        <Grid Margin="0,10,0,0">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="85" />
+                                                                <ColumnDefinition Width="48*" />
+                                                                <ColumnDefinition Width="112*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="28" />
+                                                                <RowDefinition Height="28" />
+                                                                <RowDefinition Height="28" />
+
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+                                                            <Label Content="组名：" HorizontalAlignment="Right" Name="newGroupName" Height="26" VerticalAlignment="Top" Width="46" Foreground="White"  />
+                                                            <TextBox Height="24" HorizontalAlignment="Left" Name="newGroupNameText" VerticalAlignment="Center"  Width="311" Margin="85,1,0,3" Grid.ColumnSpan="3" Background="{x:Null}" Foreground="White"  />
+                                                            <Label Content="序列：" Height="28" HorizontalAlignment="Right" Name="newGroupIdex" VerticalAlignment="Top" Grid.Row="1" Margin="0,0,0.333,0" Width="46" Foreground="White" />
+                                                            <TextBox Grid.Row="1" Height="24" HorizontalAlignment="Left" Name="newGroupIdexText" VerticalAlignment="Center" Width="311" Margin="85,1,0,3" Grid.ColumnSpan="3" Background="{x:Null}" Foreground="White" />
+                                                            <Label Content="描述：" Height="28" HorizontalAlignment="Right" Name="newGroupDes" VerticalAlignment="Top" Grid.Row="2" Margin="0,0,0.333,0" Width="46" Foreground="White" />
+                                                            <TextBox Grid.Row="2" Height="87" HorizontalAlignment="Left" Name="newGroupDesText" VerticalAlignment="Center" Width="311" Margin="85,1,0,10" Grid.ColumnSpan="3" Grid.RowSpan="2" Background="{x:Null}" Foreground="White" />
+                                                        </Grid>
+                                                    </GroupBox>
+                                                    <ListBox Name="RegesterStack" Grid.Column="1" Grid.ColumnSpan="3" Margin="439,33,454.667,0" Grid.RowSpan="2" Foreground="White" Background="{x:Null}" >
+                                                    </ListBox>
+                                                    <ListBox Name="AddCallStack" Grid.Column="3" Margin="206.333,33,4.667,0" Grid.RowSpan="2" Background="{x:Null}" Foreground="White" />
+
+                                                    <Button Name="GroupSureName" Click="GroupSure" Content="确定" Grid.Column="3" Margin="162.333,5,395.667,6" Grid.Row="2" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" />
+                                                    <Button Name="TurnRightName" Click="TurnRight" Grid.Column="2" Margin="0.333,5,3.667,6" Grid.Row="2" Background="{x:Null}" BorderBrush="{x:Null}" >
+                                                        <Image Source="../Resources/icon_add.png"/>
+                                                    </Button>
+                                                    <Button Name="TurnLeftName" Click="TurnLeft" Grid.Column="3" Margin="413.333,5,144.667,6" Grid.Row="2" BorderBrush="{x:Null}" Background="{x:Null}" >
+                                                        <Image Source="../Resources/icon_delete.png"/>
+                                                    </Button>
+                                                </Grid>
+                                            </StackPanel>
+                                        </TabItem>
+                                    </TabControl>
+                                </Grid>
+                            </GroupBox>
+
+                            <GroupBox Header="线路" Height="230" Width="1540" Name="groupxianlu" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,460,0,0" Foreground="White">
+                        <Grid Background="#FF587975" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="148*" />
+                                <ColumnDefinition Width="148*" />
+                                <ColumnDefinition Width="148*"/>
+                                <ColumnDefinition Width="148*"/>
+                                <ColumnDefinition Width="280*"/>
+                                <ColumnDefinition Width="484*"/>
+                                <ColumnDefinition Width="165*"/>
+                            </Grid.ColumnDefinitions>
+                            <DataGrid  Background="{x:Null}" Height="176" FontSize="20" Margin="0,10" Name="LineShowGrid" Width="872" HorizontalAlignment="Left"  Grid.ColumnSpan="6">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding index}" Width="148" Header="序列"></DataGridTextColumn>
+                                    <DataGridTextColumn Binding="{Binding name}" Width="148" Header="名称"></DataGridTextColumn>
+                                    <DataGridTextColumn Binding="{Binding callno}" Width="148" Header="成员"></DataGridTextColumn>
+                                    <DataGridTextColumn Binding="{Binding description}" Width="148" Header="描述"></DataGridTextColumn>
+                                    <DataGridTemplateColumn Header="操作" Width="280">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Style="{StaticResource GridBtnInfo}" Command="{Binding Path=name}" Content="删除" Click="btn_hotline_delete_Click" Tag="{Binding index}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <TextBox Text="添加线路" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" RenderTransformOrigin="-9.309,-3.731" Margin="26.333,10,379.667,163" FontSize="18" Height="23" Width="78" />
+                            <ListBox Name="CallLine" Grid.Column="5" Margin="4.333,38,4.667,10" Background="{x:Null}" Foreground="White" />
+                            <Button Content="添加" Background="{x:Null}" BorderBrush="{x:Null}" Width="56"  Height="59" x:Name="btn_line_add" Grid.Column="6" VerticalAlignment="Center"  Click="LineAdd"  BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" FontSize="24" Foreground="White" Margin="55,38,55,111"/>
+                            <Button Content="完成" Background="{x:Null}" BorderBrush="{x:Null}" Width="56"  Height="60" x:Name="btn_line_finish" Grid.Column="6" VerticalAlignment="Center"  Click="FinishDeskChange"  BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" FontSize="24" Foreground="White" RenderTransformOrigin="0.363,-0.384" Margin="55,132,55,16"/>
+                        </Grid>
+                    </GroupBox>
+
+           
+                        </Grid>
+                    </TabItem>
+            <TabItem x:Name="keymanage" Background="{x:Null}" Header="tabItem4" Visibility="Collapsed"  >
+                <!--<local:KeyBoardManage x:Name="keyboardmanagetab" />-->
+            </TabItem>
+            </TabControl>
+            
+            
+        </Grid>
+    </Grid>
+</UserControl>

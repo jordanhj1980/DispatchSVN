@@ -1,0 +1,55 @@
+﻿<Window x:Class="DispatchApp.CreateUserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="添加用户" Height="484" Width="366">
+    <Grid Height="448" HorizontalAlignment="Center" VerticalAlignment="Top" Width="344">
+        <TabControl Height="400" Margin="5,5,0,0" Name="tabControl1" VerticalAlignment="Top">
+            <TabItem Header="常规" Name="tabItem1">
+                <StackPanel Height="369">
+                    <Grid Height="369">
+                            <Grid.ColumnDefinitions>                                
+                                <ColumnDefinition Width="62*" />
+                                <ColumnDefinition Width="200*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                            <RowDefinition Height="70*" />
+                        </Grid.RowDefinitions>
+                        <Label Content="标识：" HorizontalAlignment="Right" Name="label1" VerticalAlignment="Center" />
+                        <Label Content="姓名：" HorizontalAlignment="Right" Name="label2" VerticalAlignment="Center" Grid.Row="1" />
+                        <Label Content="密码：" HorizontalAlignment="Right" Name="label3" VerticalAlignment="Center" Grid.Row="2" />
+                        <Label Content="确认密码：" HorizontalAlignment="Right" Name="label4" VerticalAlignment="Center" Grid.Row="3" />
+                        <Label Content="状态：" HorizontalAlignment="Right" Name="label5" VerticalAlignment="Center" Grid.Row="4" />
+                        <Label Content="权限：" HorizontalAlignment="Right" Name="label7" VerticalAlignment="Center" Grid.Row="5" />
+                        <Label Content="调度台：" HorizontalAlignment="Right" Name="label8" VerticalAlignment="Center" Grid.Row="6" />
+                        <Label Content="描述：" HorizontalAlignment="Right" Name="label9" VerticalAlignment="Center" Grid.Row="7" />
+                        <TextBox Grid.Column="1" HorizontalAlignment="Left" Name="tb_id" VerticalAlignment="Center"  Width="217" Margin="0,1,0,3" />
+                        <TextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="tb_name" VerticalAlignment="Center" Width="218" />
+                        <TextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Name="tb_pass" VerticalAlignment="Center" Width="217" />
+                        <TextBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Name="tb_passure" VerticalAlignment="Center" Width="217" />
+                        <ComboBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Name="comBox_status" VerticalAlignment="Center" Width="215" 
+                                  DataContext="{Binding}">
+                            
+                        </ComboBox>
+                        <ComboBox Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Name="comBox_privilege" VerticalAlignment="Center" Width="215" />
+                        <ComboBox Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Name="comBox_desk" VerticalAlignment="Center" Width="215" />
+                        <TextBox HorizontalAlignment="Left" Name="tb_description" VerticalAlignment="Center" Width="218" Grid.Column="1" Grid.Row="7" Height="88" Margin="0,0,0,1" TextWrapping="Wrap" />
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+        
+        <StackPanel Orientation="Horizontal" Margin="81,411,0,-1">
+            <Button Content="确定" Height="23" Name="btn_ok" Width="75" Click="bt_Click_ok"  Margin="10,0,0,0" />
+            <Button Content="取消" Height="23" Name="btn_cancel" Click="bt_Click_cancel" Width="75" Margin="10,0,0,0" />
+            <Button Content="应用" Height="23" Name="btn_apply" Click="bt_Click_apply"  Width="75" Margin="10,0,0,0" />
+        </StackPanel>
+
+    </Grid>
+</Window>

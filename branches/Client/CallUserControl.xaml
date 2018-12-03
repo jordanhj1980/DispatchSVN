@@ -1,0 +1,349 @@
+﻿<UserControl x:Class="DispatchApp.CallUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DispatchApp"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"             
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" FontSize="18" Height="900" Width="1920">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Generic.xaml"/>
+                <ResourceDictionary Source="/DispatchApp;component/NewPanelDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!--<materialDesign:DrawerHost x:Name="DrawerHostName" Margin="0,0,0,0" HorizontalAlignment="Center" 
+                               VerticalAlignment="Center" 
+                               BorderThickness="2" 
+                               BorderBrush="{DynamicResource MaterialDesignDivider}" 
+                               Height="900" Width="1920">
+        <materialDesign:DrawerHost.BottomDrawerContent>
+            <StackPanel Margin="20"
+                        HorizontalAlignment="Center" 
+                        Orientation="Horizontal"
+                        Height="160">
+                <Button Name="CommandBtn"
+                        Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}" 
+                        Style="{DynamicResource MaterialDesignFlatButton}" 
+                        Margin="4" VerticalAlignment="Center" 
+                        Content=" 关闭夜服" FontSize="46" 
+                        Height="100" Width="265"
+                        Click="CloseNightServer"> 
+                </Button>              
+            </StackPanel>
+        </materialDesign:DrawerHost.BottomDrawerContent>-->
+
+    <!--<materialDesign:DialogHost
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        IsOpen="{Binding IsSample4DialogOpen}"
+        CloseOnClickAway="True">
+        <materialDesign:DialogHost.DialogContent>
+            <TabControl Margin="20"
+                        Name="DialogTab"
+                    HorizontalAlignment="Center"                     
+                    BorderBrush="{x:Null}" 
+                    Foreground="{x:Null}"
+                    >--><!--Orientation="Horizontal"--><!--
+                <TabItem >                  
+                    <Button Name="CommandBtn"
+                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" 
+                        Style="{DynamicResource MaterialDesignFlatButton}"
+                        Margin="4" 
+                        Content=" 关闭夜服" FontSize="46" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"
+                        Height="100" Width="265"
+                        Click="CloseNightServer" >
+                    </Button>
+                </TabItem>
+                <TabItem >
+                    <Button 
+                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" 
+                        Style="{DynamicResource MaterialDesignFlatButton}"
+                        Margin="4" 
+                        FontSize="46" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"
+                        Height="517" Width="400"
+                        Click="CloseNightServer" >
+                        <StackPanel Name="card">
+                            
+                        </StackPanel>
+                    </Button>
+                </TabItem>
+            </TabControl>
+        </materialDesign:DialogHost.DialogContent>-->
+                <!--存放呼叫电话-->
+    <Grid Margin="0,0,0,0">
+        <!--<Button Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" Margin="1825,803,16,22"  
+                         Style="{DynamicResource MaterialDesignRaisedAccentButton}">
+                <materialDesign:PackIcon Kind="ArrowAll" />
+            </Button>-->
+
+            <!--<ScrollViewer Name="scroll" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" ></ScrollViewer>-->
+            <!--WrapPanel x:Name="MyWrapPanel2" Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Style="{StaticResource FillWrapListBoxStyle}">
+            </>-->
+            <!--<ListBox x:Name="MyWrapPanel2" Background="{x:Null}"  BorderBrush="{x:Null}" Style="{StaticResource WrapListBoxStyle}">
+        </ListBox> -->
+
+            <TabControl Height="757" HorizontalAlignment="Left" Margin="289,0,0,0" Name="tabCtrl_User" VerticalAlignment="Top" Width="1499" TabStripPlacement="Bottom" Background="{x:Null}" BorderBrush="{x:Null}">
+            </TabControl>
+            <!--<ListBox x:Name="RelayList" Style="{StaticResource RelayWrapListBoxStyle}" Background="{x:Null}"  Height="162" HorizontalAlignment="Left" Margin="284,558,0,0" VerticalAlignment="Top" Width="1504">
+        </ListBox>-->
+            <ListBox Height="757" HorizontalAlignment="Left" Margin="284,0,0,0" Name="tabCtrl_CDR" VerticalAlignment="Top" Width="1499" Background="{x:Null}" Visibility="Hidden"/>
+            <!--右侧快捷内容栏-->
+            <Grid Margin="1804,13,16,160" x:Name="grid_right" Width="100" HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="63*" />
+                    <RowDefinition Height="53*" />
+                    <RowDefinition Height="53*" />
+                    <RowDefinition Height="53*" />
+                    <RowDefinition Height="53*" />
+                    <RowDefinition Height="53*" />
+                </Grid.RowDefinitions>
+                
+            <!--<Button Name="NightService"
+                        Width="100" 
+                        Style="{DynamicResource RoundedButton}" 
+                        Grid.Row="0"
+                        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Click="Night_Click">
+                <Button.CommandParameter>
+                    --><!-- the simplest view model of all, a DateTime. the view can be found in the resources of MainWindow.xaml  --><!--
+                    <Button Name="CommandBtn"
+                           
+                            IsCancel="True"
+                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                            CommandParameter="Sample2Cancel"
+                            HorizontalAlignment="Center">
+                        --><!--Style="{StaticResource MaterialDesignFlatButton}"--><!--
+                        关闭夜服
+                    </Button>
+                </Button.CommandParameter>
+                <StackPanel OpacityMask="Black" VerticalAlignment="Top">
+                    <Image Height="64" Source="../Resources/phone_off.png" Width="64" />
+                    <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="夜服" VerticalAlignment="Bottom" Width="94" />
+                </StackPanel>
+            </Button>-->
+                
+            <!--<Button HorizontalAlignment="Center" Grid.Row="1" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Click="Button_Log" Background="{x:Null}">
+                    <StackPanel VerticalAlignment="Top">
+                        <Image Height="64" Source="../Resources/log.png" Width="64" />
+                        <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,0" Text="日志" VerticalAlignment="Bottom" Width="80" Foreground="#FFD8D7D7" />
+                    </StackPanel>
+                </Button>-->
+                <Button HorizontalAlignment="Center" Grid.Row="2" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Click="Button_Search" Background="{x:Null}" Opacity="0.4">
+                    <StackPanel VerticalAlignment="Top">
+                        <Image Height="64" Source="../Resources/search.png" Width="64" />
+                        <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,0" Text="查询" VerticalAlignment="Bottom" Width="80" Foreground="#FFD8D7D7" />
+                    </StackPanel>
+                </Button>
+                <Button HorizontalAlignment="Center" Grid.Row="3" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Click="Button_Email" Background="{x:Null}" Opacity="0.4">
+                    <StackPanel VerticalAlignment="Top">
+                        <Image Height="64" Source="../Resources/email_focus.png" Width="64" />
+                        <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,0" Text="邮件" VerticalAlignment="Bottom" Width="80" Foreground="#FFD8D7D7" />
+                    </StackPanel>
+                </Button>
+                <Button HorizontalAlignment="Center" Grid.Row="4" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Click="Button_Meeting" Background="{x:Null}" Opacity="0.4">
+                    <StackPanel VerticalAlignment="Top">
+                        <Image Height="64" Source="../Resources/groupconf.png" Width="64" />
+                        <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,0" Text="会议" VerticalAlignment="Bottom" Width="80" Foreground="#FFD8D7D7" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+
+            <!--分割线，需要加粗-->
+            <!--<Separator VerticalAlignment="Bottom" Margin="1784,0,0,140" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Visible" Height="29" >
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>-->
+
+
+
+        <!--功能区-->
+        <WrapPanel Height="104" Margin="0,776,171,16" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Center"
+                x:Name="grid_bottom" 
+                Width="1449" 
+                Orientation="Horizontal" 
+                ItemWidth="126" >
+            <Button Click="Button_Call"
+                Width="100" 
+                Style="{DynamicResource RoundedButton}">
+                <StackPanel VerticalAlignment="Top">
+                    <Image Height="64" Source="../Resources/call_ing.png" Width="64" />
+                    <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="呼叫" VerticalAlignment="Bottom" Width="80" />
+                </StackPanel>
+            </Button>
+            <Button Width="100" Style="{DynamicResource RoundedButton}" Click="Button_Transfer" >
+                <StackPanel VerticalAlignment="Top">
+                    <Image Height="64" Source="../Resources/call_transfer.png" Width="64" />
+                    <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="转接" VerticalAlignment="Bottom" Width="80" />
+                </StackPanel>
+            </Button>
+ <!--Click="Night_Click"-->
+            <Button 
+                Command="{Binding NightServerCommand}"
+                Width="100"
+                Style="{DynamicResource RoundedButton}">
+                <StackPanel VerticalAlignment="Top">
+                    <Image Source="../Resources/phone_off.png" 
+                        Height="64" Width="64" />
+                    <TextBlock Text="夜服"
+                        Block.TextAlignment="Center" 
+                        FontFamily="SimHei" 
+                        FontSize="30"  
+                        Height="34" Width="80"   
+                        VerticalAlignment="Bottom"/>
+                </StackPanel>
+            </Button>
+            <!--<Button Width="100" Background="#FFCBC7C7" Click="Button_Hangoff" Style="{DynamicResource RoundedButton}" Opacity="0.4">
+                <StackPanel VerticalAlignment="Top">
+                    <Image Height="64" Source="../Resources/hangoff.png" Width="64" />
+                    <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="强挂" VerticalAlignment="Bottom" Width="80" />
+                </StackPanel>
+            </Button>-->             
+            <Button Width="100" Background="#FFCBC7C7" Click="Button_Monitor" Style="{DynamicResource RoundedButton}">
+                    <StackPanel VerticalAlignment="Top">
+                        <Image Height="64" Source="../Resources/monitor.png" Width="64" />
+                        <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="监听" VerticalAlignment="Bottom" Width="80" />
+                    </StackPanel>
+                </Button>
+                    <Button Width="100" Background="#FFCBC7C7" Click="Radio_Click" Style="{DynamicResource RoundedButton}">
+                    <StackPanel VerticalAlignment="Top">
+                        <Image Height="64" Source="../Resources/photo.png" Width="64" />
+                        <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="广播" VerticalAlignment="Bottom" Width="80" />
+                    </StackPanel>
+                </Button>
+                <Button Width="100" Background="#FFCBC7C7" Click="Relay_Click" Style="{DynamicResource RoundedButton}">
+                    <StackPanel VerticalAlignment="Top">
+                        <Image Height="64" Source="../Resources/photo.png" Width="64" />
+                        <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="中继" VerticalAlignment="Bottom" Width="80" />
+                    </StackPanel>
+                </Button>
+                <Button Width="100" Background="#FFCBC7C7" Click="Button_Log" Style="{DynamicResource RoundedButton}">
+                    <StackPanel VerticalAlignment="Top">
+                        <Image Height="64" Source="../Resources/log.png" Width="64" />
+                        <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="日志" VerticalAlignment="Bottom" Width="80" />
+                    </StackPanel>
+                </Button><!--Click = "Button_CallKeyBord"-->
+                <Button Command = "{Binding OutLineComand}"
+                    Width ="100" 
+                    Style = "{DynamicResource RoundedButton}" >
+                    <StackPanel VerticalAlignment="Top">
+                        <Image Source="../Resources/option.png" 
+                            Height="64" Width="64" />
+                        <TextBlock Text="外线"
+                            Block.TextAlignment="Center" 
+                            FontFamily="SimHei" 
+                            FontSize="30" 
+                            Height="34" Width="80" 
+                            VerticalAlignment="Bottom" />
+                    </StackPanel>
+                </Button>
+            </WrapPanel>
+            <!--分隔线-->
+            <Separator VerticalAlignment="Bottom" Margin="1339,0,-319,436" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Visible" Height="29" >
+                <Separator.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Separator.RenderTransform>
+            </Separator>
+
+            <!--中间终端电话区-->
+            <TabControl HorizontalAlignment="Left" Height="695" VerticalAlignment="Top" Width="280" Background="{x:Null}" BorderBrush="{x:Null}">
+                <TabItem Header="呼叫队列" Margin="0" HorizontalAlignment="Left" Width="140" Height="38" Background="{x:Null}" FontFamily="SimHei" FontSize="24" Foreground="#FFD8D7D7">
+                    <Grid >
+                        <ListBox x:Name="lbCallQueue" HorizontalContentAlignment="Stretch" ItemsSource="{Binding m_callQueue}" Background="{x:Null}" 
+                                 Height="649" Width="270" 
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Top" >
+                            <ListBox.Resources>
+                                <Style TargetType="{x:Type ListBoxItem}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                <Button Content="{Binding Path=fromnumber}" Background="{Binding Path=CurrentState, Converter={StaticResource cvtDate}}"
+                                                    Tag="{Binding visitorid}" Margin="0,2" Height="35" Click="btn_lbqueue_click"/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListBox.Resources>
+                            <Button Content="hello" />
+                        </ListBox>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="呼叫记录" HorizontalAlignment="Right" Width="134" RenderTransformOrigin="1.465,-5.19" Height="38" Background="{x:Null}" FontFamily="SimHei" FontSize="24" Foreground="#FFD8D7D7">
+                    <Grid />
+                </TabItem>
+            </TabControl>
+
+
+            <!--键权电话区-->
+            <Grid Margin="2,0,1627,12" x:Name="grid_liftDown" VerticalAlignment="Bottom" Height="184" RenderTransformOrigin="0.499,0.477" HorizontalAlignment="Center" Width="277">
+                <Grid.Resources>
+                    <local:KeyImageConverter x:Key="cvtKeyDate" />
+                </Grid.Resources>
+                <ListBox Style="{StaticResource KeyWrapListBoxStyle}"  Height="184" Width="269" HorizontalAlignment="Left" Name="KeyCallListBox" VerticalAlignment="Bottom"  Background="{x:Null}" Margin="-2,0,0,0" />
+                <Button x:Name="btn_holdoff" Content="Unhold" HorizontalAlignment="Left" Margin="6,7.333,0,7" Grid.Row="2" VerticalAlignment="Bottom" Width="75" Click="btn_holdoff_click"/>
+                <Button x:Name="btn_key"  Grid.ColumnSpan="2" Content="挂断" HorizontalAlignment="Left" Height="38" Margin="42,4.333,0,7" VerticalAlignment="Bottom" Width="191" FontSize="30" FontFamily="SimHei" Background="#FFB40D0D" Foreground="#FFD8D7D7" Click="Button_Click_1" Grid.Row="2"/>
+
+            </Grid>
+
+ 
+            <!--分隔线-->
+            <Separator VerticalAlignment="Bottom" Margin="284,0,134,123.666" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Visible" Height="29" >
+                <Separator.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Separator.RenderTransform>
+            </Separator>
+            <Separator VerticalAlignment="Bottom" Margin="-167,0,1188,437" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Visible" Height="29" >
+                <Separator.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Separator.RenderTransform>
+            </Separator>
+        
+            <!--Dialog-->
+            <materialDesign:DialogHost Identifier="UserNightServerDialog" 
+                DialogClosing="NightServeDialogClosing" 
+                Grid.Row="2"
+                SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+            </materialDesign:DialogHost>
+
+            <materialDesign:DialogHost Identifier="UserOutLineDialog" 
+                DialogClosing="OutLineDialogClosing" 
+                Grid.Row="2"
+                SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+            </materialDesign:DialogHost>
+    </Grid>
+    <!--</materialDesign:DrawerHost>-->
+    <!--</materialDesign:DialogHost>-->
+    
+    
+</UserControl>
