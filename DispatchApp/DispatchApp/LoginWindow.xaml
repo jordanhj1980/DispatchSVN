@@ -49,8 +49,8 @@
                     Margin="100,20,100,0"
                     VerticalAlignment="Top"
                     Height="80"
-                    AcceptsReturn="True"
-                    VerticalScrollBarVisibility="Auto"
+                    AcceptsReturn="False"
+                    
                     materialDesign:HintAssist.Hint="用户名" FontSize="25"
                     />
 
