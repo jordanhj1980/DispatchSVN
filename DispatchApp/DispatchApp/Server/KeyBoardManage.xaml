@@ -33,30 +33,31 @@
             <local:BroadcastlistConverter x:Key="cvtBroadcast" />
         </ResourceDictionary>
     </UserControl.Resources>
+    
     <Grid>
         <StackPanel Width="1557">
             <StackPanel.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type local:KeyBoardNew}" ItemsSource="{Binding Path=grouplist}">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Keyboard" 
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Keyboard" 
                             Width="40" Height="40" 
                             Margin="0,0,10,0"
                             VerticalAlignment="Center" />
-                        <TextBlock  Text="{Binding Path=name}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignDisplay1TextBlock}"/>
-                    </StackPanel>
-                </HierarchicalDataTemplate>
+                    <TextBlock  Text="{Binding Path=name}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignDisplay1TextBlock}"/>
+                </StackPanel>
+            </HierarchicalDataTemplate>
 
-                <HierarchicalDataTemplate DataType = "{x:Type local:GroupNew}">
-                    <StackPanel Orientation="Vertical" >
-                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                            <materialDesign:Badged Badge="{Binding memberlist, Converter={StaticResource cvtMemberlist}}">
-                                <materialDesign:PackIcon Kind="AccountSupervisor" 
+            <HierarchicalDataTemplate DataType = "{x:Type local:GroupNew}">
+                <StackPanel Orientation="Vertical" >
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <materialDesign:Badged Badge="{Binding memberlist, Converter={StaticResource cvtMemberlist}}">
+                            <materialDesign:PackIcon Kind="AccountSupervisor" 
                                  Width="40" Height="40" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                            </materialDesign:Badged>
-                            <TextBlock Text="{Binding Path=groupname}" VerticalAlignment="Center"/>
-                        </StackPanel>
+                        </materialDesign:Badged>
+                        <TextBlock Text="{Binding Path=groupname}" VerticalAlignment="Center"/>
                     </StackPanel>
-                </HierarchicalDataTemplate>
+                </StackPanel>
+            </HierarchicalDataTemplate>
             </StackPanel.Resources>
             <!--主标题-->
             <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5"
@@ -75,8 +76,8 @@
             <DockPanel Height="654" VerticalAlignment="Bottom">
                 <!--调度键盘树-->
                 <materialDesign:Card x:Name="keyboardtreeview" Margin="10,0,0,10"  Height="654"
-                materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Visible"   
-                Padding="0" UniformCornerRadius="6">
+                    materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Visible"   
+                    Padding="0" UniformCornerRadius="6">
                     <StackPanel Width="300" HorizontalAlignment="Left">
                         <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="280">
@@ -84,18 +85,18 @@
                             <Button x:Name="delkey" Content="删除键盘" Width="100" Click="delkey_Click" Margin="20,0,10,0" HorizontalAlignment="Right" />
                         </StackPanel>
                         <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
-                        <ScrollViewer x:Name="scrollViewer" VerticalScrollBarVisibility="Auto" 
-                        HorizontalScrollBarVisibility="Auto"
-                        VerticalAlignment="Top"
-                        PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" MaxHeight="505">
-                            <ScrollViewer.Content>
-                                <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto" >
-                                    <TreeView x:Name="Keyboardlist" ItemsSource="{Binding KeyboardList}" TreeViewItem.Selected="Keyboardlist_Selected" />
-                                </StackPanel>
-                            </ScrollViewer.Content>
-                        </ScrollViewer>
+                <ScrollViewer x:Name="scrollViewer" VerticalScrollBarVisibility="Auto" 
+                              HorizontalScrollBarVisibility="Auto"
+                      VerticalAlignment="Top"
+                      PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" MaxHeight="505">
+                <ScrollViewer.Content>
+                    <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto" >
+                        <TreeView x:Name="Keyboardlist" ItemsSource="{Binding KeyboardList}" TreeViewItem.Selected="Keyboardlist_Selected" />
                     </StackPanel>
-                </materialDesign:Card>
+                </ScrollViewer.Content>
+            </ScrollViewer>
+            </StackPanel>
+        </materialDesign:Card>
                 <!--调度键盘树end-->
                 <!--调度键盘详细信息-->
                 <StackPanel>
@@ -113,15 +114,15 @@
                         <StackPanel Height="60">
                             <DockPanel Height="60">
                                 <TextBlock Text="名字:" Width="60" VerticalAlignment="Center" Margin="40,0,10,0"
-                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
-                                <TextBox Text="{Binding SelectedKey.name}"                            
+                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+                                <TextBox Text="{Binding SelectedKey.name}" 
                                 Width="272" VerticalAlignment="Center"  Margin="0,0,20,0" FontSize="24"/>
                                 <TextBlock Text="IP:" Width="36" VerticalAlignment="Center" Margin="40,16,10,16"
-                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
                                 <TextBox Text="{Binding SelectedKey.ip}" 
                                 Width="300" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24" />
                                 <TextBlock Text="MAC:" Width="60" VerticalAlignment="Center" Margin="40,0,10,0"
-                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
                                 <TextBox Text="{Binding SelectedKey.mac}"
                                 Width="272" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,11,20,11" FontSize="24"/>
                             </DockPanel>
@@ -143,38 +144,21 @@
                         <StackPanel Height="200">
                             <DockPanel Margin="0,10,0,0">
                                 <TextBlock Text="键权电话:" Width="110" VerticalAlignment="Center"
-                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="20,0,0,0"/>
+                                Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="20,0,0,0"/>
                                 <TextBlock Text="{Binding SelectedKey.hotlinelist, Converter={StaticResource cvtMemberlist}, Mode=OneWay}" 
-                                    MinWidth="100" VerticalAlignment="Center" FontSize="24"/>
+                                MinWidth="100" VerticalAlignment="Center" FontSize="24"/>
                                 <Button Content="选择成员" Command="{Binding HotlineListViewDialogCommand}" Width="145" />
                             </DockPanel>
-
                             <ListView x:Name="hotlinelistgrid" 
                                 ItemsSource="{Binding SelectedKey.hotlinelist}" FontSize="24" 
-                                MaxHeight="100" MinWidth="1000" >
-
-                                <!--<DockPanel Margin="0,5,0,0">
-                                    <TextBlock Text="中继电话:" Width="110" VerticalAlignment="Center"
-                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
-                                    <TextBlock Text="{Binding SelectedKey.trunklist, Converter={StaticResource cvtTrunklist}, Mode=OneWay}" 
-                                    MinWidth="100" VerticalAlignment="Center"/>
-                                    <Button Content="选择成员" Command="{Binding TrunklistViewDialogCommand}" />
-                                </DockPanel>
-                            </ListView>
-                        </StackPanel>
-                    </materialDesign:Card>-->
-                    <!--<Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
-
-                    <StackPanel Grid.Row="2" Margin="0,5,0,0">-->
-                        <!--<ListView x:Name="grouplistgrid" ItemsSource="{Binding SelectedKey.grouplist}" FontSize="16" 
-                                      SelectedItem="{Binding SelectedGroup}" SelectionChanged="grouplistgrid_Selected"
-                                      MaxHeight="150">-->
+                                MaxHeight="200" MinWidth="1000">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <materialDesign:Card Margin="1"                                           
-                                            UniformCornerRadius="6"><!--Background="{DynamicResource PrimaryHueLightBrush}"
-                                            Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"-->
-                                            <DockPanel Margin="0,10,0,0">
+                                        <materialDesign:Card Margin="1"
+                                            Background="{DynamicResource PrimaryHueLightBrush}"
+                                            Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                                            UniformCornerRadius="6">
+                                             <DockPanel Margin="0,10,0,0">
                                                 <TextBlock Text="名称:" Width="60" VerticalAlignment="Center" Margin="0,0,10,0"/>
                                                 <TextBox Text="{Binding name}" 
                                                     MinWidth="200" VerticalAlignment="Center" FontSize="24"/>
@@ -182,7 +166,7 @@
                                                 <TextBox Text="{Binding callno}" 
                                                     MinWidth="200" VerticalAlignment="Center" FontSize="24"/>
                                                 <TextBlock Text="描述:" Width="60" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                                                <TextBox Text="{Binding description}" 
+                                                        <TextBox Text="{Binding description}" 
                                                     MinWidth="200" VerticalAlignment="Center" FontSize="24"/>
                                             </DockPanel>
                                         </materialDesign:Card>
@@ -209,201 +193,130 @@
                                 Padding="0" UniformCornerRadius="6">
                                 <StackPanel Width="900" Height="300">
                                     <StackPanel>
-                                        <DockPanel Margin="5">
-                                            <Button Content="添加分组" Click="addgroup_Click" Width="100" Margin="10,0,20,0"/>
-                                            <Button Content="删除分组" Click="delgroup_Click" Width="100" />
-                                            <Button Command="{Binding RunListViewDialogCommand}" HorizontalAlignment="Right"
-                                                Margin="10,0,20,0" Width="100">
-                                                选择成员
-                                            </Button>
-                                            <Button Content="更新" Click="Update_Click" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100"/>
-                                        </DockPanel>
-                                    </StackPanel>
-                                    <ListView x:Name="grouplistgrid" ItemsSource="{Binding SelectedKey.grouplist}" FontSize="24" 
-                                        SelectedItem="{Binding SelectedGroup}" SelectionChanged="grouplistgrid_Selected"
-                                        MaxHeight="200" >
-                                        <ListView.Template>                                            <ControlTemplate TargetType="{x:Type ListView}">                                                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">                                                    <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>                                                </ScrollViewer>                                            </ControlTemplate>                                        </ListView.Template>
+                            <DockPanel Margin="5">
+                                <Button Content="添加分组" Click="addgroup_Click" Width="100" Margin="10,0,20,0"/>
+                                <Button Content="删除分组" Click="delgroup_Click" Width="100" />
+                                <Button Command="{Binding RunGroupMemberDialogCommand}" HorizontalAlignment="Right"
+                                    Margin="10,0,20,0" Width="100">
+                                    选择成员
+                                </Button>
+                                <Button Content="更新" Click="Update_Click" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100"/>
+                            </DockPanel>
+                            </StackPanel>             
+                                 <ListView x:Name="grouplistgrid" ItemsSource="{Binding SelectedKey.grouplist}" FontSize="24" 
+                                    SelectedItem="{Binding SelectedGroup}" SelectionChanged="grouplistgrid_Selected"
+                                    MaxHeight="300">
+                                        <!--横向排列Item设置-->
+                                        <ListView.ItemsPanel> 
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel ItemWidth="180" ItemHeight="160"/>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                        <!--横向排列Item设置end-->
+                                        <!--ListView内容-->
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
-                                                <!--<materialDesign:Card Width="56" Height="90">
-                                                    <Button>
+                                                <!--Button触发分组信息编辑-->
+                                                <Button Click="RunGroupDetailDialogCommand" 
+                                                    Background="{x:Null}" Width="180" Height="160"
+                                                    HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                                                    VerticalAlignment="Center" VerticalContentAlignment="Center">
+                                                <!--卡片-->
+                                                <materialDesign:Card Margin="0" UniformCornerRadius="0" 
+                                                                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                     Width="140" Height="140">
+                                                    <StackPanel>
                                                         <StackPanel>
                                                             <DockPanel>
-                                                                <materialDesign:PackIcon Kind="AccountSupervisor" />
-                                                                <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="0"
-                                                                    Text="{Binding groupname}">
+                                                                <TextBlock FontStyle="Italic"
+                                                                           Style="{StaticResource MaterialDesignSubheadingTextBlock}">
+                                                                    <DockPanel>                                                                       
+                                                                        <materialDesign:PackIcon Kind="AccountSupervisor"
+                                                                            VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                                            Margin="0,0,10,0" Width="22" Height="22"/>
+                                                                        <TextBlock Text="{Binding groupname}" FontSize="18" 
+                                                                            VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                    </DockPanel>  
+                                                                </TextBlock>
                                                             </DockPanel>
-                                                            
                                                         </StackPanel>
-                                                    </Button>
-                                                </materialDesign:Card>-->
-                                                <materialDesign:Card Margin="1"                                                
-                                                    UniformCornerRadius="6">
-                                                    <DockPanel Margin="0,10,0,0">
-                                                        <TextBlock Text="组名:" Width="60" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                                                        <TextBox Text="{Binding groupname}" 
-                                                        MinWidth="120" VerticalAlignment="Center" FontSize="24"/>
-                                                        <TextBlock Text="列数:" Width="60" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                                                        <TextBox Text="{Binding column}" 
-                                                        MinWidth="120" VerticalAlignment="Center" FontSize="24"/>
-                                                        <TextBlock Text="描述:" Width="60" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                                                        <TextBox Text="{Binding description}" 
-                                                        MinWidth="120" VerticalAlignment="Center" FontSize="24"/>
-                                                        <TextBlock Text="成员:" Width="60" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                                                        <TextBox Text="{Binding memberlist, Converter={StaticResource cvtMemberlist}, Mode=OneWay}" 
-                                                        MinWidth="10" VerticalAlignment="Center" FontSize="24"/>
-                                                    </DockPanel>
+                                                        <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                                        <StackPanel>
+                                                            <DockPanel>
+                                                                <TextBlock Text="列数"  VerticalAlignment="Center"
+                                                                           Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+                                                                <TextBlock Text="{Binding column}"  VerticalAlignment="Center" Margin="0,0,10,0"
+                                                                           Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+                                                                <TextBlock Text="成员数"  VerticalAlignment="Center" 
+                                                                           Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+                                                                <TextBlock Text="{Binding memberlist, Converter={StaticResource cvtMemberlist}, Mode=OneWay}" 
+                                                                           VerticalAlignment="Center" Margin="0,0,10,0"
+                                                                           Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+                                                            </DockPanel>
+                                                        </StackPanel>
+                                                        <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                                        <TextBlock Text="描述" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                       FontWeight="Bold"
+                                                                       Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+                                                        <TextBlock Text="{Binding description}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                       Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+                                                    </StackPanel>
                                                 </materialDesign:Card>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                </StackPanel>
-                            </materialDesign:Card>
+                                                 <!--卡片end-->
+                                                </Button>
+                                                <!--Button触发分组信息编辑end-->
+                                               
+                                    </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                     <!--ListView内容end-->
+                                 </ListView>
+                            </StackPanel>
+                    </materialDesign:Card>
                             <!--分组列表end-->
                             <!--组成员列表-->
                             <StackPanel>
                                 <materialDesign:Card x:Name="memberlistcard"
-                                    materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Hidden"
-                                    Padding="0"
+            materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Hidden"
+            Padding="0"
                                     UniformCornerRadius="6" >
-                                    <ScrollViewer x:Name="scrollAlldev" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                <ScrollViewer x:Name="scrollAlldev" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                         Visibility="{Binding SelectedGroup}" VerticalAlignment="Top" Margin="10" Height="300"
                                         PreviewMouseWheel="scrollAlldev_PreviewMouseWheel">
-                                        <ScrollViewer.Content>
-                                            <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
-                                                <DataGrid x:Name="groupdevicegrid" ItemsSource="{Binding SelectedGroup.memberlist}" 
+                    <ScrollViewer.Content>
+                        <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
+                            <DataGrid x:Name="groupdevicegrid" ItemsSource="{Binding SelectedGroup.memberlist}" 
                                                     AutoGenerateColumns="False" CanUserAddRows="False" FontSize="30" IsEnabled="False">
-                                                    <DataGrid.Columns>
-                                                        <DataGridTextColumn Header="号码" CanUserReorder="False" Binding="{Binding callno}"/>
-                                                        <DataGridTextColumn Header="岗位名称" CanUserReorder="False" Binding="{Binding name}"/>
-                                                        <DataGridTextColumn Header="类型" CanUserReorder="False" Binding="{Binding type}"/>
-                                                    </DataGrid.Columns>
-                                                </DataGrid>
-                                            </StackPanel>
-                                        </ScrollViewer.Content>
-                                    </ScrollViewer>
-                                </materialDesign:Card>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="号码" CanUserReorder="False" Binding="{Binding callno}"/>
+                                    <DataGridTextColumn Header="岗位名称" CanUserReorder="False" Binding="{Binding name}"/>
+                                    <DataGridTextColumn Header="类型" CanUserReorder="False" Binding="{Binding type}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </ScrollViewer.Content>
+                </ScrollViewer>
+        </materialDesign:Card>
                             </StackPanel>
                             <!--组成员列表end-->
                         </DockPanel>
                     </StackPanel>
                     <!--分组信息end-->
-
-                    <!--</StackPanel>
-                                            </Grid>
-                                        </materialDesign:Card>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                            <DockPanel Margin="5">
-                                <Button Content="添加分组" Click="addgroup_Click" Width="100" Margin="10,0,20,0"/>
-                                <Button Content="删除分组" Click="delgroup_Click" Width="100" />
-
-                        <Button Command="{Binding RunGroupMemberDialogCommand}" HorizontalAlignment="Right"
-                            Margin="0,0,10,0" Width="100">
-                                    选择成员
-                                </Button>
-                            </DockPanel>
-                    <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
-                    <ListView x:Name="broadcastlistgrid" ItemsSource="{Binding SelectedKey.broadcastlist}" FontSize="16" 
-                                      SelectedItem="{Binding SelectedBroadcast}" SelectionChanged="broadcastlistgrid_Selected"
-                                      MaxHeight="150">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <materialDesign:Card Margin="10"
-                                    Background="{DynamicResource PrimaryHueLightBrush}"
-                                    Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
-                                    UniformCornerRadius="6" 
-                                     >
-                                    <Grid>
-                                        <StackPanel x:Name="broadcastview" Margin="10" Width="500" >
-
-                                            <DockPanel Margin="0,10,0,0">
-                                                <TextBlock Text="名称:" Width="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
-
-                                                <TextBox Text="{Binding name}" 
-                                                            MinWidth="20" VerticalAlignment="Center"/>
-                                                
-                                                <TextBlock Text="成员:" Width="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                                                <TextBox Text="{Binding bmemberlist, Converter={StaticResource cvtBroadcast}, Mode=OneWay}" 
-                                                            MinWidth="20" VerticalAlignment="Center"/>
-                                            </DockPanel>
-                                        </StackPanel>
-                                    </Grid>
-                                </materialDesign:Card>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                    <DockPanel Margin="5">
-                        <Button Content="添加广播" Click="addbroadcast_Click" Width="100" Margin="10,0,20,0"/>
-                        <Button Content="删除广播" Click="delbroadcast_Click" Width="100" />
-
-                        <Button Command="{Binding BroadcastViewDialogCommand}" HorizontalAlignment="Right"
-                            Margin="0,0,10,0" Width="100">
-                            选择成员
-                        </Button>
-                    </DockPanel>
-                    <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
-                    <Button Content="更新" Click="Update_Click" VerticalAlignment="Bottom" Width="100"/>
-                </StackPanel>             
-            </Grid>
-        </materialDesign:Card>-->
-                    <!--分组详细信息-->
-                    <!--<materialDesign:Card x:Name="groupview" Grid.Row="0" Grid.Column="1" Margin="10"
-                        UniformCornerRadius="6" FontSize="24" Visibility="Hidden"
-                                     >
-            <Grid>
-                <StackPanel Margin="10" Width="300">
-                    <TextBlock Text="分组信息" HorizontalAlignment="Center" />
-                    <DockPanel Margin="0,5,0,0">
-                        <TextBlock Text="组名:" Width="40" VerticalAlignment="Center"/>
-                        <TextBox Text="{Binding SelectedGroup.groupname}" MinWidth="200" VerticalAlignment="Center"/>
-                    </DockPanel>
-                    <DockPanel Margin="0,5,0,0">
-                        <TextBlock Text="列数:" Width="40" VerticalAlignment="Center"/>
-                        <TextBox Text="{Binding SelectedGroup.column}" MinWidth="200" VerticalAlignment="Center"/>
-                    </DockPanel>
-                    <DockPanel Margin="0,5,0,0">
-                        <TextBlock Text="描述:" Width="40" VerticalAlignment="Center"/>
-                        <TextBox Text="{Binding SelectedGroup.description}" MinWidth="200" VerticalAlignment="Center"/>
-                    </DockPanel>
-                    <DataGrid x:Name="extdevicegrid" ItemsSource="{Binding SelectedGroup.memberlist}" AutoGenerateColumns="False" CanUserAddRows="False">
-                        <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="选择">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <CheckBox 
-                                VerticalAlignment="Center" 
-                                HorizontalAlignment="Center" 
-                                IsChecked ="True"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="号码" Binding="{Binding callno}"/>
-                            <DataGridTextColumn Header="岗位名称" Binding="{Binding name}"/>
-                            <DataGridTextColumn Header="描述" Binding="{Binding description}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>-->
-
                 </StackPanel>
                 <!--调度键盘详细信息end-->
             </DockPanel>
         </StackPanel>
-
         <materialDesign:DialogHost Grid.Column="0" Grid.ColumnSpan="3" Identifier="RootDialogHotline" 
                                    DialogClosing="RootDialogHotline_OnDialogClosing"/>
-
-
-
         <materialDesign:DialogHost Grid.Column="0" Grid.ColumnSpan="3" Identifier="RootDialogGroupMember" 
                                    DialogClosing="RootDialogGroupMember_OnDialogClosing"/>
-
-
         <materialDesign:DialogHost Grid.Column="0" Grid.ColumnSpan="3" Identifier="RootDialogTrunk" 
                                    DialogClosing="RootDialogTrunk_OnDialogClosing"/>
-
         <materialDesign:DialogHost Grid.Column="0" Grid.ColumnSpan="3" Identifier="RootDialogBroadcast" 
                                    DialogClosing="RootDialogBroadcast_OnDialogClosing"/>
+        <materialDesign:DialogHost Grid.Column="0" Grid.ColumnSpan="3" Identifier="RootDialogGroupDetial" 
+                                   DialogClosing="RootDialogGroupDetial_OnDialogClosing"/>
 
+        <!--<materialDesign:DialogHost Grid.Column="0" Grid.ColumnSpan="3" Identifier="groupDialog" DialogClosing="GroupDitiel_OnDialogClosing" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+        </materialDesign:DialogHost>-->
     </Grid>
 </UserControl>

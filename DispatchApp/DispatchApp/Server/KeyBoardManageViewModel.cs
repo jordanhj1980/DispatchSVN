@@ -86,6 +86,60 @@ namespace DispatchApp
             Console.WriteLine("You can intercept the closing event, and cancel here.");
         }
 
+        /// <summary>
+        /// 分组成员编辑窗口 20181203 xiaozi
+        /// </summary>
+        //private MyCommand _RunGroupDetailDialogCommand;
+        //public MyCommand RunGroupDetailDialogCommand
+        //{
+        //    get
+        //    {
+        //        if (_RunGroupDetailDialogCommand == null)
+        //            _RunGroupDetailDialogCommand = new MyCommand(new Action<object>
+        //            (
+        //                o =>
+        //                {
+        //                    EditGroupDetialDialog();
+        //                }
+        //            ),
+        //            new Func<object, bool>(o => this.SelectedGroup != null));
+        //        return _RunGroupDetailDialogCommand;
+        //    }
+        //}
+       
+
+        public GroupDetialViewModel groupData;
+        public async void EditGroupDetialDialog()
+        {
+            GroupDetialViewModel groupData = new GroupDetialViewModel();
+            groupData.groupDetail = SelectedGroup;      // 初始化编辑界面参数
+            Console.WriteLine("SelectedGroupzzzzzzzz" + SelectedGroup.groupname);
+
+            var view = new GroupDetial();
+            view.DataContext = groupData;
+
+            //show the dialog
+            var result = await DialogHost.Show(view, "RootDialogGroupDetial", ListViewClosingEventHandler);
+
+            //check the result...
+            Console.WriteLine("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         private MyCommand _HotlineListViewDialogCommand;
 
         public MyCommand HotlineListViewDialogCommand

@@ -154,6 +154,10 @@
       <DependentUpon>KeyCall.xaml</DependentUpon>
     </Compile>
     <Compile Include="Client\OutLineViewModel.cs" />
+    <Compile Include="Server\GroupDetial.xaml.cs">
+      <DependentUpon>GroupDetial.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Server\GroupDetialViewModel.cs" />
     <Compile Include="Server\KeyBoardManage.xaml.cs">
       <DependentUpon>KeyBoardManage.xaml</DependentUpon>
     </Compile>
@@ -249,6 +253,10 @@
     <Page Include="Client\KeyCall.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Server\GroupDetial.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Server\KeyBoardManage.xaml">
       <SubType>Designer</SubType>

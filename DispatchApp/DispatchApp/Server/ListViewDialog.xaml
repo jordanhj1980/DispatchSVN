@@ -52,7 +52,7 @@
             </ListView>
         </StackPanel>
         <StackPanel Grid.Row="1">
-            <Button Content="确定" Margin="10" Width="100" Command="{x:Static wpf:DialogHost.CloseDialogCommand}"/>
+            <Button Content="确定" Margin="175,10" Width="100" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

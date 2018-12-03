@@ -253,5 +253,19 @@ namespace DispatchApp
         {
             keyboardmanagedata.SelectedKey.broadcastlist.Remove(keyboardmanagedata.SelectedBroadcast);
         }
+
+        private void RootDialogGroupDetial_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            Console.WriteLine("分组信息参数编辑完毕！！！");
+            this.keyboardmanagedata.SelectedGroup = this.keyboardmanagedata.groupData.groupDetail;
+
+            //this.keyboardmanagedata.OnPropertyChanged("SelectedGroup");   
+        }
+
+        private void RunGroupDetailDialogCommand(object sender, RoutedEventArgs e)
+        {
+            this.keyboardmanagedata.EditGroupDetialDialog();
+        }
+
     }
 }
