@@ -169,6 +169,9 @@
     <Compile Include="Server\MemberlistConverter.cs" />
     <Compile Include="Server\MyCommand.cs" />
     <Compile Include="Server\ObjectCopier.cs" />
+    <Compile Include="Flipper\Flipper.cs" />
+    <Compile Include="Flipper\LessThanXToTrueConverter.cs" />
+    <Compile Include="Flipper\Plane3D.cs" />
     <Compile Include="Splitwindow\LoadingWindow.xaml.cs">
       <DependentUpon>LoadingWindow.xaml</DependentUpon>
     </Compile>
@@ -222,6 +225,7 @@
     <Compile Include="Utils\MyPrivilegeToVisibilityConverter.cs" />
     <Compile Include="Utils\NotifyObject.cs" />
     <Compile Include="Utils\PostgreHelper.cs" />
+    <Compile Include="Utils\RequiredRule.cs" />
     <Page Include="Client\CallBoardDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -263,6 +267,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Server\ListViewDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Flipper\FlipperStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -352,6 +360,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="ValidateStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindow_event.xaml.cs" />
@@ -371,6 +383,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Design\projectGuides.guides" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -383,6 +396,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\cardprofile.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\close-circle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -434,6 +450,7 @@
     <Content Include="Resources\optionWhite.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\icon_return.png" />
     <Content Include="USERSkin.dll" />
   </ItemGroup>
   <ItemGroup>

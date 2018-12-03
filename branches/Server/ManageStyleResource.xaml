@@ -174,7 +174,7 @@
         <Setter Property="AlternationCount" Value="2"/>
     </Style>
 
-    <LinearGradientBrush x:Key="GrayBlueGradientBrush"     StartPoint="0,0" EndPoint="0,1">
+    <LinearGradientBrush x:Key="GrayBlueGradientBrush" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Color="#7982b0"  Offset="0" />
         <GradientStop Color="#585e80" Offset="1" />
     </LinearGradientBrush>

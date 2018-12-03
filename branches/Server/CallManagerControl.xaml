@@ -4,12 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DispatchApp"
+             xmlns:uc="clr-namespace:DispatchApp.wpf"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1920" Background="Black">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/DispatchApp;component/Server/ManageStyleResource.xaml"/>
+                <ResourceDictionary Source="/DispatchApp;component/Flipper/FlipperStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -56,7 +58,7 @@
             
             <!--<ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.Column="1" Margin="10,0,0,0">
                 <ListBoxItem > -->
-            <StackPanel Name="StackPanelLeft" Margin="0,2"  Grid.Row="1"  Grid.Column="0" Background="White" Grid.ColumnSpan="2">
+            <StackPanel Name="StackPanelLeft" Margin="0,2,0,236.4"  Grid.Row="1"  Grid.Column="0" Background="White" Grid.ColumnSpan="2">
                 <StackPanel.Resources>
                     <local:ExpanderToBooleanConverter x:Key="ExpanderToBooleanConverter" />
                 </StackPanel.Resources>
@@ -70,8 +72,60 @@
                         </StackPanel>
                     </Expander.Content>
                 </Expander>
-                
             </StackPanel>
+                
+            <Border BorderBrush="White" BorderThickness="1" Height="150" Margin="5,515,5,0" Grid.Row="1" 
+                    VerticalAlignment="Top" Grid.ColumnSpan="2">
+
+                <uc:Flipper x:Name="fc" IsFlippedChanged="Flipper_OnIsFlippedChanged">
+                    <uc:Flipper.FrontContent>
+                        <Grid Height="150" Width="200" Background="Silver">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="80" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Image Height="80" Width="80" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Source="../Resources/cardprofile.png"/>
+                            <StackPanel  Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock HorizontalAlignment="Center" Foreground="Black" Text="James Willock" />
+                                <Button Command="{x:Static uc:Flipper.FlipCommand}" Margin="0 4 0 0" Width="184">
+                                    编辑
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </uc:Flipper.FrontContent>
+                    <uc:Flipper.BackContent>
+                        <Grid Height="150" Width="200" Background="Silver">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Command="{x:Static uc:Flipper.FlipCommand}" HorizontalAlignment="Left">
+                                    <Image Source="../Resources/icon_return.png" HorizontalAlignment="Right"/>
+                                </Button>
+                                <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Text="返回"/>
+            </StackPanel>
+                            <Grid Grid.Row="1" Margin="0 6 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="172">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBox Text="用户名" Margin="0 12 0 0"/>
+                                <TextBox Grid.Row="1" Text="Last name" Margin="0 12 0 0"/>
+                                <Button Command="{x:Static uc:Flipper.FlipCommand}" Margin="0 4 0 0" Width="184">
+                                    确定
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </uc:Flipper.BackContent>
+                </uc:Flipper>
+
+
+            </Border>
+
+            
+
         </Grid>
         
         <!--右侧-->
@@ -120,7 +174,7 @@
                             <DataGridTemplateColumn Header="信息" Width="300*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Style="{StaticResource GridBtnInfo}" Command="{Binding Path=name}" Content="查看信息" Click="Btn_SWGrid_Click" Tag="{Binding index}" />
+                                        <Button Style="{StaticResource GridBtnInfo}" Command="{Binding Path=name}" Content="查看电话" Click="Btn_SWGrid_MemberClick" Tag="{Binding index}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -158,7 +212,7 @@
                                 <TextBox Grid.Row="1" Grid.Column="0" x:Name="swIndex" Text="{Binding Path=SelectedSW.index, Mode=OneWay}" Visibility="Hidden" FontSize="20"/>
 
                                 <Button Grid.Row="1" HorizontalAlignment="Left" Grid.Column="9"  FontSize="20" Style="{StaticResource GridBtnInfo}" 
-                                                Content="Update" Tag="{Binding SelectedSW.index}" Command="{Binding Path=name}"  Click="Btn_Update_Click" />
+                                                Content="更新信息" Tag="{Binding SelectedSW.index}" Command="{Binding Path=name}"  Click="Btn_Update_Click" />
                             </Grid>
                         </GroupBox>
                         </Border>

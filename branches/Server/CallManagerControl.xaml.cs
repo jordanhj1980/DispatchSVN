@@ -834,11 +834,11 @@ namespace DispatchApp
 #region 软交换设备表格
 
         /// <summary>
-        /// 软交换列表中处理查看信息按钮事件
+        /// 查看软交换中电话信息
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Btn_SWGrid_Click(object sender, RoutedEventArgs e)
+        private void Btn_SWGrid_MemberClick(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
             if (btn != null)
@@ -846,6 +846,8 @@ namespace DispatchApp
                 Int16 index = Convert.ToInt16(btn.Tag);
                 Debug.WriteLine("current index: " + index);
             }
+
+
         }     
 
         /// <summary>    
@@ -1040,6 +1042,11 @@ namespace DispatchApp
         private void NextStepHotLine(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Flipper_OnIsFlippedChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
+        {
+            System.Diagnostics.Debug.WriteLine("Card is flipped = " + e.NewValue);
         }
     }
 }

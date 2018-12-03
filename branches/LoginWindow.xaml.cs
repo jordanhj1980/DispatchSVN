@@ -30,6 +30,7 @@ namespace DispatchApp
         private MainWindow m_mainWindow;
         ////20181010 xiaozi Add
         //private WebSocket ws;
+        private string Name;
       
         public LoginWindow(MainWindow mainWindow)
         {
@@ -37,6 +38,8 @@ namespace DispatchApp
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.WindowState = System.Windows.WindowState.Maximized;
+
+            Name = "";
         }
 
         public string logIn = "0"; 
