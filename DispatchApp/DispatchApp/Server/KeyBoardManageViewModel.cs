@@ -18,6 +18,7 @@ namespace DispatchApp
             AllDevList = new ObservableCollection<ExtDevice>();
             AllPhoneList = new ObservableCollection<ExtDevice>();
             AllTrunkList = new ObservableCollection<ExtDevice>();
+            groupData = new GroupDetialViewModel();
         }
 
 
@@ -111,12 +112,19 @@ namespace DispatchApp
         public GroupDetialViewModel groupData;
         public async void EditGroupDetialDialog()
         {
-            GroupDetialViewModel groupData = new GroupDetialViewModel();
-            groupData.groupDetail = SelectedGroup;      // 初始化编辑界面参数
-            Console.WriteLine("SelectedGroupzzzzzzzz" + SelectedGroup.groupname);
+            //OnPropertyChanged("SelectedGroup");
+            //GroupDetialViewModel groupData = new GroupDetialViewModel();
+            groupData.groupDetail = ObjectCopier.Clone<GroupNew>(SelectedGroup); // 初始化编辑界面参数
+            //groupData.groupDetail = this.SelectedGroup; // 双向绑定     
+            //Console.WriteLine("SelectedGroupzzzzzzzz" + SelectedGroup.groupname);
+
+            //var view = new GroupDetial();
+            //view.DataContext = groupData;
 
             var view = new GroupDetial();
-            view.DataContext = groupData;
+            view.DataContext = groupData.groupDetail;
+            //view.DataContext = this.SelectedGroup;
+
 
             //show the dialog
             var result = await DialogHost.Show(view, "RootDialogGroupDetial", ListViewClosingEventHandler);
@@ -167,7 +175,7 @@ namespace DispatchApp
             ListViewDialogViewModel data = new ListViewDialogViewModel();
             List<ExtDevice> selectedkeyboardhotlist = new List<ExtDevice>(this.SelectedKey.hotlinelist.ToList());
             List<ExtDevice> alldevlist = new List<ExtDevice>(this.AllPhoneList.ToList());
-            this.SelectedGroup = null;
+            //this.SelectedGroup = null;
             //选中已有成员
             foreach (ExtDevice e in alldevlist)
             {

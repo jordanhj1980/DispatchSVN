@@ -24,32 +24,42 @@
     <Grid>
         <StackPanel>
             <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5"
-                      Height="36"
+                      Height="46"
                       Background="{DynamicResource PrimaryHueDarkBrush}"
                       Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                       UniformCornerRadius="0" 
                       VerticalContentAlignment="Center">
-                <TextBlock Text="编辑分组详细信息" VerticalAlignment="Center"/>
+                <TextBlock Text="编辑分组详细信息" FontSize="24" VerticalAlignment="Center" Margin="10,0,0,0"/>
             </materialDesign:Card>
             <DockPanel Margin="0,10,0,0">
-                    <TextBlock Text="组名:" Width="60" FontSize="24" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <TextBox Text="{Binding groupDetail.groupname}" 
-                    MinWidth="120" VerticalAlignment="Center" FontSize="24"/>
+                    <TextBlock Text="组名:" Width="60" FontSize="24" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                <TextBox Text="{Binding groupname}" 
+                    Width="220" VerticalAlignment="Center" FontSize="24"/>
             </DockPanel>
             <DockPanel>
-                <TextBlock Text="列数:" Width="60" FontSize="24" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <TextBox Text="{Binding groupDetail.column}" 
-                    MinWidth="120" VerticalAlignment="Center" FontSize="24"/>
+                <TextBlock Text="列数:" Width="60" FontSize="24" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                <TextBox Text="{Binding column}" 
+                    Width="220" VerticalAlignment="Center" FontSize="24"/>
             </DockPanel>
-            <DockPanel>
-                <TextBlock Text="描述:" Width="60" FontSize="24" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <TextBox Text="{Binding groupDetail.description}" 
-                    MinWidth="120" VerticalAlignment="Center" FontSize="24"/>
-            </DockPanel>
+            <StackPanel>
+                <TextBlock Text="描述:" Width="60" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                <TextBox Text="{Binding description}" 
+                    Width="280" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="24"/>
+            </StackPanel>
         </StackPanel>
-        <StackPanel Margin="0,250,0,0" VerticalAlignment="Center">
-            <Button Content="确定" Width="100" 
-                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
+        <StackPanel Orientation="Horizontal" Margin="0,250,0,0" VerticalAlignment="Center">
+            <Button Content="确定" Width="100" Margin="30,10,20,10" HorizontalAlignment="Left"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">                  
+                <Button.CommandParameter>
+                    <system:Boolean>True</system:Boolean>
+                </Button.CommandParameter>
+            </Button>
+            <Button Content="取消" Width="100" Margin="20,10,30,10" HorizontalAlignment="Right"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">                   
+                <Button.CommandParameter>
+                    <system:Boolean>False</system:Boolean>
+                </Button.CommandParameter>
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -204,12 +204,12 @@
                             </DockPanel>
                             </StackPanel>             
                                  <ListView x:Name="grouplistgrid" ItemsSource="{Binding SelectedKey.grouplist}" FontSize="24" 
-                                    SelectedItem="{Binding SelectedGroup}" SelectionChanged="grouplistgrid_Selected"
+                                    SelectedItem="{Binding SelectedGroup}" SelectionChanged="grouplistgrid_Selected" 
                                     MaxHeight="300">
                                         <!--横向排列Item设置-->
                                         <ListView.ItemsPanel> 
                                             <ItemsPanelTemplate>
-                                                <WrapPanel ItemWidth="180" ItemHeight="160"/>
+                                                <WrapPanel ItemWidth="180" ItemHeight="160" />
                                             </ItemsPanelTemplate>
                                         </ListView.ItemsPanel>
                                         <!--横向排列Item设置end-->
@@ -217,14 +217,16 @@
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <!--Button触发分组信息编辑-->
-                                                <Button Click="RunGroupDetailDialogCommand" 
+                                                <!--<Button Click="RunGroupDetailDialogCommand" 
                                                     Background="{x:Null}" Width="180" Height="160"
                                                     HorizontalAlignment="Center" HorizontalContentAlignment="Center"
-                                                    VerticalAlignment="Center" VerticalContentAlignment="Center">
+                                                    VerticalAlignment="Center" VerticalContentAlignment="Center">-->
                                                 <!--卡片-->
-                                                <materialDesign:Card Margin="0" UniformCornerRadius="0" 
-                                                                     HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                                     Width="140" Height="140">
+                                                <materialDesign:Card UniformCornerRadius="0" 
+                                                    MouseDoubleClick="RunGroupDetailDialogCommand"
+                                                    Width="140" Height="140" Margin="10,0,0,0"
+                                                    HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                                                    VerticalAlignment="Center" VerticalContentAlignment="Center">
                                                     <StackPanel>
                                                         <StackPanel>
                                                             <DockPanel>
@@ -263,7 +265,7 @@
                                                     </StackPanel>
                                                 </materialDesign:Card>
                                                  <!--卡片end-->
-                                                </Button>
+                                                <!--</Button>-->
                                                 <!--Button触发分组信息编辑end-->
                                                
                                     </DataTemplate>
@@ -276,26 +278,26 @@
                             <!--组成员列表-->
                             <StackPanel>
                                 <materialDesign:Card x:Name="memberlistcard"
-            materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Hidden"
-            Padding="0"
+                                    materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Hidden"
+                                    Padding="0"
                                     UniformCornerRadius="6" >
-                <ScrollViewer x:Name="scrollAlldev" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                    <ScrollViewer x:Name="scrollAlldev" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                         Visibility="{Binding SelectedGroup}" VerticalAlignment="Top" Margin="10" Height="300"
                                         PreviewMouseWheel="scrollAlldev_PreviewMouseWheel">
-                    <ScrollViewer.Content>
-                        <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
-                            <DataGrid x:Name="groupdevicegrid" ItemsSource="{Binding SelectedGroup.memberlist}" 
-                                                    AutoGenerateColumns="False" CanUserAddRows="False" FontSize="30" IsEnabled="False">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="号码" CanUserReorder="False" Binding="{Binding callno}"/>
-                                    <DataGridTextColumn Header="岗位名称" CanUserReorder="False" Binding="{Binding name}"/>
-                                    <DataGridTextColumn Header="类型" CanUserReorder="False" Binding="{Binding type}"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </StackPanel>
-                    </ScrollViewer.Content>
-                </ScrollViewer>
-        </materialDesign:Card>
+                                        <ScrollViewer.Content>
+                                            <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
+                                                <DataGrid x:Name="groupdevicegrid" ItemsSource="{Binding SelectedGroup.memberlist}" 
+                                                                        AutoGenerateColumns="False" CanUserAddRows="False" FontSize="30" IsEnabled="False">
+                                                    <DataGrid.Columns>
+                                                        <DataGridTextColumn Header="号码" CanUserReorder="False" Binding="{Binding callno}"/>
+                                                        <DataGridTextColumn Header="岗位名称" CanUserReorder="False" Binding="{Binding name}"/>
+                                                        <DataGridTextColumn Header="类型" CanUserReorder="False" Binding="{Binding type}"/>
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
+                                            </StackPanel>
+                                        </ScrollViewer.Content>
+                                    </ScrollViewer>
+                                </materialDesign:Card>
                             </StackPanel>
                             <!--组成员列表end-->
                         </DockPanel>

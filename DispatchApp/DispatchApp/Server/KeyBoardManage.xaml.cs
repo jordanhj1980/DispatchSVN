@@ -257,12 +257,23 @@ namespace DispatchApp
         private void RootDialogGroupDetial_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
         {
             Console.WriteLine("分组信息参数编辑完毕！！！");
-            this.keyboardmanagedata.SelectedGroup = this.keyboardmanagedata.groupData.groupDetail;
+            if (!Equals(eventArgs.Parameter, true)) return;
 
-            //this.keyboardmanagedata.OnPropertyChanged("SelectedGroup");   
+            else
+            {
+                //this.keyboardmanagedata.SelectedGroup = this.keyboardmanagedata.groupData.groupDetail;
+                //this.keyboardmanagedata.OnPropertyChanged("SelectedGroup"); 
+                this.keyboardmanagedata.SelectedGroup.groupname = this.keyboardmanagedata.groupData.groupDetail.groupname;
+                this.keyboardmanagedata.SelectedGroup.index = this.keyboardmanagedata.groupData.groupDetail.index;
+                this.keyboardmanagedata.SelectedGroup.memberlist = this.keyboardmanagedata.groupData.groupDetail.memberlist;
+                this.keyboardmanagedata.SelectedGroup.column = this.keyboardmanagedata.groupData.groupDetail.column;
+                this.keyboardmanagedata.SelectedGroup.description = this.keyboardmanagedata.groupData.groupDetail.description;
+            }
+                
+           
         }
 
-        private void RunGroupDetailDialogCommand(object sender, RoutedEventArgs e)
+        private void RunGroupDetailDialogCommand(object sender, MouseButtonEventArgs e)
         {
             this.keyboardmanagedata.EditGroupDetialDialog();
         }
