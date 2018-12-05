@@ -67,49 +67,9 @@ namespace DispatchApp
         
         public event CtrlSwitchHandler CtrlSwitchEvent;
         List<TestClass> classlist;
-
-
-        // 软交换设备列表
-        ObservableCollection<SWDEV> swList;
-        /// <summary>
-        /// function 列表中当前选中软交换设备
-        /// </summary>
-        private SWDEV _selectedSW;
-        // 当对话框打开添加软交换时，临时存储软交换的信息
-        public SWDEV swdevobj;      // 新增软交换
-        public SWDEV SelectedSW
-        {
-            get { return _selectedSW; }
-            set
-            {
-                if (_selectedSW != value)
-                {
-                    _selectedSW = value;
-                    RaisePropertyChanged("SelectedSW");
-                }
-            }
-        }
-
-        // 用户列表
-        ObservableCollection<User> m_UserList;
-        /// <summary>
-        /// function 列表中当前选中用户
-        /// </summary>
-        private User _selectedUser;
-        // 当对话框打开添加软交换时，临时存储软交换的信息
-        public User userobj;      // /* 保存临时的用户item */
-        public User SelectedUser
-        {
-            get { return _selectedUser; }
-            set
-            {
-                if (_selectedUser != value)
-                {
-                    _selectedUser = value;
-                    RaisePropertyChanged("SelectedUser");
-                }
-            }
-        }
+        
+        
+        
         #endregion
 
         public string ImageSource { get; set; }
@@ -136,32 +96,34 @@ namespace DispatchApp
         }*/
         //public KeyBoardManageViewModel keyboardmanagedata; //调度键盘界面数据
         KeyBoardManage keyboardmanagetab;
+        /* 软交换界面TabItem */
+        SwitchManage swmanaagetab;
+        /* 用户界面TabItem */
+        UserManage usermanagetab;
+
         public CallManagerControl(MainWindow mmainWindow)
         {
-            DataContext = this;
-
             mainWindow = mmainWindow;
             //keyboardmanagetab.keyboardmanagedata = new KeyBoardManageViewModel();
             InitializeComponent();
+
+            DataContext = this;
+
+            /* 赋值软交换界面 */
+            swmanaagetab = new SwitchManage(mainWindow);
+            this.tabItem_switch.Content = swmanaagetab;
+
+            /* 赋值用户界面 */
+            usermanagetab = new UserManage(mainWindow);
+            this.tabItem_user.Content = usermanagetab;
+
+            /* 赋值调度台界面 */
             keyboardmanagetab = new KeyBoardManage(mainWindow);
-            this.keymanage.Content = keyboardmanagetab;
+            this.keymanage.Content = keyboardmanagetab;            
 
             // 初始化左侧资源服务列表
             //ToolTipTestWindow();
             isCollapse = true;
-
-            var viewModel = new ExpanderListViewModel();
-            StackPanelLeft.DataContext = viewModel;
-
-            viewModel.SelectedExpander = 1;
-
-            Expander exp = new Expander();
-            exp.Header = "exp1";
-            StackPanel sp1 = new StackPanel();
-            exp.Content = sp1;
-            RadioButton rb = new RadioButton();
-            rb.Content = "rb1";
-            sp1.Children.Add(rb);
 
             //StackPanelLeft.Children.Add(exp);
 
@@ -176,47 +138,18 @@ namespace DispatchApp
             deskList = new ObservableCollection<UserStatus>();
             // 绑定数据
             userDesk.ItemsSource = deskList;
-        }
-
-        public void ToolTipTestWindow()
-        {
-            LoadData();
-            Expander ep;
-            foreach (TestClass ts in classlist)
-            {
-               ep = new Expander();
-               ep.Header = ts.ClassTypeId;
-               ep.FontSize = 14;
-               ep.Content = new ListBox()
-               {
-                   ItemsSource = ts.btnList,
-                   DisplayMemberPath = "Content"
-               };
-
-               StackPanelLeft.Children.Add(ep);
-            }
-        }
+        }        
        
         /// <summary>
         /// 接收信息
         /// </summary>
         public void InitialSwitches()
         {
-            swdevobj = new SWDEV();
-            SelectedSW = new SWDEV();
-            SelectedSW.name = "";
-            SelectedSW.ip = "";
+            //switchGrid.ItemsSource = swList;
+            //switchGrid.SelectionChanged += DataGrid_Click;
 
-            userobj = new User();
-
-            swList = new ObservableCollection<SWDEV>();
-            m_UserList = new ObservableCollection<User>();
-
-            switchGrid.ItemsSource = swList;
-            switchGrid.SelectionChanged += DataGrid_Click;
-
-            userGrid.ItemsSource = m_UserList;
-            userGrid.MouseDown += DataGrid_MouseDown;
+            //userGrid.ItemsSource = m_UserList;
+            //userGrid.MouseDown += DataGrid_MouseDown;
         }
 
         /// =======================获取查询的调度台信息======================
@@ -262,28 +195,16 @@ namespace DispatchApp
                     AnsDelKeyBoard(data);
                     break;
                 case "ADDSW":
-                    addSwitchDevice(data);
-                    break;
                 case "QUERYSW":
-                    freshSwitchDevice(data);
-                    break;
                 case "DELSW":
-                    delSwitchDevice(data);
-                    break;
                 case "EDITSW":
-                    editSwitchDevice(data);
+                    swmanaagetab.recv(state,data);
                     break;
                 case "ADDUSER":
-                    addUser(data);
-                    break;
                 case "GETUSER":
-                    freshUser(data);
-                    break;
                 case "DELUSER":
-                    delUser(data);
-                    break;
                 case "EDITUSER":
-                    editUser(data);
+                    usermanagetab.recv(state,data);
                     break;
                 case "GETALLREGISTERDEV":
                     ShowGroupMember(data); 
@@ -311,32 +232,7 @@ namespace DispatchApp
                 //myprofile.ShowDialog();
                 myprofile.Show();
             }
-        }
-        
-        private void LoadData()
-        {
-            classlist = new List<TestClass>();
-            TestClass class1 = new TestClass();
-            class1.ClassTypeId = 1;
-            List<RadioButton> list1 = new List<RadioButton>()
-            {
-                new RadioButton(){Content="1a", GroupName="btnGrp" },
-                new RadioButton(){Content="1b", GroupName="btnGrp" },
-                new RadioButton(){Content="1c", GroupName="btnGrp" },
-            };
-            class1.btnList = list1;
-            classlist.Add(class1);
-            TestClass class2 = new TestClass();
-            class2.ClassTypeId = 2;
-            List<RadioButton> list2 = new List<RadioButton>()
-            {
-                new RadioButton(){Content="2a", GroupName="btnGrp"},
-                new RadioButton(){Content="2b", GroupName="btnGrp"},
-                new RadioButton(){Content="2c", GroupName="btnGrp"},
-            };
-            class2.btnList = list2;
-            classlist.Add(class2);
-        }
+        }   
 
         private void callManager_click(object sender, RoutedEventArgs e)
         {
@@ -346,12 +242,9 @@ namespace DispatchApp
             }
         }
 
-        public void radioBtn_man_click(object sender, RoutedEventArgs e)
+        public void man_header_click(string name)
         {
-            RadioButton btn = sender as RadioButton;
-            if (btn == null)
-                return;
-            switch (btn.Name)
+            switch (name)
             {
                 case "sw":
                     tabControl_mgt.SelectedIndex = 0;
@@ -373,6 +266,15 @@ namespace DispatchApp
                 default:
                     break;
             }
+        }
+
+        public void radioBtn_man_click(object sender, RoutedEventArgs e)
+        {
+            RadioButton btn = sender as RadioButton;
+            if (btn == null)
+                return;
+
+            man_header_click(btn.Name);           
 
         }
 
@@ -419,21 +321,7 @@ namespace DispatchApp
             sendMsg(this, "net", sb.ToString());
         }
 
-        public void delUserReq(string name)
-        {
-            /* 向服务器请求列表 */
-            USERQUERY req = new USERQUERY();
-            req.sequence = GlobalFunAndVar.sequenceGenerator();
-            req.name = name;
-            StringBuilder sb = new StringBuilder(100);
-            sb.Append("MAN#DELUSER#");
-            sb.Append(JsonConvert.SerializeObject(req));
-
-            Debug.WriteLine("SEND: " + sb.ToString());
-            sendMsg(this, "net", sb.ToString());
-            /* 临时保存用户名 */
-            userobj.name = name;
-        }
+        
 
         // 查询调度键盘 未用
         public void queryDesk()
@@ -466,281 +354,7 @@ namespace DispatchApp
             sendMsg(this, "net", sb.ToString());
         }
 
-
-
-
-        public void recvNetMsg(string msg)
-        {
-            int startpos = msg.IndexOf("#");
-            string msgTpye = msg.Substring(0, startpos);
-            string data = msg.Substring(startpos + 1);
-
-            switch (msgTpye)
-            {
-                case "ADDSW":
-                    addSwitchDevice(data);
-                    break;
-                case "QUERYSW":
-                    freshSwitchDevice(data);
-                    break;
-                case "DELSW":
-                    delSwitchDevice(data);
-                    break;
-                case "EDITSW":
-                    editSwitchDevice(data);
-                    break;
-                case "ADDUSER":
-                    addUser(data);
-                    break;
-                case "GETUSER":
-                    freshUser(data);
-                    break;
-                case "DELUSER":
-                    delUser(data);
-                    break;
-                case "EDITUSER":
-                    editUser(data);
-                    break;
-                default:
-                    break;
-            }
-
-        }
-        #endregion
-
-
-        /* 添加软交换设备 */
-        /// <summary>
-        /// 20181025 xf Add
-        /// </summary>
-        /// <param name="data"></param>
-        private void addSwitchDevice(string data)
-        {
-
-            try
-            {
-                /* 比较临时存储的obj的sequence是否一致 */
-                SW_ADDRESULT res = JsonConvert.DeserializeObject<SW_ADDRESULT>(data);
-                if (res != null && swdevobj.sequence == res.sequence)
-                {
-                    if (res.result == "Fail")
-                    {
-                        Debug.WriteLine(res.reason);
-                        return;
-                    }
-
-                    // 收到添加成功消息，通知服务器添加调度电话
-                    SWQUERY tempDev = new SWQUERY();
-                    tempDev.sequence = GlobalFunAndVar.sequenceGenerator();
-                    tempDev.index = res.index;
-
-                    StringBuilder sb = new StringBuilder(100);
-                    sb.Append("MAN#QUERYALLDEV#");
-                    sb.Append(JsonConvert.SerializeObject(tempDev));
-
-                    Debug.WriteLine("SEND: " + sb.ToString());
-                    sendMsg(this, "net", sb.ToString());
-
-                    SWDEV item = new SWDEV();
-                    //item.idstr = swdevobj.name;
-                    item.name = swdevobj.name;
-                    item.ip = swdevobj.ip;
-                    item.port = swdevobj.port;
-                    item.index = swdevobj.index;
-                    item.type = swdevobj.type;
-
-                    swList.Add(item);
-                }
-            }
-            catch (System.Exception e)
-            {
-                Debug.WriteLine(e);
-            }
-        }
-
-        private void delSwitchDevice(string data)
-        {
-            /* 比较临时存储的obj的sequence是否一致 */
-            SW_ADDRESULT res = JsonConvert.DeserializeObject<SW_ADDRESULT>(data);
-            if (res != null /* && swdevobj.sequence == res.sequence */)
-            {
-                if (res.result == "Fail")
-                {
-                    Debug.WriteLine(res.reason);
-                    return;
-                }
-
-                /* 查询index */
-                for (int i = 0; i < swList.Count; i++)
-                {
-                    if ((swList[i].index).ToString() == res.index)
-                    {
-                        swList.RemoveAt(i);
-                    }
-                }
-            }
-        }
-
-        /* 接收到服务器的回应消息，更新软交换设备列表 */
-        private void editSwitchDevice(string data)
-        {
-            /* 比较临时存储的obj的sequence是否一致 */
-            SW_ADDRESULT res = JsonConvert.DeserializeObject<SW_ADDRESULT>(data);
-            if (res != null && swdevobj.sequence == res.sequence)
-            {
-                if (res.result == "Fail")
-                {
-                    Debug.WriteLine(res.reason);
-                    return;
-                }
-
-                // 在swList中查询对应的item
-                for (int i = 0; i < swList.Count; i++)
-                {
-                    // 根据index来判断
-                    if (swList[i].index == swdevobj.index)
-                        {
-                        SWDEV dev = swList[i];
-                        // index 不允许更新
-                        dev.name = swdevobj.name;
-                        dev.ip = swdevobj.ip;
-                        dev.port = swdevobj.port;
-                        dev.type = swdevobj.type;
-                    }
-                }
-            }
-
-        }
-
-        /* 刷新软交换设备列表 */
-        private void freshSwitchDevice(string data)
-        {
-            swList.Clear();
-            SW_QUERYRESULT res = JsonConvert.DeserializeObject<SW_QUERYRESULT>(data);
-            if (res != null)
-            {
-                ObservableCollection<SWDEV> list = new ObservableCollection<SWDEV>();
-                foreach (SWDEVITEM member in res.switchlist)
-                {
-                    SWDEV item = new SWDEV();
-                    //item.idstr = member.name;
-                    item.name = member.name;
-                    item.index = member.index;
-                    item.type = member.type;
-                    item.ip = member.ip;
-                    item.port = member.port.ToString();
-
-                    swList.Add(item);
-                }
-                //  = list;
-            }
-        }
-
-        /* 添加用户应答 */
-        private void addUser(string data)
-        {
-            /* 比较临时存储的obj的sequence是否一致 */
-            USER_ADDRESULT res = JsonConvert.DeserializeObject<USER_ADDRESULT>(data);
-            if (res != null && userobj.sequence == res.sequence)
-            {
-                if (res.result == "Fail")
-                {
-                    Debug.WriteLine(res.reason);
-                    return;
-                }
-
-                //retrievedItems is the data you received from the service
-                //foreach (object item in retrievedItems)
-                //Dispatcher.BeginInvoke(DispatcherPriority.Background, new ParameterizedThreadStart(AddItem), item);  
-                //Dispatcher.BeginInvoke( new Action( ()  =>  {
-                m_UserList.Add(userobj);
-                //}));
-            }
-        }
-
-        // 查询用户请求
-        private void freshUser(string data)
-        {
-            m_UserList.Clear();
-            USER_QUERYRESULT res = JsonConvert.DeserializeObject<USER_QUERYRESULT>(data);
-            if (res != null)
-            {
-                ObservableCollection<USERITEM> list = new ObservableCollection<USERITEM>();
-                foreach (USERITEM member in res.userlist)
-                {
-                    User item = new User();
-                    item.index = m_UserList.Count;  // 列表序号，从0开始
-                    item.name = member.name;
-                    item.password = member.password;
-                    item.status = member.status;
-                    item.privilege = member.privilege;
-                    item.description = member.description;
-                    item.desk = member.desk;
-
-                    m_UserList.Add(item);
-                }
-                //  = list;
-            }
-
-        }
-
-        private void delUser(string data)
-        {
-            /* 比较临时存储的obj的sequence是否一致 */
-            SW_ADDRESULT res = JsonConvert.DeserializeObject<SW_ADDRESULT>(data);
-            if (res != null /* && swdevobj.sequence == res.sequence */)
-            {
-                if (res.result == "Fail")
-                {
-                    Debug.WriteLine(res.reason);
-                    return;
-                }
-
-                /* 查询index */
-                for (int i = 0; i < m_UserList.Count; i++)
-                {
-                    if (m_UserList[i].name == userobj.name)
-                    {
-                        m_UserList.RemoveAt(i);
-                    }
-                }
-            }
-        }
-
-        private void editUser(string data)
-        {
-            /* 比较临时存储的obj的sequence是否一致 */
-            SW_ADDRESULT res = JsonConvert.DeserializeObject<SW_ADDRESULT>(data);
-            if (res != null && userobj.sequence == res.sequence)
-            {
-                if (res.result == "Fail")
-                {
-                    Debug.WriteLine(res.reason);
-                    return;
-                }
-
-                // 在swList中查询对应的item
-                for (int i = 0; i < m_UserList.Count; i++)
-                {
-                    // 用户名来判断
-                    if (m_UserList[i].name == userobj.name)
-                    {
-                        User item = m_UserList[i];
-                item.name = userobj.name;
-                item.password = userobj.password;
-                item.privilege = userobj.privilege;
-                item.description = userobj.description;
-                item.role = userobj.role;
-                item.index = userobj.index;
-                item.status = userobj.status;
-                item.desk = userobj.desk;
-
-                        Trace.WriteLine("current selected name: " + item.name);
-                        break;
-                    }
-                }
-            }
-        }
+        #endregion        
 
         /* 向服务器发送网络协议 */
         /// <summary>
@@ -749,7 +363,7 @@ namespace DispatchApp
         /// <param name="sender"></param>
         /// <param name="msg"></param>
         /// <param name="obj"></param>
-        private void sendMsg(object sender, string msg, object obj)
+        public void sendMsg(object sender, string msg, object obj)
         {
             if (msg == "net")
             {
@@ -758,11 +372,11 @@ namespace DispatchApp
             }
             else if (msg == "swdev")
             {
-                swdevobj = obj as SWDEV;
+                //swdevobj = obj as SWDEV;
             }
             else if (msg == "user")
             {
-                userobj = obj as User;
+                //userobj = obj as User;
             }
 
         }
@@ -807,21 +421,13 @@ namespace DispatchApp
             /* 删除软交换页面 */
             if (0 == index)
             {
-                int i = switchGrid.SelectedIndex;
-                if (MessageBox.Show("确定是否要删除设备 " + swList[i].name, "提示消息",
-                MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
-                {
-                    delSWReq(swList[i].index.ToString());
-                }
+                //int i = switchGrid.SelectedIndex;
+                
             }
             else if (1 == index)
             {
                 int i = userGrid.SelectedIndex;
-                if (MessageBox.Show("确定是否要删除用户 " + m_UserList[i].name, "提示消息",
-                MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
-                {
-                    delUserReq(m_UserList[i].name);
-                }
+                
             }
             else
             {
@@ -876,93 +482,8 @@ namespace DispatchApp
                 }
             }
             return null;
-        }  
-
-        /// <summary>
-        /// 更新软交换数据
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Btn_Update_Click(object sender, RoutedEventArgs e)
-        {
-            Button btn = sender as Button;
-            if (btn != null)
-            {
-                Int16 index = Convert.ToInt16(btn.Tag);
-                Debug.WriteLine("update index: " + btn.Tag);
-
-                SWDEV tempDev = new SWDEV();
-                tempDev.sequence = GlobalFunAndVar.sequenceGenerator();
-                tempDev.index = swIndex.Text;
-                tempDev.name = swName.Text;
-                tempDev.ip = swIP.Text;
-                tempDev.port = swPort.Text;
-                tempDev.type = swType.Text;
-
-                /* 向服务器发送更新消息 */
-                StringBuilder sb = new StringBuilder(100);
-                sb.Append("MAN#EDITSW#");
-                sb.Append(JsonConvert.SerializeObject(tempDev));
-
-                Debug.WriteLine("SEND: " + sb.ToString());
-                sendMsg(this, "net", sb.ToString());
-                sendMsg(this, "swdev", tempDev);
-            }
-        }
-
-        private void btn_expOrCollapse_Click(object sender, RoutedEventArgs e)
-        {
-            BitmapImage imgSource;
-            if (isCollapse)
-            {
-                imgSource = new BitmapImage(new Uri("../Resources/expand.png", UriKind.Relative));
-                isCollapse = false;
-            }
-            else
-            {
-                imgSource = new BitmapImage(new Uri("../Resources/collapse.png", UriKind.Relative));
-                isCollapse = true;
-            }
-            img_collapse.Source = imgSource;
-        }
-
-        private void DataGrid_Click(object sender, SelectionChangedEventArgs e)
-        {
-            int index = switchGrid.SelectedIndex;
-
-            if (index >= 0 && index < swList.Count)
-            {
-                //SelectedSW = swList[index];
-            }
-        }
-
-        private void DataGrid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                int index = switchGrid.SelectedIndex;
-
-                if (index >= 0 && index < swList.Count)
-                {
-                //    SelectedSW = swList[index];
-                }
-
-                /*
-                var se = switchGrid.SelectedItem;
-
-                FrameworkElement el = switchGrid.Columns[0].GetCellContent(se);
-                DataGridRow row = DataGridRow.GetRowContainingElement(el.Parent as FrameworkElement);
-                row.DetailsVisibility = row.DetailsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-                
-                */
-                //if (objElement != null)
-                //{
-                //    TextBlock objChk = (TextBlock)objElement;
-                //    //objChk.IsChecked = !objChk.IsChecked;
-                //    Debug.WriteLine("MouseDown");
-                //}
-            }
-        }
+        }   
+        
 #endregion
 
         // 查看用户信息

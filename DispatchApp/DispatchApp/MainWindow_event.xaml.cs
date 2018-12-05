@@ -88,6 +88,21 @@ namespace DispatchApp
             Debug.WriteLine("menu open clicked!");
         }
 
+        private void man_sw_click(object sender, RoutedEventArgs e)
+        {
+            callManagerCtrl.man_header_click("sw");
+        }
+
+        private void man_user_click(object sender, RoutedEventArgs e)
+        {
+            callManagerCtrl.man_header_click("user");
+        }
+
+        private void man_desk_click(object sender, RoutedEventArgs e)
+        {
+            callManagerCtrl.man_header_click("desk");
+        }
+
     }
 }
 

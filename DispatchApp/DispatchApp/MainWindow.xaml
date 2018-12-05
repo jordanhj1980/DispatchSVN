@@ -91,10 +91,31 @@
                         FontSize="46"
                         HorizontalContentAlignment="Center"  VerticalContentAlignment="Center"                          
                         HorizontalAlignment="Left" Width="285" />
+                    <Button x:Name="sw_button" Grid.Column="0" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
+                            Margin="0,0" Opacity="1" BorderBrush="{x:Null}" Click="man_sw_click">
+                        <StackPanel Height="100" Width="69">
+                            <Image Source="Resources/settings.png" Height="64" Width="64"  VerticalAlignment="Top"/>
+                            <TextBlock Block.TextAlignment="Center"  Width="100" Text="软交换" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="24" FontFamily="SimHei" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="user_button" Grid.Column="0" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
+                            Margin="0,0" Opacity="1" BorderBrush="{x:Null}" Click="man_user_click">
+                        <StackPanel Height="100" Width="69">
+                            <Image Source="Resources/settings.png" Height="64" Width="64"  VerticalAlignment="Top"/>
+                            <TextBlock Block.TextAlignment="Center"  Width="100" Text="用户" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="24" FontFamily="SimHei" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="desk_button" Grid.Column="0" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
+                            Margin="0,0" Opacity="1" BorderBrush="{x:Null}" Click="man_desk_click">
+                        <StackPanel Height="100" Width="69">
+                            <Image Source="Resources/settings.png" Height="64" Width="64"  VerticalAlignment="Top"/>
+                            <TextBlock Block.TextAlignment="Center"  Width="100" Text="调度台" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="24" FontFamily="SimHei" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
                     <Label Name="ShowKeyLabel" 
                         VerticalContentAlignment="Center" 
                         FontSize="46" 
-                        Height="98" Width="1354" 
+                        Height="98" Width="1104" 
                         VerticalAlignment="Bottom"/>                        
                     <!--Foreground="{Binding Path=CurrentState, Converter={StaticResource comeCallDate}}"-->
                     <Image Name="image_photo"

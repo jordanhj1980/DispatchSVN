@@ -44,6 +44,7 @@ namespace DispatchApp
         {
             keyboardmanagedata.SelectedKey = new KeyBoardNew();
             keyboardmanagedata.SelectedKey.name = "新增键盘";
+            keyboardmanagedata.KeyboardList.Add(keyboardmanagedata.SelectedKey);
             //keyboardview.Visibility = System.Windows.Visibility.Visible;
         }
 

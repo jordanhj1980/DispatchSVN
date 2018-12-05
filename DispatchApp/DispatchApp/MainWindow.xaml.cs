@@ -118,6 +118,11 @@ namespace DispatchApp
             logwin.Show();
             this.Hide();
 
+            /* 隐藏公共工具栏的button */
+            sw_button.Visibility = Visibility.Hidden;
+            user_button.Visibility = Visibility.Hidden;
+            desk_button.Visibility = Visibility.Hidden;
+
             // 创建websocket
             m_ServerIP = ConfigurationManager.AppSettings["serverip"];
             m_ServerPort = ConfigurationManager.AppSettings["serverport"];
@@ -428,8 +433,15 @@ namespace DispatchApp
 
         private void Btn_logOut(object sender, RoutedEventArgs e)
         {
+            /* 隐藏公共工具栏的button */
+            sw_button.Visibility = Visibility.Hidden;
+            user_button.Visibility = Visibility.Hidden;
+            desk_button.Visibility = Visibility.Hidden;
+
             logwin.Show();
+
             this.Hide();
+            
 
             // 20181010 xf Add  
             App.isLogin = false;    // 用户主动选择登出
@@ -446,7 +458,7 @@ namespace DispatchApp
         {
             this.CenterPanel2.Content = callUserCtrl;
             // 启动心跳
-            HeartBeatTimer.Start();
+            HeartBeatTimer.Start();            
         }
 
         public void managercontrol_click(object sender, RoutedEventArgs e)
@@ -458,6 +470,11 @@ namespace DispatchApp
             /* 打开服务端界面钱首先查询软交换设备、用户列表 */
             callManagerCtrl.querySWDevice();
             callManagerCtrl.queryUSER();
+
+            /* 隐藏公共工具栏的button */
+            sw_button.Visibility = Visibility.Visible;
+            user_button.Visibility = Visibility.Visible;
+            desk_button.Visibility = Visibility.Visible;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
