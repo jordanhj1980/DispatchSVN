@@ -199,22 +199,19 @@
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="转接" VerticalAlignment="Bottom" Width="80" />
                 </StackPanel>
             </Button>
- <!--Click="Night_Click"-->
-            <Button 
-                Command="{Binding NightServerCommand}"
-                Width="100"
-                Style="{DynamicResource RoundedButton}">
+            <Button Width="100" Background="#FFCBC7C7" Click="Button_Insert" Style="{DynamicResource RoundedButton}">
                 <StackPanel VerticalAlignment="Top">
-                    <Image Source="../Resources/phone_off.png" 
-                        Height="64" Width="64" />
-                    <TextBlock Text="夜服"
-                        Block.TextAlignment="Center" 
-                        FontFamily="SimHei" 
-                        FontSize="30"  
-                        Height="34" Width="80"   
-                        VerticalAlignment="Bottom"/>
+                    <Image Height="64" Source="/DispatchApp;component/Resources/call_insert.png" Width="64" />
+                    <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="强插" VerticalAlignment="Bottom" Width="80" />
                 </StackPanel>
             </Button>
+            <Button Width="100" Background="#FFCBC7C7" Click="Button_Split" Style="{DynamicResource RoundedButton}">
+                <StackPanel VerticalAlignment="Top">
+                    <Image Height="64" Source="../Resources/call_split.png" Width="64" />
+                    <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="强拆" VerticalAlignment="Bottom" Width="80" />
+                </StackPanel>
+            </Button>
+
             <!--<Button Width="100" Background="#FFCBC7C7" Click="Button_Hangoff" Style="{DynamicResource RoundedButton}" Opacity="0.4">
                 <StackPanel VerticalAlignment="Top">
                     <Image Height="64" Source="../Resources/hangoff.png" Width="64" />
@@ -227,38 +224,55 @@
                         <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="监听" VerticalAlignment="Bottom" Width="80" />
                     </StackPanel>
                 </Button>
-                    <Button Width="100" Background="#FFCBC7C7" Click="Radio_Click" Style="{DynamicResource RoundedButton}">
+            <Button Command = "{Binding OutLineComand}"
+                    Width ="100" 
+                    Style = "{DynamicResource RoundedButton}" >
+                <StackPanel VerticalAlignment="Top">
+                    <Image Source="../Resources/option.png" 
+                            Height="64" Width="64" />
+                    <TextBlock Text="外线"
+                            Block.TextAlignment="Center" 
+                            FontFamily="SimHei" 
+                            FontSize="30" 
+                            Height="34" Width="80" 
+                            VerticalAlignment="Bottom" />
+                </StackPanel>
+            </Button>
+            <Button Width="100" Background="#FFCBC7C7" Click="Relay_Click" Style="{DynamicResource RoundedButton}">
+                <StackPanel VerticalAlignment="Top">
+                    <Image Height="64" Source="../Resources/binding.png" Width="64" />
+                    <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="中继" VerticalAlignment="Bottom" Width="80" />
+                </StackPanel>
+            </Button>
+            <Button Width="100" Background="#FFCBC7C7" Click="Radio_Click" Style="{DynamicResource RoundedButton}">
                     <StackPanel VerticalAlignment="Top">
-                        <Image Height="64" Source="../Resources/photo.png" Width="64" />
+                        <Image Height="64" Source="../Resources/broadcastDark.png" Width="64" />
                         <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="广播" VerticalAlignment="Bottom" Width="80" />
                     </StackPanel>
                 </Button>
-                <Button Width="100" Background="#FFCBC7C7" Click="Relay_Click" Style="{DynamicResource RoundedButton}">
-                    <StackPanel VerticalAlignment="Top">
-                        <Image Height="64" Source="../Resources/photo.png" Width="64" />
-                        <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="中继" VerticalAlignment="Bottom" Width="80" />
-                    </StackPanel>
-                </Button>
+            <Button 
+                Command="{Binding NightServerCommand}"
+                Width="100"
+                Style="{DynamicResource RoundedButton}">
+                <StackPanel VerticalAlignment="Top">
+                    <Image Source="../Resources/night_portrait.png" 
+                        Height="64" Width="64" />
+                    <TextBlock Text="夜服"
+                        Block.TextAlignment="Center" 
+                        FontFamily="SimHei" 
+                        FontSize="30"  
+                        Height="34" Width="80"   
+                        VerticalAlignment="Bottom"/>
+                </StackPanel>
+            </Button>
+                
                 <Button Width="100" Background="#FFCBC7C7" Click="Button_Log" Style="{DynamicResource RoundedButton}">
                     <StackPanel VerticalAlignment="Top">
                         <Image Height="64" Source="../Resources/log.png" Width="64" />
                         <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="日志" VerticalAlignment="Bottom" Width="80" />
                     </StackPanel>
                 </Button><!--Click = "Button_CallKeyBord"-->
-                <Button Command = "{Binding OutLineComand}"
-                    Width ="100" 
-                    Style = "{DynamicResource RoundedButton}" >
-                    <StackPanel VerticalAlignment="Top">
-                        <Image Source="../Resources/option.png" 
-                            Height="64" Width="64" />
-                        <TextBlock Text="外线"
-                            Block.TextAlignment="Center" 
-                            FontFamily="SimHei" 
-                            FontSize="30" 
-                            Height="34" Width="80" 
-                            VerticalAlignment="Bottom" />
-                    </StackPanel>
-                </Button>
+               
             </WrapPanel>
             <!--分隔线-->
             <Separator VerticalAlignment="Bottom" Margin="1339,0,-319,436" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Visible" Height="29" >
@@ -296,9 +310,9 @@
                         </ListBox>
                     </Grid>
                 </TabItem>
-                <TabItem Header="呼叫记录" HorizontalAlignment="Right" Width="134" RenderTransformOrigin="1.465,-5.19" Height="38" Background="{x:Null}" FontFamily="SimHei" FontSize="24" Foreground="#FFD8D7D7">
+                <!--<TabItem Header="呼叫记录" HorizontalAlignment="Right" Width="134" RenderTransformOrigin="1.465,-5.19" Height="38" Background="{x:Null}" FontFamily="SimHei" FontSize="24" Foreground="#FFD8D7D7">
                     <Grid />
-                </TabItem>
+                </TabItem>-->
             </TabControl>
 
 
@@ -308,7 +322,7 @@
                     <local:KeyImageConverter x:Key="cvtKeyDate" />
                 </Grid.Resources>
                 <ListBox Style="{StaticResource KeyWrapListBoxStyle}"  Height="184" Width="269" HorizontalAlignment="Left" Name="KeyCallListBox" VerticalAlignment="Bottom"  Background="{x:Null}" Margin="-2,0,0,0" />
-                <Button x:Name="btn_holdoff" Content="Unhold" HorizontalAlignment="Left" Margin="6,7.333,0,7" Grid.Row="2" VerticalAlignment="Bottom" Width="75" Click="btn_holdoff_click"/>
+                <!--<Button x:Name="btn_holdoff" Content="Unhold" HorizontalAlignment="Left" Margin="6,7.333,0,7" Grid.Row="2" VerticalAlignment="Bottom" Width="75" Click="btn_holdoff_click"/>-->
                 <Button x:Name="btn_key"  Grid.ColumnSpan="2" Content="挂断" HorizontalAlignment="Left" Height="38" Margin="42,4.333,0,7" VerticalAlignment="Bottom" Width="191" FontSize="30" FontFamily="SimHei" Background="#FFB40D0D" Foreground="#FFD8D7D7" Click="Button_Click_1" Grid.Row="2"/>
 
             </Grid>
@@ -337,7 +351,7 @@
             </Separator>
         
             <!--Dialog-->
-            <!--<materialDesign:DialogHost Identifier="UserNightServerDialog" 
+            <materialDesign:DialogHost Identifier="UserNightServerDialog" 
                 DialogClosing="NightServeDialogClosing" 
                 Grid.Row="2"
                 SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
@@ -347,7 +361,7 @@
                 DialogClosing="OutLineDialogClosing" 
                 Grid.Row="2"
                 SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
-            </materialDesign:DialogHost>-->
+            </materialDesign:DialogHost>
     </Grid>
     <!--</materialDesign:DrawerHost>-->
     <!--</materialDesign:DialogHost>-->

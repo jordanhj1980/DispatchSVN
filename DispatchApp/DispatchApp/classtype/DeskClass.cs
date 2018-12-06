@@ -183,12 +183,49 @@ namespace DispatchApp
     //============================================================
 
     /// =======================直呼键权电话=======================
-    public struct GroupTrunk
+    public class GroupTrunk : NotifyObject
     {
-        public string trunkid;
-	    public string name;
-        public string bindingnumber;
+        private string _trunkid;
+        public string trunkid
+        {
+            get { return _trunkid ; }
+            set
+            {
+                if (_trunkid != value)
+                {
+                    _trunkid = value;
+                    OnPropertyChanged("trunkid");
+                }
+            }
+        }
 
+        private string _name;
+        public string name
+        {
+            get { return _name ; }
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged("name");
+                }
+            }
+        }
+
+        private string _bindingnumber;
+        public string bindingnumber
+        {
+            get { return _bindingnumber ; }
+            set
+            {
+                if (_bindingnumber != value)
+                {
+                    _bindingnumber = value;
+                    OnPropertyChanged("bindingnumber");
+                }
+            }
+        }
     }
     //============================================================ 
 

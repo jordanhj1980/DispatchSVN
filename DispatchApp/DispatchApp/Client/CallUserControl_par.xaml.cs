@@ -80,7 +80,7 @@ namespace DispatchApp
             Debug.WriteLine(strMsg);
 
             btn_expand();
-            btn_holdoff.Visibility = Visibility.Hidden;
+            //btn_holdoff.Visibility = Visibility.Hidden;
             isHolding = false;
         }
 
@@ -93,7 +93,7 @@ namespace DispatchApp
                 Duration = TimeSpan.FromSeconds(0.5)
             };
             btn_key.BeginAnimation(Button.WidthProperty, widthAnimation);
-            btn_holdoff.Visibility = Visibility.Visible;            
+            //btn_holdoff.Visibility = Visibility.Visible;            
         }
 
         private void btn_expand()
@@ -107,7 +107,7 @@ namespace DispatchApp
             btn_key.BeginAnimation(Button.WidthProperty, widthAnimation);
 
             /* 隐藏保持按钮 */
-            btn_holdoff.Visibility = Visibility.Hidden;
+            //btn_holdoff.Visibility = Visibility.Hidden;
         }
 
         private void btn_lbqueue_click(object sender, RoutedEventArgs e)

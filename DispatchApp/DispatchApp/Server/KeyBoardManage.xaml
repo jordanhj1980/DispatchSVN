@@ -7,7 +7,7 @@
              xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:local ="clr-namespace:DispatchApp"
-             mc:Ignorable="d" d:DesignWidth="1557"
+             mc:Ignorable="d" d:DesignWidth="1920"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              TextElement.FontWeight="Regular"
              TextElement.FontSize="13"
@@ -34,7 +34,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <StackPanel Width="1557">
+        <StackPanel Width="1920">
             <StackPanel.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type local:KeyBoardNew}" ItemsSource="{Binding Path=grouplist}">
                     <StackPanel Orientation="Horizontal">
@@ -268,7 +268,7 @@
                             <StackPanel Height="298">
                                 <materialDesign:Card x:Name="memberlistcard"
                                     materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Visible"
-                                    Padding="0" Width="320"
+                                    Padding="0" 
                                     UniformCornerRadius="6" Height="290" >
                                     <ScrollViewer x:Name="scrollAlldev" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                         Visibility="{Binding SelectedGroup}" VerticalAlignment="Top" Margin="10"
@@ -470,7 +470,6 @@
         <materialDesign:DialogHost Identifier="RootDialogBoardDetail" 
                                    DialogClosing="RootDialogBoardDetail_OnDialogClosing"/>
 
-        <!--<materialDesign:DialogHost Grid.Column="0" Grid.ColumnSpan="3" Identifier="groupDialog" DialogClosing="GroupDitiel_OnDialogClosing" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
-        </materialDesign:DialogHost>-->
+     
     </Grid>
 </UserControl>

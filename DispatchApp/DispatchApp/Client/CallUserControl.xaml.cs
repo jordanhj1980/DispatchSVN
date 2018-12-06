@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using System.Threading;
 using System.Diagnostics;
 using MaterialDesignThemes.Wpf.Transitions;
+using MaterialDesignThemes.Wpf;
 
 // 终端用户界面
 namespace DispatchApp
@@ -173,8 +174,8 @@ namespace DispatchApp
             }
 
             /* 隐藏“呼叫保持”按钮 */
-            btn_holdoff.Visibility = Visibility.Hidden;
-            btn_holdoff.Click += new RoutedEventHandler(btn_holdoff_click);
+            //btn_holdoff.Visibility = Visibility.Hidden;
+            //btn_holdoff.Click += new RoutedEventHandler(btn_holdoff_click);
 
             /* 清空呼叫队列 */
             lbCallQueue.Items.Clear();
@@ -733,17 +734,27 @@ namespace DispatchApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Call(object sender, RoutedEventArgs e)
+        private async void Button_Call(object sender, RoutedEventArgs e)
         {
             if ("0" == serverCall)
             {
-                MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
+                var view = new MessageBoxShow();
+                view.MsgBoxShowText.Text = "当前键权电话空,请点击键权电话或拿起键权电话！";
+                var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+
+                Console.WriteLine("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
+                //MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
+
             }
             else
             {
                 if ("0" == clientCall)
                 {
-                    MessageBox.Show("当前终端电话空\r\n请点击终端电话！", "呼叫信息");
+                    var view = new MessageBoxShow();
+                    view.MsgBoxShowText.Text = "当前终端电话空\r\n请点击终端电话！";
+                    var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+                    Console.WriteLine("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
+                    //MessageBox.Show("当前终端电话空\r\n请点击终端电话！", "呼叫信息");
                 }
                 else
                 {
@@ -758,16 +769,22 @@ namespace DispatchApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Transfer(object sender, RoutedEventArgs e)
+        private async void Button_Transfer(object sender, RoutedEventArgs e)
         {
             string extid = m_keyphone[m_keyIndex].extid;
             if ("0" == extid)
             {
-                MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
+                var view = new MessageBoxShow();
+                view.MsgBoxShowText.Text = "当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！";
+                var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+                //MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
             }
             else if ("0" == clientCall)
             {
-                MessageBox.Show("当前终端电话空\r\n请点击终端电话！", "呼叫信息");
+                var view = new MessageBoxShow();
+                view.MsgBoxShowText.Text = "当前终端电话空\r\n请点击终端电话！";
+                var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+                //MessageBox.Show("当前终端电话空\r\n请点击终端电话！", "呼叫信息");
             }
             else
             {
@@ -790,17 +807,23 @@ namespace DispatchApp
 
         }
 
-        private void Button_Insert(object sender, RoutedEventArgs e)
+        private async void Button_Insert(object sender, RoutedEventArgs e)
         {
             if ("0" == serverCall)
             {
-                MessageBox.Show("错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "强插信息");
+                var view = new MessageBoxShow();
+                view.MsgBoxShowText.Text = "错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！";
+                var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+                //MessageBox.Show("错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "强插信息");
             }
             else
             {
                 if ("0" == clientCall)
                 {
-                    MessageBox.Show("错误操作\r\n当前终端电话空\r\n请在通话过程中强插！", "强插信息");
+                    var view = new MessageBoxShow();
+                    view.MsgBoxShowText.Text = "错误操作\r\n当前终端电话空\r\n请在通话过程中强插！";
+                    var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+                    //MessageBox.Show("错误操作\r\n当前终端电话空\r\n请在通话过程中强插！", "强插信息");
                 }
                 else
                 {
@@ -811,17 +834,23 @@ namespace DispatchApp
             }
         }
 
-        private void Button_Split(object sender, RoutedEventArgs e)
+        private async void Button_Split(object sender, RoutedEventArgs e)
         {
             if ("0" == serverCall)
             {
-                MessageBox.Show("错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "强拆信息");
+                var view = new MessageBoxShow();
+                view.MsgBoxShowText.Text = "错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话!";
+                var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+                //MessageBox.Show("错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "强拆信息");
             }
             else
             {
                 if ("0" == clientCall)
                 {
-                    MessageBox.Show("错误操作\r\n当前终端电话空\r\n请在通话过程中强拆！", "强拆信息");
+                    var view = new MessageBoxShow();
+                    view.MsgBoxShowText.Text = "错误操作\r\n当前终端电话空\r\n请在通话过程中强拆！";
+                    var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+                    //MessageBox.Show("错误操作\r\n当前终端电话空\r\n请在通话过程中强拆！", "强拆信息");
                 }
                 else
                 {
@@ -836,17 +865,23 @@ namespace DispatchApp
 
         }
 
-        private void Button_Monitor(object sender, RoutedEventArgs e)
+        private async void Button_Monitor(object sender, RoutedEventArgs e)
         {
             if ("0" == serverCall)
             {
-                MessageBox.Show("错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "监听信息");
+                var view = new MessageBoxShow();
+                view.MsgBoxShowText.Text = "错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！";
+                var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+                //MessageBox.Show("错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "监听信息");
             }
             else
             {
                 if ("0" == clientCall)
                 {
-                    MessageBox.Show("错误操作\r\n当前终端电话空\r\n请在通话过程中监听！", "监听信息");
+                    var view = new MessageBoxShow();
+                    view.MsgBoxShowText.Text = "错误操作\r\n当前终端电话空\r\n请在通话过程中监听！";
+                    var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+                    //MessageBox.Show("错误操作\r\n当前终端电话空\r\n请在通话过程中监听！", "监听信息");
                 }
                 else
                 {
@@ -1021,9 +1056,25 @@ namespace DispatchApp
             tabCtrl_User.SelectedIndex = PageRelayIndex;        // 直呼区跳转中继直呼界面
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 强挂键权电话
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            if ("0" == serverCall)
+            {
+                var view = new MessageBoxShow();
+                view.MsgBoxShowText.Text = "错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！";
+                var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+                //MessageBox.Show("错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "强拆信息");
+            }
+            else
+            {
+                string strMsg = "CMD#Clear#" + clientCall;
+                mainWindow.ws.Send(strMsg);
+            }
         }
 
         /// <summary>

@@ -557,6 +557,11 @@ namespace DispatchApp
             }
         }
 
+        private void MessageBoxDialogClosing(object sender, MaterialDesignThemes.Wpf.DialogClosingEventArgs eventArgs)
+        {
+
+        }
+
 
 
         //private void CtrlSwitch_callUser()

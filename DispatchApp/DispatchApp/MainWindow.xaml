@@ -9,7 +9,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"           
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignWidth="1920" Cursor="Arrow" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.IsSharedSizeScope="True" 
         WindowStyle="None" AllowsTransparency="True">
 
@@ -147,7 +147,11 @@
             
             <!--界面内容容器-->
             <ContentControl Name="CenterPanel2" Grid.Row="2" />
-            
+
+            <materialDesign:DialogHost Identifier="MessageBox" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="5"
+                DialogClosing="MessageBoxDialogClosing" 
+                SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+            </materialDesign:DialogHost>
         </Grid>
     </Viewbox>
 </Window>

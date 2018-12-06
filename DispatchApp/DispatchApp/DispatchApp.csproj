@@ -178,6 +178,9 @@
     <Compile Include="Client\UserRelay.xaml.cs">
       <DependentUpon>UserRelay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MessageBoxShow.xaml.cs">
+      <DependentUpon>MessageBoxShow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Server\BoardDetail.xaml.cs">
       <DependentUpon>BoardDetail.xaml</DependentUpon>
     </Compile>
@@ -319,6 +322,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Server\contact\ContactManage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MessageBoxShow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -478,6 +485,9 @@
     <Content Include="Resources\broadcast.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\broadcastDark.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\broadcastingstation.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -527,6 +537,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\house_512x512.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\log.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Night-Mode.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\night_portrait.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\optionWhite.png">
@@ -691,11 +710,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\homepage.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\log.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

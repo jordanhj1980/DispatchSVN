@@ -234,7 +234,7 @@ namespace DispatchApp
                 userRelay.Soures = PageRelay[i];
                 //userRelay.name.Text = PageRelay[i].name;
                 //userRelay.trunkid.Text = PageRelay[i].trunkid;
-                userRelay.bindingnumber.Text = PageRelay[i].bindingnumber;
+                //userRelay.bindingnumber.Text = PageRelay[i].bindingnumber;
                 /* 存放组员 */
                 MyWrapPanel2.Items.Add(userRelay);
                 /* 组员被点击后的操作 */
@@ -276,17 +276,23 @@ namespace DispatchApp
         /// 双击中继号码
         /// </summary>
         /// <param name="word"></param>
-        private void RelayImageDoubleEvent(GroupTrunk word)
+        private async void RelayImageDoubleEvent(GroupTrunk word)
         {
             if ("0" == serverCall)
             {
-                MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
+                var view = new MessageBoxShow();
+                view.MsgBoxShowText.Text = "当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！";
+                var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+                //MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
             }
             else
             {
                 if (("0" == word.bindingnumber) || (null == word.bindingnumber))
                 {
-                    MessageBox.Show("当前中继未绑定终端电话！", "呼叫信息");
+                    var view = new MessageBoxShow();
+                    view.MsgBoxShowText.Text = "当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！";
+                    var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+                    //MessageBox.Show("当前中继未绑定终端电话！", "呼叫信息");
                 }
                 else
                 {
@@ -410,17 +416,23 @@ namespace DispatchApp
         /// 双击用户号码
         /// </summary>
         /// <param name="word"></param>
-        private void ImageDoubleEvent(string word)
+        private async void ImageDoubleEvent(string word)
         {
             if ("0" == serverCall)
             {
-                MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
+                var view = new MessageBoxShow();
+                view.MsgBoxShowText.Text = "当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！";
+                var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+                //MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
             }
             else
             {
                 if ("0" == clientCall)
                 {
-                    MessageBox.Show("当前终端电话空\r\n请点击终端电话！", "呼叫信息");
+                    var view = new MessageBoxShow();
+                    view.MsgBoxShowText.Text = "当前终端电话空\r\n请点击终端电话！";
+                    var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+                    //MessageBox.Show("当前终端电话空\r\n请点击终端电话！", "呼叫信息");
                 }
                 else
                 {
@@ -561,7 +573,10 @@ namespace DispatchApp
             view.outLineViewModel.outLineCall.serverNum = serverCall;
             if ((view.outLineViewModel.outLineCall.serverNum == null) || (view.outLineViewModel.outLineCall.serverNum == "0"))
             {
-                MessageBox.Show("键权电话为空" +"\r\n"+"请点击键权电话");
+                var view2 = new MessageBoxShow();
+                view2.MsgBoxShowText.Text = "键权电话为空！";
+                var result = await DialogHost.Show(view2, "MessageBox", ListViewClosingEventHandler);
+                //MessageBox.Show("键权电话为空" +"\r\n"+"请点击键权电话");
             }
             else
             {
