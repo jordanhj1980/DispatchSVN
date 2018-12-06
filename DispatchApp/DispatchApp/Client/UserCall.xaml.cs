@@ -87,6 +87,13 @@ namespace DispatchApp
                 ImageSouresHandle(phoneNum);
             }
         }
+        private void MouseDouble_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (ImageSouresDoubleHandle != null)
+            {
+                ImageSouresDoubleHandle(phoneNum);
+            }
+        }
 
         /// <summary>
         ///     根据参数初始化该控件
@@ -107,13 +114,7 @@ namespace DispatchApp
             labelNumToId.Content = num.ToString();
         }
 
-        private void MouseDouble_Click(object sender, MouseButtonEventArgs e)
-        {
-            if (ImageSouresDoubleHandle != null)
-            {
-                ImageSouresDoubleHandle(phoneNum);
-            }
-        }
+
 
         private DispatcherTimer timer;
         private ProcessCount processCount;

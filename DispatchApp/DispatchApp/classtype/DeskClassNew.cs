@@ -89,7 +89,58 @@ namespace DispatchApp
                 }
             }
         }
+        private string _bindingnumber;
+        public string bindingnumber
+        {
+            get { return _bindingnumber; }
+            set
+            {
+                if (_bindingnumber != value)
+                {
+                    _bindingnumber = value;
+                    OnPropertyChanged("bindingnumber");
+                }
+            }
+        }
     }
+
+    public class ExtDeviceNew : NotifyObject
+    {
+        private ExtDevice _allDev;
+        public ExtDevice allBec
+        {
+            get { return _allDev; }
+            set
+            {
+                if (_allDev != value)
+                {
+                    _allDev = value;
+                    OnPropertyChanged("allBec");
+                }
+            }
+        }
+      
+
+        private string _bindingnumber;
+        public string bindingnumber
+        {
+            get { return _bindingnumber; }
+            set
+            {
+                if (_bindingnumber != value)
+                {
+                    _bindingnumber = value;
+                    OnPropertyChanged("bindingnumber");
+                }
+            }
+        }
+
+        public ExtDeviceNew()
+        {
+            allBec = new ExtDevice();
+        }
+    }
+
     public class GroupNew : NotifyObject
     {
         public GroupNew()
@@ -232,6 +283,20 @@ namespace DispatchApp
     }
     public class TrunkDev : NotifyObject
     {
+        private bool _ischecked = false;
+        public bool DevSelected
+        {
+            get { return _ischecked; }
+            set
+            {
+                if (_ischecked != value)
+                {
+                    _ischecked = value;
+                    OnPropertyChanged("DevSelected");
+                }
+
+            }
+        }
         private string _trunkid;
         public string trunkid
         {

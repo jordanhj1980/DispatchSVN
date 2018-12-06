@@ -91,8 +91,8 @@
             <!--<ListBox x:Name="MyWrapPanel2" Background="{x:Null}"  BorderBrush="{x:Null}" Style="{StaticResource WrapListBoxStyle}">
         </ListBox> -->
 
-            <TabControl Height="757" HorizontalAlignment="Left" Margin="289,0,0,0" Name="tabCtrl_User" VerticalAlignment="Top" Width="1499" TabStripPlacement="Bottom" Background="{x:Null}" BorderBrush="{x:Null}">
-            </TabControl>
+        <TabControl Height="757" HorizontalAlignment="Left" Margin="289,0,0,0" Name="tabCtrl_User" VerticalAlignment="Top" Width="1499" TabStripPlacement="Bottom" Background="{x:Null}" BorderBrush="{x:Null}">              
+        </TabControl>
             <!--<ListBox x:Name="RelayList" Style="{StaticResource RelayWrapListBoxStyle}" Background="{x:Null}"  Height="162" HorizontalAlignment="Left" Margin="284,558,0,0" VerticalAlignment="Top" Width="1504">
         </ListBox>-->
             <ListBox Height="757" HorizontalAlignment="Left" Margin="284,0,0,0" Name="tabCtrl_CDR" VerticalAlignment="Top" Width="1499" Background="{x:Null}" Visibility="Hidden"/>
@@ -330,7 +330,7 @@
             </Separator>
         
             <!--Dialog-->
-            <materialDesign:DialogHost Identifier="UserNightServerDialog" 
+            <!--<materialDesign:DialogHost Identifier="UserNightServerDialog" 
                 DialogClosing="NightServeDialogClosing" 
                 Grid.Row="2"
                 SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
@@ -340,7 +340,7 @@
                 DialogClosing="OutLineDialogClosing" 
                 Grid.Row="2"
                 SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
-            </materialDesign:DialogHost>
+            </materialDesign:DialogHost>-->
     </Grid>
     <!--</materialDesign:DrawerHost>-->
     <!--</materialDesign:DialogHost>-->

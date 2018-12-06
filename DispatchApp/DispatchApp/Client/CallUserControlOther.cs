@@ -56,9 +56,11 @@ namespace DispatchApp
         /* 电话List分类 start  */
         public List<s_ListUser> PageUser = new List<s_ListUser>();                  // 用户电话
         public List<GroupData> PageKey = new List<GroupData>();                     // 键权电话
-        public List<GroupData> PageRelay = new List<GroupData>();                   // 直呼中继电话
+        //public List<GroupData> PageRelay = new List<GroupData>();                   // 直呼中继电话
+        public List<GroupTrunk> PageRelay = new List<GroupTrunk>();                 // 直呼中继电话
         public int PageRelayIndex = 0;                                              // 直呼中继电话所在直呼区的页数
-        public List<GroupData> PageRadio = new List<GroupData>();                   // 广播电话
+        //public List<GroupData> PageRadio = new List<GroupData>();                   // 广播电话
+        public List<GroupBroadcast> PageRadio = new List<GroupBroadcast>();         // 广播电话
         public int PageRadioIndex = 0;                                              // 广播电话所在直呼区的页数
         /* 电话List分类 end  */
 
@@ -135,17 +137,114 @@ namespace DispatchApp
         }
         //============================================================
 
-        /// =====================直呼键区中继代码=====================
+        /// =====================直呼键区广播代码=====================
         /// <summary>
-        /// 直呼中继电话的分布
+        /// 直呼区广播电话的分布
         /// </summary>
-        private void SetRelayCall()
+        public void SetRadioCall()
         {
             /* 创建容器 */
             TabItem tab = new TabItem();            // 造一个新选项卡
             tab.Visibility = Visibility.Collapsed;
+            //tab.Visibility = Visibility.Visible;
             ListBox MyWrapPanel2 = new ListBox();   // 选项卡中的容器，用于存放每一个元素
             MyWrapPanel2.Style = FindResource("WrapListBoxStyle") as Style;     // 设定ListBox样式为定义好的样式 WrapListBoxStyle
+
+            /* 处理组员 */
+            int groupNum = PageRadio.Count;      // 组员个数
+            for (int i = 0; i < groupNum; i++)
+            {
+                /* 一个组员的信息 */
+                UserRadio userRadio = new UserRadio();
+                userRadio.name.Text = PageRadio[i].name;
+                /* 存放组员 */
+                MyWrapPanel2.Items.Add(userRadio);
+                /* 组员被点击后的操作 */
+                userRadio.ImageSouresHandle += new UserRadio.ImageEventHandler(RadioImageEvent);
+                userRadio.ImageSouresDoubleHandle += new UserRadio.ImageEventHandler(RadioImageDoubleEvent);
+            
+            }
+
+            /* 将造好的新选项卡扔进TabControl1里 */
+            tab.Content = MyWrapPanel2;
+            tabCtrl_User.Items.Add(tab);
+
+            /* 获取广播电话所在直呼区的页数 */
+            PageRadioIndex = tabCtrl_User.Items.Count - 1;
+           
+
+        }
+        private void RadioImageEvent(string word)
+        {
+            List<UserRadio> firstPageUserCall = FindChirldHelper.FindVisualChild<UserRadio>(this);
+
+            foreach (var item in firstPageUserCall)
+            {
+                if (word == item.name.Text)
+                {
+                    item.ButtonBack.BorderBrush = Brushes.Yellow;
+                }
+                else
+                {
+                    item.ButtonBack.BorderBrush = Brushes.Gray;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 双击广播号码
+        /// </summary>
+        /// <param name="word"></param>
+        private void RadioImageDoubleEvent(string word)
+        {
+            GroupBroadcast callRadio = new GroupBroadcast();
+            callRadio = PageRadio.Find(c => c.name.Equals(word));
+
+            call callBoard = new call();
+            foreach (GroupMember item in callRadio.bmemberlist)
+            {
+                callBoard.fromid = "1";
+                callBoard.toid = item.callno;
+                string strMsg = "CMD#MenuToExt#" + JsonConvert.SerializeObject(callBoard);
+                mainWindow.ws.Send(strMsg);
+            }
+        }
+
+        //============================================================
+
+        /// =====================直呼键区中继代码=====================
+        /// <summary>
+        /// 直呼中继电话的分布
+        /// </summary>
+        public void SetRelayCall()
+        {
+            /* 创建容器 */
+            TabItem tab = new TabItem();            // 造一个新选项卡
+            tab.Visibility = Visibility.Collapsed;
+            //tab.Visibility = Visibility.Visible;
+            ListBox MyWrapPanel2 = new ListBox();   // 选项卡中的容器，用于存放每一个元素
+            MyWrapPanel2.Style = FindResource("UserRelayWrapListBoxStyle") as Style;
+
+            /* 处理组员 */
+            int groupNum = PageRelay.Count;      // 组员个数
+            for (int i = 0; i < groupNum; i++)
+            {
+                /* 一个组员的信息 */
+                UserRelay userRelay = new UserRelay();
+                userRelay.Soures = PageRelay[i];
+                //userRelay.name.Text = PageRelay[i].name;
+                //userRelay.trunkid.Text = PageRelay[i].trunkid;
+                userRelay.bindingnumber.Text = PageRelay[i].bindingnumber;
+                /* 存放组员 */
+                MyWrapPanel2.Items.Add(userRelay);
+                /* 组员被点击后的操作 */
+                userRelay.ImageSouresHandle += new UserRelay.ImageEventHandler(RelayImageEvent);
+                userRelay.ImageSouresDoubleHandle += new UserRelay.ImageEventHandler(RelayImageDoubleEvent);
+                /* 获取组员初始状态 */
+                //string strMsg = "CMD#GETSTATE#" + userRelay.trunkid.Text;
+                string strMsg = "CMD#GETSTATE#" + userRelay.Soures.trunkid;
+                mainWindow.ws.Send(strMsg);
+            }
 
             /* 将造好的新选项卡扔进TabControl1里 */
             tab.Content = MyWrapPanel2;
@@ -154,26 +253,48 @@ namespace DispatchApp
             /* 获取直呼中继电话所在直呼区的页数 */
             PageRelayIndex = tabCtrl_User.Items.Count - 1;
         }
-        //============================================================
 
-        /// =====================直呼键区广播代码=====================
-        /// <summary>
-        /// 直呼区广播电话的分布
-        /// </summary>
-        private void SetRadioCall()
+        private void RelayImageEvent(GroupTrunk word)
         {
-            /* 创建容器 */
-            TabItem tab = new TabItem();            // 造一个新选项卡
-            tab.Visibility = Visibility.Collapsed;
-            ListBox MyWrapPanel2 = new ListBox();   // 选项卡中的容器，用于存放每一个元素
-            MyWrapPanel2.Style = FindResource("WrapListBoxStyle") as Style;
+            List<UserRelay> firstPageUserCall = FindChirldHelper.FindVisualChild<UserRelay>(this);
 
-            /* 将造好的新选项卡扔进TabControl1里 */
-            tab.Content = MyWrapPanel2;
-            tabCtrl_User.Items.Add(tab);
+            foreach (var item in firstPageUserCall)
+            {
+                //if (word.trunkid == item.trunkid.Text)
+                if (word.trunkid == item.Soures.trunkid)
+                {
+                    item.ButtonBack.BorderBrush = Brushes.Yellow;
+                }
+                else
+                {
+                    item.ButtonBack.BorderBrush = Brushes.Gray;
+                }
+            }
+        }
 
-            /* 获取广播电话所在直呼区的页数 */
-            PageRadioIndex = tabCtrl_User.Items.Count - 1;
+        /// <summary>
+        /// 双击中继号码
+        /// </summary>
+        /// <param name="word"></param>
+        private void RelayImageDoubleEvent(GroupTrunk word)
+        {
+            if ("0" == serverCall)
+            {
+                MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
+            }
+            else
+            {
+                if (("0" == word.bindingnumber) || (null == word.bindingnumber))
+                {
+                    MessageBox.Show("当前中继未绑定终端电话！", "呼叫信息");
+                }
+                else
+                {
+                    callRel tellCall = new callRel() { fromid = serverCall, toid = word.bindingnumber, trunkid = word.trunkid };
+                    string strMsg = "CMD#CallOut#" + JsonConvert.SerializeObject(tellCall);
+                    mainWindow.ws.Send(strMsg);
+                }
+            }
         }
         //============================================================
 
@@ -456,7 +577,7 @@ namespace DispatchApp
                     for (int Idx = 0; Idx < PageRelay.Count; Idx++) // 布置页面按钮
                     {
                         RelayNum relaynum = new RelayNum();
-                        relaynum.relayNum = PageRelay[Idx].extid;
+                        //relaynum.relayNum = PageRelay[Idx].extid;
                         relaynum.isSelected = false;
                         view.outLineViewModel.outLineCall.relayNumList.Add(relaynum);
 

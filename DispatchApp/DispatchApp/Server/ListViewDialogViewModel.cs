@@ -19,6 +19,7 @@ namespace DispatchApp
                 SetAndNotifyIfChanged("AllDevList", ref _alldevlist, value);
             }
         }
+
         public ListViewDialogViewModel()
         {
             AllDevList = new ObservableCollection<ExtDevice>();

@@ -310,11 +310,12 @@ namespace DispatchApp
 
                     if (App.isLogin) { 
                         loadingWin.ShowDialog(this);
+                        callUserCtrl.KeyCallListBox.Items.Clear();           // 清理键权电话区
+                        callUserCtrl.tabCtrl_User.Items.Clear();             // 清理直呼键区
                     }
                 } 
                 else 
                 {
-                    List<GroupData> temp = new List<GroupData>();
                     string strMsg = (string)msg;
                     int indexstart = 0;
                     int indexend = 0;
@@ -327,14 +328,29 @@ namespace DispatchApp
                     switch (type)
                     {
                         case "GroupExt":
-                            temp = JsonConvert.DeserializeObject<List<GroupData>>(word);
+                            List<GroupData> tempExt = JsonConvert.DeserializeObject<List<GroupData>>(word);
                             //temp = JsonConvert.DeserializeObject(word);//测试代码
-                            callUserCtrl.output(temp);
+                            callUserCtrl.output(tempExt);
                             //getButtons(temp);
                             //output(temp);
                             break;
+                        case "GroupTrunk": //中继直呼页面
+                            List<GroupTrunk> tempTru = JsonConvert.DeserializeObject<List<GroupTrunk>>(word);
+                            callUserCtrl.PageRelay = tempTru;
+                            callUserCtrl.c_callTypeInfo.status = e_CallType.RELAY;
+                            callUserCtrl.SetRelayCall();
+                            Debug.WriteLine("中继直呼" + word);
+                            break;
+                        case "GroupBroadcast": // 广播页面
+                            List<GroupBroadcast> tempBro = JsonConvert.DeserializeObject<List<GroupBroadcast>>(word);
+                            callUserCtrl.PageRadio = tempBro;
+                            callUserCtrl.c_callTypeInfo.status = e_CallType.RADIO;
+                            callUserCtrl.SetRadioCall();
+                            Debug.WriteLine("广播分组" + word);
+                            break;
                         case "STATE":
                             callUserCtrl.Second_State_Word(word);
+                            Debug.WriteLine("状态问题？？？？？？" + word);
                             break;
                         case "MAN": // 20181024 xiaozi 调度信息
                             callManagerCtrl.Second_State_Word(word); 
@@ -441,11 +457,12 @@ namespace DispatchApp
             logwin.Show();
 
             this.Hide();
-            
 
             // 20181010 xf Add  
             App.isLogin = false;    // 用户主动选择登出
             ws.Close();
+            callUserCtrl.KeyCallListBox.Items.Clear();           // 清理键权电话区
+            callUserCtrl.tabCtrl_User.Items.Clear();             // 清理直呼键区
         }
 
         public void showLogWin()

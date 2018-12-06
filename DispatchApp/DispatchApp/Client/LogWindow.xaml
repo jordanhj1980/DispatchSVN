@@ -81,7 +81,7 @@
 
 
 
-        <DataGrid  Name="DetialMsg" Background="Black" Height="456" Width="1166" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="328,31,10,0" Foreground="White">
+        <DataGrid  Name="DetailMsg" Background="Black" Height="456" Width="1166" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="328,31,10,0" Foreground="White">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Cdrid}" Width="145" Header="话单" Foreground="White"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding callid}" Width="145" Header="唯一标识" Foreground="White"></DataGridTextColumn>
@@ -93,10 +93,10 @@
                 <DataGridTextColumn Binding="{Binding Duration}" Width="151" Header="通话时长" Foreground="White"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <!--<GroupBox Header="详细信息" Height="456" x:Name="DetialMsg" Width="614" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="166,0,10,0">          
+        <!--<GroupBox Header="详细信息" Height="456" x:Name="DetailMsg" Width="614" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="166,0,10,0">          
         -->
         <!--<ListBox Na
-        me="DetialContent"/>-->
+        me="DetailContent"/>-->
         <!--
         </GroupBox>-->
         <Button Content="确定" Height="23" Name="button1" Click="Btn_MakeSure" Width="75" Margin="348,501,367,46" />

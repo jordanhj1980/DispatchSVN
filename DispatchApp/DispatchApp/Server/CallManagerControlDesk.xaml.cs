@@ -178,7 +178,7 @@ namespace DispatchApp
             // 添加成功则跳转界面
             if (ans.result == "Success")
             {
-                tabControl_mgt.SelectedIndex = 2;  // 跳转到键盘的树
+                tabControl_mgt.SelectedIndex = 4;  // 跳转到键盘的树
             }
             else
             {
@@ -401,13 +401,21 @@ namespace DispatchApp
                 allphonelist = allphonelist.OrderBy(e => e.callno).ToList();
                 List<ExtDevice> alltrunklist = alldevlist.FindAll(delegate(ExtDevice ext) { return ext.type.Equals("trunk"); });
                 alltrunklist = alltrunklist.OrderBy(e => e.callno).ToList();
-                
+
+                List<TrunkDev> alltrunkdevlist = new List<TrunkDev>();
+                foreach (ExtDevice t in alltrunklist)
+                {
+                    TrunkDev member = new TrunkDev();
+                    member.trunkid = t.callno;
+                    member.name = t.name;
+                    alltrunkdevlist.Add(member);
+                }
                 //keyboardmanagetab.keyboardmanagedata.AllDevList = alldev.DevList;
 
                 keyboardmanagetab.keyboardmanagedata.AllDevList = new ObservableCollection<ExtDevice>(alldevlist);
                 keyboardmanagetab.keyboardmanagedata.AllPhoneList = new ObservableCollection<ExtDevice>(allphonelist);
                 keyboardmanagetab.keyboardmanagedata.AllTrunkList = new ObservableCollection<ExtDevice>(alltrunklist);
-
+                keyboardmanagetab.keyboardmanagedata.AllTrunkListView = new ObservableCollection<TrunkDev>(alltrunkdevlist);
                 if (getAllRegister.sequence == searchAllRegest.sequence)
                 {
                     RegesterStack.Items.Clear();

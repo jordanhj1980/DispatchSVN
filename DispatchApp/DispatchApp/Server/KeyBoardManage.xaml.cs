@@ -205,14 +205,18 @@ namespace DispatchApp
         private void RootDialogTrunk_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
         {
             Console.WriteLine("trunklist选择完毕！！！");
+
+            //实际操作
             this.keyboardmanagedata.SelectedKey.trunklist.Clear();
             foreach (ExtDevice t in this.keyboardmanagedata.AllTrunkList)
+            //foreach (ExtDeviceNew t in this.keyboardmanagedata.AllTrunkListNew)
             {
                 if (t.DevSelected == true)
                 {
                     TrunkDev member = new TrunkDev();
                     member.trunkid = t.callno;
                     member.name = t.name;
+                    member.bindingnumber = t.bindingnumber;
                     this.keyboardmanagedata.SelectedKey.trunklist.Add(member);
                 }
             }
@@ -255,7 +259,7 @@ namespace DispatchApp
             keyboardmanagedata.SelectedKey.broadcastlist.Remove(keyboardmanagedata.SelectedBroadcast);
         }
 
-        private void RootDialogGroupDetial_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        private void RootDialogGroupDetail_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
         {
             Console.WriteLine("分组信息参数编辑完毕！！！");
             if (!Equals(eventArgs.Parameter, true)) return;
@@ -274,10 +278,69 @@ namespace DispatchApp
            
         }
 
+        private void RootDialogTrunkDetail_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            Console.WriteLine("直呼中继信息参数编辑完毕！！！");
+            if (!Equals(eventArgs.Parameter, true)) return;
+
+            else
+            {
+                this.keyboardmanagedata.SelectedTrunk.bindingnumber = this.keyboardmanagedata.trunkData.trunkDetail.bindingnumber;
+                this.keyboardmanagedata.SelectedTrunk.name = this.keyboardmanagedata.trunkData.trunkDetail.name;
+                this.keyboardmanagedata.SelectedTrunk.trunkid = this.keyboardmanagedata.trunkData.trunkDetail.trunkid;    
+            }
+        }
+
+        private void RootDialogBoardDetail_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            Console.WriteLine("广播组信息参数编辑完毕！！！");
+            if (!Equals(eventArgs.Parameter, true)) return;
+
+            else
+            {
+                this.keyboardmanagedata.SelectedBroadcast.index = this.keyboardmanagedata.boardData.boardDetail.index;
+                this.keyboardmanagedata.SelectedBroadcast.name = this.keyboardmanagedata.boardData.boardDetail.name;
+                this.keyboardmanagedata.SelectedBroadcast.bmemberlist = this.keyboardmanagedata.boardData.boardDetail.bmemberlist;
+
+            }
+        }
+
+        /// <summary>
+        /// 分组详细信息编辑框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RunGroupDetailDialogCommand(object sender, MouseButtonEventArgs e)
         {
-            this.keyboardmanagedata.EditGroupDetialDialog();
+            this.keyboardmanagedata.EditGroupDetailDialog();
         }
+
+
+
+        /// <summary>
+        /// 中继直呼详细信息编辑框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RunTrunkDetailDialogCommand(object sender, MouseButtonEventArgs e)
+        {
+            this.keyboardmanagedata.EditTrunkDetailDialog();
+        }
+
+        /// <summary>
+        /// 广播组的详细信息编辑框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RunBoardDetailDialogCommand(object sender, MouseButtonEventArgs e)
+        {
+            this.keyboardmanagedata.EditBoardDetailDialog();
+        }
+
+
+        
+
+     
 
     }
 }

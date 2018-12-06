@@ -72,6 +72,32 @@
         </Setter>
     </Style>
 
+    <Style x:Key="UserRelayWrapListBoxStyle"
+               TargetType="{x:Type ListBox}"
+                BasedOn="{StaticResource WrapListBoxStyle}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel Name="aa" ItemWidth="190"
+                                   Margin="0,2,2,2" Style="{DynamicResource MyWrapPanel}"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="UserBroadWrapListBoxStyle"
+               TargetType="{x:Type ListBox}"
+                BasedOn="{StaticResource WrapListBoxStyle}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel Name="aa" ItemWidth="90"
+                                   Margin="0,2,2,2" Style="{DynamicResource MyWrapPanel}"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="KeyWrapListBoxStyle"
                TargetType="{x:Type ListBox}"
                 BasedOn="{StaticResource WrapListBoxStyle}">

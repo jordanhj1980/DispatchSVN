@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DispatchApp
 {
-    public class GroupDetialViewModel : NotifyObject
+    public class GroupDetailViewModel : NotifyObject
     {
         /// <summary>
         /// 分组详细信息编辑
@@ -26,7 +26,7 @@ namespace DispatchApp
         }
 
 
-        public GroupDetialViewModel()
+        public GroupDetailViewModel()
         {
             groupDetail = new GroupNew();
         }

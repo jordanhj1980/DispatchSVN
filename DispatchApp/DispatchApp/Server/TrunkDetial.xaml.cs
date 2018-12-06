@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace DispatchApp
 {
     /// <summary>
-    /// GroupDetail.xaml 的交互逻辑
+    /// TrunkDetail.xaml 的交互逻辑
     /// </summary>
-    public partial class GroupDetail : UserControl
+    public partial class TrunkDetail : UserControl
     {
-        public GroupDetail()
+        public TrunkDetail()
         {
             InitializeComponent();
         }

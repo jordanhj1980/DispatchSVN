@@ -182,6 +182,30 @@ namespace DispatchApp
     }
     //============================================================
 
+    /// =======================直呼键权电话=======================
+    public struct GroupTrunk
+    {
+        public string trunkid;
+	    public string name;
+        public string bindingnumber;
+
+    }
+    //============================================================ 
+
+    /// =======================广播分组电话=======================
+    public struct GroupBroadcast
+    {
+        public string name;
+        public List<GroupMember> bmemberlist;
+    }
+
+    public struct GroupMember
+    {
+        public string callno;
+        public string name;
+    }
+    //============================================================ 
+
     /// ==========================查询日志========================
     class DateCDR
     {

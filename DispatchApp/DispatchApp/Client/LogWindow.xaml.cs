@@ -253,7 +253,7 @@ namespace DispatchApp
 
         private void Btn_Clear(object sender, RoutedEventArgs e)
         {
-            //DetialContent.Text = "";
+            //DetailContent.Text = "";
         }
 
         private void Btn_Save(object sender, RoutedEventArgs e)

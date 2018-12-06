@@ -95,7 +95,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="SuperSocket.ClientEngine.Protocol">
-      <HintPath>..\packages\SuperSocket.ClientEngine.Protocol.dll</HintPath>
+      <HintPath>..\..\DispatchApp\packages\SuperSocket.ClientEngine.Protocol.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -160,6 +160,16 @@
       <DependentUpon>KeyCall.xaml</DependentUpon>
     </Compile>
     <Compile Include="Client\OutLineViewModel.cs" />
+    <Compile Include="Client\UserRadio.xaml.cs">
+      <DependentUpon>UserRadio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\UserRelay.xaml.cs">
+      <DependentUpon>UserRelay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Server\BoardDetail.xaml.cs">
+      <DependentUpon>BoardDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Server\BoardDetailViewModel.cs" />
     <Compile Include="Server\GroupDetial.xaml.cs">
       <DependentUpon>GroupDetial.xaml</DependentUpon>
     </Compile>
@@ -187,6 +197,10 @@
       <DependentUpon>UserManage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Server\user\UserViewModel.cs" />
+    <Compile Include="Server\TrunkDetialViewModel.cs" />
+    <Compile Include="Server\TrunkDetial.xaml.cs">
+      <DependentUpon>TrunkDetial.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Splitwindow\LoadingWindow.xaml.cs">
       <DependentUpon>LoadingWindow.xaml</DependentUpon>
     </Compile>
@@ -272,6 +286,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Client\UserRadio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Client\UserRelay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Server\BoardDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Server\GroupDetial.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -293,6 +319,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Server\user\UserManage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Server\TrunkDetial.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -414,6 +444,15 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\binding.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\broadcast.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\broadcastingstation.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\close-circle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -465,7 +504,6 @@
     <Content Include="Resources\optionWhite.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="USERSkin.dll" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\1.ico">

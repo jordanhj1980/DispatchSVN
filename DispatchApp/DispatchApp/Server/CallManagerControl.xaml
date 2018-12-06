@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DispatchApp"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1920" Background="Black">
+             d:DesignHeight="900" d:DesignWidth="1920" Background="Black">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -24,14 +24,14 @@
         </Grid.ColumnDefinitions>
 
         <!--右侧-->
-        <Grid Height="800" HorizontalAlignment="Left" Margin="2,1,0,0" Name="grid1" VerticalAlignment="Top">                      
+        <Grid Height="900" HorizontalAlignment="Left" Name="grid1" VerticalAlignment="Top">
 
             <!---->
             <TabControl  Background="{x:Null}" 
-                Height="718" HorizontalAlignment="Left" Name="tabControl_mgt" VerticalAlignment="Bottom">
+                Height="900" HorizontalAlignment="Left" Name="tabControl_mgt" VerticalAlignment="Top" Margin="0,0,0,0" Width="1920">
                 <!--软交换设备展开-->
             <TabItem Header="tabItem1" Visibility="Collapsed"  Name="tabItem_switch">
-                
+
             </TabItem>
 
             <!--系统用户展开-->
@@ -123,8 +123,8 @@
                         </GroupBox>
                     </Border>
                 </Grid>
-            </TabItem>    
-                
+            </TabItem>
+
 
             <!--调度台展开-->
             <TabItem Background="{x:Null}" Header="tabItem3" Visibility="Collapsed"  Name="tabItem_desk"

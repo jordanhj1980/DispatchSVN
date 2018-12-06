@@ -231,9 +231,6 @@ namespace DispatchApp
                 groupName.Add(item);
             }
 
-            KeyCallListBox.Items.Clear();           // 清理键权电话区
-            tabCtrl_User.Items.Clear();             // 清理直呼键区
-
             // 找到键权电话/中继电话/广播电话/用户电话
             foreach (string name in groupName)
             {
@@ -245,16 +242,16 @@ namespace DispatchApp
                         c_callTypeInfo.status = e_CallType.Key;
                         SetKeyCall();
                         break;
-                    case "T":
-                        PageRelay = item;
-                        c_callTypeInfo.status = e_CallType.RELAY;
-                        SetRelayCall();
-                        break;
-                    case "B":
-                        PageRadio = item;
-                        c_callTypeInfo.status = e_CallType.RADIO;
-                        SetRadioCall();
-                        break;
+                    //case "T":
+                    //    PageRelay = item;
+                    //    c_callTypeInfo.status = e_CallType.RELAY;
+                    //    SetRelayCall();
+                    //    break;
+                    //case "B":
+                    //    PageRadio = item;
+                    //    c_callTypeInfo.status = e_CallType.RADIO;
+                    //    SetRadioCall();
+                    //    break;
                     default:
                         s_ListUser user = new s_ListUser();
                         user.GroupUser = item;
@@ -408,16 +405,16 @@ namespace DispatchApp
                 clientNum = tempName.fromid;
             }
             // 查看是否为键权电话
-            GroupData groupDate = new GroupData() { groupid = "0", extid = clientNum };
-            GroupData groupDateT = new GroupData() { groupid = "T", extid = clientNum };
-            if (PageKey.Contains(groupDate))
-            {
+            //GroupData groupDate = new GroupData() { groupid = "0", extid = clientNum };
+            //GroupData groupDateT = new GroupData() { groupid = "T", extid = clientNum };
+            //if (PageKey.Contains(groupDate))
+            //{
                 KeyCommondWord_State(type, data);
-            }
-            else if (PageRelay.Contains(groupDateT))
-            {
+            //}
+            //else if (PageRelay.Contains(groupDateT))
+            //{
                 RelayCommondWord_State(type, data);
-            }
+            //}
             //else
             //{
                 //判断命令字 20181010 xiaozi add,终端电话状态判断
@@ -503,84 +500,19 @@ namespace DispatchApp
                     Debug.WriteLine("中继电话"+num+"状态："+state);
                 }
             }
-            
-            //string trunkNum;
-            //callRel tempName = new callRel();
-            //RelayCall temp = new RelayCall();
-            //switch (state)
-            //{
-            //    case "Ready":
-            //    case "Active":
-            //    case "Progress":
-            //    case "Offline":
-            //    case "Offhook":
-            //        trunkNum = num.ToString();
-            //        FindRelayCall(trunkNum);
-            //        //temp.ButtonRelay.Background = Brushes.Yellow;
-            //        //temp.RelaylabelPoleId.Background = state;
-            //        break;
-            //    case "BUSY":
-            //        trunkNum = num.ToString();
-            //        FindRelayCall(trunkNum);
-            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
-            //        temp.ButtonRelay.Background = Brushes.Yellow;
-            //        break;
-            //    case "IDLE":
-            //        trunkNum = num.ToString();
-            //        FindRelayCall(trunkNum);
-            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
-            //        temp.ButtonRelay.Background = Brushes.Green;
-            //        break;
-            //    case "ONLINE":
-            //        trunkNum = num.ToString();
-            //        FindRelayCall(trunkNum);
-            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
-            //        temp.ButtonRelay.Background = Brushes.Green;
-            //        break;
-            //    case "OFFLINE":
-            //        trunkNum = num.ToString();
-            //        FindRelayCall(trunkNum);
-            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
-            //        temp.ButtonRelay.Background = Brushes.Gray;
-            //        break;
-            //    case "FAILED":
-            //        tempName = JsonConvert.DeserializeObject<callRel>(num);
-            //        FindRelayCall(tempName.trunkid);
-            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
-            //        temp.ButtonRelay.Background = Brushes.Gray;
-            //        break;
-            //    case "BYE":
-            //        tempName = JsonConvert.DeserializeObject<callRel>(num);
-            //        FindRelayCall(tempName.trunkid);
-            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
-            //        temp.ButtonRelay.Background = Brushes.Green;
-            //        break;
-            //    case "RING":
-            //        tempName = JsonConvert.DeserializeObject<callRel>(num);
-            //        FindRelayCall(tempName.trunkid);
-            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
-            //        temp.ButtonRelay.Background = Brushes.Blue;
-            //        break;
-            //    case "ALERT":
-            //        tempName = JsonConvert.DeserializeObject<callRel>(num);
-            //        FindRelayCall(tempName.trunkid);
-            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
-            //        temp.ButtonRelay.Background = Brushes.Blue;
-            //        break;
-            //    case "ANSWER":
-            //        tempName = JsonConvert.DeserializeObject<callRel>(num);
-            //        FindRelayCall(tempName.trunkid);
-            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
-            //        temp.ButtonRelay.Background = Brushes.Red;
-            //        break;
-            //    case "ANSWERED":
-            //        tempName = JsonConvert.DeserializeObject<callRel>(num);
-            //        FindRelayCall(tempName.trunkid);
-            //        temp = (RelayCall)callBoard.RelayList.Items[relayCallStateIdex];
-            //        temp.ButtonRelay.Background = Brushes.Red;
-            //        break;
-            //    default: break;
-            //}
+
+            int pageRelayBoxNum = ((ListBox)((TabItem)tabCtrl_User.Items[PageRelayIndex]).Content).Items.Count;
+            for (int jdex = 0; jdex < pageRelayBoxNum; jdex++)
+            {
+                // 直呼界面中继电话
+                UserRelay t = (UserRelay)(((ListBox)((TabItem)tabCtrl_User.Items[PageRelayIndex]).Content).Items[jdex]);
+                //if (t.trunkid.Text == num)
+                if (t.Soures.trunkid == num)
+                {
+                    t.CurrentState = state;
+                    Debug.WriteLine("中继电话aaaaa" + num + "状态：" + state);
+                }
+            } 
         }
 
         /// <summary>
@@ -632,6 +564,8 @@ namespace DispatchApp
 
             for (int idex = 0; idex < pageUserTabNum; idex++)
             {
+                if ((idex != PageRelayIndex) && (idex != PageRadioIndex))
+                {
                 // 查找1：每一页的每一个UserCall
                 //int pageUserBoxNum = ((ListBox)((TabItem)tabCtrl_User.Items[idex]).Content).Items.Count;
                 //for (int jdex = 0; jdex < pageUserBoxNum; jdex++)
@@ -644,65 +578,66 @@ namespace DispatchApp
                 int pageUserBoxNum = listBox.Items.Count;   // ListBox中UserCall的个数
                 for (int jdex = 0; jdex < pageUserBoxNum; jdex++)
                 {
-                    UserCall temp = (UserCall)listBox.Items[jdex];  // ListBox中的一个UserCall 
+                        UserCall temp = (UserCall)listBox.Items[jdex];  // ListBox中的一个UserCall 
 
-                    string callNum = temp.labelNumFromId.Content.ToString(); // 读取当前UserCall的本机号码                  
-                    // 布置本机号码对应的状态
-                    //if ((callNum == clientNum) || (callNum == clientToid))
-                    if (callNum == clientNum)
-                    {
-                        temp.CurrentState = state;
-
-                        switch (state)
+                        string callNum = temp.labelNumFromId.Content.ToString(); // 读取当前UserCall的本机号码                  
+                        // 布置本机号码对应的状态
+                        //if ((callNum == clientNum) || (callNum == clientToid))
+                        if (callNum == clientNum)
                         {
-                            case "Ready":
-                            case "Active":
-                            case "Progress":
-                            case "Offline":
-                            case "Offhook":
-                                break;
-                            case "BUSY":
-                                break;
-                            case "IDLE":
-                                temp.timer_Stop();
-                                temp.labelNumFromId.Content = callNum;
-                                temp.labelNumToId.Content = "no";
-                                temp.ButtonBack.Background = (Brush)new BrushConverter().ConvertFromString("#CACDDA");
-                                break;
-                            case "ONLINE":
-                                temp.ButtonBack.Background = (Brush)new BrushConverter().ConvertFromString("#CACDDA");
-                                break;
-                            case "OFFLINE":
-                                temp.ButtonBack.Background = (Brush)new BrushConverter().ConvertFromString("#898B94");
-                                break;
-                            case "FAILED":
-                                break;
-                            case "BYE":
-                                temp.timer_Stop();
-                                temp.labelNumFromId.Content = callNum;
-                                temp.labelNumToId.Content = "no";
-                                break;
-                            case "RING":
-                                temp.labelNumFromId.Content = tempName.fromid;
-                                temp.labelNumToId.Content = tempName.toid;
-                                break;
-                            case "ALERT":
-                                temp.labelNumFromId.Content = tempName.fromid;
-                                temp.labelNumToId.Content = tempName.toid;
-                                break;
-                            case "ANSWER":
-                                temp.labelNumFromId.Content = tempName.fromid;
-                                temp.labelNumToId.Content = tempName.toid;
-                                temp.timer_Stop();
-                                temp.ShowCallTime();
-                                break;
-                            case "ANSWERED":
-                                temp.labelNumFromId.Content =  tempName.fromid;
-                                temp.labelNumToId.Content = tempName.toid;
-                                temp.timer_Stop();
-                                temp.ShowCallTime();
-                                break;
-                            default: break;
+                            temp.CurrentState = state;
+
+                            switch (state)
+                            {
+                                case "Ready":
+                                case "Active":
+                                case "Progress":
+                                case "Offline":
+                                case "Offhook":
+                                    break;
+                                case "BUSY":
+                                    break;
+                                case "IDLE":
+                                    temp.timer_Stop();
+                                    temp.labelNumFromId.Content = callNum;
+                                    temp.labelNumToId.Content = "no";
+                                    temp.ButtonBack.Background = (Brush)new BrushConverter().ConvertFromString("#CACDDA");
+                                    break;
+                                case "ONLINE":
+                                    temp.ButtonBack.Background = (Brush)new BrushConverter().ConvertFromString("#CACDDA");
+                                    break;
+                                case "OFFLINE":
+                                    temp.ButtonBack.Background = (Brush)new BrushConverter().ConvertFromString("#898B94");
+                                    break;
+                                case "FAILED":
+                                    break;
+                                case "BYE":
+                                    temp.timer_Stop();
+                                    temp.labelNumFromId.Content = callNum;
+                                    temp.labelNumToId.Content = "no";
+                                    break;
+                                case "RING":
+                                    temp.labelNumFromId.Content = tempName.fromid;
+                                    temp.labelNumToId.Content = tempName.toid;
+                                    break;
+                                case "ALERT":
+                                    temp.labelNumFromId.Content = tempName.fromid;
+                                    temp.labelNumToId.Content = tempName.toid;
+                                    break;
+                                case "ANSWER":
+                                    temp.labelNumFromId.Content = tempName.fromid;
+                                    temp.labelNumToId.Content = tempName.toid;
+                                    temp.timer_Stop();
+                                    temp.ShowCallTime();
+                                    break;
+                                case "ANSWERED":
+                                    temp.labelNumFromId.Content = tempName.fromid;
+                                    temp.labelNumToId.Content = tempName.toid;
+                                    temp.timer_Stop();
+                                    temp.ShowCallTime();
+                                    break;
+                                default: break;
+                            }
                         }
                     }
                 }
@@ -728,7 +663,7 @@ namespace DispatchApp
                     List<DateCDR> itemList = JsonConvert.DeserializeObject<List<DateCDR>>(data);
                     tabCtrl_User.Visibility = Visibility.Collapsed;
                     tabCtrl_CDR.Items.Clear();
-                    logWindow.DetialMsg.ItemsSource = itemList;
+                    logWindow.DetailMsg.ItemsSource = itemList;
                     tabCtrl_CDR.Items.Add(logWindow);
                     tabCtrl_CDR.Visibility = Visibility.Visible;
                     break;
@@ -1059,15 +994,6 @@ namespace DispatchApp
         private void Radio_Click(object sender, RoutedEventArgs e)
         {
             tabCtrl_User.SelectedIndex = PageRadioIndex;        // 直呼区跳转广播界面
-
-            call callRadio = new call();          
-            foreach (GroupData item in PageRadio)
-            {
-                callRadio.fromid = "1";
-                callRadio.toid = item.extid;
-                string strMsg = "CMD#MenuToExt#" + JsonConvert.SerializeObject(callRadio);
-                mainWindow.ws.Send(strMsg);
-            }
         }
 
         /// <summary>

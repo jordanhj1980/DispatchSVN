@@ -139,7 +139,7 @@
             </StackPanel>
             
             <!--界面内容容器-->
-            <ContentControl Name="CenterPanel2" Grid.Row="2"  />
+            <ContentControl Name="CenterPanel2" Grid.Row="2" />
             
         </Grid>
     </Viewbox>

@@ -14,11 +14,15 @@ namespace DispatchApp
             SelectedKey = new KeyBoardNew();
             SelectedGroup = new GroupNew();
             SelectedBroadcast = new Broadcast();
+            SelectedTrunk = new TrunkDev();
             KeyboardList = new ObservableCollection<KeyBoardNew>();
             AllDevList = new ObservableCollection<ExtDevice>();
             AllPhoneList = new ObservableCollection<ExtDevice>();
             AllTrunkList = new ObservableCollection<ExtDevice>();
-            groupData = new GroupDetialViewModel();
+            AllTrunkListNew = new ObservableCollection<ExtDeviceNew>();
+            groupData = new GroupDetailViewModel();
+            trunkData = new TrunkDetailViewModel();
+            boardData = new BoardDetailViewModel();
         }
 
 
@@ -100,7 +104,7 @@ namespace DispatchApp
         //            (
         //                o =>
         //                {
-        //                    EditGroupDetialDialog();
+        //                    EditGroupDetailDialog();
         //                }
         //            ),
         //            new Func<object, bool>(o => this.SelectedGroup != null));
@@ -109,32 +113,60 @@ namespace DispatchApp
         //}
        
 
-        public GroupDetialViewModel groupData;
-        public async void EditGroupDetialDialog()
+        public GroupDetailViewModel groupData;
+        public async void EditGroupDetailDialog()
         {
             //OnPropertyChanged("SelectedGroup");
-            //GroupDetialViewModel groupData = new GroupDetialViewModel();
+            //GroupDetailViewModel groupData = new GroupDetailViewModel();
             groupData.groupDetail = ObjectCopier.Clone<GroupNew>(SelectedGroup); // 初始化编辑界面参数
             //groupData.groupDetail = this.SelectedGroup; // 双向绑定     
             //Console.WriteLine("SelectedGroupzzzzzzzz" + SelectedGroup.groupname);
 
-            //var view = new GroupDetial();
+            //var view = new GroupDetail();
             //view.DataContext = groupData;
 
-            var view = new GroupDetial();
+            var view = new GroupDetail();
             view.DataContext = groupData.groupDetail;
             //view.DataContext = this.SelectedGroup;
 
 
             //show the dialog
-            var result = await DialogHost.Show(view, "RootDialogGroupDetial", ListViewClosingEventHandler);
+            var result = await DialogHost.Show(view, "RootDialogGroupDetail", ListViewClosingEventHandler);
+
+            //check the result...
+            Console.WriteLine("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
+        }
+
+        public TrunkDetailViewModel trunkData;
+        public async void EditTrunkDetailDialog()
+        {
+            trunkData.trunkDetail = ObjectCopier.Clone<TrunkDev>(SelectedTrunk); // 初始化编辑界面参数
+
+            var view = new TrunkDetail();
+            view.DataContext = trunkData.trunkDetail;
+
+            //show the dialog
+            var result = await DialogHost.Show(view, "RootDialogTrunkDetail", ListViewClosingEventHandler);
 
             //check the result...
             Console.WriteLine("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
         }
 
 
+        public BoardDetailViewModel boardData;
+        public async void EditBoardDetailDialog()
+        {
+            boardData.boardDetail = ObjectCopier.Clone<Broadcast>(SelectedBroadcast); // 初始化编辑界面参数
 
+            var view = new BoardDetail();
+            view.DataContext = boardData.boardDetail;
+
+            //show the dialog
+            var result = await DialogHost.Show(view, "RootDialogBoardDetail", ListViewClosingEventHandler);
+
+            //check the result...
+            Console.WriteLine("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
+        }
 
 
 
@@ -230,6 +262,7 @@ namespace DispatchApp
                 return _TrunkListViewDialogCommand;
             }
         }
+
         /// <summary>
         /// 中继电话选择窗口
         /// </summary>
@@ -252,6 +285,7 @@ namespace DispatchApp
                 else
                 {
                     e.DevSelected = true;
+                    e.bindingnumber = temp.bindingnumber;
                 }
             }
             //成员排序
@@ -297,7 +331,7 @@ namespace DispatchApp
             }
         }
         /// <summary>
-        /// 中继电话选择窗口
+        /// 广播电话选择窗口
         /// </summary>
         /// <param name="o"></param>
         private async void ExecuteBroadcastViewDialog(object o)
@@ -306,6 +340,7 @@ namespace DispatchApp
             ListViewDialogViewModel data = new ListViewDialogViewModel();
             List<BroadcastMember> selectedbroadcastmemberlist = new List<BroadcastMember>(this.SelectedBroadcast.bmemberlist.ToList());
             List<ExtDevice> allphonelist = new List<ExtDevice>(this.AllPhoneList.ToList());
+           
 
             //选中已有成员
             foreach (ExtDevice e in allphonelist)
@@ -384,6 +419,22 @@ namespace DispatchApp
                 }
             }
         }
+        private TrunkDev _selectedtrunk;
+        public TrunkDev SelectedTrunk
+        {
+            get { return _selectedtrunk; }
+            set
+            {
+                if (_selectedtrunk != value)
+                {
+                    _selectedtrunk = value;
+                    OnPropertyChanged("SelectedTrunk");
+                }
+            }
+        }
+
+
+
         private string _username;
         /// <summary>
         /// 用户名
@@ -515,6 +566,26 @@ namespace DispatchApp
             set
             {
                 SetAndNotifyIfChanged("AllTrunkList", ref _alltrunklist, value);
+            }
+        }
+
+        private ObservableCollection<TrunkDev> _alltrunklistview;
+        public ObservableCollection<TrunkDev> AllTrunkListView
+        {
+            get { return _alltrunklistview; }
+            set
+            {
+                SetAndNotifyIfChanged("AllTrunkListView", ref _alltrunklistview, value);
+            }
+        }
+
+        private ObservableCollection<ExtDeviceNew> _alltrunklistNew;
+        public ObservableCollection<ExtDeviceNew> AllTrunkListNew
+        {
+            get { return _alltrunklistNew; }
+            set
+            {
+                SetAndNotifyIfChanged("AllTrunkListNew", ref _alltrunklistNew, value);
             }
         }
     }
