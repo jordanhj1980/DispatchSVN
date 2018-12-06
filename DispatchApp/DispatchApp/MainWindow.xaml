@@ -112,10 +112,17 @@
                             <TextBlock Block.TextAlignment="Center"  Width="100" Text="调度台" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="24" FontFamily="SimHei" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
+                    <Button x:Name="contact_button" Grid.Column="0" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
+                            Margin="0,0" Opacity="1" BorderBrush="{x:Null}" Click="man_contact_click">
+                        <StackPanel Height="100" Width="69">
+                            <Image Source="Resources/settings.png" Height="64" Width="64"  VerticalAlignment="Top"/>
+                            <TextBlock Block.TextAlignment="Center"  Width="100" Text="电话簿" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="24" FontFamily="SimHei" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
                     <Label Name="ShowKeyLabel" 
                         VerticalContentAlignment="Center" 
                         FontSize="46" 
-                        Height="98" Width="1104" 
+                        Height="98" Width="997" 
                         VerticalAlignment="Bottom"/>                        
                     <!--Foreground="{Binding Path=CurrentState, Converter={StaticResource comeCallDate}}"-->
                     <Image Name="image_photo"

@@ -301,4 +301,39 @@ namespace DispatchApp
         public string level { set; get; }
     }
     #endregion
+
+    #region 电话簿
+
+    public class PhoneItem
+    {
+        public string callno { get; set; }
+        public string name { get; set; }
+    }
+
+    public class Department : NotifyObject
+    {
+        private string _department;
+        public string department
+        {
+            get { return _department; }
+            set
+            {
+                if (_department != value)
+                {
+                    _department = value;
+                    OnPropertyChanged("department");
+                }
+            }
+        }
+
+        public List<PhoneItem> memberlist { get; set; }
+    }
+
+    public class PhoneBook
+    {
+        public string sequence { get; set; }
+        public List<Department> departmentlist { get; set; }
+    }
+
+    #endregion
 }

@@ -31,7 +31,7 @@
                 Height="900" HorizontalAlignment="Left" Name="tabControl_mgt" VerticalAlignment="Top" Margin="0,0,0,0" Width="1920">
                 <!--软交换设备展开-->
             <TabItem Header="tabItem1" Visibility="Collapsed"  Name="tabItem_switch">
-
+                
             </TabItem>
 
             <!--系统用户展开-->
@@ -123,8 +123,12 @@
                         </GroupBox>
                     </Border>
                 </Grid>
-            </TabItem>
+            </TabItem>    
+                
+            <!--电话簿展开-->
+            <TabItem Header="tabItem_contact" Visibility="Collapsed"  Name="tabItem_contact">
 
+            </TabItem>
 
             <!--调度台展开-->
             <TabItem Background="{x:Null}" Header="tabItem3" Visibility="Collapsed"  Name="tabItem_desk"

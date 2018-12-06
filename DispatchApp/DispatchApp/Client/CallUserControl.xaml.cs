@@ -186,14 +186,17 @@ namespace DispatchApp
             outLineCall = new OutLineCall();
             /* add by xiaozi 20181128 end  */
 
-
+            // 初始化界面应隐藏日志界面
+            LogCtrl.Visibility = Visibility.Hidden;
 
 
         }
 
         private void ClossCDR()
         {
-            tabCtrl_CDR.Visibility = System.Windows.Visibility.Hidden;
+            //tabCtrl_CDR.Visibility = System.Windows.Visibility.Hidden;
+            LogCtrl.Visibility = System.Windows.Visibility.Hidden;
+            tabCtrl_User.Visibility = Visibility.Visible;
         }
         /// <summary>
         /// 
@@ -660,12 +663,20 @@ namespace DispatchApp
             switch (type)
             {
                 case "GETCDR":
-                    List<DateCDR> itemList = JsonConvert.DeserializeObject<List<DateCDR>>(data);
+                    /*List<DateCDR> itemList = JsonConvert.DeserializeObject<List<DateCDR>>(data);
                     tabCtrl_User.Visibility = Visibility.Collapsed;
                     tabCtrl_CDR.Items.Clear();
                     logWindow.DetailMsg.ItemsSource = itemList;
                     tabCtrl_CDR.Items.Add(logWindow);
-                    tabCtrl_CDR.Visibility = Visibility.Visible;
+                    tabCtrl_CDR.Visibility = Visibility.Visible;*/
+                    break;
+                case "GetUserlog":
+                    List<UserLog> userlog = JsonConvert.DeserializeObject<List<UserLog>>(data);
+                    DataGridPageViewModel logmodel = new DataGridPageViewModel(userlog);
+                    datagridpage.DataContext = logmodel;
+                    this.datagridpage.msgevent += new DataGridPage.CWHandler(ClossCDR);
+
+
                     break;
                 default:
                     break;
@@ -950,8 +961,12 @@ namespace DispatchApp
         /// <param name="e"></param>
         private void Button_Log(object sender, RoutedEventArgs e)
         {
-            string strMsg = "CMD#GETCDR#ALL";
+            // 更改GETCDR到GetUserlog
+            string strMsg = "CMD#GetUserlog#ALL";
             mainWindow.ws.Send(strMsg);
+
+            tabCtrl_User.Visibility = Visibility.Collapsed;
+            LogCtrl.Visibility = Visibility.Visible;// 显示日志界面
         }
 
         /// <summary>

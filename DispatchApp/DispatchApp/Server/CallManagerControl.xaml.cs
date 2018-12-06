@@ -100,6 +100,8 @@ namespace DispatchApp
         SwitchManage swmanaagetab;
         /* 用户界面TabItem */
         UserManage usermanagetab;
+        /* 电话簿界面TabItem */
+        ContactManage contactmanaagetab;
 
         public CallManagerControl(MainWindow mmainWindow)
         {
@@ -116,6 +118,10 @@ namespace DispatchApp
             /* 赋值用户界面 */
             usermanagetab = new UserManage(mainWindow);
             this.tabItem_user.Content = usermanagetab;
+
+            /* 赋值电话簿界面 */
+            contactmanaagetab = new ContactManage(mainWindow);
+            this.tabItem_contact.Content = contactmanaagetab;
 
             /* 赋值调度台界面 */
             keyboardmanagetab = new KeyBoardManage(mainWindow);
@@ -206,6 +212,12 @@ namespace DispatchApp
                 case "EDITUSER":
                     usermanagetab.recv(state,data);
                     break;
+                case "GETPHONEBOOK":
+                case "ADDPHONEBOOK":
+                case "EDITPHONEBOOK":
+                case "DELPHONEBOOK":
+                    contactmanaagetab.recv(state, data);
+                    break;
                 case "GETALLREGISTERDEV":
                     ShowGroupMember(data); 
                     showGroupDate = data;
@@ -255,13 +267,20 @@ namespace DispatchApp
                     /* 发送调度台查询命令 */
                     queryDesk();
 
-                    break;
+                    break;                
                 case "desk":
                     //tabControl_mgt.SelectedIndex = 2;
                     tabControl_mgt.SelectedIndex = 4;
                     // 查询调度键盘 20181024 xiaozi
                     //keyboardmanagetab.DataContext = keyboardmanagedata;
                     InitialDeskes();
+                    break;
+                case "contact":
+                    tabControl_mgt.SelectedIndex = 2;
+
+                    /* 发送电话簿查询命令 */
+                    queryContact();
+
                     break;
                 default:
                     break;
@@ -321,7 +340,20 @@ namespace DispatchApp
             sendMsg(this, "net", sb.ToString());
         }
 
-        
+        public void queryContact()
+        {
+            /* 向服务器请求列表 */
+            string sequence = GlobalFunAndVar.sequenceGenerator();
+            StringBuilder sb = new StringBuilder(100);
+
+            sb.Append("MAN#GETPHONEBOOK#{\"sequence\":");
+            sb.Append(JsonConvert.SerializeObject(sequence));
+            sb.Append("}");
+
+            Debug.WriteLine("SEND: " + sb.ToString());
+            sendMsg(this, "net", sb.ToString());
+        }  
+
 
         // 查询调度键盘 未用
         public void queryDesk()

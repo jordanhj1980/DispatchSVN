@@ -103,6 +103,11 @@ namespace DispatchApp
             callManagerCtrl.man_header_click("desk");
         }
 
+        private void man_contact_click(object sender, RoutedEventArgs e)
+        {
+            callManagerCtrl.man_header_click("contact");
+        }
+
     }
 }
 
