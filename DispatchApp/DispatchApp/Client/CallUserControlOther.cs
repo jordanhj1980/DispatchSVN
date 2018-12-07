@@ -601,6 +601,18 @@ namespace DispatchApp
                         //relayCall.ImageSouresDoubleHandle += new RelayCall.ImageEventHandler(ReLaDoubleEvent);
                     }
                 }
+
+                /* 发送电话簿查询请求 */
+                string sequence = GlobalFunAndVar.sequenceGenerator();
+                StringBuilder sb = new StringBuilder(100);
+
+                sb.Append("CMD#GETPHONEBOOK#{\"sequence\":");
+                sb.Append(JsonConvert.SerializeObject(sequence));
+                sb.Append("}");
+
+                Debug.WriteLine("SEND: " + sb.ToString());
+                mainWindow.ws.Send(sb.ToString());
+
                 var result = await DialogHost.Show(view, "UserOutLineDialog", ListViewClosingEventHandler);
 
             }

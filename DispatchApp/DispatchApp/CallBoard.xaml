@@ -189,6 +189,29 @@
                     </ListBox>
                 </StackPanel>
             </TabItem>
+            <TabItem Name="Contact" Visibility="Visible" Margin="0" FontSize="18">
+                <TabItem.Header>
+                    电话簿
+                </TabItem.Header>
+                <StackPanel VerticalAlignment="Bottom">
+                    <DataGrid Name="gridMem" Background="Transparent" Grid.Row="0" FontSize="24" ItemsSource="{Binding gridMemList}" AutoGenerateColumns="False" 
+                  CanUserAddRows="True" Margin="0,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible">
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                <!--<Setter Property="Background" Value="#FFF0F0F0"></Setter>-->
+                                <Setter Property="Background" Value="Transparent"></Setter>
+                                <Setter Property="Height" Value="50" />
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="300" Header="电话号码" Binding="{Binding callno}" />
+                            <DataGridTextColumn Width="300" Header="标识" Binding="{Binding name}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </TabItem>
         </TabControl>
 
     </Grid>

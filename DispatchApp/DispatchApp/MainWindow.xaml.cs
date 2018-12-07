@@ -122,6 +122,7 @@ namespace DispatchApp
             sw_button.Visibility = Visibility.Hidden;
             user_button.Visibility = Visibility.Hidden;
             desk_button.Visibility = Visibility.Hidden;
+            contact_button.Visibility = Visibility.Hidden;
 
             // 创建websocket
             m_ServerIP = ConfigurationManager.AppSettings["serverip"];
@@ -453,6 +454,7 @@ namespace DispatchApp
             sw_button.Visibility = Visibility.Hidden;
             user_button.Visibility = Visibility.Hidden;
             desk_button.Visibility = Visibility.Hidden;
+            contact_button.Visibility = Visibility.Hidden;
 
             logwin.Show();
 
@@ -492,6 +494,7 @@ namespace DispatchApp
             sw_button.Visibility = Visibility.Visible;
             user_button.Visibility = Visibility.Visible;
             desk_button.Visibility = Visibility.Visible;
+            contact_button.Visibility = Visibility.Visible;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -49,6 +49,8 @@ namespace DispatchApp
             }
         }
 
+        private TreeViewItem selectedTreeItem    { get;set; }
+
         /// <summary>
         /// 通话记录全部信息
         /// </summary>
@@ -83,6 +85,21 @@ namespace DispatchApp
             }
         }
 
+        /* 电话簿 */
+        private ObservableCollection<Department> _contactlist;
+        public ObservableCollection<Department> ContactList
+        {
+            get { return _contactlist; }
+            set
+            {
+                if (_contactlist != value)
+                {
+                    _contactlist = value;
+                    OnPropertyChanged("ContactList");
+                }
+            }
+        }
+
 
         public OutLineViewModel(OutLine outline)
         {
@@ -90,6 +107,34 @@ namespace DispatchApp
             callLogList = new ObservableCollection<CallLog>();
             callLogSelect = new CallLog();
             this.outLine = outline;
+
+
+            /* 初始化电话簿 */
+            ContactList = new ObservableCollection<Department>();
+            Department dept = new Department();
+            dept.department = "group1";
+            PhoneItem item = new PhoneItem();
+            item.callno = "12";
+            item.name = "123";
+
+            List<PhoneItem> mlist = new List<PhoneItem>();
+            mlist.Add(item);
+
+            dept.memberlist = mlist;
+            ContactList.Add(dept);
+
+            // item 2
+            dept = new Department();
+            dept.department = "group2";
+            item = new PhoneItem();
+            item.callno = "21";
+            item.name = "222";
+
+            mlist = new List<PhoneItem>();
+            mlist.Add(item);
+            dept.memberlist = mlist;
+            ContactList.Add(dept);
+
         }
 
         /// <summary>

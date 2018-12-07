@@ -16,6 +16,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/DispatchApp;component/Client/CallBoardDictionary.xaml"/>
                 <ResourceDictionary Source="/DispatchApp;component/MaterialDictionary.xaml"/>
+                <ResourceDictionary Source="/DispatchApp;component/Client/TreeListControls/TreeListViewTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -261,6 +262,41 @@
                         </DataGrid.Columns>
                     </DataGrid>-->
                 </TabItem>
+                <TabItem Name="Contact" Visibility="Visible" Margin="0" FontSize="18">
+                    <!--<TabItem.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type local:Department}" ItemsSource="{Binding Path=memberlist}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Keyboard" Width="40" Height="40" Margin="0,0,10,0" VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding Path=department}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignDisplay1TextBlock}"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate DataType = "{x:Type local:PhoneItem}">
+                            <StackPanel Orientation="Vertical" >
+                                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">                                    
+                                    <TextBlock Text="{Binding Path=callno}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>                        
+                    </TabItem.Resources>-->
+                    <TabItem.Header>
+                        电话簿
+                    </TabItem.Header>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  VerticalAlignment="Top" MaxHeight="505">
+                        <ScrollViewer.Content>
+                            <StackPanel VerticalAlignment="Top">
+                                <local:TreeListView x:Name="treeList"
+                            Background="#FFE9E9E9" BorderBrush="#FF96DFFF" ItemsSource="{Binding ContactList}" 
+                                                    TreeViewItem.Selected="contact_Click_Selected"  PreviewMouseUp="PreviewMouseUp">
+                                    <local:TreeListView.ItemTemplate>
+                                        <HierarchicalDataTemplate ItemsSource="{Binding memberlist}" />
+                                    </local:TreeListView.ItemTemplate>
+                                </local:TreeListView>
+                            </StackPanel>
+                        </ScrollViewer.Content>
+                    </ScrollViewer>
+                </TabItem>
+
 
             </TabControl>
         </Grid>

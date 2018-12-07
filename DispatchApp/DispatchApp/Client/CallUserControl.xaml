@@ -136,14 +136,14 @@
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="夜服" VerticalAlignment="Bottom" Width="94" />
                 </StackPanel>
             </Button>-->
-                
+
             <!--<Button HorizontalAlignment="Center" Grid.Row="1" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Click="Button_Log" Background="{x:Null}">
-                    <StackPanel VerticalAlignment="Top">
-                        <Image Height="64" Source="../Resources/log.png" Width="64" />
-                        <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,0" Text="日志" VerticalAlignment="Bottom" Width="80" Foreground="#FFD8D7D7" />
-                    </StackPanel>
-                </Button>-->
-                <Button HorizontalAlignment="Center" Grid.Row="2" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Click="Button_Search" Background="{x:Null}" Opacity="0.4">
+                <StackPanel VerticalAlignment="Top">
+                    <Image Height="64" Source="../Resources/log.png" Width="64" />
+                    <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,0" Text="日志" VerticalAlignment="Bottom" Width="80" Foreground="#FFD8D7D7" />
+                </StackPanel>
+            </Button>-->
+            <Button HorizontalAlignment="Center" Grid.Row="2" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Click="Button_Search" Background="{x:Null}" Opacity="0.4">
                     <StackPanel VerticalAlignment="Top">
                         <Image Height="64" Source="../Resources/search.png" Width="64" />
                         <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,0" Text="查询" VerticalAlignment="Bottom" Width="80" Foreground="#FFD8D7D7" />

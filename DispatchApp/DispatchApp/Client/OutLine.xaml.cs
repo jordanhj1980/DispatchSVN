@@ -146,9 +146,24 @@ namespace DispatchApp
             outLineViewModel.outLineCall.outLineNum = outLineViewModel.callLogSelect.num;
         }
 
+        private void contact_Click_Selected(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem tvi = e.OriginalSource as TreeViewItem;         
+            contact  
+        }
 
+        private void previewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            TreeViewItem tvi = ;
+            if (tvi == null)
+            {
+                return;
+            }
 
-      
-
+            if (tvi.Header is Department)
+            {
+                tvi.IsExpanded = !tvi.IsExpanded;
+            }
+        }
     }
 }

@@ -172,6 +172,8 @@
       <DependentUpon>KeyCall.xaml</DependentUpon>
     </Compile>
     <Compile Include="Client\OutLineViewModel.cs" />
+    <Compile Include="Client\TreeListControls\LevelToIndentConverter.cs" />
+    <Compile Include="Client\TreeListControls\TreeListView.cs" />
     <Compile Include="Client\UserRadio.xaml.cs">
       <DependentUpon>UserRadio.xaml</DependentUpon>
     </Compile>
@@ -313,6 +315,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Client\TreeListControls\TreeListViewTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Client\UserRadio.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -384,11 +390,6 @@
     <Page Include="NewPanelDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Properties\DesignTimeResources.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
     </Page>
     <Page Include="Resources\Generic.xaml">
       <SubType>Designer</SubType>
@@ -546,6 +547,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\night_portrait.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\list_header_bk.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\optionWhite.png">

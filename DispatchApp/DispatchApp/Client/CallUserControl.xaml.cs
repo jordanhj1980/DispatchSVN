@@ -676,7 +676,27 @@ namespace DispatchApp
                     DataGridPageViewModel logmodel = new DataGridPageViewModel(userlog);
                     datagridpage.DataContext = logmodel;
                     this.datagridpage.msgevent += new DataGridPage.CWHandler(ClossCDR);
+                    break;
+                case "GETPHONEBOOK":                    
+                    PhoneBook pb = JsonConvert.DeserializeObject<PhoneBook>(data);
+                    if (pb != null)
+                    {
+                        mainWindow.outLine.outLineViewModel.ContactList.Clear();
+                        foreach (Department member in pb.departmentlist)
+                        {
+                            Department item = new Department();
+                            item.department = member.department;
+                            item.memberlist = new List<PhoneItem>();
+                            foreach (PhoneItem it in member.memberlist) {
+                                PhoneItem newItem = new PhoneItem();
+                                newItem.callno = it.callno;
+                                newItem.name = it.name;
+                                item.memberlist.Add(newItem);
+                            }
 
+                            mainWindow.outLine.outLineViewModel.ContactList.Add(item);
+                        }
+                    }
 
                     break;
                 default:
