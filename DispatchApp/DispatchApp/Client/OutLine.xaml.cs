@@ -148,13 +148,13 @@ namespace DispatchApp
 
         private void contact_Click_Selected(object sender, RoutedEventArgs e)
         {
-            TreeViewItem tvi = e.OriginalSource as TreeViewItem;         
-            contact  
+            TreeViewItem tvi = e.OriginalSource as TreeViewItem;
+            outLineViewModel.selectedTreeItem = tvi;
         }
 
-        private void previewMouseUp(object sender, MouseButtonEventArgs e)
+        private void preMouseUp(object sender, MouseButtonEventArgs e)
         {
-            TreeViewItem tvi = ;
+            TreeViewItem tvi = outLineViewModel.selectedTreeItem;
             if (tvi == null)
             {
                 return;

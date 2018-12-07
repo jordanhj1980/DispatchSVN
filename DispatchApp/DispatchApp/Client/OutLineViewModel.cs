@@ -49,7 +49,7 @@ namespace DispatchApp
             }
         }
 
-        private TreeViewItem selectedTreeItem    { get;set; }
+        public TreeViewItem selectedTreeItem    { get;set; }
 
         /// <summary>
         /// 通话记录全部信息

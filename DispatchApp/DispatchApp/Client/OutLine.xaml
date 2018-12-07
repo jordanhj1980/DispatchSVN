@@ -287,7 +287,7 @@
                             <StackPanel VerticalAlignment="Top">
                                 <local:TreeListView x:Name="treeList"
                             Background="#FFE9E9E9" BorderBrush="#FF96DFFF" ItemsSource="{Binding ContactList}" 
-                                                    TreeViewItem.Selected="contact_Click_Selected"  PreviewMouseUp="PreviewMouseUp">
+                                                    TreeViewItem.Selected="contact_Click_Selected"  PreviewMouseUp="preMouseUp">
                                     <local:TreeListView.ItemTemplate>
                                         <HierarchicalDataTemplate ItemsSource="{Binding memberlist}" />
                                     </local:TreeListView.ItemTemplate>
