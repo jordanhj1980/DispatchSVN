@@ -592,7 +592,7 @@ namespace DispatchApp
                     for (int Idx = 0; Idx < PageRelay.Count; Idx++) // 布置页面按钮
                     {
                         RelayNum relaynum = new RelayNum();
-                        //relaynum.relayNum = PageRelay[Idx].extid;
+                        relaynum.relayNum = PageRelay[Idx].trunkid;
                         relaynum.isSelected = false;
                         view.outLineViewModel.outLineCall.relayNumList.Add(relaynum);
 
