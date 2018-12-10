@@ -29,7 +29,7 @@ namespace DispatchApp
         /************************************************************************/
         /* 关闭窗口执行前，触发保存设置参数                                       */
         /************************************************************************/
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        public void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (MessageBox.Show("是否要关闭？", "确认", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
@@ -76,6 +76,12 @@ namespace DispatchApp
             {
                 e.Handled = true;
             }
+        }
+
+        private void btn_lock_Clicked(object sender, RoutedEventArgs e)
+        {
+            lockScreen.Show();
+            this.Hide();
         }
 
         private void btnMask_Click(object sender, RoutedEventArgs e)

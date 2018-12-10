@@ -180,9 +180,15 @@
     <Compile Include="Client\UserRelay.xaml.cs">
       <DependentUpon>UserRelay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Flipper\Flipper.cs" />
+    <Compile Include="Flipper\LessThanXToTrueConverter.cs" />
+    <Compile Include="LockScreen.xaml.cs">
+      <DependentUpon>LockScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MessageBoxShow.xaml.cs">
       <DependentUpon>MessageBoxShow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Flipper\Plane3D.cs" />
     <Compile Include="Server\BoardDetail.xaml.cs">
       <DependentUpon>BoardDetail.xaml</DependentUpon>
     </Compile>
@@ -324,6 +330,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Client\UserRelay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Flipper\FlipperStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LockScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

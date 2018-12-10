@@ -26,6 +26,7 @@ using WebSocket4Net;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.ComponentModel;
+using System.Security.Cryptography;
 
 
 public struct GroupData
@@ -61,6 +62,23 @@ namespace DispatchApp
         private int m_HeartBeat;
 
         private LoadingWindow loadingWin;
+        private LockScreen lockScreen;  // 锁屏窗口
+
+        private string _password;
+        public string password
+        {
+            get { return _password; }
+            set {
+                var buffer = Encoding.UTF8.GetBytes(value);
+                var data = SHA1.Create().ComputeHash(buffer);
+                var sb = new StringBuilder();
+                foreach (var t in data)
+                {
+                    sb.Append(t.ToString("X2"));
+                }
+                _password = sb.ToString();
+            }  // 记录用户密码
+        }
 
         /* 调度usercontrol */
         //UserControl1 callUserCtrl;//weituo 20181013
@@ -160,6 +178,14 @@ namespace DispatchApp
 
             // 初始化loading界面
             loadingWin = new LoadingWindow();
+            lockScreen = new LockScreen(this);
+            lockScreen.msgevent += new LockScreen.LockHandler(lockWinClose);
+        }
+
+        public void lockWinClose(object sender, string msg)
+        {
+            this.Show();
+            lockScreen.TxPassword.Clear();
         }
 
         /// <summary>
@@ -563,7 +589,7 @@ namespace DispatchApp
         private void MessageBoxDialogClosing(object sender, MaterialDesignThemes.Wpf.DialogClosingEventArgs eventArgs)
         {
 
-        }
+        }      
 
 
 

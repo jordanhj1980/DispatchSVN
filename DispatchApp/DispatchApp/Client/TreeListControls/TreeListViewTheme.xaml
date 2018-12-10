@@ -76,11 +76,11 @@
         <GridViewColumn Header=" "
                         CellTemplate="{StaticResource CellTemplate_Name}" Width="20" />
         <GridViewColumn Header="组名" 
-                        DisplayMemberBinding="{Binding department}" Width="70" />
+                        DisplayMemberBinding="{Binding department}" Width="100" />
         <GridViewColumn Header="电话号码" 
-                        DisplayMemberBinding="{Binding callno}" Width="70" />
+                        DisplayMemberBinding="{Binding callno}" Width="100" />
         <GridViewColumn Header="标识" 
-                        DisplayMemberBinding="{Binding name}" Width="70" />
+                        DisplayMemberBinding="{Binding name}" Width="100" />
     </GridViewColumnCollection>
     
     <!--交替行样式-->

@@ -122,8 +122,14 @@
                     <Label Name="ShowKeyLabel" 
                         VerticalContentAlignment="Center" 
                         FontSize="46" 
-                        Height="98" Width="997" 
-                        VerticalAlignment="Bottom"/>                        
+                        Height="98" Width="800" 
+                        VerticalAlignment="Bottom"/>
+                    <Button Height="100" HorizontalAlignment="Center" Click="btn_lock_Clicked" VerticalAlignment="Top" Width="107" Margin="8,0" BorderBrush="{x:Null}">
+                        <StackPanel Height="100" Width="80">
+                            <Image Source="Resources/lock_close.png" Height="64" Width="64"  VerticalAlignment="Top"/>
+                            <TextBlock Block.TextAlignment="Center"  Width="80" Text="锁定" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="24" FontFamily="SimHei" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
                     <!--Foreground="{Binding Path=CurrentState, Converter={StaticResource comeCallDate}}"-->
                     <Image Name="image_photo"
                         Height="84" Width="84"

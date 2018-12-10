@@ -55,6 +55,7 @@ namespace DispatchApp
             {
                 case "Success#Control":
                     App.isLogin = true;
+                    m_mainWindow.password = this.TxPassword.Password;
                     this.Hide();
                     m_mainWindow.usercontrol_click(this, null);
                     m_mainWindow.Show();
@@ -62,6 +63,7 @@ namespace DispatchApp
                     break;
                 case "Success#Admin":
                     App.isLogin = true;
+                    m_mainWindow.password = this.TxPassword.Password;
                     this.Hide();
                     m_mainWindow.managercontrol_click(this, null);
                     m_mainWindow.Show();
