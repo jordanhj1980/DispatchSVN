@@ -477,6 +477,26 @@ namespace DispatchApp
                         mainWindow.ShowKeyLabel.Content = "来电显示：" + tempName.toid + "呼叫" + tempName.fromid;
                         mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
                     }
+                    else if (("ANSWERED" == state) || ("ANSWER" == state))
+                    {
+                        mainWindow.ShowKeyLabel.Content = "键权电话呼叫" + tempName.fromid;
+                        mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                    }
+                    else if ("Bargein" == state)
+                    {
+                        mainWindow.ShowKeyLabel.Content = "键权电话强插" + tempName.fromid;
+                        mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                    }
+                    else if ("Clear" == state)
+                    {
+                        mainWindow.ShowKeyLabel.Content = "键权电话强拆" + tempName.fromid;
+                        mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                    }
+                    else if ("Monitor" == state)
+                    {
+                        mainWindow.ShowKeyLabel.Content = "键权电话监听" + tempName.fromid;
+                        mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                    }
                     else
                     {
                         mainWindow.ShowKeyLabel.Content = "";
@@ -756,6 +776,8 @@ namespace DispatchApp
         /// <param name="e"></param>
         private async void Button_Call(object sender, RoutedEventArgs e)
         {
+            operaState = e_OperaState.CALL;
+            FunKeysBorderBrush("btn_call");
             if ("0" == serverCall)
             {
                 var view = new MessageBoxShow();
@@ -764,25 +786,24 @@ namespace DispatchApp
 
                 Console.WriteLine("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
                 //MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
-
             }
-            else
-            {
-                if ("0" == clientCall)
-                {
-                    var view = new MessageBoxShow();
-                    view.MsgBoxShowText.Text = "当前终端电话空\r\n请点击终端电话！";
-                    var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
-                    Console.WriteLine("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
-                    //MessageBox.Show("当前终端电话空\r\n请点击终端电话！", "呼叫信息");
-                }
-                else
-                {
-                    call tellCall = new call() { fromid = serverCall, toid = clientCall };
-                    string strMsg = "CMD#Call#" + JsonConvert.SerializeObject(tellCall);
-                    mainWindow.ws.Send(strMsg);
-                }
-            }
+            //else
+            //{
+            //    if ("0" == clientCall)
+            //    {
+            //        var view = new MessageBoxShow();
+            //        view.MsgBoxShowText.Text = "当前终端电话空\r\n请点击终端电话！";
+            //        var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+            //        Console.WriteLine("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
+            //        //MessageBox.Show("当前终端电话空\r\n请点击终端电话！", "呼叫信息");
+            //    }
+            //    else
+            //    {
+            //        call tellCall = new call() { fromid = serverCall, toid = clientCall };
+            //        string strMsg = "CMD#Call#" + JsonConvert.SerializeObject(tellCall);
+            //        mainWindow.ws.Send(strMsg);
+            //    }
+            //}
         }
         /// <summary>
         /// add by twinkle 20181106
@@ -791,6 +812,8 @@ namespace DispatchApp
         /// <param name="e"></param>
         private async void Button_Transfer(object sender, RoutedEventArgs e)
         {
+            operaState = e_OperaState.TRANS;
+            FunKeysBorderBrush("btn_trans");
             string extid = m_keyphone[m_keyIndex].extid;
             if ("0" == extid)
             {
@@ -799,26 +822,26 @@ namespace DispatchApp
                 var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
                 //MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
             }
-            else if ("0" == clientCall)
-            {
-                var view = new MessageBoxShow();
-                view.MsgBoxShowText.Text = "当前终端电话空\r\n请点击终端电话！";
-                var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
-                //MessageBox.Show("当前终端电话空\r\n请点击终端电话！", "呼叫信息");
-            }
-            else
-            {
-                /* 如果当前选择的键权电话正处于通话过程中，hold */
-                if (m_keyphone[m_keyIndex].Status == KeyStatus.ESTABLISHED ||
-                    m_keyphone[m_keyIndex].Status == KeyStatus.CALLING)
-                {
-                    Operation_hold(extid, this);
-                }
+            //else if ("0" == clientCall)
+            //{
+            //    var view = new MessageBoxShow();
+            //    view.MsgBoxShowText.Text = "当前终端电话空\r\n请点击终端电话！";
+            //    var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+            //    //MessageBox.Show("当前终端电话空\r\n请点击终端电话！", "呼叫信息");
+            //}
+            //else
+            //{
+            //    /* 如果当前选择的键权电话正处于通话过程中，hold */
+            //    if (m_keyphone[m_keyIndex].Status == KeyStatus.ESTABLISHED ||
+            //        m_keyphone[m_keyIndex].Status == KeyStatus.CALLING)
+            //    {
+            //        Operation_hold(extid, this);
+            //    }
 
-                call tellCall = new call() { fromid = serverCall, toid = clientCall };
-                string strMsg = "CMD#Call#" + JsonConvert.SerializeObject(tellCall);
-                mainWindow.ws.Send(strMsg);
-            }
+            //    call tellCall = new call() { fromid = serverCall, toid = clientCall };
+            //    string strMsg = "CMD#Call#" + JsonConvert.SerializeObject(tellCall);
+            //    mainWindow.ws.Send(strMsg);
+            //}
         }
 
 
@@ -829,33 +852,48 @@ namespace DispatchApp
 
         private async void Button_Insert(object sender, RoutedEventArgs e)
         {
-            if ("0" == serverCall)
+            if (operaState == e_OperaState.INTER)
             {
-                var view = new MessageBoxShow();
-                view.MsgBoxShowText.Text = "错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！";
-                var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
-                //MessageBox.Show("错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "强插信息");
+                string strMsg = "CMD#Clear#" + serverCall;
+                mainWindow.ws.Send(strMsg);
+                operaState = e_OperaState.NULL;
+                FunKeysBorderBrush("");
             }
             else
             {
-                if ("0" == clientCall)
+                operaState = e_OperaState.INTER;
+                FunKeysBorderBrush("btn_insert");
+                if ("0" == serverCall)
                 {
                     var view = new MessageBoxShow();
-                    view.MsgBoxShowText.Text = "错误操作\r\n当前终端电话空\r\n请在通话过程中强插！";
+                    view.MsgBoxShowText.Text = "错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！";
                     var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
-                    //MessageBox.Show("错误操作\r\n当前终端电话空\r\n请在通话过程中强插！", "强插信息");
-                }
-                else
-                {
-                    call insertCall = new call() { fromid = serverCall, toid = clientCall };
-                    string strMsg = "CMD#Bargein#" + JsonConvert.SerializeObject(insertCall);
-                    mainWindow.ws.Send(strMsg);
+                    //MessageBox.Show("错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "强插信息");
                 }
             }
+            
+            //else
+            //{
+            //    if ("0" == clientCall)
+            //    {
+            //        var view = new MessageBoxShow();
+            //        view.MsgBoxShowText.Text = "错误操作\r\n当前终端电话空\r\n请在通话过程中强插！";
+            //        var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+            //        //MessageBox.Show("错误操作\r\n当前终端电话空\r\n请在通话过程中强插！", "强插信息");
+            //    }
+            //    else
+            //    {
+            //        call insertCall = new call() { fromid = serverCall, toid = clientCall };
+            //        string strMsg = "CMD#Bargein#" + JsonConvert.SerializeObject(insertCall);
+            //        mainWindow.ws.Send(strMsg);
+            //    }
+            //}
         }
 
         private async void Button_Split(object sender, RoutedEventArgs e)
         {
+            operaState = e_OperaState.SPLIT;
+            FunKeysBorderBrush("btn_split");
             if ("0" == serverCall)
             {
                 var view = new MessageBoxShow();
@@ -863,21 +901,21 @@ namespace DispatchApp
                 var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
                 //MessageBox.Show("错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "强拆信息");
             }
-            else
-            {
-                if ("0" == clientCall)
-                {
-                    var view = new MessageBoxShow();
-                    view.MsgBoxShowText.Text = "错误操作\r\n当前终端电话空\r\n请在通话过程中强拆！";
-                    var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
-                    //MessageBox.Show("错误操作\r\n当前终端电话空\r\n请在通话过程中强拆！", "强拆信息");
-                }
-                else
-                {
-                    string strMsg = "CMD#Clear#" + clientCall;
-                    mainWindow.ws.Send(strMsg);
-                }
-            }
+            //else
+            //{
+            //    if ("0" == clientCall)
+            //    {
+            //        var view = new MessageBoxShow();
+            //        view.MsgBoxShowText.Text = "错误操作\r\n当前终端电话空\r\n请在通话过程中强拆！";
+            //        var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+            //        //MessageBox.Show("错误操作\r\n当前终端电话空\r\n请在通话过程中强拆！", "强拆信息");
+            //    }
+            //    else
+            //    {
+            //        string strMsg = "CMD#Clear#" + clientCall;
+            //        mainWindow.ws.Send(strMsg);
+            //    }
+            //}
         }
 
         private void Button_Hangoff(object sender, RoutedEventArgs e)
@@ -887,29 +925,42 @@ namespace DispatchApp
 
         private async void Button_Monitor(object sender, RoutedEventArgs e)
         {
-            if ("0" == serverCall)
+            if (operaState == e_OperaState.LISTEN)
             {
-                var view = new MessageBoxShow();
-                view.MsgBoxShowText.Text = "错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！";
-                var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
-                //MessageBox.Show("错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "监听信息");
+                string strMsg = "CMD#Clear#" + serverCall;
+                mainWindow.ws.Send(strMsg);
+                operaState = e_OperaState.NULL;
+                FunKeysBorderBrush("");
             }
             else
             {
-                if ("0" == clientCall)
+                operaState = e_OperaState.LISTEN;
+                FunKeysBorderBrush("btn_monitor");
+                if ("0" == serverCall)
                 {
                     var view = new MessageBoxShow();
-                    view.MsgBoxShowText.Text = "错误操作\r\n当前终端电话空\r\n请在通话过程中监听！";
+                    view.MsgBoxShowText.Text = "错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！";
                     var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
-                    //MessageBox.Show("错误操作\r\n当前终端电话空\r\n请在通话过程中监听！", "监听信息");
-                }
-                else
-                {
-                    call monitorCall = new call() { fromid = serverCall, toid = clientCall };
-                    string strMsg = "CMD#Monitor#" + JsonConvert.SerializeObject(monitorCall);
-                    mainWindow.ws.Send(strMsg);        
+                    //MessageBox.Show("错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "监听信息");
                 }
             }
+            
+            //else
+            //{
+            //    if ("0" == clientCall)
+            //    {
+            //        var view = new MessageBoxShow();
+            //        view.MsgBoxShowText.Text = "错误操作\r\n当前终端电话空\r\n请在通话过程中监听！";
+            //        var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+            //        //MessageBox.Show("错误操作\r\n当前终端电话空\r\n请在通话过程中监听！", "监听信息");
+            //    }
+            //    else
+            //    {
+            //        call monitorCall = new call() { fromid = serverCall, toid = clientCall };
+            //        string strMsg = "CMD#Monitor#" + JsonConvert.SerializeObject(monitorCall);
+            //        mainWindow.ws.Send(strMsg);        
+            //    }
+            //}
         }
 
         private void Button_Urgentconf(object sender, RoutedEventArgs e)
@@ -1004,6 +1055,55 @@ namespace DispatchApp
                 }
             }
         }
+
+        /// <summary>
+        /// 功能键高亮功能
+        /// </summary>
+        /// <param name="name"></param>
+        private void FunKeysBorderBrush(string name)
+        {            
+            //if (name == "btn_call")
+            //    btn_call.BorderBrush = Brushes.Yellow;
+            //else
+            //    btn_call.BorderBrush = Brushes.Gray;
+            if (name == "btn_trans")
+                btn_trans.BorderBrush = Brushes.Yellow;
+            else
+                btn_trans.BorderBrush = Brushes.Gray;  
+            if (name == "btn_insert")
+                btn_insert.BorderBrush = Brushes.Yellow;
+            else
+                btn_insert.BorderBrush = Brushes.Gray;
+            if (name == "btn_split")
+                btn_split.BorderBrush = Brushes.Yellow;
+            else
+                btn_split.BorderBrush = Brushes.Gray;
+            if (name == "btn_monitor")
+                btn_monitor.BorderBrush = Brushes.Yellow;
+            else
+                btn_monitor.BorderBrush = Brushes.Gray;
+            if (name == "btn_outline")
+                btn_outline.BorderBrush = Brushes.Yellow;
+            else
+                btn_outline.BorderBrush = Brushes.Gray;
+            if (name == "btn_relay")
+                btn_relay.BorderBrush = Brushes.Yellow;
+            else
+                btn_relay.BorderBrush = Brushes.Gray;
+            if (name == "btn_radio")
+                btn_radio.BorderBrush = Brushes.Yellow;
+            else
+                btn_radio.BorderBrush = Brushes.Gray;
+            if (name == "btn_night")
+                btn_night.BorderBrush = Brushes.Yellow;
+            else
+                btn_night.BorderBrush = Brushes.Gray;
+            if (name == "btn_log")
+                btn_log.BorderBrush = Brushes.Yellow;
+            else
+                btn_log.BorderBrush = Brushes.Gray;
+        }
+
         //=========================================================================
 
 
@@ -1016,6 +1116,7 @@ namespace DispatchApp
         /// <param name="e"></param>
         private void Button_Log(object sender, RoutedEventArgs e)
         {
+            FunKeysBorderBrush("btn_log");
             // 更改GETCDR到GetUserlog
             string strMsg = "CMD#GetUserlog#ALL";
             mainWindow.ws.Send(strMsg);
@@ -1063,6 +1164,7 @@ namespace DispatchApp
         //public int radioState = 0; 
         private void Radio_Click(object sender, RoutedEventArgs e)
         {
+            FunKeysBorderBrush("btn_radio");
             tabCtrl_User.SelectedIndex = PageRadioIndex;        // 直呼区跳转广播界面
         }
 
@@ -1073,6 +1175,7 @@ namespace DispatchApp
         /// <param name="e"></param>
         private void Relay_Click(object sender, RoutedEventArgs e)
         {
+            FunKeysBorderBrush("btn_relay");
             tabCtrl_User.SelectedIndex = PageRelayIndex;        // 直呼区跳转中继直呼界面
         }
 
@@ -1135,7 +1238,6 @@ namespace DispatchApp
             //}
             //callBoard.ShowDialog();
         }
-
 
 
 

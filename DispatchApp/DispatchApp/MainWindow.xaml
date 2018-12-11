@@ -71,7 +71,7 @@
                         <MenuItem Header="高级"></MenuItem>
                         <MenuItem Header="帮助"></MenuItem>
                     </Menu>
-                    
+
                 </WrapPanel>
             </Grid>
 
@@ -91,32 +91,32 @@
                         FontSize="46"
                         HorizontalContentAlignment="Center"  VerticalContentAlignment="Center"                          
                         HorizontalAlignment="Left" Width="285" />
-                    <Button x:Name="sw_button" Grid.Column="0" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
+                    <Button x:Name="sw_button" Grid.Column="0" Height="92" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
                             Margin="0,0" Opacity="1" BorderBrush="{x:Null}" Click="man_sw_click">
-                        <StackPanel Height="100" Width="69">
-                            <Image Source="Resources/settings.png" Height="64" Width="64"  VerticalAlignment="Top"/>
-                            <TextBlock Block.TextAlignment="Center"  Width="100" Text="软交换" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="24" FontFamily="SimHei" VerticalAlignment="Center"/>
+                        <StackPanel Height="90" Width="70">
+                            <Image Source="Resources/settings.png" Height="58" Width="58"  VerticalAlignment="Top"/>
+                            <TextBlock Block.TextAlignment="Center"  Width="100" Text="软交换" HorizontalAlignment="Center" Margin="-15,0,-15.667,0" FontSize="22" FontFamily="SimHei" VerticalAlignment="Center" Height="23"/>
                         </StackPanel>
                     </Button>
-                    <Button x:Name="user_button" Grid.Column="0" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
+                    <Button x:Name="user_button" Grid.Column="0" Height="92" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
                             Margin="0,0" Opacity="1" BorderBrush="{x:Null}" Click="man_user_click">
                         <StackPanel Height="100" Width="69">
-                            <Image Source="Resources/settings.png" Height="64" Width="64"  VerticalAlignment="Top"/>
-                            <TextBlock Block.TextAlignment="Center"  Width="100" Text="用户" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="24" FontFamily="SimHei" VerticalAlignment="Center"/>
+                            <Image Source="Resources/settings.png" Height="58" Width="58"  VerticalAlignment="Top"/>
+                            <TextBlock Block.TextAlignment="Center"  Width="100" Text="用户" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="22" FontFamily="SimHei" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-                    <Button x:Name="desk_button" Grid.Column="0" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
+                    <Button x:Name="desk_button" Grid.Column="0" Height="92" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
                             Margin="0,0" Opacity="1" BorderBrush="{x:Null}" Click="man_desk_click">
-                        <StackPanel Height="100" Width="69">
-                            <Image Source="Resources/settings.png" Height="64" Width="64"  VerticalAlignment="Top"/>
-                            <TextBlock Block.TextAlignment="Center"  Width="100" Text="调度台" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="24" FontFamily="SimHei" VerticalAlignment="Center"/>
+                        <StackPanel Height="92" Width="69">
+                            <Image Source="Resources/settings.png" Height="58" Width="58"  VerticalAlignment="Top"/>
+                            <TextBlock Block.TextAlignment="Center"  Width="100" Text="调度台" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="22" FontFamily="SimHei" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-                    <Button x:Name="contact_button" Grid.Column="0" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
+                    <Button x:Name="contact_button" Grid.Column="0" Height="92" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
                             Margin="0,0" Opacity="1" BorderBrush="{x:Null}" Click="man_contact_click">
-                        <StackPanel Height="100" Width="69">
-                            <Image Source="Resources/settings.png" Height="64" Width="64"  VerticalAlignment="Top"/>
-                            <TextBlock Block.TextAlignment="Center"  Width="100" Text="电话簿" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="24" FontFamily="SimHei" VerticalAlignment="Center"/>
+                        <StackPanel Height="92" Width="69">
+                            <Image Source="Resources/settings.png" Height="58" Width="58"  VerticalAlignment="Top"/>
+                            <TextBlock Block.TextAlignment="Center"  Width="100" Text="电话簿" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="22" FontFamily="SimHei" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <Label Name="ShowKeyLabel" 
@@ -145,12 +145,12 @@
                         BorderBrush="{x:Null}" Background="{x:Null}" />
                 </StackPanel>
             </Label>
-            
+
             <!--底部-->
             <StackPanel Grid.Row="3">
                 <Label Content="服务器IP:" Foreground="#FFD8D7D7" FontSize="22" HorizontalAlignment="Left" Width="277"/>
             </StackPanel>
-            
+
             <!--界面内容容器-->
             <ContentControl Name="CenterPanel2" Grid.Row="2" />
 

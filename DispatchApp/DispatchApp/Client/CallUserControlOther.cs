@@ -37,6 +37,16 @@ namespace DispatchApp
         RELAY,          // 中继
     }
 
+    public enum e_OperaState
+    {
+        CALL,            // 呼叫
+        TRANS,           // 转接
+        LISTEN,          // 监听
+        INTER,           // 强插
+        SPLIT,           // 强拆
+        NULL,            // 空
+    }
+
     public class c_CallTypeInfo
     {
         public e_CallType status { get; set; }
@@ -52,7 +62,7 @@ namespace DispatchApp
 
     public partial class CallUserControl : UserControl
     {
-
+        public e_OperaState operaState = e_OperaState.NULL; // 操作状态
         /* 电话List分类 start  */
         public List<s_ListUser> PageUser = new List<s_ListUser>();                  // 用户电话
         public List<GroupData> PageKey = new List<GroupData>();                     // 键权电话
@@ -162,7 +172,6 @@ namespace DispatchApp
                 /* 组员被点击后的操作 */
                 userRadio.ImageSouresHandle += new UserRadio.ImageEventHandler(RadioImageEvent);
                 userRadio.ImageSouresDoubleHandle += new UserRadio.ImageEventHandler(RadioImageDoubleEvent);
-            
             }
 
             /* 将造好的新选项卡扔进TabControl1里 */
@@ -239,7 +248,7 @@ namespace DispatchApp
                 MyWrapPanel2.Items.Add(userRelay);
                 /* 组员被点击后的操作 */
                 userRelay.ImageSouresHandle += new UserRelay.ImageEventHandler(RelayImageEvent);
-                userRelay.ImageSouresDoubleHandle += new UserRelay.ImageEventHandler(RelayImageDoubleEvent);
+                //userRelay.ImageSouresDoubleHandle += new UserRelay.ImageEventHandler(RelayImageDoubleEvent);
                 /* 获取组员初始状态 */
                 //string strMsg = "CMD#GETSTATE#" + userRelay.trunkid.Text;
                 string strMsg = "CMD#GETSTATE#" + userRelay.Soures.trunkid;
@@ -312,10 +321,8 @@ namespace DispatchApp
         private void SetUserCall()
         {
             /* 创建容器 */
-            TabItem tab = new TabItem();            // 造一个新选项卡
-            int idex = PageUser.Count - 1;         
-            tab.Header = PageUser[idex].Header;     // 当前组组名
-          
+            int idex = PageUser.Count - 1;
+            TabItem tab = new TabItem(){Header = PageUser[idex].Header, FontSize = 24, Height = 40, Width = 100};            // 造一个新选项卡         
             ListBox MyWrapPanel2 = new ListBox();   // 选项卡中的容器，用于存放每一个元素
             MyWrapPanel2.Style = FindResource("WrapListBoxStyle") as Style;
 
@@ -349,17 +356,16 @@ namespace DispatchApp
         /// 点击事件进行传用户号码
         /// 对控件高亮，其余变暗
         /// </summary>
-        private void ImageEvent(string word)
+        private async void ImageEvent(string word)
         {
             clientCall = word;
             Debug.WriteLine("clientCall" + clientCall);
-
+            call tellCall = new call();
+            string strMsg;
+            // 高亮
             List<UserCall> firstPageUserCall = FindChirldHelper.FindVisualChild<UserCall>(this);
-
-            //string upName = "name" + word;
             foreach (var item in firstPageUserCall)
             {
-                //UserCall btn = new UserCall();
                 if (word == item.phoneNum)
                 {
                     item.ButtonBack.BorderBrush = Brushes.Yellow;
@@ -369,6 +375,56 @@ namespace DispatchApp
                     item.ButtonBack.BorderBrush = Brushes.Gray;
                 }
             }
+
+            // 按键触发事件
+            switch(operaState)
+            {
+                case e_OperaState.CALL:   
+                case e_OperaState.NULL:
+                    tellCall = new call() { fromid = serverCall, toid = clientCall };
+                    strMsg = "CMD#Call#" + JsonConvert.SerializeObject(tellCall);
+                    mainWindow.ws.Send(strMsg);
+                    operaState = e_OperaState.NULL;
+                    FunKeysBorderBrush("");
+                    break;
+                case e_OperaState.INTER:
+                    tellCall = new call() { fromid = serverCall, toid = clientCall };
+                    strMsg = "CMD#Bargein#" + JsonConvert.SerializeObject(tellCall);
+                    mainWindow.ws.Send(strMsg);
+                    break;
+                case e_OperaState.LISTEN:
+                    tellCall = new call() { fromid = serverCall, toid = clientCall };
+                    strMsg = "CMD#Monitor#" + JsonConvert.SerializeObject(tellCall);
+                    mainWindow.ws.Send(strMsg);
+                    break;
+                case e_OperaState.SPLIT:
+                    strMsg = "CMD#Clear#" + clientCall;
+                    mainWindow.ws.Send(strMsg);
+                    operaState = e_OperaState.NULL;
+                    FunKeysBorderBrush("");
+                    break;
+                case e_OperaState.TRANS:
+                    /* 如果当前选择的键权电话正处于通话过程中，hold */
+                    if (m_keyphone[m_keyIndex].Status == KeyStatus.ESTABLISHED ||
+                        m_keyphone[m_keyIndex].Status == KeyStatus.CALLING)
+                    {
+                        Operation_hold(m_keyphone[m_keyIndex].extid, this);
+                    }
+                    tellCall = new call() { fromid = serverCall, toid = clientCall };
+                    strMsg = "CMD#Call#" + JsonConvert.SerializeObject(tellCall);
+                    mainWindow.ws.Send(strMsg);
+                    operaState = e_OperaState.NULL;
+                    FunKeysBorderBrush("");
+                    break;
+                default:
+                    var view = new MessageBoxShow();
+                    view.MsgBoxShowText.Text = "错误操作,请选择功能项！";
+                    var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+                    operaState = e_OperaState.NULL;
+                    FunKeysBorderBrush("");
+                    break;
+            }
+            
         }
 
         /// <summary>
@@ -499,6 +555,7 @@ namespace DispatchApp
         public NightServerCloseBtn nightServerCloseBtn = new NightServerCloseBtn();
         private async void NightServerCommandViewDialog(object o)
         {
+            FunKeysBorderBrush("btn_night");
             call tellCall = new call() { fromid = serverCall, toid = clientCall };
             string strState = "";
 
@@ -568,6 +625,7 @@ namespace DispatchApp
 
         private async void OutLineComandViewDialog(object o)
         {
+            FunKeysBorderBrush("btn_outline");
             //var view = new OutLine(mainWindow);
             var view = mainWindow.outLine;
             view.outLineViewModel.outLineCall.serverNum = serverCall;
