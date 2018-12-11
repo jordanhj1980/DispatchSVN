@@ -19,47 +19,54 @@
     <Viewbox>
         <Grid Height="1080" Width="1920">
 
-            <materialDesign:Card Grid.Row="0" Margin="0,200" Width="500" Height="680" materialDesign:ShadowAssist.ShadowDepth="Depth5">
-                <local:Flipper x:Name="flipc" Height="480" HorizontalAlignment="Center" VerticalAlignment="Center" Width="410" Margin="46,100,44,100">
-                    <local:Flipper.FrontContent>
-                        <Grid Height="360" Width="200">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="260" />
-                                <RowDefinition Height="60" />
-                                <RowDefinition Height="20*" />
-                            </Grid.RowDefinitions>
+            <materialDesign:Card Margin="0,200" Width="500" Height="680" materialDesign:ShadowAssist.ShadowDepth="Depth5">
+                <StackPanel Orientation="Vertical">
+                    <Button Height="90" Width="90" Background="Transparent" BorderThickness="0"  HorizontalAlignment="Right" Click="exitProgram" >
+                        <!--<Image Source="Resources/close_white.png"/>-->
+                        <materialDesign:PackIcon Kind="Close" Height="54" Width="54" RenderTransformOrigin="0.536,0.56"/>
+                    </Button>
+                    <local:Flipper x:Name="flipc" Height="480" HorizontalAlignment="Center" VerticalAlignment="Center" Width="410" Margin="46,20,44,100">
+                        <local:Flipper.FrontContent>
+                            <Grid Height="360" Width="200">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="260" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="20*" />
+                                </Grid.RowDefinitions>
 
-                            <StackPanel>
-                                <Button BorderThickness="0" Height="260" Background="Transparent" Command="{x:Static local:Flipper.FlipCommand}" Margin="0 4 0 20">
-                                    <StackPanel>
-                                        <Image Source="Resources/lock_close.png"/>
-                                        <TextBlock Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="24" Text="解锁"/>
-                                    </StackPanel>
-                                </Button>
-                            </StackPanel>
-                            <TextBlock Grid.Row="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Text="正在锁定中"/>
-                        </Grid>
-                    </local:Flipper.FrontContent>
-                    <local:Flipper.BackContent>
-                        <Grid Height="380" Width="260">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50" />
-                                <RowDefinition Height="50" />
-                                <RowDefinition Height="156*" />
-                            </Grid.RowDefinitions>
-                            <TextBlock FontSize="24" Text="解锁密码：" Foreground="White"/>
-                            <PasswordBox Grid.Row="1" Name="TxPassword" Foreground="WhiteSmoke" FontFamily="Microsoft YaHei"
+                                <StackPanel>
+                                    <Button BorderThickness="0" Height="260" Background="Transparent" Command="{x:Static local:Flipper.FlipCommand}" Margin="0 4 0 20">
+                                        <StackPanel>
+                                            <Image Source="Resources/lock_close.png"/>
+                                            <TextBlock Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Microsoft YaHei" FontSize="24" Text="解锁"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                                <TextBlock Grid.Row="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Microsoft YaHei" FontSize="24" Text="正在锁定中"/>
+                            </Grid>
+                        </local:Flipper.FrontContent>
+                        <local:Flipper.BackContent>
+                            <Grid Height="380" Width="260">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="76*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock FontSize="24" Text="解锁密码：" Foreground="White"/>
+                                <PasswordBox Grid.Row="1" Name="TxPassword" Foreground="WhiteSmoke" FontFamily="Microsoft YaHei"
                     VerticalAlignment="Center" Margin="0,0,0,2" FontSize="20"/>
-
-                            <StackPanel Grid.Row="2" Orientation="Horizontal">
-                                <Button FontSize="24" Content="确定" IsDefault="True" Width="100" Margin="20,0" VerticalAlignment="Center" HorizontalAlignment="Center"  Click="btn_OK"/>
-                                <Button FontSize="24" Content="取消" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center"  Command="{x:Static local:Flipper.FlipCommand}"/>
-                            </StackPanel>
-                        </Grid>
-                    </local:Flipper.BackContent>
-                </local:Flipper>
+                                <TextBlock Grid.Row="2" x:Name="message" FontSize="24" Text="" Foreground="White" Margin="10,0"/>
+                                
+                                <StackPanel Grid.Row="3" Orientation="Horizontal">
+                                    <Button FontSize="24" Content="确定" IsDefault="True" Width="100" Margin="20,0" VerticalAlignment="Center" HorizontalAlignment="Center"  Click="btn_OK"/>
+                                    <Button FontSize="24" Content="取消" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center"  Command="{x:Static local:Flipper.FlipCommand}"/>
+                                </StackPanel>
+                            </Grid>
+                        </local:Flipper.BackContent>
+                    </local:Flipper>
+                </StackPanel>
             </materialDesign:Card>
-            <materialDesign:PackIcon Kind="Close" Width="80" Height="80" MouseUp="exitProgram" Foreground="#FFC0c0c0" HorizontalAlignment="Left" Margin="1129,205,0,0" VerticalAlignment="Top"/>
         </Grid>
     </Viewbox>
 </Window>

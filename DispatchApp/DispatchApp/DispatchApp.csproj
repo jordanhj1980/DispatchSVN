@@ -515,6 +515,7 @@
     <Content Include="Resources\closeWhite.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\close_white.png" />
     <Content Include="Resources\collapse.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

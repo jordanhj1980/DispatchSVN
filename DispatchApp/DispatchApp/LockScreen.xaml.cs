@@ -46,10 +46,17 @@ namespace DispatchApp
             if (sb.ToString() == m_mainwin.password)
             {
                 flipc.IsFlipped = false;
+                this.message.Text = "";
+                this.TxPassword.Clear();
+
                 flipc.OnApplyTemplate();
 
                 this.Close();
                 msgevent(this, "close");
+            }
+            else
+            {
+                this.message.Text = "解锁密码错误";
             }
         }
 
@@ -63,8 +70,8 @@ namespace DispatchApp
             this.Hide();
             e.Cancel = true;
         }
-
-        private void exitProgram(object sender, MouseButtonEventArgs e)
+        
+        private void exitProgram(object sender, RoutedEventArgs e)
         {
             m_mainwin.Close();
         }
