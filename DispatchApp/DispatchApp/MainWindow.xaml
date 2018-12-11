@@ -71,7 +71,7 @@
                         <MenuItem Header="高级"></MenuItem>
                         <MenuItem Header="帮助"></MenuItem>
                     </Menu>
-
+                    
                 </WrapPanel>
             </Grid>
 
@@ -123,7 +123,7 @@
                         VerticalContentAlignment="Center" 
                         FontSize="46" 
                         Height="98" Width="800" 
-                        VerticalAlignment="Bottom"/>
+                        VerticalAlignment="Bottom"/>                        
                     <Button Height="100" HorizontalAlignment="Center" Click="btn_lock_Clicked" VerticalAlignment="Top" Width="107" Margin="8,0" BorderBrush="{x:Null}">
                         <StackPanel Height="100" Width="80">
                             <Image Source="Resources/lock_close.png" Height="64" Width="64"  VerticalAlignment="Top"/>
@@ -145,12 +145,12 @@
                         BorderBrush="{x:Null}" Background="{x:Null}" />
                 </StackPanel>
             </Label>
-
+            
             <!--底部-->
             <StackPanel Grid.Row="3">
                 <Label Content="服务器IP:" Foreground="#FFD8D7D7" FontSize="22" HorizontalAlignment="Left" Width="277"/>
             </StackPanel>
-
+            
             <!--界面内容容器-->
             <ContentControl Name="CenterPanel2" Grid.Row="2" />
 

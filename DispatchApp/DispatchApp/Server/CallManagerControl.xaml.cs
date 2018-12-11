@@ -270,7 +270,7 @@ namespace DispatchApp
                     break;                
                 case "desk":
                     //tabControl_mgt.SelectedIndex = 2;
-                    tabControl_mgt.SelectedIndex = 4;
+                    tabControl_mgt.SelectedIndex = 5;
                     // 查询调度键盘 20181024 xiaozi
                     //keyboardmanagetab.DataContext = keyboardmanagedata;
                     InitialDeskes();
