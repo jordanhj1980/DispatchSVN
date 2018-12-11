@@ -12,23 +12,59 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace DispatchApp
 {
     /// <summary>
     /// LockScreen.xaml 的交互逻辑
     /// </summary>
-    public partial class LockScreen : Window
+    public partial class LockScreen : Window, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /* propertyName为属性的名称 */
+        public void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                //假设属性发生了改变，则触发这个事件
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        protected virtual void SetAndNotifyIfChanged<T>(string propertyName, ref T oldValue, T newValue)
+        {
+            if (oldValue == null && newValue == null) return;
+            if (oldValue != null && oldValue.Equals(newValue)) return;
+            if (newValue != null && newValue.Equals(oldValue)) return;
+            oldValue = newValue;
+            OnPropertyChanged(propertyName);
+        }
+
         public delegate void LockHandler(object sender, string msg);
         public event LockHandler msgevent;
 
         private MainWindow m_mainwin;
 
+        private string _account;
+        public string account
+        {
+            get { return _account; }
+            set { 
+                _account = value;
+                OnPropertyChanged("account");
+            }
+        }
+
         public LockScreen(MainWindow mainwin)
         {
             InitializeComponent();
             m_mainwin = mainwin;
+            DataContext = this;
         }
 
         private void btn_OK(object sender, RoutedEventArgs e)
@@ -71,10 +107,5 @@ namespace DispatchApp
             e.Cancel = true;
         }
         
-        private void exitProgram(object sender, RoutedEventArgs e)
-        {
-            m_mainwin.Close();
-        }
-
     }
 }

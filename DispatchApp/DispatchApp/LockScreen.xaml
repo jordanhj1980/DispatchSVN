@@ -21,10 +21,13 @@
 
             <materialDesign:Card Margin="0,200" Width="500" Height="680" materialDesign:ShadowAssist.ShadowDepth="Depth5">
                 <StackPanel Orientation="Vertical">
-                    <Button Height="90" Width="90" Background="Transparent" BorderThickness="0"  HorizontalAlignment="Right" Click="exitProgram" >
-                        <!--<Image Source="Resources/close_white.png"/>-->
-                        <materialDesign:PackIcon Kind="Close" Height="54" Width="54" RenderTransformOrigin="0.536,0.56"/>
-                    </Button>
+                    <StackPanel Height="90" Width="200" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock  FontSize="24" Text="当前用户："
+                               VerticalAlignment="Center" Foreground="White" HorizontalAlignment="Center"/>
+                        <TextBlock FontSize="24" Text="{Binding account}"
+                               VerticalAlignment="Center" Foreground="White" HorizontalAlignment="Center"/>
+                    </StackPanel>                    
+                    
                     <local:Flipper x:Name="flipc" Height="480" HorizontalAlignment="Center" VerticalAlignment="Center" Width="410" Margin="46,20,44,100">
                         <local:Flipper.FrontContent>
                             <Grid Height="360" Width="200">
@@ -37,7 +40,7 @@
                                 <StackPanel>
                                     <Button BorderThickness="0" Height="260" Background="Transparent" Command="{x:Static local:Flipper.FlipCommand}" Margin="0 4 0 20">
                                         <StackPanel>
-                                            <Image Source="Resources/lock_close.png"/>
+                                            <Image Source="Resources/lock_close_128.png"/>
                                             <TextBlock Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Microsoft YaHei" FontSize="24" Text="解锁"/>
                                         </StackPanel>
                                     </Button>
@@ -48,7 +51,7 @@
                         <local:Flipper.BackContent>
                             <Grid Height="380" Width="260">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="30" />
                                     <RowDefinition Height="50" />
                                     <RowDefinition Height="50" />
                                     <RowDefinition Height="76*" />

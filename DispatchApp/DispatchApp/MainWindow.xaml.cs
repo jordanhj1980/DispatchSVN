@@ -58,11 +58,27 @@ namespace DispatchApp
         private LoginWindow logwin;
         
         private string m_ServerIP;
+        public string serverip
+        {
+            get { return m_ServerIP; }
+            set { 
+                m_ServerIP = value;
+                saveUserOption();
+            }
+        }
+
         private string m_ServerPort;
         private int m_HeartBeat;
 
         private LoadingWindow loadingWin;
         private LockScreen lockScreen;  // 锁屏窗口
+
+        private string _account;
+        public string account
+        {
+            get { return _account; }
+            set { _account = value; }
+        }
 
         private string _password;
         public string password
@@ -129,18 +145,13 @@ namespace DispatchApp
             callManagerCtrl = new CallManagerControl(this);
             //callManagerCtrl.CtrlSwitchEvent += new CtrlSwitchHandler(CtrlSwitch_callManager);
             outLine = new OutLine(this);
-            //CtrlSwitch_callUser();
-
-            // 显示登录界面，验证后返回，未登陆前不会触发Window_Loaded事件
-            logwin = new LoginWindow(this);
-            logwin.Show();
-            this.Hide();
+            //CtrlSwitch_callUser();            
 
             /* 隐藏公共工具栏的button */
             sw_button.Visibility = Visibility.Hidden;
             user_button.Visibility = Visibility.Hidden;
             desk_button.Visibility = Visibility.Hidden;
-            contact_button.Visibility = Visibility.Hidden;
+            contact_button.Visibility = Visibility.Hidden;            
 
             // 创建websocket
             m_ServerIP = ConfigurationManager.AppSettings["serverip"];
@@ -149,19 +160,12 @@ namespace DispatchApp
             m_HeartBeat = Convert.ToInt16(heartbeat);
             Debug.WriteLine("serverip = " + m_ServerIP);
 
-            // 创建websocket
-            string serveruri = "ws://" + m_ServerIP + ":" + m_ServerPort.Trim();
-            try
-            {
-                ws = new WebSocket(serveruri);
-                ws.Opened += websocket_Opened;
-                ws.Closed += websocket_Closed;
-                ws.MessageReceived += websocket_MessageReceived;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.ToString());
-            }
+            // 显示登录界面，验证后返回，未登陆前不会触发Window_Loaded事件
+            logwin = new LoginWindow(this);
+            logwin.setIPaddr(m_ServerIP);
+            logwin.Show();
+
+            this.Hide();
 
             // 创建socket和ui交互机制 // 20181010 xf Add
             PeerCallBack.Instance = new PeerCallBack(SynchronizationContext.Current, this);
@@ -180,6 +184,23 @@ namespace DispatchApp
             loadingWin = new LoadingWindow();
             lockScreen = new LockScreen(this);
             lockScreen.msgevent += new LockScreen.LockHandler(lockWinClose);
+        }
+
+        public void initSocket(string serverip)
+        {
+            // 创建websocket
+            string serveruri = "ws://" + serverip + ":" + m_ServerPort.Trim();
+            try
+            {
+                ws = new WebSocket(serveruri);
+                ws.Opened += websocket_Opened;
+                ws.Closed += websocket_Closed;
+                ws.MessageReceived += websocket_MessageReceived;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
         }
 
         public void lockWinClose(object sender, string msg)
@@ -486,9 +507,10 @@ namespace DispatchApp
 
             this.Hide();
 
-            // 20181010 xf Add  
+            // 20181010 xf Add   必须关闭ws，在登陆界面重新连接
             App.isLogin = false;    // 用户主动选择登出
-            ws.Close();
+            ws.Close(); // important
+
             callUserCtrl.KeyCallListBox.Items.Clear();           // 清理键权电话区
             callUserCtrl.tabCtrl_User.Items.Clear();             // 清理直呼键区
         }

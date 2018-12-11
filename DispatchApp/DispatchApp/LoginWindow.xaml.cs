@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,12 +28,17 @@ namespace DispatchApp
     /// </summary>
     public partial class LoginWindow : Window
     {
+        private bool isExpand;
+        private bool isRegistered;
         private MainWindow m_mainWindow;
+        private string _machineCode;
         ////20181010 xiaozi Add
         //private WebSocket ws;
       
         public LoginWindow(MainWindow mainWindow)
         {
+            isExpand = false;
+            isRegistered = false;
             m_mainWindow = mainWindow;
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -55,7 +61,9 @@ namespace DispatchApp
             {
                 case "Success#Control":
                     App.isLogin = true;
+                    m_mainWindow.account = this.TxUserName.Text.Trim();
                     m_mainWindow.password = this.TxPassword.Password;
+                    m_mainWindow.serverip = this.IPAddr.Text.Trim();    // 登陆成功则保存ip地址
                     this.Hide();
                     m_mainWindow.usercontrol_click(this, null);
                     m_mainWindow.Show();
@@ -63,7 +71,9 @@ namespace DispatchApp
                     break;
                 case "Success#Admin":
                     App.isLogin = true;
+                    m_mainWindow.account = this.TxUserName.Text.Trim();
                     m_mainWindow.password = this.TxPassword.Password;
+                    m_mainWindow.serverip = this.IPAddr.Text.Trim();
                     this.Hide();
                     m_mainWindow.managercontrol_click(this, null);
                     m_mainWindow.Show();
@@ -72,8 +82,6 @@ namespace DispatchApp
                 case "connected":// ws 连接成功，暂未登陆 //2018101 xf Add
                     if (!App.isLogin)
                     {
-                        label_msg.Content = "";
-
                         //联网登陆，有问题
                         List<string> logdata = new List<string>();
                         logdata.Add(TxUserName.Text);
@@ -88,7 +96,6 @@ namespace DispatchApp
                     }
                     break;
                 case "Wrong":
-                    //label_msg.Content = data;
                     //MessageBox.Show("账号或密码错误！");
                     
                     message = "账号或密码错误！";
@@ -97,7 +104,6 @@ namespace DispatchApp
                     Task.Factory.StartNew(() => messageQueue.Enqueue(message));
                     break;
                 case "Already":
-                    //label_msg.Content = data;
                     //MessageBox.Show("用户已登陆！");
 
                     message = "用户已登陆！";
@@ -120,12 +126,23 @@ namespace DispatchApp
         /// <param name="e"></param>
         public void BtLogin_Click(object sender, RoutedEventArgs e)
         {
+            if (!isRegistered)
+            {
+                var messageQueue = SnackbarOne.MessageQueue;               
+                Task.Factory.StartNew(() => messageQueue.Enqueue("当前未注册，请输入注册码"));
+                this.serialBox.Visibility = Visibility.Visible;
+                return;
+            }
+
             /* 尝试连接远程服务器 */
             //2018101 xf Add
             if (!App.isLogin)
             {
                 try
                 {
+                    /* 初始化socket连接 */
+                    m_mainWindow.initSocket(this.IPAddr.Text.Trim());
+
                     m_mainWindow.ws.Open();
                 }
                 catch (System.Exception exc)
@@ -146,12 +163,123 @@ namespace DispatchApp
         //2018101 xf Add
         public void setStatus(string msg)
         {
-            label_msg.Content = msg;
         }
 
         private void BtExit_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void BtAdvance_Click(object sender, RoutedEventArgs e)
+        {
+            if (isExpand)
+            {
+                isExpand = false;
+                this.loginBox.Height -= 40;
+                advBox.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                isExpand = true;
+                advBox.Visibility = Visibility.Collapsed;
+                this.loginBox.Height += 40;
+            }
+            
+        }
+
+        private void Form_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.loginBox.Height -= 40;
+            advBox.Visibility = Visibility.Collapsed;
+
+            // obtain the machine code
+            _machineCode = MachineCode.getRNum();
+
+            StreamReader sr = null;
+            try
+            {
+                //string appDataPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.CommonApplicationData);
+                string appDataPath = "license.lic";
+                sr = new StreamReader(appDataPath, Encoding.Default);
+                if (sr == null)
+                {
+                    return;
+                }
+                string content;
+                while ((content = sr.ReadLine()) != null)
+                {
+                    content = content.Trim();
+                    if (content.ToUpper().StartsWith("SERIAL:"))
+                    {
+                        string code = content.Substring(content.IndexOf(":") + 1);
+
+                        if (code == _machineCode)
+                        {
+                            isRegistered = true;
+                        }
+
+                    }
+                }
+                sr.Close();
+            }
+            catch (SystemException exc)
+            {
+                System.Windows.MessageBox.Show(exc.Message + "Form_Loaded");
+                if (sr != null)
+                {
+                    sr.Close();
+                }
+                return;
+            }
+
+            // 如果未成功注册，显示注册码输入界面
+            if (!isRegistered)
+            {
+                serialBox.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                serialBox.Visibility = Visibility.Hidden;
+            }
+            
+        }
+
+        public void setIPaddr(string ipAddr)
+        {
+            IPAddr.Text = ipAddr;
+        }
+
+        private void register_click(object sender, RoutedEventArgs e)
+        {
+            var messageQueue = SnackbarOne.MessageQueue;
+            string msg;
+            if (serial.Text.Trim()  == _machineCode)  {
+                // 注册成功
+                serialBox.Visibility = Visibility.Collapsed;
+                isRegistered = true;
+                msg = "注册成功";
+                // 写入注册码
+                string appDataPath = "license.lic";
+                StreamWriter sw = null; 
+                try
+                {
+                    sw = new StreamWriter(appDataPath);
+                    sw.Write("SERIAL:");
+                    sw.Write(_machineCode);
+                    sw.Close();
+
+                } catch (SystemException exc) {
+                    if (sw != null) {
+                        sw.Close();
+                    }
+                    msg = "写入注册文件失败";
+                }                
+            }
+            else
+            {
+                msg = "注册失败";
+            }
+            Task.Factory.StartNew(() => messageQueue.Enqueue(msg));
         }
     }
 }

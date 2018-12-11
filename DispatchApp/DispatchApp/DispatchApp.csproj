@@ -101,6 +101,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -278,6 +279,7 @@
     <Compile Include="Utils\ExpanderListViewModel .cs" />
     <Compile Include="Utils\ExpanderToBooleanConverter.cs" />
     <Compile Include="Utils\INIHelper.cs" />
+    <Compile Include="Utils\MachineCode.cs" />
     <Compile Include="Utils\MyPrivilegeToVisibilityConverter.cs" />
     <Compile Include="Utils\NotifyObject.cs" />
     <Compile Include="Utils\PostgreHelper.cs" />
@@ -553,6 +555,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\house_512x512.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\lock_close_128.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\log.png">

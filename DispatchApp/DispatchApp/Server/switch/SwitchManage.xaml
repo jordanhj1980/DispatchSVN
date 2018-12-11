@@ -8,14 +8,14 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:local ="clr-namespace:DispatchApp"
         mc:Ignorable="d" 
-        d:DesignHeight="720" d:DesignWidth="1557"
+        d:DesignHeight="904" d:DesignWidth="1920"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}">
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        TextElement.FontSize="13">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -36,7 +36,7 @@
         <Grid.Resources>
             <HierarchicalDataTemplate DataType="{x:Type local:SWDEV}">
                 <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon Kind="Keyboard" 
+                    <materialDesign:PackIcon Kind="ImportantDevices" 
                             Width="40" Height="40" 
                             Margin="0,0,10,0"
                             VerticalAlignment="Center" />
@@ -44,7 +44,7 @@
                 </StackPanel>
             </HierarchicalDataTemplate>
         </Grid.Resources>
-        <StackPanel Width="1557">
+        <StackPanel>
             <!--主标题-->
             <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5"
                 Height="50"
@@ -59,9 +59,9 @@
             <!--分隔线-->
             <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
 
-            <DockPanel Height="654" VerticalAlignment="Bottom">
+            <DockPanel Height="827" VerticalAlignment="Bottom">
                 <!--调度键盘树-->
-                <materialDesign:Card x:Name="switchtreeview" Margin="10,0,0,10"  Height="654"
+                <materialDesign:Card x:Name="switchtreeview" Margin="10,0,0,-174.6"  Height="829"
                     materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Visible"   
                     Padding="0" UniformCornerRadius="6">
                     <StackPanel Width="300" HorizontalAlignment="Left">
@@ -127,15 +127,15 @@
 
                             </DockPanel>
                             <DockPanel Height="60">
-                                </DockPanel>
+                            </DockPanel>
                         </StackPanel>
                     </materialDesign:Card>
                     <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                        Height="77" Margin="10,0"                        
+                        Height="112" Margin="10,0"                        
                         UniformCornerRadius="0" FontSize="24">
-                        <StackPanel Height="100" RenderTransformOrigin="0.458,0.499" Orientation="Horizontal">
+                        <StackPanel Height="100" RenderTransformOrigin="0.458,0.499" Orientation="Horizontal" Margin="0,-2,-0.4,-21.2">
                             <Button Content="保存" FontSize="24" Click="Update_Click"  VerticalAlignment="Center" Width="100" Margin="10,0,0,0"/>
-                            <Label Name="result" FontSize="24" Content="re"  VerticalAlignment="Center" Margin="10,31,0,31" Width="410"/>
+                            <Label Name="result" FontSize="24" Content=""  VerticalAlignment="Center" Margin="10,31,0,31" Width="410"/>
                         </StackPanel>
                     </materialDesign:Card>
                 </StackPanel>

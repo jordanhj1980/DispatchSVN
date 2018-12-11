@@ -80,6 +80,7 @@ namespace DispatchApp
 
         private void btn_lock_Clicked(object sender, RoutedEventArgs e)
         {
+            lockScreen.account = this.account;
             lockScreen.Show();
             this.Hide();
         }

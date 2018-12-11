@@ -8,7 +8,7 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:local ="clr-namespace:DispatchApp"
         mc:Ignorable="d" 
-        d:DesignHeight="720" d:DesignWidth="1557"
+        d:DesignHeight="904" d:DesignWidth="1920"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -29,7 +29,7 @@
             </ResourceDictionary.MergedDictionaries>
             <local:BoolToVisibilityConverter CollapseWhenInvisible="False" x:Key="BtVconverter" />
             <local:NegateConverter x:Key="NegateConverter"/>
-        </ResourceDictionary>        
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>
@@ -44,7 +44,7 @@
                 </StackPanel>
             </HierarchicalDataTemplate>
         </Grid.Resources>
-        <StackPanel Width="1557">
+        <StackPanel>
             <!--主标题-->
             <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5"
                 Height="50"
@@ -59,9 +59,9 @@
             <!--分隔线-->
             <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
 
-            <DockPanel Height="654" VerticalAlignment="Bottom">
+            <DockPanel Height="832" VerticalAlignment="Bottom">
                 <!--调度键盘树-->
-                <materialDesign:Card x:Name="usertreeview" Margin="10,0,0,10"  Height="654"
+                <materialDesign:Card x:Name="usertreeview" Margin="10,0,0,-172.6"  Height="827"
                     materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Visible"   
                     Padding="0" UniformCornerRadius="6">
                     <StackPanel Width="300" HorizontalAlignment="Left">

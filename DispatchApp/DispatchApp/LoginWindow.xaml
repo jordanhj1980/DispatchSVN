@@ -5,7 +5,8 @@
         WindowStyle="None" AllowsTransparency="True"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="LoginWindow" Height="1080" Width="1920">
+        Title="LoginWindow" Height="1080" Width="1920"
+        Loaded="Form_Loaded">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -15,7 +16,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <Viewbox>
-        <Grid Height="1080" Width="1920">            
+        <Grid Height="1080" Width="1920">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="3*" />
@@ -33,7 +34,7 @@
                 </TextBlock>
             </materialDesign:Card>
 
-            <materialDesign:Card Grid.Row="1" Width="500" Height="680" materialDesign:ShadowAssist.ShadowDepth="Depth5">
+            <materialDesign:Card x:Name="loginBox" Grid.Row="1" Width="500" Height="720" materialDesign:ShadowAssist.ShadowDepth="Depth5">
 
                 <Grid>
                     <Grid.RowDefinitions>
@@ -41,6 +42,8 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Image Source="Resources/startup_1920x1080.jpg" Stretch="Fill" />
@@ -49,10 +52,8 @@
                     Margin="100,20,100,0"
                     VerticalAlignment="Top"
                     Height="80"
-                    AcceptsReturn="False"
-                    
-                    materialDesign:HintAssist.Hint="用户名" FontSize="25"
-                    />
+                    AcceptsReturn="False"                    
+                    materialDesign:HintAssist.Hint="用户名" FontSize="25"/>
 
                     <PasswordBox Grid.Row="2" Name="TxPassword" Foreground="WhiteSmoke" FontFamily="Microsoft YaHei"
                     Margin="100,20,100,0"
@@ -64,12 +65,19 @@
                     <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,40,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                         <Button  Margin="0,0,45,0" materialDesign:ShadowAssist.ShadowDepth="Depth5"               
                             Style="{StaticResource MaterialDesignRaisedButton}"
+                            Click="BtAdvance_Click"
+                            Height="50" Width="100" FontSize="25" FontFamily="Microsoft YaHei">
+                            高级
+                        </Button>
+
+                        <Button  Margin="0,0,45,0" materialDesign:ShadowAssist.ShadowDepth="Depth5"               
+                            Style="{StaticResource MaterialDesignRaisedButton}"
                             Click="BtLogin_Click"
                             IsDefault="True"
                             Height="50" Width="100" FontSize="25" FontFamily="Microsoft YaHei">
                             登录
                         </Button>
-                        
+
                         <Button materialDesign:ShadowAssist.ShadowDepth="Depth5" Margin="45,0,0,0"          
                             Style="{StaticResource MaterialDesignRaisedButton}"
                             Click="BtExit_Click"
@@ -78,13 +86,25 @@
                         </Button>
                     </StackPanel>
                     <materialDesign:Snackbar  
-                        HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
-                        Grid.Row="4"  Background="OrangeRed" Foreground="WhiteSmoke"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                        Grid.Row="1"  Background="OrangeRed" Foreground="WhiteSmoke"
                         MessageQueue="{materialDesign:MessageQueue}"
                         x:Name="SnackbarOne" 
                         />
-                    
-                    <Label  Content="" Height="92" HorizontalAlignment="Left" FontSize="16" Width="68" x:Name="label_msg" VerticalAlignment="Top"/>
+                    <StackPanel Name="serialBox" Orientation="Horizontal" Grid.Row="4" Height="50" HorizontalAlignment="Center">
+                        <TextBlock Text="注册码：" Foreground="White" Width="106" VerticalAlignment="Center" Margin="20,0,5,0"
+                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+                        <TextBox x:Name="serial" Foreground="White" 
+                                Width="231" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20"/>
+                        <Button Foreground="White" Content="注册" Click="register_click"
+                                Width="72" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" Margin="0,4"/>
+                    </StackPanel>
+                    <StackPanel Name="advBox" Orientation="Horizontal" Grid.Row="5" Height="40" HorizontalAlignment="Center">
+                        <TextBlock Text="IP地址：" Foreground="White" Width="106" VerticalAlignment="Center" Margin="20,0,5,0"
+                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+                        <TextBox x:Name="IPAddr" Foreground="White"          
+                                Width="294" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="24"/>
+                    </StackPanel>
                 </Grid>
             </materialDesign:Card>
 
