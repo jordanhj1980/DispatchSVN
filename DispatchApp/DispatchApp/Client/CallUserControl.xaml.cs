@@ -462,40 +462,35 @@ namespace DispatchApp
                     if ("BUSY" == state)
                     {
                         KeyClickEvent(clientNum); // 摘机同单击
-
                         nightServerCloseBtn.NightServerClose.Command.Execute(nightServerCloseBtn.NightServerClose.CommandTarget);           // 自动触发button命令事件。 
                         //CommandBtn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));  // 自动触发button单击事件。
                     }
-
-                    if ("ALERT" == state)
+                    else if ("ALERT" == state)
                     {
-                        mainWindow.ShowKeyLabel.Content = "键权电话" + tempName.fromid + "呼叫" + tempName.toid;
-                        mainWindow.ShowKeyLabel.Foreground = Brushes.Red;
+                        if ((e_OperaState.INTER != operaState) && (e_OperaState.LISTEN != operaState))
+                        { 
+                            mainWindow.ShowKeyLabel.Content = tempName.toid + "与" + tempName.fromid + "通话连接中...";
+                            mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                        }
                     }
                     else if ("RING" == state)
                     {
-                        mainWindow.ShowKeyLabel.Content = "来电显示：" + tempName.toid + "呼叫" + tempName.fromid;
-                        mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                        if ((e_OperaState.INTER != operaState) && (e_OperaState.LISTEN != operaState))
+                        {
+                            mainWindow.ShowKeyLabel.Content = tempName.fromid + "与" + tempName.toid + "通话连接中...";
+                            mainWindow.ShowKeyLabel.Visibility = Visibility.Visible;
+                            mainWindow.ShowKeyLabel.Foreground = Brushes.RosyBrown;
+                            //var converter = new System.Windows.Media.BrushConverter();
+                            //mainWindow.ShowKeyLabel.Foreground = (Brush)converter.ConvertFromString("#FFFF0090");
+                        }
                     }
                     else if (("ANSWERED" == state) || ("ANSWER" == state))
                     {
-                        mainWindow.ShowKeyLabel.Content = "键权电话呼叫" + tempName.fromid;
-                        mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
-                    }
-                    else if ("Bargein" == state)
-                    {
-                        mainWindow.ShowKeyLabel.Content = "键权电话强插" + tempName.fromid;
-                        mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
-                    }
-                    else if ("Clear" == state)
-                    {
-                        mainWindow.ShowKeyLabel.Content = "键权电话强拆" + tempName.fromid;
-                        mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
-                    }
-                    else if ("Monitor" == state)
-                    {
-                        mainWindow.ShowKeyLabel.Content = "键权电话监听" + tempName.fromid;
-                        mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                        if ((e_OperaState.INTER != operaState) && (e_OperaState.LISTEN != operaState))
+                        {
+                            mainWindow.ShowKeyLabel.Content = "键权电话与" + tempName.toid + "正在通话";
+                            mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                        }
                     }
                     else
                     {
@@ -560,7 +555,15 @@ namespace DispatchApp
             }
         }
 
-
+        /// <summary>
+        /// 用来判断用户名片上是否刷新时间
+        /// </summary>
+        public struct StateUser
+        {
+            public string state;
+            public string num;
+        }
+        public StateUser stateUser;
         private void CommondWord_State(string state, string num)
         {
             string clientNum = "0";
@@ -649,16 +652,25 @@ namespace DispatchApp
                                     temp.labelNumToId.Content = tempName.toid;
                                     break;
                                 case "ANSWER":
-                                    temp.labelNumFromId.Content = tempName.fromid;
-                                    temp.labelNumToId.Content = tempName.toid;
-                                    temp.timer_Stop();
-                                    temp.ShowCallTime();
+                                    if (((e_OperaState.INTER != operaState) && (e_OperaState.LISTEN != operaState)) || (callNum != clientCall))
+                                    {
+                                        temp.labelNumFromId.Content = tempName.fromid;
+                                        temp.labelNumToId.Content = tempName.toid;
+                                        temp.timer_Stop();
+                                        temp.ShowCallTime();
+                                    }
                                     break;
                                 case "ANSWERED":
-                                    temp.labelNumFromId.Content = tempName.fromid;
-                                    temp.labelNumToId.Content = tempName.toid;
-                                    temp.timer_Stop();
-                                    temp.ShowCallTime();
+                                    //if ((("Insert" != stateUser.state) && ("Monitor" != stateUser.state)) || (num != stateUser.num))
+                                    if (((e_OperaState.INTER != operaState) && (e_OperaState.LISTEN != operaState)) || (callNum != clientCall))
+                                    {
+                                        temp.labelNumFromId.Content = tempName.fromid;
+                                        temp.labelNumToId.Content = tempName.toid;
+                                        temp.timer_Stop();
+                                        temp.ShowCallTime();
+                                        //stateUser.state = "";
+                                        //stateUser.num = num;
+                                    }
                                     break;
                                 default: break;
                             }
@@ -717,10 +729,51 @@ namespace DispatchApp
                             mainWindow.outLine.outLineViewModel.ContactList.Add(item);
                         }
                     }
-
+                    break;
+                case "Call":
+                case "CallOut":
+                case "Visitor":
+                case "Bargein":
+                case "Monitor":
+                case "NightServiceOn":
+                case "NightServiceOff":
+                    ShowKeyLabelScreen(type, data);
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void ShowKeyLabelScreen(string type,string data)
+        {
+            Reply reply = JsonConvert.DeserializeObject<Reply>(data);
+            if (reply.result == "Fail")
+            {
+                switch (type)
+                {
+                    case "Call":
+                    case "CallOut":
+                        mainWindow.ShowKeyLabel.Content = "键权电话呼叫失败：" + reply.reason;
+                        break;
+                    case "Visitor":
+                        mainWindow.ShowKeyLabel.Content = "转接失败：" + reply.reason;
+                        break;
+                    case "Bargein":
+                        mainWindow.ShowKeyLabel.Content = "键权电话强插失败：" + reply.reason;
+                        break;
+                    case "Monitor":
+                        mainWindow.ShowKeyLabel.Content = "键权电话监听失败：" + reply.reason;
+                        break;
+                    case "NightServiceOn":
+                        mainWindow.ShowKeyLabel.Content = "夜服开启失败：" + reply.reason;
+                        break;
+                    case "NightServiceOff":
+                        mainWindow.ShowKeyLabel.Content = "夜服关闭失败：" + reply.reason;
+                        break;
+                    default:
+                        mainWindow.ShowKeyLabel.Content = "发生未知错误，检查CMD应答";
+                        break;
+                }
             }
         }
         ///============================================================

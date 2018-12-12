@@ -171,7 +171,7 @@ namespace DispatchApp
                 MyWrapPanel2.Items.Add(userRadio);
                 /* 组员被点击后的操作 */
                 userRadio.ImageSouresHandle += new UserRadio.ImageEventHandler(RadioImageEvent);
-                userRadio.ImageSouresDoubleHandle += new UserRadio.ImageEventHandler(RadioImageDoubleEvent);
+                //userRadio.ImageSouresDoubleHandle += new UserRadio.ImageEventHandler(RadioImageDoubleEvent);
             }
 
             /* 将造好的新选项卡扔进TabControl1里 */
@@ -198,6 +198,8 @@ namespace DispatchApp
                     item.ButtonBack.BorderBrush = Brushes.Gray;
                 }
             }
+
+            RadioImageDoubleEvent(word);
         }
 
         /// <summary>
@@ -279,6 +281,7 @@ namespace DispatchApp
                     item.ButtonBack.BorderBrush = Brushes.Gray;
                 }
             }
+            RelayImageDoubleEvent(word);
         }
 
         /// <summary>
@@ -391,17 +394,23 @@ namespace DispatchApp
                     tellCall = new call() { fromid = serverCall, toid = clientCall };
                     strMsg = "CMD#Bargein#" + JsonConvert.SerializeObject(tellCall);
                     mainWindow.ws.Send(strMsg);
+                    mainWindow.ShowKeyLabel.Content = "键权电话强插" + clientCall;
+                    mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
                     break;
                 case e_OperaState.LISTEN:
                     tellCall = new call() { fromid = serverCall, toid = clientCall };
                     strMsg = "CMD#Monitor#" + JsonConvert.SerializeObject(tellCall);
                     mainWindow.ws.Send(strMsg);
+                    mainWindow.ShowKeyLabel.Content = "键权电话监听" + clientCall;
+                    mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
                     break;
                 case e_OperaState.SPLIT:
                     strMsg = "CMD#Clear#" + clientCall;
                     mainWindow.ws.Send(strMsg);
                     operaState = e_OperaState.NULL;
                     FunKeysBorderBrush("");
+                    mainWindow.ShowKeyLabel.Content = "键权电话强拆" + clientCall;
+                    mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
                     break;
                 case e_OperaState.TRANS:
                     /* 如果当前选择的键权电话正处于通话过程中，hold */
@@ -522,8 +531,7 @@ namespace DispatchApp
                     mainWindow.ws.Send(strMsg);
 
                     mainWindow.ShowKeyLabel.Content = "";
-                    mainWindow.ShowKeyLabel.Foreground = Brushes.Red;
-                    Debug.WriteLine("键权话机" + item.id + "开启夜服");
+                    Debug.WriteLine("键权话机" + item.id + "关闭夜服");
                     //MessageBox.Show("键权话机" + item.id + "\r\n" + "夜服关闭", "夜服信息");
                     //NightService.Background = ((Brush)new BrushConverter().ConvertFromString("#FFCBC7C7"));
                 }
@@ -576,16 +584,21 @@ namespace DispatchApp
                     tellCall.toid = item.nightId;
                     string strMsg = "CMD#NightServiceOn#" + JsonConvert.SerializeObject(tellCall);
                     mainWindow.ws.Send(strMsg);
-
-                    mainWindow.ShowKeyLabel.Content = "夜服已开启";
-                    //MessageBox.Show("键权话机" + item.id + "\r\n" + "夜服开启" + "\r\n" + "呼转至" + item.nightId, "夜服信息");
-                    Debug.WriteLine("键权话机" + item.id + "关闭夜服");
+                    Debug.WriteLine("键权话机" + item.id + "夜服已开启"); 
                 }
-            }
 
-            var view = nightServerCloseBtn;
-            // var view = new NightServerCloseBtn();
-            var result = await DialogHost.Show(view, "UserNightServerDialog", ListViewClosingEventHandler);
+                mainWindow.ShowKeyLabel.Foreground = Brushes.Red;
+                mainWindow.ShowKeyLabel.Content = "夜服已开启";
+                var view = nightServerCloseBtn;
+                // var view = new NightServerCloseBtn();
+                var result = await DialogHost.Show(view, "UserNightServerDialog", ListViewClosingEventHandler);
+            }
+            else
+            {
+                var view = new MessageBoxShow();
+                view.MsgBoxShowText.Text = "当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！";
+                var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+            }
         }
         private void ListViewClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {

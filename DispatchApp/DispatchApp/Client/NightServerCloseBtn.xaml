@@ -8,7 +8,7 @@
              xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="200">
+             d:DesignHeight="100" d:DesignWidth="270">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -18,8 +18,8 @@
     </UserControl.Resources>
     <Grid>
         <Button Name="NightServerClose"
-            Content="关闭夜服"
+            Content="关闭夜服" 
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}" 
-            Height="Auto" FontSize="36"/>
+            Height="Auto" FontSize="46" FontFamily="Microsoft YaHei" />
     </Grid>
 </UserControl>

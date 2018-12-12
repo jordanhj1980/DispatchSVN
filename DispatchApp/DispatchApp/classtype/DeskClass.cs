@@ -4,6 +4,12 @@ using System.Collections.ObjectModel;
 
 namespace DispatchApp
 {
+    public struct Reply
+    {
+        public string result;
+        public string reason;
+    }
+
     // =======================查询调度台信息指令======================
     /// 20181024 xiaozi Add
     /// <summary>
@@ -409,4 +415,6 @@ namespace DispatchApp
         }
     }
     /// ==========================查询日志========================
+
+   
 }
