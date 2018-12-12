@@ -1114,47 +1114,48 @@ namespace DispatchApp
         /// </summary>
         /// <param name="name"></param>
         private void FunKeysBorderBrush(string name)
-        {            
-            //if (name == "btn_call")
-            //    btn_call.BorderBrush = Brushes.Yellow;
-            //else
-            //    btn_call.BorderBrush = Brushes.Gray;
+        {
+            var converter = new System.Windows.Media.BrushConverter();
+            if (name == "btn_call")
+                btn_call.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
+            else
+                btn_call.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_trans")
-                btn_trans.BorderBrush = Brushes.Yellow;
+                btn_trans.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
             else
-                btn_trans.BorderBrush = Brushes.Gray;  
+                btn_trans.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_insert")
-                btn_insert.BorderBrush = Brushes.Yellow;
+                btn_insert.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
             else
-                btn_insert.BorderBrush = Brushes.Gray;
+                btn_insert.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_split")
-                btn_split.BorderBrush = Brushes.Yellow;
+                btn_split.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
             else
-                btn_split.BorderBrush = Brushes.Gray;
+                btn_split.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_monitor")
-                btn_monitor.BorderBrush = Brushes.Yellow;
+                btn_monitor.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
             else
-                btn_monitor.BorderBrush = Brushes.Gray;
+                btn_monitor.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_outline")
-                btn_outline.BorderBrush = Brushes.Yellow;
+                btn_outline.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
             else
-                btn_outline.BorderBrush = Brushes.Gray;
+                btn_outline.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_relay")
-                btn_relay.BorderBrush = Brushes.Yellow;
+                btn_relay.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
             else
-                btn_relay.BorderBrush = Brushes.Gray;
+                btn_relay.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_radio")
-                btn_radio.BorderBrush = Brushes.Yellow;
+                btn_radio.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
             else
-                btn_radio.BorderBrush = Brushes.Gray;
+                btn_radio.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_night")
-                btn_night.BorderBrush = Brushes.Yellow;
+                btn_night.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
             else
-                btn_night.BorderBrush = Brushes.Gray;
+                btn_night.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_log")
-                btn_log.BorderBrush = Brushes.Yellow;
+                btn_log.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
             else
-                btn_log.BorderBrush = Brushes.Gray;
+                btn_log.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
         }
 
         //=========================================================================

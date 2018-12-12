@@ -9,8 +9,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <!--<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" CornerRadius="15,15,15,15" Border.Background ="{TemplateBinding Background}">-->
-                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="3" CornerRadius="15,15,15,15" Border.Background = "#FFCBC7C7">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" CornerRadius="15,15,15,15" Border.Background ="{TemplateBinding Background}">
+                    <!--<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="3" CornerRadius="15,15,15,15" Border.Background = "#FFCBC7C7">-->
                         <!--<Border.Background>
                             <LinearGradientBrush EndPoint="0,0" StartPoint="0,1">
                                 <GradientStop Color="White" Offset="0.0" />

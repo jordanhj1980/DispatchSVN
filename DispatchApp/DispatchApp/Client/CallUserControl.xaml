@@ -161,12 +161,12 @@
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,0" Text="邮件" VerticalAlignment="Bottom" Width="80" Foreground="#FFD8D7D7" />
                 </StackPanel>
             </Button>
-            <Button HorizontalAlignment="Center" Grid.Row="4" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Click="Button_Meeting" Background="{x:Null}" Opacity="0.4">
+            <!--<Button HorizontalAlignment="Center" Grid.Row="4" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Click="Button_Meeting" Background="{x:Null}" Opacity="0.4">
                 <StackPanel VerticalAlignment="Top">
                     <Image Height="64" Source="../Resources/groupconf.png" Width="64" />
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,0" Text="会议" VerticalAlignment="Bottom" Width="80" Foreground="#FFD8D7D7" />
                 </StackPanel>
-            </Button>
+            </Button>-->
         </Grid>
 
         <!--分割线，需要加粗-->
@@ -209,21 +209,21 @@
                 </StackPanel>
             </Button>
             <Button Name="btn_insert"
-                Width="100" Background="#FFCBC7C7" Click="Button_Insert" Style="{DynamicResource RoundedButton}">
+                Width="100" Click="Button_Insert" Style="{DynamicResource RoundedButton}">
                 <StackPanel VerticalAlignment="Top">
                     <Image Height="64" Source="/DispatchApp;component/Resources/call_insert.png" Width="64" />
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="强插" VerticalAlignment="Bottom" Width="80" />
                 </StackPanel>
             </Button>
             <Button Name="btn_split"
-                Width="100" Background="#FFCBC7C7" Click="Button_Split" Style="{DynamicResource RoundedButton}">
+                Width="100" Click="Button_Split" Style="{DynamicResource RoundedButton}">
                 <StackPanel VerticalAlignment="Top">
                     <Image Height="64" Source="../Resources/call_split.png" Width="64" />
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="强拆" VerticalAlignment="Bottom" Width="80" />
                 </StackPanel>
             </Button>
             <Button x:Name="btn_monitor"
-            	Width="100" Background="#FFCBC7C7" Click="Button_Monitor" Style="{DynamicResource RoundedButton}" Margin="13,0">
+            	Width="100" Click="Button_Monitor" Style="{DynamicResource RoundedButton}" Margin="13,0">
                 <StackPanel VerticalAlignment="Top">
                     <Image Height="64" Source="../Resources/monitor.png" Width="64" />
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="监听" VerticalAlignment="Bottom" Width="80" />
@@ -252,14 +252,14 @@
                 </StackPanel>
             </Button>
             <Button Name="btn_relay"
-                Width="100" Background="#FFCBC7C7" Click="Relay_Click" Style="{DynamicResource RoundedButton}">
+                Width="100" Click="Relay_Click" Style="{DynamicResource RoundedButton}">
                 <StackPanel VerticalAlignment="Top">
                     <Image Height="64" Source="../Resources/binding.png" Width="64" />
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="中继" VerticalAlignment="Bottom" Width="80" />
                 </StackPanel>
             </Button>
             <Button Name="btn_radio"
-                Width="100" Background="#FFCBC7C7" Click="Radio_Click" Style="{DynamicResource RoundedButton}">
+                Width="100" Click="Radio_Click" Style="{DynamicResource RoundedButton}">
                 <StackPanel VerticalAlignment="Top">
                     <Image Height="64" Source="../Resources/broadcastDark.png" Width="64" />
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="广播" VerticalAlignment="Bottom" Width="80" />
@@ -282,12 +282,20 @@
             </Button>
 
             <Button Name="btn_log"
-                    Width="100" Background="#FFCBC7C7" Click="Button_Log" Style="{DynamicResource RoundedButton}">
+                    Width="100" Click="Button_Log" Style="{DynamicResource RoundedButton}">
                 <StackPanel VerticalAlignment="Top">
                     <Image Height="64" Source="../Resources/log.png" Width="64" />
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="日志" VerticalAlignment="Bottom" Width="80" />
                 </StackPanel>
             </Button>
+            <Button x:Name="btn_meeting"
+                    Width="100" Click="Button_Meeting" Style="{DynamicResource RoundedButton}" Margin="13,0">
+                <StackPanel VerticalAlignment="Top">
+                    <Image Height="64" Source="../Resources/groupconf.png" Width="64" />
+                    <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="会议" VerticalAlignment="Bottom" Width="80" />
+                </StackPanel>
+            </Button>
+
             <!--Click = "Button_CallKeyBord"-->
 
         </WrapPanel>
