@@ -34,18 +34,22 @@
 
     <Grid>
         <Grid.Resources>
+            <local:MyPrivilegeToVisibilityConverter x:Key="MyValToVisibilityConverter" />
+            <local:UserImageConverter x:Key="ImgConverter"/>
+            
             <HierarchicalDataTemplate DataType="{x:Type local:User}">
                 <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon Kind="Keyboard" 
-                            Width="40" Height="40" 
-                            Margin="0,0,10,0"
-                            VerticalAlignment="Center" />
-                    <TextBlock  Text="{Binding Path=name}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignDisplay1TextBlock}"/>
+                    <Image Width="40" Height="40"  Margin="0,0,10,0" VerticalAlignment="Center" 
+                           Source="{Binding Path=privilege, Converter={StaticResource ImgConverter}}"/>
+                    <TextBlock Text="{Binding Path=name}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignDisplay1TextBlock}"/>
                 </StackPanel>
-            </HierarchicalDataTemplate>
-            <local:MyPrivilegeToVisibilityConverter x:Key="MyValToVisibilityConverter" />
+            </HierarchicalDataTemplate>            
         </Grid.Resources>
-        <StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="643*"/>
+            <ColumnDefinition Width="317*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.ColumnSpan="2">
             <!--主标题-->
             <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5"
                 Height="50"
@@ -91,7 +95,7 @@
                         Background="{DynamicResource PrimaryHueLightBrush}"
                         Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
                         UniformCornerRadius="0" FontSize="24">
-                        <TextBlock Text="基本信息" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Text="基本信息" VerticalAlignment="Center" HorizontalAlignment="Center"/>                        
                     </materialDesign:Card>
                     <materialDesign:Card x:Name="userview" Margin="10,0,10,10"
                     materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Visible"   
@@ -114,7 +118,7 @@
                             </DockPanel>
                             <DockPanel Height="60">
                                 <TextBlock Text="权限:" Width="60" VerticalAlignment="Center" Margin="40,0,10,0"
-                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>                                
+                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
                                 <ComboBox Name="userPriv" ItemsSource="{Binding privCandidateList}" 
                                 Width="244" HorizontalAlignment="Left"                                           
                                 SelectedValuePath="id" DisplayMemberPath="description" 
@@ -130,15 +134,14 @@
                                 Width="244" HorizontalAlignment="Left" 
                                 Visibility="{Binding ElementName=userPriv, Path=SelectedValue, Mode=OneWay, Converter={StaticResource MyValToVisibilityConverter}}"                                          
                                 SelectedValuePath="id" DisplayMemberPath="description" 
-                                SelectedValue="{Binding SelectedUser.desk, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>                                
+                                SelectedValue="{Binding SelectedUser.desk, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
                             </DockPanel>
                             <DockPanel Height="60">
                                 <TextBlock Text="描述:" Width="60" VerticalAlignment="Center" Margin="40,16,10,16"
                                            Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
                                 <TextBox Name="userDesp" Text="{Binding SelectedUser.description}"
                                 Width="300" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
-                                <TextBox Name="d" Text="{}"
-                                Width="300" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
+                                 
                             </DockPanel>
                         </StackPanel>
                     </materialDesign:Card>

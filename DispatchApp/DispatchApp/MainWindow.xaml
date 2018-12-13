@@ -121,7 +121,7 @@
                             <materialDesign:PackIcon Kind="ContactMail" Width="60" Height="60" VerticalAlignment="Center" Margin="5,0,0,0"/>
                             <TextBlock Block.TextAlignment="Center"  Width="100" Text="电话簿" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="22" FontFamily="SimHei" VerticalAlignment="Center"/>
                         </StackPanel>
-                    </Button>
+                    </Button>                    
                     <Label Name="ShowKeyLabel" 
                         VerticalContentAlignment="Center" 
                         FontSize="46" 
