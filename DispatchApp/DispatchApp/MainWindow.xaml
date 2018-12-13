@@ -2,7 +2,6 @@
         x:Class="DispatchApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        FontFamily="simHei"
         xmlns:local="clr-namespace:DispatchApp"
         Title="MainWindow" Height="1080" Width="1920" ResizeMode="CanMinimize" mc:Ignorable="d" 
         Margin="0" 
@@ -151,8 +150,9 @@
             </Label>
             
             <!--底部-->
-            <StackPanel Grid.Row="3">
-                <Label Content="服务器IP:" Foreground="#FFD8D7D7" FontSize="22" HorizontalAlignment="Left" Width="277"/>
+            <StackPanel Grid.Row="3" Orientation="Horizontal">
+                <Label Content="服务器IP:" Foreground="#FFD8D7D7" FontSize="22" HorizontalAlignment="Left" Width="109" Margin="0,0,0,0.4"/>
+                <TextBlock Name="serverIP" Text="127.0.0.1" VerticalAlignment="Center" Foreground="#FFD8D7D7" FontSize="22" HorizontalAlignment="Left" Width="277"/>
             </StackPanel>
             
             <!--界面内容容器-->

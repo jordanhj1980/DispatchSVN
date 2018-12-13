@@ -63,6 +63,8 @@ namespace DispatchApp
             get { return m_ServerIP; }
             set { 
                 m_ServerIP = value;
+                // 界面左下角显示服务器IP
+                this.serverIP.Text = value;
                 saveUserOption();
             }
         }

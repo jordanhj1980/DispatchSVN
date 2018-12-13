@@ -103,6 +103,16 @@ namespace DispatchApp.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap call_hold_dark {
+            get {
+                object obj = ResourceManager.GetObject("call_hold_dark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap call_ing {
             get {
                 object obj = ResourceManager.GetObject("call_ing", resourceCulture);
@@ -123,6 +133,16 @@ namespace DispatchApp.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap call_insert_dark {
+            get {
+                object obj = ResourceManager.GetObject("call_insert_dark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap call_split {
             get {
                 object obj = ResourceManager.GetObject("call_split", resourceCulture);
@@ -133,9 +153,29 @@ namespace DispatchApp.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap call_split_dark {
+            get {
+                object obj = ResourceManager.GetObject("call_split_dark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap call_transfer {
             get {
                 object obj = ResourceManager.GetObject("call_transfer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap call_transfer_dark {
+            get {
+                object obj = ResourceManager.GetObject("call_transfer_dark", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -196,6 +236,16 @@ namespace DispatchApp.Properties {
         internal static System.Drawing.Bitmap groupconf {
             get {
                 object obj = ResourceManager.GetObject("groupconf", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap groupconf_dark {
+            get {
+                object obj = ResourceManager.GetObject("groupconf_dark", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -326,6 +376,16 @@ namespace DispatchApp.Properties {
         internal static System.Drawing.Bitmap monitor {
             get {
                 object obj = ResourceManager.GetObject("monitor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap night_portrait_dark {
+            get {
+                object obj = ResourceManager.GetObject("night_portrait_dark", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

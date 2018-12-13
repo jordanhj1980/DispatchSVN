@@ -235,4 +235,22 @@
   <data name="lock_close_128" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lock_close_128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="call_hold_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\call_hold_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="call_insert_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\call_insert_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="call_split_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\call_split_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="call_transfer_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\call_transfer_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="groupconf_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\groupconf_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="night_portrait_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\night_portrait_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

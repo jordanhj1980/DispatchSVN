@@ -205,21 +205,21 @@
                 Width="100" Style="{DynamicResource RoundedButton}" 
                 Click="Button_Transfer" >
                 <StackPanel VerticalAlignment="Top">
-                    <Image Height="64" Source="../Resources/call_transfer.png" Width="64" />
+                    <Image Height="64" Source="../Resources/call_transfer_dark.png" Width="64" />
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="转接" VerticalAlignment="Bottom" Width="80" />
                 </StackPanel>
             </Button>
             <Button Name="btn_insert"
                 Width="100" Click="Button_Insert" Style="{DynamicResource RoundedButton}">
                 <StackPanel VerticalAlignment="Top">
-                    <Image Height="64" Source="/DispatchApp;component/Resources/call_insert.png" Width="64" />
+                    <Image Height="64" Source="/DispatchApp;component/Resources/call_insert_dark.png" Width="64" />
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="强插" VerticalAlignment="Bottom" Width="80" />
                 </StackPanel>
             </Button>
             <Button Name="btn_split"
                 Width="100" Click="Button_Split" Style="{DynamicResource RoundedButton}">
                 <StackPanel VerticalAlignment="Top">
-                    <Image Height="64" Source="../Resources/call_split.png" Width="64" />
+                    <Image Height="64" Source="../Resources/call_split_dark.png" Width="64" />
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="强拆" VerticalAlignment="Bottom" Width="80" />
                 </StackPanel>
             </Button>
@@ -271,7 +271,7 @@
                 Width="100"
                 Style="{DynamicResource RoundedButton}">
                 <StackPanel VerticalAlignment="Top">
-                    <Image Source="../Resources/night_portrait.png" 
+                    <Image Source="../Resources/night_portrait_dark.png" 
                         Height="64" Width="64" />
                     <TextBlock Text="夜服"
                         Block.TextAlignment="Center" 
@@ -292,7 +292,7 @@
             <Button x:Name="btn_meeting"
                     Width="100" Click="Button_Meeting" Style="{DynamicResource RoundedButton}" Margin="13,0">
                 <StackPanel VerticalAlignment="Top">
-                    <Image Height="64" Source="../Resources/groupconf.png" Width="64" />
+                    <Image Height="64" Source="../Resources/groupconf_dark.png" Width="64" />
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="会议" VerticalAlignment="Bottom" Width="80" />
                 </StackPanel>
             </Button>
