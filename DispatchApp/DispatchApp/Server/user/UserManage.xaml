@@ -43,6 +43,7 @@
                     <TextBlock  Text="{Binding Path=name}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignDisplay1TextBlock}"/>
                 </StackPanel>
             </HierarchicalDataTemplate>
+            <local:MyPrivilegeToVisibilityConverter x:Key="MyValToVisibilityConverter" />
         </Grid.Resources>
         <StackPanel>
             <!--主标题-->
@@ -113,24 +114,31 @@
                             </DockPanel>
                             <DockPanel Height="60">
                                 <TextBlock Text="权限:" Width="60" VerticalAlignment="Center" Margin="40,0,10,0"
-                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
-                                <TextBox x:Name="userPriv" Text="{Binding SelectedUser.privilege}" 
-                                Width="260" VerticalAlignment="Center"  Margin="0,0,10,0" FontSize="24"/>
+                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>                                
+                                <ComboBox Name="userPriv" ItemsSource="{Binding privCandidateList}" 
+                                Width="244" HorizontalAlignment="Left"                                           
+                                SelectedValuePath="id" DisplayMemberPath="description" 
+                                SelectedValue="{Binding SelectedUser.privilege, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
                                 <TextBlock Text="角色:" Width="52" VerticalAlignment="Center" Margin="20,16,10,16"
                                            Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
                                 <TextBox Name="userRole" Text="{Binding SelectedUser.role}" 
                                 Width="300" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24" />
                                 <TextBlock Text="所属调度台:" Width="140" VerticalAlignment="Center" Margin="20,0,10,0"
-                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
-                                <TextBox Name="userDesk" Text="{Binding SelectedUser.desk}"
-                                Width="244" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
+                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}" 
+                                           Visibility="{Binding ElementName=userPriv, Path=SelectedValue, Mode=OneWay, Converter={StaticResource MyValToVisibilityConverter}}"/>
+                                <ComboBox Name="userDesk" ItemsSource="{Binding deskList}" 
+                                Width="244" HorizontalAlignment="Left" 
+                                Visibility="{Binding ElementName=userPriv, Path=SelectedValue, Mode=OneWay, Converter={StaticResource MyValToVisibilityConverter}}"                                          
+                                SelectedValuePath="id" DisplayMemberPath="description" 
+                                SelectedValue="{Binding SelectedUser.desk, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>                                
                             </DockPanel>
                             <DockPanel Height="60">
                                 <TextBlock Text="描述:" Width="60" VerticalAlignment="Center" Margin="40,16,10,16"
                                            Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
                                 <TextBox Name="userDesp" Text="{Binding SelectedUser.description}"
                                 Width="300" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
-
+                                <TextBox Name="d" Text="{}"
+                                Width="300" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
                             </DockPanel>
                         </StackPanel>
                     </materialDesign:Card>
@@ -139,7 +147,7 @@
                         UniformCornerRadius="0" FontSize="24">
                         <StackPanel Height="100" RenderTransformOrigin="0.458,0.499" Orientation="Horizontal">
                             <Button Content="保存" FontSize="24" Click="Update_Click"  VerticalAlignment="Center" Width="100" Margin="10,0,0,0"/>
-                            <Label Name="result" FontSize="24" Content="re"  VerticalAlignment="Center" Margin="10,31,0,31" Width="410"/>
+                            <Label Name="result" FontSize="24" Content=""  VerticalAlignment="Center" Margin="10,31,0,31" Width="410"/>
                         </StackPanel>
                     </materialDesign:Card>
                 </StackPanel>

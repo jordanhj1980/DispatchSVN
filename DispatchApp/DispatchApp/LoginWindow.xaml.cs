@@ -224,7 +224,7 @@ namespace DispatchApp
             }
             catch (SystemException exc)
             {
-                System.Windows.MessageBox.Show(exc.Message + "Form_Loaded");
+                //System.Windows.MessageBox.Show(exc.Message + "Form_Loaded");
                 if (sr != null)
                 {
                     sr.Close();

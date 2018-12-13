@@ -2,7 +2,7 @@
         x:Class="DispatchApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-
+        FontFamily="simHei"
         xmlns:local="clr-namespace:DispatchApp"
         Title="MainWindow" Height="1080" Width="1920" ResizeMode="CanMinimize" mc:Ignorable="d" 
         Margin="0" 

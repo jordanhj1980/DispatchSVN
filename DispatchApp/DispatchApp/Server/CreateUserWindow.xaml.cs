@@ -34,8 +34,8 @@ namespace DispatchApp
             /* 用户角色列表 */
             List<UserStatus> allstatus = new List<UserStatus>
             {
-                new UserStatus(1, "启用"),
-                new UserStatus(2, "停用"),
+                new UserStatus("1", "启用"),
+                new UserStatus("2", "停用"),
             };
 
             comBox_status.ItemsSource = allstatus;

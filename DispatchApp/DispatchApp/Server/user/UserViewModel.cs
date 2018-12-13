@@ -33,6 +33,14 @@ namespace DispatchApp
         public UserViewModel() 
         {
             _userlist = new ObservableCollection<User>();
+            _deskList = new ObservableCollection<UserStatus>();
+
+            _privCandidateList = new List<UserStatus>();
+            /* 初始化权限下拉列表 */
+            UserStatus stat = new UserStatus("2", "键盘调度员");
+            _privCandidateList.Add(stat);
+            stat = new UserStatus("1", "管理员");
+            _privCandidateList.Add(stat);
         }
 
         /// <summary>
@@ -54,7 +62,26 @@ namespace DispatchApp
             }
         }
 
-        
+        private List<UserStatus> _privCandidateList;
+        public List<UserStatus> privCandidateList
+        {
+            get { return _privCandidateList; }
+            set
+            {
+                SetAndNotifyIfChanged("privCandidateList", ref _privCandidateList, value);
+            }
+        }
+
+        // 添加调度台信息  add by twinkle 20181122 
+        private ObservableCollection<UserStatus> _deskList;
+        public ObservableCollection<UserStatus> deskList
+        {
+            get { return _deskList; }
+            set
+            {
+                SetAndNotifyIfChanged("deskList", ref _deskList, value);
+            }
+        }
 
     }
 }

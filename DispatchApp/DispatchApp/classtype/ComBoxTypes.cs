@@ -27,10 +27,10 @@ namespace DispatchApp
 
     public class UserStatus
     {
-        public Int16 id { set; get; }
+        public string id { set; get; }
         public string description { set; get; }
 
-        public UserStatus(Int16 idparam, string des)
+        public UserStatus(string idparam, string des)
         {
             id = idparam;
             description = des;

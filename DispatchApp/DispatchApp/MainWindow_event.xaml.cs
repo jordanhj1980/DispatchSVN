@@ -18,6 +18,7 @@ using System.Configuration;
 
 using Npgsql;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace DispatchApp
 {
@@ -103,6 +104,9 @@ namespace DispatchApp
         private void man_user_click(object sender, RoutedEventArgs e)
         {
             callManagerCtrl.man_header_click("user");
+
+            /* 发送调度台查询命令 */
+            queryDesk();
         }
 
         private void man_desk_click(object sender, RoutedEventArgs e)
@@ -115,6 +119,19 @@ namespace DispatchApp
             callManagerCtrl.man_header_click("contact");
         }
 
+        // 查询调度键盘
+        public void queryDesk()
+        {
+            SearchDesk searchDesk = new SearchDesk();
+            searchDesk.sequence = GlobalFunAndVar.sequenceGenerator();
+            StringBuilder sb = new StringBuilder(100);
+            sb.Append("MAN#GETALLKEYBOARD#");
+            sb.Append(JsonConvert.SerializeObject(searchDesk));
+
+            Debug.WriteLine("SEND：" + sb.ToString());
+            ws.Send(sb.ToString());
+
+        }
     }
 }
 

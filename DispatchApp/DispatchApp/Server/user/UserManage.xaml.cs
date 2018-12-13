@@ -103,9 +103,7 @@ namespace DispatchApp
 
                     userDataModel.UserList.Add(item);
                 }
-                //  = list;
             }
-
         }
 
         private void delUser(string data)
@@ -191,11 +189,24 @@ namespace DispatchApp
             userobj.name = name;
         }
 
+        public void freshDeskList(ObservableCollection<UserStatus> list)
+        {
+            /* 清空列表 */
+            userDataModel.deskList.Clear();
+            /*foreach (UserStatus item in list)
+            {
+                userDataModel.deskList.Add(item);
+            }*/
+            userDataModel.deskList = list;
+        }
+
+
         /* 添加用户 */
         private void add_Click(object sender, RoutedEventArgs e)
         {
             userDataModel.SelectedUser = new User();
             userDataModel.SelectedUser.name = "新用户";
+            userDataModel.SelectedUser.privilege = "2";
             userDataModel.NewUser = true;
         }
 
@@ -215,11 +226,14 @@ namespace DispatchApp
             TreeViewItem tvi = e.OriginalSource as TreeViewItem;
             if (tvi.Header is User)
             {
-                var modelkey = tvi.Header as User;
+                User modelkey = tvi.Header as User;
                 // 赋值给UI的临时对象，用于显示
-                userDataModel.SelectedUser = modelkey;
-                /* 表示是否是新建用户 */
-                userDataModel.NewUser = false;
+                if (modelkey != null)
+                {
+                    userDataModel.SelectedUser = modelkey;
+                    /* 表示是否是新建用户 */
+                    userDataModel.NewUser = false;
+                }                
             }
         }
 
@@ -234,10 +248,17 @@ namespace DispatchApp
                 item.name = userName.Text.Trim();
                 item.password = userPass.Text.Trim();
                 item.status = userStatus.Text.Trim();
-                item.privilege = userPriv.Text.Trim();
-                //int ind = userDesk.SelectedIndex;
-                //tempUser.desk = deskList[ind].id.ToString();// userDesk.SelectedValue.ToString(); //userDesk.Text.Trim();
-                item.desk = userDesk.Text.Trim();
+                //item.privilege = userPriv.Text.Trim();
+                item.privilege = userPriv.SelectedValue as string;
+                int ind = userDesk.SelectedIndex;
+                if (item.privilege == "2")
+                {
+                    item.desk = userDataModel.deskList[ind].id;// userDesk.SelectedValue.ToString(); //userDesk.Text.Trim();
+                }
+                else
+                {
+                    item.desk = "";
+                }              
                 item.role = userRole.Text.Trim();                
                 item.description = userDesp.Text.Trim();
 

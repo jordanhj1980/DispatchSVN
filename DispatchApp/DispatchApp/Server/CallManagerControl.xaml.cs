@@ -79,21 +79,7 @@ namespace DispatchApp
 
         // 新建用户窗口，可以反复打开
         CreateUserWindow cuw;
-        // 添加调度台信息  add by twinkle 20181122 
-        private ObservableCollection<UserStatus> deskList;
-        /*
-        public List<UserStatus> deskList
-        {
-            get { return _deskList; }
-            set
-            {
-                if (_deskList != value)
-                {
-                    _deskList = value;
-                    RaisePropertyChanged("deskList");
-                }
-            }
-        }*/
+
         //public KeyBoardManageViewModel keyboardmanagedata; //调度键盘界面数据
         KeyBoardManage keyboardmanagetab;
         /* 软交换界面TabItem */
@@ -140,10 +126,6 @@ namespace DispatchApp
             cuw = new CreateUserWindow();
             // 传递消息事件
             cuw.msgevent += new CreateUserWindow.CWHandler(sendMsg);
-
-            deskList = new ObservableCollection<UserStatus>();
-            // 绑定数据
-            userDesk.ItemsSource = deskList;
         }        
        
         /// <summary>
@@ -531,52 +513,7 @@ namespace DispatchApp
         // 更新用户信息        
         private void Btn_UserUpdate_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = sender as Button;
-            if (btn != null)
-            {
-                // 获取当前的list序号
-                Int16 index = Convert.ToInt16(btn.Tag);
-                Debug.WriteLine("update index: " + btn.Tag);
-
-                USEREDITITEM tempUser = new USEREDITITEM();
-                tempUser.sequence = GlobalFunAndVar.sequenceGenerator();
-                tempUser.name = userName.Text.Trim();
-                tempUser.password = userPass.Text.Trim();
-                tempUser.status = userStatus.Text.Trim();
-                tempUser.description = userDesp.Text.Trim();
-                int ind = userDesk.SelectedIndex;
-                tempUser.desk = deskList[ind].id.ToString();// userDesk.SelectedValue.ToString(); //userDesk.Text.Trim();
-                tempUser.role = userRole.Text.Trim();
-                tempUser.privilege = userPriv.Text.Trim();
-
-                // 用于界面显示
-                User uiUser = new User();
-                uiUser.sequence = tempUser.sequence;
-                uiUser.name = tempUser.name;
-                uiUser.password = tempUser.password;
-                uiUser.status = tempUser.status;
-                uiUser.description = tempUser.description;
-                uiUser.desk = tempUser.desk;
-                uiUser.role = tempUser.role;
-                uiUser.privilege = tempUser.privilege;
-                // 保存List的序号
-                uiUser.index = index;
-
-                /* 向服务器发送删除消息 */
-
-                StringBuilder sb = new StringBuilder(100);
-                sb.Append("MAN#EDITUSER#");
-                sb.Append(JsonConvert.SerializeObject(tempUser));
-
-                Debug.WriteLine("SEND: " + sb.ToString());
-                sendMsg(this, "net", sb.ToString());
-                sendMsg(this, "user", uiUser);
-                /*
-                BindingExpression be = temp.GetBindingExpression(TextBox.TextProperty);
-                be.UpdateSource();
-                */
-                //MainWindow.swList[index].name = switchGrid.
-            }
+            
         }
 
 

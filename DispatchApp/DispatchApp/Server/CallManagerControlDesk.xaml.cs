@@ -222,12 +222,11 @@ namespace DispatchApp
             List<propertyNodeItem> listItem = new List<propertyNodeItem>();
 
             // add by twinkle 20181123
+            ObservableCollection<UserStatus>  deskList = new ObservableCollection<UserStatus>();
             if (tabControl_mgt.SelectedIndex == 1)
             {
                 // 首先清空调度台的列表
                 deskList.Clear();
-                // 增加一个空白项
-                //deskList.Add(new UserStatus(0, ""));
             }
 
             /* 调度台查询到的信息 */
@@ -247,19 +246,26 @@ namespace DispatchApp
                 // 第一级树枝加入树中
                 listItem.Add(keyBoardNode);
 
-                // 添加调度台信息  add by twinkle 20181122 
-                // 如果当前的界面是添加用户界面，才执行下面操作
-                if (tabControl_mgt.SelectedIndex == 1) { 
-                    UserStatus us = new UserStatus(Convert.ToInt16(keyBoard.index), keyBoard.name);
-                    deskList.Add(us);
+                // 添加调度台信息  add by twinkle 20181122
+
+                string keyidx = "";
+                if (keyBoard.index != null)
+                {
+                    keyidx = keyBoard.index;
                 }
+                UserStatus us = new UserStatus(keyidx, keyBoard.name);
+                deskList.Add(us);
             }
 
+            usermanagetab.freshDeskList(deskList);
+
+            /*
             this.tvProperty.ItemsSource = listItem;
             if (deskList.Count > 0)
             {
                 cuw.freshDeskCombox(deskList.ToList<UserStatus>());
             }
+             * */
 
         }
 

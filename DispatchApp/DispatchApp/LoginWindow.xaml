@@ -92,16 +92,14 @@
                         x:Name="SnackbarOne" 
                         />
                     <StackPanel Name="serialBox" Orientation="Horizontal" Grid.Row="4" Height="50" HorizontalAlignment="Center">
-                        <TextBlock Text="注册码：" Foreground="White" Width="106" VerticalAlignment="Center" Margin="20,0,5,0"
-                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+                        <TextBlock Text="注册码：" FontSize="24" Foreground="White" Width="106" VerticalAlignment="Center" Margin="20,0,5,0"/>
                         <TextBox x:Name="serial" Foreground="White" 
                                 Width="231" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20"/>
                         <Button Foreground="White" Content="注册" Click="register_click"
                                 Width="72" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" Margin="0,4"/>
                     </StackPanel>
                     <StackPanel Name="advBox" Orientation="Horizontal" Grid.Row="5" Height="40" HorizontalAlignment="Center">
-                        <TextBlock Text="IP地址：" Foreground="White" Width="106" VerticalAlignment="Center" Margin="20,0,5,0"
-                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+                        <TextBlock Text="IP地址：" FontSize="24" Foreground="White" Width="106" VerticalAlignment="Center" Margin="20,0,5,0"/>
                         <TextBox x:Name="IPAddr" Foreground="White"          
                                 Width="294" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="24"/>
                     </StackPanel>
