@@ -181,7 +181,7 @@ namespace DispatchApp
             else
             {
                 isExpand = true;
-                advBox.Visibility = Visibility.Collapsed;
+                advBox.Visibility = Visibility.Visible;
                 this.loginBox.Height += 40;
             }
             
