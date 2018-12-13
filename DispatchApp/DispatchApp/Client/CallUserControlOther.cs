@@ -334,6 +334,7 @@ namespace DispatchApp
             tab.BorderBrush = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
             //tab.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("{x:Null}"));
             ListBox MyWrapPanel2 = new ListBox();   // 选项卡中的容器，用于存放每一个元素
+            MyWrapPanel2.Name = "name"+tab.Header.ToString();
             MyWrapPanel2.Style = FindResource("WrapListBoxStyle") as Style;
 
             /* 处理组员 */
@@ -400,17 +401,37 @@ namespace DispatchApp
                         mainWindow.ShowKeyLabel.Content = "键权电话强插" + clientCall;
                         mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
                         userNow.CurrentState = "INSTER";
+                        userNow.insterNum = serverCall;
                         Debug.WriteLine("键权电话强插" + clientCall);
                     }
                     else if (userNow.CurrentState == "INSTER")
                     {
-                        strMsg = "CMD#Clear#" + userNow.labelNumToId.Content;
-                        mainWindow.ws.Send(strMsg);
-                        operaState = e_OperaState.NULL;
-                        FunKeysBorderBrush("");
-                        mainWindow.ShowKeyLabel.Content = "键权电话强拆" + userNow.labelNumToId.Content;
-                        mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
-                        Debug.WriteLine("键权电话强拆" + userNow.labelNumToId.Content);
+                        if (serverCall == userNow.insterNum)
+                        { 
+                            //strMsg = "CMD#Clear#" + userNow.labelNumToId.Content;
+                            userNow.callNum.fromid = userNow.labelNumFromId.Content.ToString();
+                            userNow.callNum.toid = userNow.labelNumToId.Content.ToString();
+                            strMsg = "CMD#Clear#" + JsonConvert.SerializeObject(userNow.callNum);
+                            mainWindow.ws.Send(strMsg);
+                            operaState = e_OperaState.NULL;
+                            FunKeysBorderBrush("");
+                            mainWindow.ShowKeyLabel.Content = "键权电话强拆" + userNow.labelNumToId.Content;
+                            mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                            userNow.callNum.toid = serverCall;// 呼叫方变为键权电话
+                            userNow.labelNumToId.Content = userNow.callNum.toid;
+                            Debug.WriteLine("键权电话强拆" + userNow.labelNumToId.Content);
+                        }
+                        else
+                        {
+                            tellCall = new call() { fromid = serverCall, toid = clientCall };
+                            strMsg = "CMD#Bargein#" + JsonConvert.SerializeObject(tellCall);
+                            mainWindow.ws.Send(strMsg);
+                            mainWindow.ShowKeyLabel.Content = "键权电话强插" + clientCall;
+                            mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                            userNow.CurrentState = "INSTER";
+                            userNow.insterNum = serverCall;
+                            Debug.WriteLine("键权电话强插" + clientCall);
+                        }
                     }
                     else
                     {
@@ -441,10 +462,14 @@ namespace DispatchApp
                     Debug.WriteLine("键权电话监听" + clientCall);
                     break;
                 case e_OperaState.SPLIT:
-                    strMsg = "CMD#Clear#" + clientCall;
+                    userNow.callNum.fromid = userNow.labelNumFromId.Content.ToString();
+                    //userNow.callNum.toid = userNow.labelNumToId.Content.ToString();
+                    userNow.callNum.toid = userNow.callNum.fromid;
+                    strMsg = "CMD#Clear#" + JsonConvert.SerializeObject(userNow.callNum);
                     mainWindow.ws.Send(strMsg);
                     operaState = e_OperaState.NULL;
                     FunKeysBorderBrush("");
+                    //userNow.callNum = new call();
                     mainWindow.ShowKeyLabel.Content = "键权电话强拆" + clientCall;
                     mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
                     Debug.WriteLine("键权电话强拆" + clientCall);

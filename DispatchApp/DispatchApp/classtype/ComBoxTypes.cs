@@ -22,7 +22,6 @@ namespace DispatchApp
             swt = swtparam;
             description = des;
         }
-
     }
 
     public class UserStatus

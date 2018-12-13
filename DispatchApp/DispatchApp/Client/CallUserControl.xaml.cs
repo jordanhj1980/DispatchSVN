@@ -46,6 +46,10 @@ namespace DispatchApp
     {
         public string fromid;
         public string toid;
+        public string visitorid;
+        public string outerid;
+        public string callid;
+
     }
 
     /// <summary>
@@ -191,6 +195,19 @@ namespace DispatchApp
             // 初始化界面应隐藏日志界面
             LogCtrl.Visibility = Visibility.Hidden;
 
+            List<SetColumn> colType = new List<SetColumn>
+            {
+                new SetColumn(6, "6列"),
+                new SetColumn(8, "8列"),
+                new SetColumn(10, "10列"),
+                new SetColumn(12, "12列"),
+            };
+
+            ColComboBox.ItemsSource = colType;
+            ColComboBox.DisplayMemberPath = "description";
+            ColComboBox.SelectedValuePath = "col";
+            ColComboBox.SelectedIndex = 1;
+
 
         }
 
@@ -247,16 +264,6 @@ namespace DispatchApp
                         c_callTypeInfo.status = e_CallType.Key;
                         SetKeyCall();
                         break;
-                    //case "T":
-                    //    PageRelay = item;
-                    //    c_callTypeInfo.status = e_CallType.RELAY;
-                    //    SetRelayCall();
-                    //    break;
-                    //case "B":
-                    //    PageRadio = item;
-                    //    c_callTypeInfo.status = e_CallType.RADIO;
-                    //    SetRadioCall();
-                    //    break;
                     default:
                         s_ListUser user = new s_ListUser();
                         user.GroupUser = item;
@@ -339,7 +346,7 @@ namespace DispatchApp
                     uicall.visitorid = cals.visitorid;
                     uicall.fromnumber = cals.fromnumber;
                     uicall.tonumber = cals.tonumber;
-                    uicall.CurrentState = "IDLE";   /**/
+                    uicall.CurrentState = "IDLE";   
                     m_callQueue.Add(uicall);
                 }
             }
@@ -626,6 +633,7 @@ namespace DispatchApp
                                     break;
                                 case "IDLE":
                                     temp.CurrentState = state;
+                                    temp.callNum = new call();  // 呼叫信息清零
                                     temp.timer_Stop();
                                     temp.labelNumFromId.Content = callNum;
                                     temp.labelNumToId.Content = "no";
@@ -660,13 +668,14 @@ namespace DispatchApp
                                     break;
                                 case "ANSWER":
                                     //if (((e_OperaState.INTER != operaState) && (e_OperaState.LISTEN != operaState)) || (callNum != clientCall))
-                                    if ((temp.CurrentState != "INSTER") && (temp.CurrentState != "LISTEN") || (callNum != clientCall))
+                                    if ((temp.CurrentState != "INSTER") && (temp.CurrentState != "LISTEN") || (callNum != temp.callNum.fromid))
                                     {
                                         temp.labelNumFromId.Content = tempName.fromid;
                                         temp.labelNumToId.Content = tempName.toid;
                                         temp.timer_Stop();
                                         temp.ShowCallTime();
                                         temp.CurrentState = state;
+                                        temp.callNum = tempName;
                                     }
                                     else
                                     {
@@ -676,13 +685,14 @@ namespace DispatchApp
                                 case "ANSWERED":
                                     //if ((("Insert" != stateUser.state) && ("Monitor" != stateUser.state)) || (num != stateUser.num))
                                     //if (((e_OperaState.INTER != operaState) && (e_OperaState.LISTEN != operaState)) || (callNum != clientCall))
-                                    if ((temp.CurrentState != "INSTER") && (temp.CurrentState != "LISTEN") || (callNum != clientCall))
+                                    if ((temp.CurrentState != "INSTER") && (temp.CurrentState != "LISTEN") || (callNum != temp.callNum.fromid))
                                     {
                                         temp.labelNumFromId.Content = tempName.fromid;
                                         temp.labelNumToId.Content = tempName.toid;
                                         temp.timer_Stop();
                                         temp.ShowCallTime();
                                         temp.CurrentState = state;
+                                        temp.callNum = tempName;
                                         //stateUser.state = "";
                                         //stateUser.num = num;
                                     }
@@ -894,26 +904,6 @@ namespace DispatchApp
                 var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
                 //MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
             }
-            //else if ("0" == clientCall)
-            //{
-            //    var view = new MessageBoxShow();
-            //    view.MsgBoxShowText.Text = "当前终端电话空\r\n请点击终端电话！";
-            //    var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
-            //    //MessageBox.Show("当前终端电话空\r\n请点击终端电话！", "呼叫信息");
-            //}
-            //else
-            //{
-            //    /* 如果当前选择的键权电话正处于通话过程中，hold */
-            //    if (m_keyphone[m_keyIndex].Status == KeyStatus.ESTABLISHED ||
-            //        m_keyphone[m_keyIndex].Status == KeyStatus.CALLING)
-            //    {
-            //        Operation_hold(extid, this);
-            //    }
-
-            //    call tellCall = new call() { fromid = serverCall, toid = clientCall };
-            //    string strMsg = "CMD#Call#" + JsonConvert.SerializeObject(tellCall);
-            //    mainWindow.ws.Send(strMsg);
-            //}
         }
 
 
@@ -926,7 +916,10 @@ namespace DispatchApp
         {
             if (operaState == e_OperaState.INTER)
             {
-                string strMsg = "CMD#Clear#" + serverCall;
+                call callNum = new call();
+                callNum.fromid = serverCall;
+                callNum.toid = serverCall;
+                string strMsg = "CMD#Clear#" + JsonConvert.SerializeObject(callNum);
                 mainWindow.ws.Send(strMsg);
                 operaState = e_OperaState.NULL;
                 FunKeysBorderBrush("");
@@ -943,23 +936,6 @@ namespace DispatchApp
                     //MessageBox.Show("错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "强插信息");
                 }
             }
-            
-            //else
-            //{
-            //    if ("0" == clientCall)
-            //    {
-            //        var view = new MessageBoxShow();
-            //        view.MsgBoxShowText.Text = "错误操作\r\n当前终端电话空\r\n请在通话过程中强插！";
-            //        var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
-            //        //MessageBox.Show("错误操作\r\n当前终端电话空\r\n请在通话过程中强插！", "强插信息");
-            //    }
-            //    else
-            //    {
-            //        call insertCall = new call() { fromid = serverCall, toid = clientCall };
-            //        string strMsg = "CMD#Bargein#" + JsonConvert.SerializeObject(insertCall);
-            //        mainWindow.ws.Send(strMsg);
-            //    }
-            //}
         }
 
         private async void Button_Split(object sender, RoutedEventArgs e)
@@ -973,21 +949,6 @@ namespace DispatchApp
                 var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
                 //MessageBox.Show("错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "强拆信息");
             }
-            //else
-            //{
-            //    if ("0" == clientCall)
-            //    {
-            //        var view = new MessageBoxShow();
-            //        view.MsgBoxShowText.Text = "错误操作\r\n当前终端电话空\r\n请在通话过程中强拆！";
-            //        var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
-            //        //MessageBox.Show("错误操作\r\n当前终端电话空\r\n请在通话过程中强拆！", "强拆信息");
-            //    }
-            //    else
-            //    {
-            //        string strMsg = "CMD#Clear#" + clientCall;
-            //        mainWindow.ws.Send(strMsg);
-            //    }
-            //}
         }
 
         private void Button_Hangoff(object sender, RoutedEventArgs e)
@@ -999,7 +960,10 @@ namespace DispatchApp
         {
             if (operaState == e_OperaState.LISTEN)
             {
-                string strMsg = "CMD#Clear#" + serverCall;
+                call callNum = new call();
+                callNum.fromid = serverCall;
+                callNum.toid = serverCall;
+                string strMsg = "CMD#Clear#" + JsonConvert.SerializeObject(callNum);
                 mainWindow.ws.Send(strMsg);
                 operaState = e_OperaState.NULL;
                 FunKeysBorderBrush("");
@@ -1016,23 +980,6 @@ namespace DispatchApp
                     //MessageBox.Show("错误操作\r\n当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "监听信息");
                 }
             }
-            
-            //else
-            //{
-            //    if ("0" == clientCall)
-            //    {
-            //        var view = new MessageBoxShow();
-            //        view.MsgBoxShowText.Text = "错误操作\r\n当前终端电话空\r\n请在通话过程中监听！";
-            //        var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
-            //        //MessageBox.Show("错误操作\r\n当前终端电话空\r\n请在通话过程中监听！", "监听信息");
-            //    }
-            //    else
-            //    {
-            //        call monitorCall = new call() { fromid = serverCall, toid = clientCall };
-            //        string strMsg = "CMD#Monitor#" + JsonConvert.SerializeObject(monitorCall);
-            //        mainWindow.ws.Send(strMsg);        
-            //    }
-            //}
         }
 
         private void Button_Urgentconf(object sender, RoutedEventArgs e)
@@ -1049,63 +996,6 @@ namespace DispatchApp
         {
 
         }
-
-        
-        //private void Night_Click(object sender, RoutedEventArgs e)
-        //{
-        //    DialogTab.SelectedIndex = 0;
-        //    call tellCall = new call() { fromid = serverCall, toid = clientCall };
-        //    string strState = "";
-
-        //    foreach (var item in keyCallDateList)
-        //    {
-        //        if ((serverCall == item.id) && ("0" != item.nightId) && (null != item.nightId))
-        //        {
-        //            strState = "True";
-        //        }
-        //    }
-
-        //    if (strState == "True")
-        //    {
-        //        foreach (var item in keyCallDateList)
-        //        {
-        //            item.nightState = "CMD#NightServiceOn#";     // 键权电话的夜服开启状态
-        //            tellCall.fromid = item.id;
-        //            tellCall.toid = item.nightId;
-        //            string strMsg = "CMD#NightServiceOn#" + JsonConvert.SerializeObject(tellCall);
-        //            mainWindow.ws.Send(strMsg);
-
-        //            mainWindow.ShowKeyLabel.Content = "夜服已开启";
-        //            // MessageBox.Show("键权话机" + item.id + "\r\n" + "夜服开启" + "\r\n" + "呼转至" + item.nightId, "夜服信息");     
-        //        }               
-        //    }
-
-        //    //foreach (var item in keyCallDateList)
-        //    //{
-        //    //    if ((serverCall == item.id) && ("0" != item.nightId) && (null != item.nightId))
-        //    //    { 
-        //    //        //if ("CMD#NightServiceOn#" == item.nightState)
-        //    //        //{
-        //    //        //    tellCall.fromid = item.id;
-        //    //        //    tellCall.toid = item.nightId;
-        //    //        //    item.nightState = "CMD#NightServiceOff#";
-        //    //        //    string strMsg = "CMD#NightServiceOff#" + JsonConvert.SerializeObject(tellCall);
-        //    //        //    mainWindow.ws.Send(strMsg);
-        //    //        //    MessageBox.Show("键权话机" + item.id + "\r\n" + "夜服关闭", "夜服信息");
-        //    //        //    //NightService.Background = ((Brush)new BrushConverter().ConvertFromString("#FFCBC7C7"));
-        //    //        //}
-        //    //        //else
-        //    //        //{    
-        //    //            item.nightState = "CMD#NightServiceOn#";     // 键权电话的夜服开启状态
-        //    //            tellCall.fromid = item.id;
-        //    //            tellCall.toid = item.nightId;
-        //    //            string strMsg = "CMD#NightServiceOn#" + JsonConvert.SerializeObject(tellCall);
-        //    //            mainWindow.ws.Send(strMsg);
-        //    //            MessageBox.Show("键权话机" + item.id + "\r\n" + "夜服开启" + "\r\n" + "呼转至" + item.nightId, "夜服信息");                  
-        //    //        //}
-        //    //    }
-        //    //}
-        //}
 
         public void CloseNightServer(object sender, RoutedEventArgs e)
         {
@@ -1310,6 +1200,42 @@ namespace DispatchApp
             //    }
             //}
             //callBoard.ShowDialog();
+        }
+
+        private void ColComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string colComboBoxType = ColComboBox.SelectedValue.ToString();
+            Debug.WriteLine("改变布局"+ colComboBoxType);
+            List<ListBox> firstPageUserCall = FindChirldHelper.FindVisualChild<ListBox>(this);
+
+            for(int i=0;i<PageUser.Count;i++)
+            {
+                foreach(ListBox item in firstPageUserCall)
+                {
+                    if(item.Name == "name" + PageUser[i].Header.ToString())
+                    {
+                        switch(colComboBoxType)
+                        {
+                            case "6":
+                                item.Style = FindResource("WrapListBoxStyle6") as Style;     
+                                break;
+                            case "8":
+                                item.Style = FindResource("WrapListBoxStyle") as Style;
+                                break;
+                            case "10":
+                                item.Style = FindResource("WrapListBoxStyle10") as Style;
+                                break;
+                            case "12":
+                                item.Style = FindResource("WrapListBoxStyle12") as Style;
+                                break;
+                        }
+                    }
+                }
+                
+            }
+           
+
+            //
         }
 
 

@@ -50,13 +50,17 @@ namespace DispatchApp
             }
         }
 
-
+        /// <summary>
+        /// 记录通话的信息
+        /// </summary>
+        public call callNum = new call();
+        public string insterNum;
         public UserCall()
         {
             InitializeComponent();
             DataContext = this;
             CurrentState = "OFFLINE";
-
+            
 
             // 依赖项属性测试
             //StateBackgroundDependencyProperty test = new StateBackgroundDependencyProperty();
@@ -187,6 +191,14 @@ namespace DispatchApp
             if (CountDown != null)
                return CountDown();
             return false;
+        }
+
+        private void SizeChange(object sender, SizeChangedEventArgs e)
+        {
+            int i = 1;
+            i++;
+
+            //this.imageTest.Visibility = Visibility.Hidden;
         }
         
         /// <summary>

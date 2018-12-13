@@ -5,7 +5,7 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Name="usname" x:Class="DispatchApp.UserCall"  
             xmlns:local="clr-namespace:DispatchApp" 
-    mc:Ignorable="d" Height="146" Width="186">
+            mc:Ignorable="d" d:DesignHeight="146" d:DesignWidth="186" SizeChanged="SizeChange">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -15,6 +15,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
+    <Viewbox>
     <Grid>
         <Grid.Resources>
             <local:DateConverter x:Key="cvtDate" />
@@ -56,7 +57,7 @@
                         <Label x:Name="labelNumToId" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Top" Width="157" Background="{x:Null}" Height="32" Foreground="White" Margin="0,32,0,-32" FontSize="18" />
                     </Grid>
                 </Label>
-                <Image Source="../Resources/startup_1920x1080.jpg" Margin="8,65,18.667,35.333" Grid.RowSpan="2"/>
+                <Image Name="imageTest" Source="../Resources/startup_1920x1080.jpg" Margin="8,65,18.667,35.333" Grid.RowSpan="2"/>
                 <TextBox Name="IuserD" Text="ID" Margin="5,25,10.667,5.333" Grid.Row="1" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" FontSize="20" HorizontalContentAlignment="Center"/>
                 <Image x:Name="PhoneState" Source="{Binding Path=CurrentState, Converter={StaticResource cvtImage}}" RenderTransformOrigin="1.062,2.37" MouseUp="MouseDouble_Click" Margin="8.333,67,29,41.333" Grid.Column="1" Grid.RowSpan="2" />
                 <!--<Button Click="ButtonBase_OnClick" Grid.ColumnSpan="2" Margin="0,28,95,60.333" Grid.RowSpan="2"/>-->
@@ -68,5 +69,5 @@
             </Grid>
         </Button>
     </Grid>
-
+    </Viewbox>
 </UserControl>

@@ -10,6 +10,18 @@ namespace DispatchApp
         public string reason;
     }
 
+    public class SetColumn
+    {
+        public Int16 col { set; get; }
+        public string description { set; get; }
+
+        public SetColumn(Int16 colu, string des)
+        {
+            col = colu;
+            description = des;
+        }
+    }
+
     // =======================查询调度台信息指令======================
     /// 20181024 xiaozi Add
     /// <summary>

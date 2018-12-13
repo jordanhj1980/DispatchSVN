@@ -94,20 +94,89 @@
         </ListBox> -->
 
         <TabControl
-            Height="757" HorizontalAlignment="Left" Margin="289,0,0,0" Name="tabCtrl_User" VerticalAlignment="Top" Width="1499" TabStripPlacement="Bottom" Background="{x:Null}" BorderBrush="{x:Null}">
+            Height="757" HorizontalAlignment="Left" Margin="289,0,0,0" Name="tabCtrl_User" VerticalAlignment="Top" Width="1631" TabStripPlacement="Bottom" Background="{x:Null}" BorderBrush="{x:Null}">
         </TabControl>
         <!--<ListBox x:Name="RelayList" Style="{StaticResource RelayWrapListBoxStyle}" Background="{x:Null}"  Height="162" HorizontalAlignment="Left" Margin="284,558,0,0" VerticalAlignment="Top" Width="1504">
         </ListBox>-->
         <!--  <ListBox Height="757" HorizontalAlignment="Left" Margin="284,0,0,0" Name="tabCtrl_CDR" VerticalAlignment="Top" Width="1499" Background="{x:Null}" Visibility="Hidden"/>
 -->
-        <Border Height="757" Name="LogCtrl" HorizontalAlignment="Left" Margin="289,0,0,0" VerticalAlignment="Top" Width="1499" Background="{x:Null}" BorderBrush="{x:Null}">
-            <local:DataGridPage x:Name="datagridpage" />
+        <Border Height="757" Name="LogCtrl" HorizontalAlignment="Left" Margin="289,0,0,0" VerticalAlignment="Top" Width="1631" Background="{x:Null}" BorderBrush="{x:Null}">
+            <local:DataGridPage x:Name="datagridpage" Margin="0,0,-0.333,0.333" />
         </Border>
 
+        <materialDesign:DrawerHost
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            BorderThickness="2"
+            BorderBrush="{DynamicResource MaterialDesignDivider}" Height="900" Width="1920" Margin="0,0,0,0">
+            <materialDesign:DrawerHost.RightDrawerContent>
+                <StackPanel Width="200"
+                    Margin="16">
+                    <!--<DataGrid >
+                        <DataGrid.Columns>
+                            <materialDesign:MaterialDataGridComboBoxColumn
+                                Header="布局" 
+                                ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.Foods}" />
+                        </DataGrid.Columns>
+                    </DataGrid>-->
+                    <StackPanel>
+                        <TextBlock Text="直呼区布局" FontSize="26"/>
+                        <ComboBox Name="ColComboBox" SelectionChanged="ColComboBoxSelectionChanged">
+                        <!--<ComboBoxItem Content="6" />
+                            <ComboBoxItem IsSelected="True" Content="8" />
+                            <ComboBoxItem Content="10" />
+                            <ComboBoxItem Content="12" />-->
+                        </ComboBox>
+                    </StackPanel>
+                   
+                    <Button x:Name="btn_meeting"
+                        Width="100" Click="Button_Meeting" Style="{DynamicResource RoundedButton}" Margin="13,0">
+                        <StackPanel VerticalAlignment="Top">
+                            <Image Height="64" Source="../Resources/groupconf_dark.png" Width="64" />
+                            <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="会议" VerticalAlignment="Bottom" Width="80" />
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button Height="40"
+                        Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                        Margin="4"
+                        HorizontalAlignment="Center"
+                        Content="关闭" FontSize="26"
+                        Style="{DynamicResource MaterialDesignFlatButton}">
+                    </Button>
+                </StackPanel>
+            </materialDesign:DrawerHost.RightDrawerContent>
+            
+            <Button x:Name="MoreButton"
+                    Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                    CommandParameter="{x:Static Dock.Right}"
+                    Width="100" Height="102" Click="Button_Meeting" Style="{DynamicResource RoundedButton}" Margin="1775,773,41,21">
+                <StackPanel VerticalAlignment="Top">
+                    <materialDesign:PackIcon Kind="MoreCircleOutline" Height="64" Width="64" HorizontalAlignment="Center"/>
+                    <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="更多" VerticalAlignment="Bottom" Width="80" />
+                </StackPanel>
+            </Button>
+        </materialDesign:DrawerHost>
+        <!---->
+
+        <!--<Label
+          Content="显示大小:"
+          VerticalAlignment="Center" />
+        <ComboBox>
+            <ComboBoxItem
+        Content="10" />
+            <ComboBoxItem
+        IsSelected="True"
+        Content="12" />
+            <ComboBoxItem
+        Content="14" />
+            <ComboBoxItem
+        Content="16" />
+        </ComboBox>-->
 
 
         <!--右侧快捷内容栏-->
-        <Grid Margin="1804,13,16,160" x:Name="grid_right" Width="100" HorizontalAlignment="Center">
+        <!--<Grid Margin="1804,13,16,160" x:Name="grid_right" Width="100" HorizontalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="63*" />
                 <RowDefinition Height="53*" />
@@ -115,17 +184,17 @@
                 <RowDefinition Height="53*" />
                 <RowDefinition Height="53*" />
                 <RowDefinition Height="53*" />
-            </Grid.RowDefinitions>
+            </Grid.RowDefinitions>-->
 
-            <!--<Button Name="NightService"
+        <!--<Button Name="NightService"
                         Width="100" 
                         Style="{DynamicResource RoundedButton}" 
                         Grid.Row="0"
                         Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Click="Night_Click">
                 <Button.CommandParameter>
                     -->
-            <!-- the simplest view model of all, a DateTime. the view can be found in the resources of MainWindow.xaml  -->
-            <!--
+        <!-- the simplest view model of all, a DateTime. the view can be found in the resources of MainWindow.xaml  -->
+        <!--
                     <Button Name="CommandBtn"
                            
                             IsCancel="True"
@@ -133,8 +202,8 @@
                             CommandParameter="Sample2Cancel"
                             HorizontalAlignment="Center">
                         -->
-            <!--Style="{StaticResource MaterialDesignFlatButton}"-->
-            <!--
+        <!--Style="{StaticResource MaterialDesignFlatButton}"-->
+        <!--
                         关闭夜服
                     </Button>
                 </Button.CommandParameter>
@@ -144,13 +213,13 @@
                 </StackPanel>
             </Button>-->
 
-            <!--<Button HorizontalAlignment="Center" Grid.Row="1" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Click="Button_Log" Background="{x:Null}">
+        <!--<Button HorizontalAlignment="Center" Grid.Row="1" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Click="Button_Log" Background="{x:Null}">
                 <StackPanel VerticalAlignment="Top">
                     <Image Height="64" Source="../Resources/log.png" Width="64" />
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,0" Text="日志" VerticalAlignment="Bottom" Width="80" Foreground="#FFD8D7D7" />
                 </StackPanel>
             </Button>-->
-            <Button HorizontalAlignment="Center" Grid.Row="2" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Click="Button_Search" Background="{x:Null}" Opacity="0.4">
+        <!--<Button HorizontalAlignment="Center" Grid.Row="2" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Click="Button_Search" Background="{x:Null}" Opacity="0.4">
                 <StackPanel VerticalAlignment="Top">
                     <Image Height="64" Source="../Resources/search.png" Width="64" />
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,0" Text="查询" VerticalAlignment="Bottom" Width="80" Foreground="#FFD8D7D7" />
@@ -161,14 +230,14 @@
                     <Image Height="64" Source="../Resources/email_focus.png" Width="64" />
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,0" Text="邮件" VerticalAlignment="Bottom" Width="80" Foreground="#FFD8D7D7" />
                 </StackPanel>
-            </Button>
-            <!--<Button HorizontalAlignment="Center" Grid.Row="4" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Click="Button_Meeting" Background="{x:Null}" Opacity="0.4">
+            </Button>-->
+        <!--<Button HorizontalAlignment="Center" Grid.Row="4" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Click="Button_Meeting" Background="{x:Null}" Opacity="0.4">
                 <StackPanel VerticalAlignment="Top">
                     <Image Height="64" Source="../Resources/groupconf.png" Width="64" />
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,0" Text="会议" VerticalAlignment="Bottom" Width="80" Foreground="#FFD8D7D7" />
                 </StackPanel>
             </Button>-->
-        </Grid>
+        <!--</Grid>-->
 
         <!--分割线，需要加粗-->
         <!--<Separator VerticalAlignment="Bottom" Margin="1784,0,0,140" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Visible" Height="29" >
@@ -289,19 +358,19 @@
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="日志" VerticalAlignment="Bottom" Width="80" />
                 </StackPanel>
             </Button>
-            <Button x:Name="btn_meeting"
+            <!--<Button x:Name="btn_meeting"
                     Width="100" Click="Button_Meeting" Style="{DynamicResource RoundedButton}" Margin="13,0">
                 <StackPanel VerticalAlignment="Top">
                     <Image Height="64" Source="../Resources/groupconf_dark.png" Width="64" />
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="会议" VerticalAlignment="Bottom" Width="80" />
                 </StackPanel>
-            </Button>
+            </Button>-->
 
             <!--Click = "Button_CallKeyBord"-->
 
         </WrapPanel>
         <!--分隔线-->
-        <Separator VerticalAlignment="Bottom" Margin="1339,0,-319,436" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Visible" Height="29" >
+        <!--<Separator VerticalAlignment="Bottom" Margin="1339,0,-319,436" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Visible" Height="29" >
             <Separator.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="-1" ScaleY="-1"/>
@@ -310,7 +379,7 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </Separator.RenderTransform>
-        </Separator>
+        </Separator>-->
 
         <!--中间终端电话区-->
         <TabControl HorizontalAlignment="Left" Height="695" VerticalAlignment="Top" Width="280" Background="{x:Null}" BorderBrush="{x:Null}">
@@ -355,7 +424,7 @@
 
 
         <!--分隔线-->
-        <Separator VerticalAlignment="Bottom" Margin="284,0,134,123.666" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Visible" Height="29" >
+        <Separator VerticalAlignment="Bottom" Margin="284,0,3,124" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Visible" Height="29" >
             <Separator.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="-1" ScaleY="-1"/>
