@@ -31,6 +31,8 @@ namespace DispatchApp
                     break;
                 case "ANSWER":         
                 case "ANSWERED":
+                case "INSTER":
+                case "LISTEN":
                     bru_return = ((Brush)new BrushConverter().ConvertFromString("#4FA92E"));
                     break;
                 case "BYE":
@@ -79,6 +81,8 @@ namespace DispatchApp
                         break;
                     case "ANSWER":
                     case "ANSWERED":
+                    case "INSTER":
+                    case "LISTEN":
                         img = (new BitmapImage(new Uri("../Resources/dianhuaCom.png", UriKind.RelativeOrAbsolute)));
                         break;
                     case "BYE":

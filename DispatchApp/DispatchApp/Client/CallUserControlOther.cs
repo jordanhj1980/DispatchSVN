@@ -40,6 +40,7 @@ namespace DispatchApp
     public enum e_OperaState
     {
         CALL,            // 呼叫
+        COMMUNICATION,   // 正在通信
         TRANS,           // 转接
         LISTEN,          // 监听
         INTER,           // 强插
@@ -155,6 +156,8 @@ namespace DispatchApp
         {
             /* 创建容器 */
             TabItem tab = new TabItem();            // 造一个新选项卡
+            tab.BorderBrush = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+            //tab.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("{x:Null}"));
             tab.Visibility = Visibility.Collapsed;
             //tab.Visibility = Visibility.Visible;
             ListBox MyWrapPanel2 = new ListBox();   // 选项卡中的容器，用于存放每一个元素
@@ -232,6 +235,8 @@ namespace DispatchApp
             /* 创建容器 */
             TabItem tab = new TabItem();            // 造一个新选项卡
             tab.Visibility = Visibility.Collapsed;
+            tab.BorderBrush = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+            //tab.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("{x:Null}"));
             //tab.Visibility = Visibility.Visible;
             ListBox MyWrapPanel2 = new ListBox();   // 选项卡中的容器，用于存放每一个元素
             MyWrapPanel2.Style = FindResource("UserRelayWrapListBoxStyle") as Style;
@@ -325,7 +330,9 @@ namespace DispatchApp
         {
             /* 创建容器 */
             int idex = PageUser.Count - 1;
-            TabItem tab = new TabItem(){Header = PageUser[idex].Header, FontSize = 24, Height = 40, Width = 100};            // 造一个新选项卡         
+            TabItem tab = new TabItem(){Header = PageUser[idex].Header, FontSize = 24, Height = 40, Width = 100};            // 造一个新选项卡       
+            tab.BorderBrush = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+            //tab.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("{x:Null}"));
             ListBox MyWrapPanel2 = new ListBox();   // 选项卡中的容器，用于存放每一个元素
             MyWrapPanel2.Style = FindResource("WrapListBoxStyle") as Style;
 
@@ -378,17 +385,42 @@ namespace DispatchApp
                     item.ButtonBack.BorderBrush = Brushes.Gray;
                 }
             }
-
+            
+            UserCall userNow = firstPageUserCall.Find((UserCall s) => s.labelNumFromId.Content.ToString() == word); // 当前用户电话
             // 按键触发事件
             switch(operaState)
             {
-                case e_OperaState.CALL:   
+                case e_OperaState.CALL:
                 case e_OperaState.NULL:
-                    tellCall = new call() { fromid = serverCall, toid = clientCall };
-                    strMsg = "CMD#Call#" + JsonConvert.SerializeObject(tellCall);
-                    mainWindow.ws.Send(strMsg);
-                    operaState = e_OperaState.NULL;
-                    FunKeysBorderBrush("");
+                    if ((userNow.CurrentState == "ANSWER") || (userNow.CurrentState == "ANSWERED"))
+                    {
+                        tellCall = new call() { fromid = serverCall, toid = clientCall };
+                        strMsg = "CMD#Bargein#" + JsonConvert.SerializeObject(tellCall);
+                        mainWindow.ws.Send(strMsg);
+                        mainWindow.ShowKeyLabel.Content = "键权电话强插" + clientCall;
+                        mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                        userNow.CurrentState = "INSTER";
+                        Debug.WriteLine("键权电话强插" + clientCall);
+                    }
+                    else if (userNow.CurrentState == "INSTER")
+                    {
+                        strMsg = "CMD#Clear#" + userNow.labelNumToId.Content;
+                        mainWindow.ws.Send(strMsg);
+                        operaState = e_OperaState.NULL;
+                        FunKeysBorderBrush("");
+                        mainWindow.ShowKeyLabel.Content = "键权电话强拆" + userNow.labelNumToId.Content;
+                        mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                        Debug.WriteLine("键权电话强拆" + userNow.labelNumToId.Content);
+                    }
+                    else
+                    {
+                        tellCall = new call() { fromid = serverCall, toid = clientCall };
+                        strMsg = "CMD#Call#" + JsonConvert.SerializeObject(tellCall);
+                        mainWindow.ws.Send(strMsg);
+                        operaState = e_OperaState.NULL;
+                        FunKeysBorderBrush("");
+                        Debug.WriteLine("键权电话呼叫" + clientCall);
+                    }
                     break;
                 case e_OperaState.INTER:
                     tellCall = new call() { fromid = serverCall, toid = clientCall };
@@ -396,6 +428,8 @@ namespace DispatchApp
                     mainWindow.ws.Send(strMsg);
                     mainWindow.ShowKeyLabel.Content = "键权电话强插" + clientCall;
                     mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                    userNow.CurrentState = "INSTER";
+                    Debug.WriteLine("键权电话强插" + clientCall);
                     break;
                 case e_OperaState.LISTEN:
                     tellCall = new call() { fromid = serverCall, toid = clientCall };
@@ -403,6 +437,8 @@ namespace DispatchApp
                     mainWindow.ws.Send(strMsg);
                     mainWindow.ShowKeyLabel.Content = "键权电话监听" + clientCall;
                     mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                    userNow.CurrentState = "LISTEN";
+                    Debug.WriteLine("键权电话监听" + clientCall);
                     break;
                 case e_OperaState.SPLIT:
                     strMsg = "CMD#Clear#" + clientCall;
@@ -411,6 +447,7 @@ namespace DispatchApp
                     FunKeysBorderBrush("");
                     mainWindow.ShowKeyLabel.Content = "键权电话强拆" + clientCall;
                     mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                    Debug.WriteLine("键权电话强拆" + clientCall);
                     break;
                 case e_OperaState.TRANS:
                     /* 如果当前选择的键权电话正处于通话过程中，hold */

@@ -127,7 +127,8 @@ namespace DispatchApp
         public string clientCall = "0";
         public string nightId = "213";
         public string trunkCall;
-        
+
+        public List<call> userTwoSidesCom = new List<call>(); // 存正在通话的用户双方，强插用
 
         public List<KeyCallDate> keyCallDateList = new List<KeyCallDate>(); // 存所有键权电话信息
         public RelayState relayState = new RelayState();
@@ -609,11 +610,8 @@ namespace DispatchApp
 
                         string callNum = temp.labelNumFromId.Content.ToString(); // 读取当前UserCall的本机号码                  
                         // 布置本机号码对应的状态
-                        //if ((callNum == clientNum) || (callNum == clientToid))
                         if (callNum == clientNum)
                         {
-                            temp.CurrentState = state;
-
                             switch (state)
                             {
                                 case "Ready":
@@ -621,55 +619,76 @@ namespace DispatchApp
                                 case "Progress":
                                 case "Offline":
                                 case "Offhook":
+                                    temp.CurrentState = state;
                                     break;
                                 case "BUSY":
+                                    temp.CurrentState = state;
                                     break;
                                 case "IDLE":
+                                    temp.CurrentState = state;
                                     temp.timer_Stop();
                                     temp.labelNumFromId.Content = callNum;
                                     temp.labelNumToId.Content = "no";
                                     temp.ButtonBack.Background = (Brush)new BrushConverter().ConvertFromString("#CACDDA");
                                     break;
                                 case "ONLINE":
+                                    temp.CurrentState = state;
                                     temp.ButtonBack.Background = (Brush)new BrushConverter().ConvertFromString("#CACDDA");
                                     break;
                                 case "OFFLINE":
+                                    temp.CurrentState = state;
                                     temp.ButtonBack.Background = (Brush)new BrushConverter().ConvertFromString("#898B94");
                                     break;
                                 case "FAILED":
+                                    temp.CurrentState = state;
                                     break;
                                 case "BYE":
+                                    temp.CurrentState = state;
                                     temp.timer_Stop();
                                     temp.labelNumFromId.Content = callNum;
                                     temp.labelNumToId.Content = "no";
                                     break;
                                 case "RING":
+                                    temp.CurrentState = state;
                                     temp.labelNumFromId.Content = tempName.fromid;
                                     temp.labelNumToId.Content = tempName.toid;
                                     break;
                                 case "ALERT":
+                                    temp.CurrentState = state;
                                     temp.labelNumFromId.Content = tempName.fromid;
                                     temp.labelNumToId.Content = tempName.toid;
                                     break;
                                 case "ANSWER":
-                                    if (((e_OperaState.INTER != operaState) && (e_OperaState.LISTEN != operaState)) || (callNum != clientCall))
+                                    //if (((e_OperaState.INTER != operaState) && (e_OperaState.LISTEN != operaState)) || (callNum != clientCall))
+                                    if ((temp.CurrentState != "INSTER") && (temp.CurrentState != "LISTEN") || (callNum != clientCall))
                                     {
                                         temp.labelNumFromId.Content = tempName.fromid;
                                         temp.labelNumToId.Content = tempName.toid;
                                         temp.timer_Stop();
                                         temp.ShowCallTime();
+                                        temp.CurrentState = state;
+                                    }
+                                    else
+                                    {
+                                        Debug.WriteLine(callNum+"当前状态"+temp.CurrentState);
                                     }
                                     break;
                                 case "ANSWERED":
                                     //if ((("Insert" != stateUser.state) && ("Monitor" != stateUser.state)) || (num != stateUser.num))
-                                    if (((e_OperaState.INTER != operaState) && (e_OperaState.LISTEN != operaState)) || (callNum != clientCall))
+                                    //if (((e_OperaState.INTER != operaState) && (e_OperaState.LISTEN != operaState)) || (callNum != clientCall))
+                                    if ((temp.CurrentState != "INSTER") && (temp.CurrentState != "LISTEN") || (callNum != clientCall))
                                     {
                                         temp.labelNumFromId.Content = tempName.fromid;
                                         temp.labelNumToId.Content = tempName.toid;
                                         temp.timer_Stop();
                                         temp.ShowCallTime();
+                                        temp.CurrentState = state;
                                         //stateUser.state = "";
                                         //stateUser.num = num;
+                                    }
+                                    else
+                                    {
+                                        Debug.WriteLine(callNum + "当前状态" + temp.CurrentState);
                                     }
                                     break;
                                 default: break;

@@ -93,7 +93,8 @@
         <!--<ListBox x:Name="MyWrapPanel2" Background="{x:Null}"  BorderBrush="{x:Null}" Style="{StaticResource WrapListBoxStyle}">
         </ListBox> -->
 
-        <TabControl Height="757" HorizontalAlignment="Left" Margin="289,0,0,0" Name="tabCtrl_User" VerticalAlignment="Top" Width="1499" TabStripPlacement="Bottom" Background="{x:Null}" BorderBrush="{x:Null}">
+        <TabControl
+            Height="757" HorizontalAlignment="Left" Margin="289,0,0,0" Name="tabCtrl_User" VerticalAlignment="Top" Width="1499" TabStripPlacement="Bottom" Background="{x:Null}" BorderBrush="{x:Null}">
         </TabControl>
         <!--<ListBox x:Name="RelayList" Style="{StaticResource RelayWrapListBoxStyle}" Background="{x:Null}"  Height="162" HorizontalAlignment="Left" Margin="284,558,0,0" VerticalAlignment="Top" Width="1504">
         </ListBox>-->
@@ -370,6 +371,16 @@
                     <ScaleTransform ScaleX="-1" ScaleY="-1"/>
                     <SkewTransform/>
                     <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>
+        <Separator VerticalAlignment="Bottom" Margin="0,0,1639,191" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Visible" Height="29" >
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0"/>
                     <TranslateTransform/>
                 </TransformGroup>
             </Separator.RenderTransform>

@@ -45,6 +45,7 @@
         </Style.Triggers>-->
 
         <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
  
         <Setter Property="ItemsPanel">
