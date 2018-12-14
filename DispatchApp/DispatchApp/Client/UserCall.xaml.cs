@@ -13,7 +13,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
 
-using System.Windows.Threading;
 
 namespace DispatchApp
 {
@@ -196,11 +195,10 @@ namespace DispatchApp
         private void SizeChange(object sender, SizeChangedEventArgs e)
         {
             int i = 1;
-            i++;
-
-            //this.imageTest.Visibility = Visibility.Hidden;
+            i++;         
         }
-        
+
+
         /// <summary>
         /// 处理倒计时的委托
         /// </summary>

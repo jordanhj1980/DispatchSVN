@@ -203,10 +203,10 @@ namespace DispatchApp
                 new SetColumn(12, "12列"),
             };
 
-            ColComboBox.ItemsSource = colType;
-            ColComboBox.DisplayMemberPath = "description";
-            ColComboBox.SelectedValuePath = "col";
-            ColComboBox.SelectedIndex = 1;
+            //ColComboBox.ItemsSource = colType;
+            //ColComboBox.DisplayMemberPath = "description";
+            //ColComboBox.SelectedValuePath = "col";
+            //ColComboBox.SelectedIndex = 1;
 
 
         }
@@ -1194,7 +1194,8 @@ namespace DispatchApp
 
         private void ColComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string colComboBoxType = ColComboBox.SelectedValue.ToString();
+            int colComboBoxType = ColComboBox.SelectedIndex;
+            //string colComboBoxType = ColComboBox.SelectedValue.ToString();
             Debug.WriteLine("改变布局"+ colComboBoxType);
             List<ListBox> firstPageUserCall = FindChirldHelper.FindVisualChild<ListBox>(this);
 
@@ -1206,16 +1207,20 @@ namespace DispatchApp
                     {
                         switch(colComboBoxType)
                         {
-                            case "6":
+                            //case "6":
+                            case 0:
                                 item.Style = FindResource("WrapListBoxStyle6") as Style;     
                                 break;
-                            case "8":
+                            //case "8":
+                            case 1:
                                 item.Style = FindResource("WrapListBoxStyle") as Style;
                                 break;
-                            case "10":
+                            //case "10":
+                            case 2:
                                 item.Style = FindResource("WrapListBoxStyle10") as Style;
                                 break;
-                            case "12":
+                            //case "12":
+                            case 3:
                                 item.Style = FindResource("WrapListBoxStyle12") as Style;
                                 break;
                         }
@@ -1223,11 +1228,10 @@ namespace DispatchApp
                 }
                 
             }
-           
-
-            //
         }
 
+
+     
 
 
 

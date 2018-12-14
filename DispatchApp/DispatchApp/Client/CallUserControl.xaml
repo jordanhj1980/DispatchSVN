@@ -104,59 +104,11 @@
             <local:DataGridPage x:Name="datagridpage" Margin="0,0,-0.333,0.333" />
         </Border>
 
-        <materialDesign:DrawerHost
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            BorderThickness="2"
-            BorderBrush="{DynamicResource MaterialDesignDivider}" Height="900" Width="1920" Margin="0,0,0,0">
-            <materialDesign:DrawerHost.RightDrawerContent>
-                <StackPanel Width="200"
-                    Margin="16">
-                    <!--<DataGrid >
-                        <DataGrid.Columns>
-                            <materialDesign:MaterialDataGridComboBoxColumn
-                                Header="布局" 
-                                ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.Foods}" />
-                        </DataGrid.Columns>
-                    </DataGrid>-->
-                    <StackPanel>
-                        <TextBlock Text="直呼区布局" FontSize="26"/>
-                        <ComboBox Name="ColComboBox" SelectionChanged="ColComboBoxSelectionChanged">
-                        <!--<ComboBoxItem Content="6" />
-                            <ComboBoxItem IsSelected="True" Content="8" />
-                            <ComboBoxItem Content="10" />
-                            <ComboBoxItem Content="12" />-->
-                        </ComboBox>
-                    </StackPanel>
-                   
-                    <Button x:Name="btn_meeting"
-                        Width="100" Click="Button_Meeting" Style="{DynamicResource RoundedButton}" Margin="13,0">
-                        <StackPanel VerticalAlignment="Top">
-                            <Image Height="64" Source="../Resources/groupconf_dark.png" Width="64" />
-                            <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="会议" VerticalAlignment="Bottom" Width="80" />
-                        </StackPanel>
-                    </Button>
-                    
-                    <Button Height="40"
-                        Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-                        Margin="4"
-                        HorizontalAlignment="Center"
-                        Content="关闭" FontSize="26"
-                        Style="{DynamicResource MaterialDesignFlatButton}">
-                    </Button>
-                </StackPanel>
-            </materialDesign:DrawerHost.RightDrawerContent>
+       
             
-            <Button x:Name="MoreButton"
-                    Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                    CommandParameter="{x:Static Dock.Right}"
-                    Width="100" Height="102" Click="Button_Meeting" Style="{DynamicResource RoundedButton}" Margin="1775,773,41,21">
-                <StackPanel VerticalAlignment="Top">
-                    <materialDesign:PackIcon Kind="MoreCircleOutline" Height="64" Width="64" HorizontalAlignment="Center"/>
-                    <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="更多" VerticalAlignment="Bottom" Width="80" />
-                </StackPanel>
-            </Button>
-        </materialDesign:DrawerHost>
+            
+            
+        
         <!---->
 
         <!--<Label
@@ -335,29 +287,7 @@
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="广播" VerticalAlignment="Bottom" Width="80" />
                 </StackPanel>
             </Button>
-            <Button Name="btn_night"
-                Command="{Binding NightServerCommand}"
-                Width="100"
-                Style="{DynamicResource RoundedButton}">
-                <StackPanel VerticalAlignment="Top">
-                    <Image Source="../Resources/night_portrait_dark.png" 
-                        Height="64" Width="64" />
-                    <TextBlock Text="夜服"
-                        Block.TextAlignment="Center" 
-                        FontFamily="SimHei" 
-                        FontSize="30"  
-                        Height="34" Width="80"   
-                        VerticalAlignment="Bottom"/>
-                </StackPanel>
-            </Button>
-
-            <Button Name="btn_log"
-                    Width="100" Click="Button_Log" Style="{DynamicResource RoundedButton}">
-                <StackPanel VerticalAlignment="Top">
-                    <Image Height="64" Source="../Resources/log.png" Width="64" />
-                    <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="日志" VerticalAlignment="Bottom" Width="80" />
-                </StackPanel>
-            </Button>
+            
             <!--<Button x:Name="btn_meeting"
                     Width="100" Click="Button_Meeting" Style="{DynamicResource RoundedButton}" Margin="13,0">
                 <StackPanel VerticalAlignment="Top">
@@ -383,7 +313,7 @@
 
         <!--中间终端电话区-->
         <TabControl HorizontalAlignment="Left" Height="695" VerticalAlignment="Top" Width="280" Background="{x:Null}" BorderBrush="{x:Null}">
-            <TabItem Header="呼叫队列" Margin="0" HorizontalAlignment="Left" Width="140" Height="38" Background="{x:Null}" FontFamily="SimHei" FontSize="24" Foreground="#FFD8D7D7">
+            <TabItem Header="呼叫队列" Margin="0" HorizontalAlignment="Left" Width="280" Height="38" Background="#FF6C2828" FontFamily="SimHei" FontSize="26" Foreground="#1976D2">
                 <Grid >
                     <ListBox x:Name="lbCallQueue" HorizontalContentAlignment="Stretch" ItemsSource="{Binding m_callQueue}" Background="{x:Null}" 
                                  Height="649" Width="270" 
@@ -418,7 +348,8 @@
             </Grid.Resources>
             <ListBox Style="{StaticResource KeyWrapListBoxStyle}"  Height="184" Width="269" HorizontalAlignment="Left" Name="KeyCallListBox" VerticalAlignment="Bottom"  Background="{x:Null}" Margin="-2,0,0,0" />
             <!--<Button x:Name="btn_holdoff" Content="Unhold" HorizontalAlignment="Left" Margin="6,7.333,0,7" Grid.Row="2" VerticalAlignment="Bottom" Width="75" Click="btn_holdoff_click"/>-->
-            <Button x:Name="btn_key"  Grid.ColumnSpan="2" Content="挂断" HorizontalAlignment="Left" Height="38" Margin="42,4.333,0,7" VerticalAlignment="Bottom" Width="191" FontSize="30" FontFamily="SimHei" Background="#FFB40D0D" Foreground="#FFD8D7D7" Click="Button_Click_1" Grid.Row="2"/>
+            <Button x:Name="btn_key"  Grid.ColumnSpan="2" Content="挂断" HorizontalAlignment="Left" Height="38" Margin="42,4.333,0,7" VerticalAlignment="Bottom" Width="191" FontSize="30" FontFamily="SimHei" Background="#FFB40D0D" Foreground="#FFD8D7D7"
+                    Click="Button_Click_1" Grid.Row="2"/>
 
         </Grid>
 
@@ -455,6 +386,96 @@
             </Separator.RenderTransform>
         </Separator>
 
+
+        <materialDesign:DrawerHost
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            BorderThickness="2"
+            BorderBrush="{DynamicResource MaterialDesignDivider}" Height="900" Width="1920" Margin="0,0,0,0">
+            <materialDesign:DrawerHost.RightDrawerContent>
+                <StackPanel Width="200"
+                    Margin="16">
+                    <TextBlock Text="直呼区布局" FontSize="26" Width="200" TextAlignment="Center" Foreground="#1976D2"/>
+                    <ListBox Name="ColComboBox" SelectedIndex="1" SelectionChanged="ColComboBoxSelectionChanged">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" ItemWidth="50" ItemHeight="50" IsItemsHost="True"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBoxItem>
+                            <materialDesign:PackIcon Kind="Numeric6BoxOutline" Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <materialDesign:PackIcon Kind="Numeric8BoxOutline" Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <materialDesign:PackIcon Kind="DieD10" Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <materialDesign:PackIcon Kind="DiceD12" Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </ListBoxItem>
+                    </ListBox>
+
+                    <Separator Height="10"/>
+                    <!--<StackPanel>
+                        <TextBlock Text="直呼区布局" FontSize="26"/>
+                        <ComboBox Name="ColComboBox" SelectionChanged="ColComboBoxSelectionChanged">
+                        </ComboBox>
+                    </StackPanel>-->
+                    <StackPanel Height="723">
+                        <Button Name="btn_night" Margin="2,2,2,6"
+                            Command="{Binding NightServerCommand}"
+                            Width="100"
+                            Style="{DynamicResource RoundedButton}">
+                            <StackPanel VerticalAlignment="Top">
+                                <Image Source="../Resources/night_portrait_dark.png" 
+                                    Height="64" Width="64" />
+                                <TextBlock Text="夜服"
+                                    Block.TextAlignment="Center" 
+                                    FontFamily="SimHei" 
+                                    FontSize="30"  
+                                    Height="34" Width="80"   
+                                    VerticalAlignment="Bottom"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Name="btn_log" Margin="2,2,2,6"
+                            Width="100" Click="Button_Log" Style="{DynamicResource RoundedButton}">
+                            <StackPanel VerticalAlignment="Top">
+                                <Image Height="64" Source="../Resources/log.png" Width="64" />
+                                <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="日志" VerticalAlignment="Bottom" Width="80" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btn_meeting" Margin="2,2,2,6"
+                            Width="100" Click="Button_Meeting" Style="{DynamicResource RoundedButton}">
+                            <StackPanel VerticalAlignment="Top">
+                                <Image Height="64" Source="../Resources/groupconf_dark.png" Width="64" />
+                                <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="会议" VerticalAlignment="Bottom" Width="80" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                    <!--<Separator Height="10"/>
+                    <Button Height="40" VerticalAlignment="Bottom" 
+                        Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                        Margin="10"
+                        HorizontalAlignment="Center"
+                        Content="关闭" FontSize="26"
+                        Style="{DynamicResource MaterialDesignFlatButton}">
+                    </Button>-->
+                </StackPanel>
+            </materialDesign:DrawerHost.RightDrawerContent>
+
+            <Button x:Name="MoreButton"
+                    Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                    CommandParameter="{x:Static Dock.Right}"
+                    Width="100" Height="102" Click="Button_Meeting" Style="{DynamicResource RoundedButton}" Margin="1775,773,41,21">
+                <StackPanel VerticalAlignment="Top">
+                    <materialDesign:PackIcon Kind="MoreCircleOutline" Height="64" Width="64" HorizontalAlignment="Center"/>
+                    <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="更多" VerticalAlignment="Bottom" Width="80" />
+                </StackPanel>
+            </Button>
+        </materialDesign:DrawerHost>
         <!--Dialog-->
         <materialDesign:DialogHost Identifier="UserNightServerDialog" 
                 DialogClosing="NightServeDialogClosing" 
