@@ -746,10 +746,15 @@ namespace DispatchApp
                 Debug.WriteLine("SEND: " + sb.ToString());
                 mainWindow.ws.Send(sb.ToString());
 
-                var result = await DialogHost.Show(view, "UserOutLineDialog", ListViewClosingEventHandler);
+                var result = await DialogHost.Show(view, "UserOutLineDialog", ListViewClosingEventHandler1);
 
             }
 
+
+        }
+        private void ListViewClosingEventHandler1(object sender, DialogClosingEventArgs eventArgs)
+        {
+            Console.WriteLine("You can intercept the closing event, and cancel here.");
         }
 
 
