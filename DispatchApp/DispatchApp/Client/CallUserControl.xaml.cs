@@ -1142,8 +1142,14 @@ namespace DispatchApp
             }
             else
             {
-                string strMsg = "CMD#Clear#" + clientCall;
+                call callNum = new call();
+                callNum.fromid = serverCall;
+                callNum.toid = serverCall;
+                string strMsg = "CMD#Clear#" + JsonConvert.SerializeObject(callNum);
                 mainWindow.ws.Send(strMsg);
+                operaState = e_OperaState.NULL;
+                //string strMsg = "CMD#Clear#" + clientCall;
+                //mainWindow.ws.Send(strMsg);
             }
         }
 
