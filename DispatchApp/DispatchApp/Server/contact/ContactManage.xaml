@@ -82,7 +82,14 @@
                         </ScrollViewer>
                     </StackPanel>
                 </materialDesign:Card>
-                <StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="*" />                        
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    
                     <!--基本信息-->
                     <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5"
                         Height="40" Margin="10,0"
@@ -91,22 +98,22 @@
                         UniformCornerRadius="0" FontSize="24">
                         <TextBlock Text="基本信息" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </materialDesign:Card>
-                    <materialDesign:Card x:Name="userview" Margin="10,0,10,10"
+                    <materialDesign:Card Grid.Row="1" x:Name="userview" Margin="10,0,0,10"
                     materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Visible"   
                     Padding="0" UniformCornerRadius="6">
                         <StackPanel Height="60" Orientation="Vertical">
                             <DockPanel Height="60">
-                                <TextBlock Text="名称:" Width="60" VerticalAlignment="Center" Margin="40,0,10,0"
+                                <TextBlock Text="名称：" Width="70" VerticalAlignment="Center" Margin="40,0,0,0"
                                            Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
                                 <TextBox x:Name="deptName" Text="{Binding SelectedContact.department, Mode=OneWay}" 
                                 IsReadOnly="{Binding NewUser, Converter={StaticResource NegateConverter}}"
-                                Width="260" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="0,0,10,0" FontSize="24"/>
+                                Width="260" VerticalAlignment="Center" HorizontalAlignment="Left"  FontSize="24"/>
                             </DockPanel>
                         </StackPanel>
                     </materialDesign:Card>
 
-                    <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                        Height="635" Margin="10,0"
+                    <materialDesign:Card Grid.Row="2" materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                        Height="660" Margin="10,0"
                         UniformCornerRadius="0" FontSize="24">
                         <StackPanel RenderTransformOrigin="0.458,0.499" Orientation="Horizontal">
                             <DataGrid Name="gridMem" Background="Transparent" Grid.Row="0" FontSize="24" ItemsSource="{Binding gridMemList}" AutoGenerateColumns="False" 
@@ -129,17 +136,24 @@
                         </StackPanel>
                     </materialDesign:Card>
 
-                    <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                    <!--<materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth3"
                         Height="77" Margin="10,0"                        
                         UniformCornerRadius="0" FontSize="24">
                         <StackPanel RenderTransformOrigin="0.458,0.499" Orientation="Horizontal" Margin="0,0,-0.4,9.8">
-                            <!--<Button Name="addBtn" Content="添加" FontSize="24" Click="addMem_Click"  VerticalAlignment="Center" Width="100" Margin="10,0,10,0"/> -->
+                            <Button Name="addBtn" Content="添加" FontSize="24" Click="addMem_Click"  VerticalAlignment="Center" Width="100" Margin="10,0,10,0"/> 
                             <Button Name="delBtn" Content="删除" FontSize="24" Click="delMem_Click"  VerticalAlignment="Center" Width="100" Margin="10,0,10,0"/>
                             <Button Content="保存" FontSize="24" Click="Update_Click"  VerticalAlignment="Center" Width="100" Margin="10,0,0,0"/>
                             <Label Name="result" FontSize="24" Content="re"  VerticalAlignment="Center" Margin="10,31,0,31" Width="410"/>
                         </StackPanel>
-                    </materialDesign:Card>
-                </StackPanel>
+                    </materialDesign:Card>-->
+
+                    <StackPanel Grid.Row="3" Height="60" VerticalAlignment="Center" Orientation="Horizontal">
+                        <Button Name="delBtn" Content="删除" FontSize="24" Click="delMem_Click"  VerticalAlignment="Center" Width="100" Margin="10,0,10,0"/>
+                        <Button Content="保存" FontSize="24" Click="Update_Click"  VerticalAlignment="Center" Width="100" Margin="10,0,0,0"/>
+                        <Label Name="result" FontSize="24" Content=""  VerticalAlignment="Center" Margin="10,0,0,0" Width="410"/>
+                    </StackPanel>
+
+                </Grid>
             </DockPanel>
         </StackPanel>
 

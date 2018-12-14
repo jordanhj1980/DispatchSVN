@@ -11,7 +11,7 @@
         d:DesignHeight="904" d:DesignWidth="1920"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
+        TextElement.FontSize="24"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
@@ -57,8 +57,8 @@
                 Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                 UniformCornerRadius="0">
                 <TextBlock Text="用户管理" 
-                    Height="35" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Style="{StaticResource MaterialDesignDisplay1TextBlock}" >
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    FontSize="24" >
                 </TextBlock>
             </materialDesign:Card>
             <!--分隔线-->
@@ -88,8 +88,14 @@
                         </ScrollViewer>
                     </StackPanel>
                 </materialDesign:Card>
-                <StackPanel>
-                    <!--基本信息-->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                        
+                        <!--基本信息-->
                     <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5"
                         Height="40" Margin="10,0"
                         Background="{DynamicResource PrimaryHueLightBrush}"
@@ -97,63 +103,70 @@
                         UniformCornerRadius="0" FontSize="24">
                         <TextBlock Text="基本信息" VerticalAlignment="Center" HorizontalAlignment="Center"/>                        
                     </materialDesign:Card>
-                    <materialDesign:Card x:Name="userview" Margin="10,0,10,10"
+                        
+                    <materialDesign:Card Grid.Row="1" x:Name="userview" Margin="10,0,10,10"
                     materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Visible"   
                     Padding="0" UniformCornerRadius="6">
                         <StackPanel Height="180" Orientation="Vertical">
                             <DockPanel Height="60">
-                                <TextBlock Text="名字:" Width="60" VerticalAlignment="Center" Margin="40,0,10,0"
-                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+                                <TextBlock Text="名字：" Width="70" VerticalAlignment="Center" Margin="40,0,10,0"
+                    				Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
                                 <TextBox x:Name="userName" Text="{Binding SelectedUser.name}" 
-                                IsReadOnly="{Binding NewUser, Converter={StaticResource NegateConverter}}"
-                                Width="260" VerticalAlignment="Center"  Margin="0,0,10,0" FontSize="24"/>
-                                <TextBlock Text="密码:" Width="52" VerticalAlignment="Center" Margin="20,16,10,16"
-                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
-                                <TextBox Name="userPass" Text="{Binding SelectedUser.password}" 
-                                Width="300" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24" />
-                                <TextBlock Text="状态:" Width="60" VerticalAlignment="Center" Margin="20,0,10,0"
-                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
-                                <TextBox Name="userStatus" Text="{Binding SelectedUser.status}"
-                                Width="272" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
+                    				IsReadOnly="{Binding NewUser, Converter={StaticResource NegateConverter}}"
+                    				Width="260" VerticalAlignment="Center"  Margin="0,0,10,0" FontSize="24"/>
+                                <TextBlock Text="密码：" Width="70" VerticalAlignment="Center" Margin="20,16,10,16"
+                    				Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+                                <TextBox x:Name="userPass" Text="{Binding SelectedUser.password}" 
+                    				Width="300" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24" />
+                                <TextBlock Text="状态：" Width="70" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                           Margin="90,0,10,0" FontSize="24"/>
+                                <TextBox x:Name="userStatus" Text="{Binding SelectedUser.status}"
+                    				Width="260" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
                             </DockPanel>
                             <DockPanel Height="60">
-                                <TextBlock Text="权限:" Width="60" VerticalAlignment="Center" Margin="40,0,10,0"
-                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
-                                <ComboBox Name="userPriv" ItemsSource="{Binding privCandidateList}" 
-                                Width="244" HorizontalAlignment="Left"                                           
-                                SelectedValuePath="id" DisplayMemberPath="description" 
-                                SelectedValue="{Binding SelectedUser.privilege, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
-                                <TextBlock Text="角色:" Width="52" VerticalAlignment="Center" Margin="20,16,10,16"
-                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
-                                <TextBox Name="userRole" Text="{Binding SelectedUser.role}" 
-                                Width="300" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24" />
-                                <TextBlock Text="所属调度台:" Width="140" VerticalAlignment="Center" Margin="20,0,10,0"
-                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}" 
-                                           Visibility="{Binding ElementName=userPriv, Path=SelectedValue, Mode=OneWay, Converter={StaticResource MyValToVisibilityConverter}}"/>
-                                <ComboBox Name="userDesk" ItemsSource="{Binding deskList}" 
-                                Width="244" HorizontalAlignment="Left" 
-                                Visibility="{Binding ElementName=userPriv, Path=SelectedValue, Mode=OneWay, Converter={StaticResource MyValToVisibilityConverter}}"                                          
-                                SelectedValuePath="id" DisplayMemberPath="description" 
-                                SelectedValue="{Binding SelectedUser.desk, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
+                                <TextBlock Text="权限：" Width="70" VerticalAlignment="Center" Margin="40,0,10,0"
+                    				Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+                                <ComboBox x:Name="userPriv" ItemsSource="{Binding privCandidateList}" 
+                    				Width="260" HorizontalAlignment="Left"                                           
+                    				SelectedValuePath="id" DisplayMemberPath="description" 
+                    				SelectedValue="{Binding SelectedUser.privilege, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="24"/>
+                                <TextBlock Text="角色：" Width="70" VerticalAlignment="Center" Margin="20,16,10,16"
+                    				Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+                                <TextBox x:Name="userRole" Text="{Binding SelectedUser.role}" 
+                    				Width="300" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24" />
+                                <TextBlock Text="所属调度台：" Width="140" VerticalAlignment="Center" Margin="20,0,10,0"
+                    				Style="{StaticResource MaterialDesignHeadlineTextBlock}" 
+                    				Visibility="{Binding SelectedValue, Converter={StaticResource MyValToVisibilityConverter}, ElementName=userPriv, Mode=OneWay}"/>
+                                <ComboBox x:Name="userDesk" ItemsSource="{Binding deskList}" 
+                    				Width="260" HorizontalAlignment="Left" 
+                    				Visibility="{Binding SelectedValue, Converter={StaticResource MyValToVisibilityConverter}, ElementName=userPriv, Mode=OneWay}"                                          
+                    				SelectedValuePath="id" DisplayMemberPath="description" 
+                    				SelectedValue="{Binding SelectedUser.desk, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
                             </DockPanel>
                             <DockPanel Height="60">
-                                <TextBlock Text="描述:" Width="60" VerticalAlignment="Center" Margin="40,16,10,16"
-                                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
-                                <TextBox Name="userDesp" Text="{Binding SelectedUser.description}"
-                                Width="300" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
-                                 
+                                <TextBlock Text="描述：" Width="70" VerticalAlignment="Center" Margin="40,16,10,16"
+                    				Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+                                <TextBox x:Name="userDesp" Text="{Binding SelectedUser.description}"
+                    				Width="260" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
+
                             </DockPanel>
                         </StackPanel>
                     </materialDesign:Card>
-                    <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                    <!--<materialDesign:Card Grid.Row="2" materialDesign:ShadowAssist.ShadowDepth="Depth3"
                         Height="77" Margin="10,0"                        
                         UniformCornerRadius="0" FontSize="24">
                         <StackPanel Height="100" RenderTransformOrigin="0.458,0.499" Orientation="Horizontal">
                             <Button Content="保存" FontSize="24" Click="Update_Click"  VerticalAlignment="Center" Width="100" Margin="10,0,0,0"/>
                             <Label Name="result" FontSize="24" Content=""  VerticalAlignment="Center" Margin="10,31,0,31" Width="410"/>
                         </StackPanel>
-                    </materialDesign:Card>
-                </StackPanel>
+                    </materialDesign:Card>-->
+                    
+                    <StackPanel Grid.Row="2" Height="60" VerticalAlignment="Center" Orientation="Horizontal">
+                        <Button Content="保存" FontSize="24" Click="Update_Click"  VerticalAlignment="Center" Width="100" Margin="10,0,0,0"/>
+                        <Label Name="result" FontSize="24" Content=""  VerticalAlignment="Center" Margin="10,0,0,0" Width="410"/>
+                    </StackPanel>
+                    
+                </Grid>
             </DockPanel>
         </StackPanel>
     </Grid>

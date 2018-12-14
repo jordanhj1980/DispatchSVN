@@ -30,7 +30,7 @@
                 Click ="Style_click"  
                 VerticalAlignment="Bottom" 
                 Width="186" 
-                Background="#CACDDA"
+                Background="#f1f4ff"
                 Margin="0,0,0,0" >
 
             <Grid Height="141" Width="186">

@@ -38,13 +38,13 @@ namespace DispatchApp
                 case "BYE":
                 case "IDLE":
                 case "ONLINE":     
-                    bru_return = ((Brush)new BrushConverter().ConvertFromString("#585F80"));//
+                    bru_return = ((Brush)new BrushConverter().ConvertFromString("#4d56ad"));//585F80
                     break;
                 case "FAILED":
                     bru_return = ((Brush)new BrushConverter().ConvertFromString("#E60416"));
                     break;
                 case "OFFLINE":
-                    bru_return = ((Brush)new BrushConverter().ConvertFromString("#4D4D4F"));
+                    bru_return = ((Brush)new BrushConverter().ConvertFromString("#4D4D4F")); //4D4D4F
                     break;
                 default: break;
             }
