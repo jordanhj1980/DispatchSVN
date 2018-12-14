@@ -202,14 +202,14 @@ namespace DispatchApp
             CalculationScal(this.labelNumFromId);
             this.labelNumFromId.FontSize = this.labelNumFromId.FontSize * scal;
             CalculationScal(this.labelNumToId);
-            this.labelNumToId.FontSize = this.labelNumFromId.FontSize * scal;
+            this.labelNumToId.FontSize = this.labelNumToId.FontSize * scal;
         }
 
-        double scal = 1d;
+        double scal = 1;
         private void CalculationScal(object sender)
         {
             Label item = sender as Label;
-            var boxWidth = this.Width;
+            var boxWidth = item.Width;
             float f = (float)item.FontSize;
             Font font = new Font(item.FontFamily.ToString(),f);
             int size = System.Windows.Forms.TextRenderer.MeasureText(item.Content.ToString(),font).Width;
@@ -219,7 +219,7 @@ namespace DispatchApp
             }
             else
             {
-                scal = 1d;
+                scal = 1;
             }
         }
 
