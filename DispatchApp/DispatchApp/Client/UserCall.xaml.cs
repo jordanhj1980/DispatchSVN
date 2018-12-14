@@ -13,6 +13,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
 
+using System.Windows.Threading;
+using System.Drawing;
+using System.Data;
 
 namespace DispatchApp
 {
