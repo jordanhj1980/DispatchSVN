@@ -80,8 +80,8 @@
                     <StackPanel Width="300" HorizontalAlignment="Left">
                         <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="280">
-                            <Button x:Name="addkey" Content="添加键盘" Width="100" Click="addkey_Click" Margin="20,0,20,0" HorizontalAlignment="Left" />
-                            <Button x:Name="delkey" Content="删除键盘" Width="100" Click="delkey_Click" Margin="20,0,10,0" HorizontalAlignment="Right" />
+                            <Button x:Name="addkey" FontSize="24" Content="添加键盘" Width="126" Click="addkey_Click" Margin="10,0,10,0" HorizontalAlignment="Left" />
+                            <Button x:Name="delkey" FontSize="24" Content="删除键盘" Width="126" Click="delkey_Click" Margin="10,0,10,0" HorizontalAlignment="Right" />
                         </StackPanel>
                         <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
                         <ScrollViewer x:Name="scrollViewer" VerticalScrollBarVisibility="Auto" 
@@ -98,7 +98,7 @@
                 </materialDesign:Card>
                 <!--调度键盘树end-->
                 <!--调度键盘详细信息-->
-                <StackPanel>
+                <StackPanel Margin="0,0,0,10.8">
                     <!--基本信息-->
                     <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5"
                         Height="40" Margin="10,0"
@@ -189,13 +189,14 @@
                                 <StackPanel Width="900" Height="300">
                                     <StackPanel>
                                         <DockPanel Margin="5">
-                                            <Button Content="添加分组" Click="addgroup_Click" Width="100" Margin="10,0,20,0"/>
-                                            <Button Content="删除分组" Click="delgroup_Click" Width="100" />
+                                            <Button Content="添加分组" FontSize="24" Click="addgroup_Click" Width="126" Margin="10,0,20,0"/>
+                                            <Button Content="删除分组" FontSize="24" Click="delgroup_Click" Width="126" Margin="10,0,20,0"/>
                                             <Button Command="{Binding RunGroupMemberDialogCommand}" HorizontalAlignment="Right"
-                                                Margin="10,0,20,0" Width="100">
+                                                Margin="10,0,20,0" Width="126" FontSize="24">
                                                 选择成员
                                             </Button>
-                                            <Button Content="更新" Click="Update_Click" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100"/>
+                                            <!--<Button Content="更新" FontSize="24" Click="Update_Click" HorizontalAlignment="Left" 
+                                                    VerticalAlignment="Bottom" Width="126" Margin="10,0,20,0"/>-->
                                         </DockPanel>
                                     </StackPanel>
                                     <ListView x:Name="grouplistgrid" ItemsSource="{Binding SelectedKey.grouplist}" FontSize="24" 
@@ -276,7 +277,7 @@
                                         <ScrollViewer.Content>
                                             <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
                                                 <DataGrid x:Name="groupdevicegrid" ItemsSource="{Binding SelectedGroup.memberlist}" 
-                                                                        AutoGenerateColumns="False" CanUserAddRows="False" FontSize="30" IsEnabled="False">
+                                                                        AutoGenerateColumns="False" CanUserAddRows="False" FontSize="24" IsEnabled="False">
                                                     <DataGrid.Columns>
                                                         <DataGridTextColumn Header="号码" CanUserReorder="False" Binding="{Binding callno}"/>
                                                         <DataGridTextColumn Header="岗位名称" CanUserReorder="False" Binding="{Binding name}"/>
@@ -293,7 +294,7 @@
                     </StackPanel>
                     <!--分组信息end-->
 
-                    <DockPanel>
+                    <DockPanel Height="316">
                         <StackPanel>
                             <!--键权信息-->
                             <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5"
@@ -302,8 +303,8 @@
                                 Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
                                 UniformCornerRadius="0" FontSize="24" Width="286">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="键权电话" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"/>
-                                    <Button Content="选择成员" Command="{Binding HotlineListViewDialogCommand}" Width="145" HorizontalAlignment="Right" Margin="28,0,0,0" />
+                                    <TextBlock Text="键权电话" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                                    <Button Content="选择成员" FontSize="20" Command="{Binding HotlineListViewDialogCommand}" Width="145" HorizontalAlignment="Right" Margin="28,0,0,0" />
                                 </StackPanel>
                             </materialDesign:Card>
                             <!--键权电话信息-->
@@ -340,10 +341,11 @@
                                 Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
                                 UniformCornerRadius="0" FontSize="24" Width="281">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="中继直呼" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                                    <TextBlock Text="中继直呼" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"/>
                                     <!--<TextBlock Text="{Binding SelectedKey.trunklist, Converter={StaticResource cvtTrunklist}, Mode=OneWay}" 
                                                 MinWidth="100" VerticalAlignment="Center"/>-->
-                                    <Button Content="选择成员" Command="{Binding TrunklistViewDialogCommand}" Width="145" HorizontalAlignment="Right" Margin="20,0,0,0" />
+                                    <Button Content="选择成员" FontSize="20" Command="{Binding TrunklistViewDialogCommand}" 
+                                            Width="145" HorizontalAlignment="Right" Margin="20,0,0,0" />
                                 </StackPanel>
                             </materialDesign:Card>
                             <materialDesign:Card x:Name="trunkview" Margin="0,0,10,0"
@@ -411,12 +413,12 @@
                             <materialDesign:Card x:Name="Boardview" Margin="0,0,10,0"
                                 materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Visible"   
                                 Padding="0" UniformCornerRadius="6" Height="323">
-                                <StackPanel>
+                                <StackPanel >
                                     <DockPanel Margin="5">
-                                        <Button Content="添加广播" Click="addbroadcast_Click" Width="100" Margin="10,0,20,0"/>
-                                        <Button Content="删除广播" Click="delbroadcast_Click" Width="100" />
+                                        <Button Content="添加广播" FontSize="24" Click="addbroadcast_Click" Width="126" Margin="10,0,20,0"/>
+                                        <Button Content="删除广播" FontSize="24" Click="delbroadcast_Click" Width="126" />
                                         <Button Command="{Binding BroadcastViewDialogCommand}" HorizontalAlignment="Right"
-                                    Margin="0,0,10,0" Width="100">
+                                    Margin="10,0,10,0" Width="100">
                                             选择成员
                                         </Button>
                                     </DockPanel>
@@ -450,6 +452,11 @@
                         <!--广播分组信息end-->
                     </DockPanel>
 
+                    <StackPanel Height="60" VerticalAlignment="Center" Orientation="Horizontal">
+                        <Button Content="更新" FontSize="24" Click="Update_Click" HorizontalAlignment="Left" 
+                                                    VerticalAlignment="Center" Width="100" Margin="10,0,0,0"/>
+                        <Label Name="result" FontSize="24" Content=""  VerticalAlignment="Center" Margin="10,0,0,0" Width="410"/>
+                    </StackPanel>
                 </StackPanel>
                 <!--调度键盘详细信息end-->
 

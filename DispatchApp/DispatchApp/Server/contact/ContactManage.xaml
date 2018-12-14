@@ -98,7 +98,7 @@
                         UniformCornerRadius="0" FontSize="24">
                         <TextBlock Text="基本信息" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </materialDesign:Card>
-                    <materialDesign:Card Grid.Row="1" x:Name="userview" Margin="10,0,0,10"
+                    <materialDesign:Card Grid.Row="1" x:Name="userview" Margin="10,0,10,10"
                     materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Visible"   
                     Padding="0" UniformCornerRadius="6">
                         <StackPanel Height="60" Orientation="Vertical">
@@ -116,8 +116,9 @@
                         Height="660" Margin="10,0"
                         UniformCornerRadius="0" FontSize="24">
                         <StackPanel RenderTransformOrigin="0.458,0.499" Orientation="Horizontal">
-                            <DataGrid Name="gridMem" Background="Transparent" Grid.Row="0" FontSize="24" ItemsSource="{Binding gridMemList}" AutoGenerateColumns="False" 
-                  CanUserAddRows="True" Margin="0,0,0,0.4" ScrollViewer.VerticalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible" Width="1009">
+                            <DataGrid Name="gridMem" Background="Transparent" Grid.Row="0" FontSize="24" ItemsSource="{Binding gridMemList}" 
+                                      AutoGenerateColumns="False" CanUserAddRows="True" Margin="0,0,0,0.4" 
+                                      ScrollViewer.VerticalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" Width="1009">
                                 <DataGrid.Resources>
                                     <Style TargetType="DataGridColumnHeader">
                                         <Setter Property="HorizontalContentAlignment" Value="Center"/>

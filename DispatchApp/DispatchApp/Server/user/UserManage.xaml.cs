@@ -73,12 +73,16 @@ namespace DispatchApp
                     return;
                 }
                 this.result.Content = "添加成功";
-                //retrievedItems is the data you received from the service
-                //foreach (object item in retrievedItems)
-                //Dispatcher.BeginInvoke(DispatcherPriority.Background, new ParameterizedThreadStart(AddItem), item);  
-                //Dispatcher.BeginInvoke( new Action( ()  =>  {
-                userDataModel.UserList.Add(userobj);
-                //}));
+                //retrievedItems is the data you received from the service                
+
+                if (userobj.privilege == "1")
+                {
+                    userDataModel.AdminList.Add(userobj);
+                }
+                else if ("2" == userobj.privilege)
+                {
+                    userDataModel.UserList.Add(userobj);
+                }
             }
         }
 
@@ -101,7 +105,14 @@ namespace DispatchApp
                     item.description = member.description;
                     item.desk = member.desk;
 
-                    userDataModel.UserList.Add(item);
+                    if (item.privilege == "1")
+                    {
+                        userDataModel.AdminList.Add(item);
+                    }
+                    else if ("2" == item.privilege)
+                    {
+                        userDataModel.UserList.Add(item);
+                    }                    
                 }
             }
         }
@@ -120,12 +131,22 @@ namespace DispatchApp
                 }
                 this.result.Content = "删除成功";
 
+                /* need consider two possible role */
                 /* 查询index */
                 for (int i = 0; i < userDataModel.UserList.Count; i++)
                 {
                     if (userDataModel.UserList[i].name == userobj.name)
                     {
                         userDataModel.UserList.RemoveAt(i);
+                    }
+                }
+
+                /* 查询index */
+                for (int i = 0; i < userDataModel.AdminList.Count; i++)
+                {
+                    if (userDataModel.AdminList[i].name == userobj.name)
+                    {
+                        userDataModel.AdminList.RemoveAt(i);
                     }
                 }
             }
@@ -147,6 +168,7 @@ namespace DispatchApp
                 /* 显示修改成功 */
                 this.result.Content = "保存成功";
 
+                bool finished = false;
                 // 在swList中查询对应的item
                 for (int i = 0; i < userDataModel.UserList.Count; i++)
                 {
@@ -156,17 +178,95 @@ namespace DispatchApp
                         User item = userDataModel.UserList[i];
                         item.name = userobj.name;
                         item.password = userobj.password;
-                        item.privilege = userobj.privilege;
+
                         item.description = userobj.description;
                         item.role = userobj.role;
                         item.index = userobj.index;
                         item.status = userobj.status;
                         item.desk = userobj.desk;
 
+                        // 如果更改了角色
+                        if(item.privilege =="2" && "1" == userobj.privilege)
+                        {
+                            item.privilege = "1";
+                            userDataModel.UserList.RemoveAt(i);
+                            // 将item添加到AdminList列表
+                            if (userDataModel.AdminList.Count == 0)
+                            {
+                                userDataModel.AdminList.Add(item);
+                            }
+                            else
+                            {
+                                for (int j = 0; j < userDataModel.AdminList.Count; j++)
+                                {
+                                    if (item.name.CompareTo(userDataModel.AdminList[j].name) <= 0)
+                                    {
+                                        userDataModel.AdminList.Insert(j, item);
+                                        break;
+                                    }
+                                }
+                            }
+
+                        }
+
                         Trace.WriteLine("current selected name: " + item.name);
+                        finished = true;
                         break;
                     }
                 }
+
+                if (finished)
+                {
+                    return;
+                }
+
+                /* 继续在admin中查找*/
+                for (int i = 0; i < userDataModel.AdminList.Count; i++)
+                {
+                    // 用户名来判断
+                    if (userDataModel.AdminList[i].name == userobj.name)
+                    {
+                        User item = userDataModel.AdminList[i];
+                        item.name = userobj.name;
+                        item.password = userobj.password;
+
+                        item.description = userobj.description;
+                        item.role = userobj.role;
+                        item.index = userobj.index;
+                        item.status = userobj.status;
+                        item.desk = userobj.desk;
+
+                        // 如果更改了角色
+                        if (item.privilege == "1" && "2" == userobj.privilege)
+                        {
+                            item.privilege = "2";
+                            userDataModel.AdminList.RemoveAt(i);
+                            // 将item添加到AdminList列表
+                            if (userDataModel.UserList.Count == 0)
+                            {
+                                userDataModel.UserList.Add(item);
+                            }
+                            else
+                            {
+                                for (int j = 0; j < userDataModel.UserList.Count; j++)
+                                {
+                                    if (item.name.CompareTo(userDataModel.UserList[j].name) <= 0)
+                                    {
+                                        userDataModel.UserList.Insert(j, item);
+                                        break;
+                                    }
+                                }
+                            }
+
+                        }
+
+                        Trace.WriteLine("current selected name: " + item.name);
+                        finished = true;
+                        break;
+                    }
+                }
+
+
             }
         }
         #endregion
@@ -253,7 +353,14 @@ namespace DispatchApp
                 int ind = userDesk.SelectedIndex;
                 if (item.privilege == "2")
                 {
-                    item.desk = userDataModel.deskList[ind].id;// userDesk.SelectedValue.ToString(); //userDesk.Text.Trim();
+                    if (ind < 0)
+                    {
+                        item.desk = "";
+                    }
+                    else
+                    {
+                        item.desk = userDataModel.deskList[ind].id;// userDesk.SelectedValue.ToString(); //userDesk.Text.Trim();
+                    }                    
                 }
                 else
                 {

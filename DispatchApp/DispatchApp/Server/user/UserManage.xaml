@@ -76,10 +76,15 @@
                             <Button x:Name="deluser" Content="删除用户" Width="128" FontSize="24" Click="del_Click" Margin="10,0,10,0" HorizontalAlignment="Right" />
                         </StackPanel>
                         <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" 
-                              HorizontalScrollBarVisibility="Auto"
-                      VerticalAlignment="Top"
-                      MaxHeight="505">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto"  HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" MaxHeight="505">
+                            <ScrollViewer.Content>
+                                <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto" >
+                                    <TreeView x:Name="adminlist" ItemsSource="{Binding AdminList}" TreeViewItem.Selected="user_Click_Selected"/>
+                                </StackPanel>
+                            </ScrollViewer.Content>
+                        </ScrollViewer>
+                        <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                        <ScrollViewer VerticalScrollBarVisibility="Auto"  HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" MaxHeight="505">
                             <ScrollViewer.Content>
                                 <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto" >
                                     <TreeView x:Name="userlist" ItemsSource="{Binding UserList}" TreeViewItem.Selected="user_Click_Selected"/>

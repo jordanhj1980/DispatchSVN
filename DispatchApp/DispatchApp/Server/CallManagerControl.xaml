@@ -26,7 +26,7 @@
         <!--右侧-->
         <Grid Height="900" HorizontalAlignment="Left" Name="grid1" VerticalAlignment="Top">
             <!---->
-            <TabControl Background="{x:Null}" 
+            <TabControl Background="{x:Null}" BorderThickness="0"
                 Height="900" HorizontalAlignment="Left" Name="tabControl_mgt" VerticalAlignment="Top" Margin="0,0,0,0" Width="1920">
                 <!--软交换设备展开-->
             <TabItem Header="tabItem1" Visibility="Collapsed"  Name="tabItem_switch">

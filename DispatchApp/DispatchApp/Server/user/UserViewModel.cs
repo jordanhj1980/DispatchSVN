@@ -19,7 +19,7 @@ namespace DispatchApp
             }
         }
 
-        /* 管理用户的列表 */
+        /* 调度员的列表 */
         private ObservableCollection<User> _userlist;
         public ObservableCollection<User> UserList
         {
@@ -30,12 +30,21 @@ namespace DispatchApp
             }
         }
 
-
-
+        /* 管理员的列表 */
+        private ObservableCollection<User> _adminlist;
+        public ObservableCollection<User> AdminList
+        {
+            get { return _adminlist; }
+            set
+            {
+                SetAndNotifyIfChanged("AdminList", ref _adminlist, value);
+            }
+        }
 
         public UserViewModel() 
         {
             _userlist = new ObservableCollection<User>();
+            _adminlist = new ObservableCollection<User>();
             _deskList = new ObservableCollection<UserStatus>();
 
             _privCandidateList = new List<UserStatus>();
