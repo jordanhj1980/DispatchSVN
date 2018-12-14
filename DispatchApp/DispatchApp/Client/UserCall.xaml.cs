@@ -198,7 +198,29 @@ namespace DispatchApp
         private void SizeChange(object sender, SizeChangedEventArgs e)
         {
             int i = 1;
-            i++;         
+            i++;
+            CalculationScal(this.labelNumFromId);
+            this.labelNumFromId.FontSize = this.labelNumFromId.FontSize * scal;
+            CalculationScal(this.labelNumToId);
+            this.labelNumToId.FontSize = this.labelNumFromId.FontSize * scal;
+        }
+
+        double scal = 1d;
+        private void CalculationScal(object sender)
+        {
+            Label item = sender as Label;
+            var boxWidth = this.Width;
+            float f = (float)item.FontSize;
+            Font font = new Font(item.FontFamily.ToString(),f);
+            int size = System.Windows.Forms.TextRenderer.MeasureText(item.Content.ToString(),font).Width;
+            if (size > boxWidth)
+            {
+                scal = boxWidth / size;
+            }
+            else
+            {
+                scal = 1d;
+            }
         }
 
 

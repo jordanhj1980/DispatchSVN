@@ -325,7 +325,7 @@
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                             <Button Content="{Binding Path=fromnumber}" Background="{Binding Path=CurrentState, Converter={StaticResource cvtDate}}"
-                                                    Tag="{Binding visitorid}" Margin="0,2" Height="35" Click="btn_lbqueue_click"/>
+                                                    Tag="{Binding visitorid}" Margin="0,2" Height="35" FontSize="26" Click="btn_lbqueue_click"/>
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>

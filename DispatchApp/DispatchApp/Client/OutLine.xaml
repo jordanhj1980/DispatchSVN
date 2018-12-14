@@ -188,13 +188,22 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <!--Command="{x:Static wpf:DialogHost.CloseDialogCommand}"-->
-                                    <ToggleButton Content="{Binding relayNum}"
+                                    <ToggleButton
+                                        Width="50" Height="50"
+                                        Content="{Binding relayNum}"
+                                        Background="{Binding Path=strRelayState, Converter={StaticResource cvtRelayState}}" 
+                                        Style="{StaticResource MaterialDesignActionLightToggleButton}"
+                                        Click="RelayClick"
+                                        IsChecked="{Binding isSelected}"
+                                        ToolTip="MaterialDesignActionLightToggleButton" />
+                                    <!--<ToggleButton Content="{Binding relayNum}"
                                         Foreground="{Binding Path=strRelayState, Converter={StaticResource cvtRelayState}}" 
+                                        Background="{Binding Path=strRelayState, Converter={StaticResource cvtRelayState}}" 
                                         Click="RelayClick"
                                         Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
                                         ToolTip="MaterialDesignFlatPrimaryToggleButton"
                                         IsChecked="{Binding isSelected}">
-                                    </ToggleButton>
+                                    </ToggleButton>-->
 
                                 </DataTemplate>
                             </ListView.ItemTemplate>
