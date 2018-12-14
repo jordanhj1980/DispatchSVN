@@ -471,7 +471,7 @@ namespace DispatchApp
                     {
                         KeyClickEvent(clientNum); // 摘机同单击
                         // 自动触发button命令事件。 
-                        //nightServerCloseBtn.NightServerClose.Command.Execute(nightServerCloseBtn.NightServerClose.CommandTarget);           
+                        nightServerCloseBtn.NightServerClose.Command.Execute(nightServerCloseBtn.NightServerClose.CommandTarget);           
                         //CommandBtn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));  // 自动触发button单击事件。
                     }
                     else if ("ALERT" == state)
