@@ -470,7 +470,8 @@ namespace DispatchApp
                     if ("BUSY" == state)
                     {
                         KeyClickEvent(clientNum); // 摘机同单击
-                        nightServerCloseBtn.NightServerClose.Command.Execute(nightServerCloseBtn.NightServerClose.CommandTarget);           // 自动触发button命令事件。 
+                        // 自动触发button命令事件。 
+                        //nightServerCloseBtn.NightServerClose.Command.Execute(nightServerCloseBtn.NightServerClose.CommandTarget);           
                         //CommandBtn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));  // 自动触发button单击事件。
                     }
                     else if ("ALERT" == state)

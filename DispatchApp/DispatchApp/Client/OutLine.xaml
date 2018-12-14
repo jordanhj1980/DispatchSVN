@@ -231,17 +231,6 @@
                         </ListView>
                     </StackPanel>
 
-
-
-
-
-
-
-
-
-
-
-
                     <!--<DataGrid  SelectionUnit="FullRow" SelectedItem="{Binding callLog}"
                               FontSize="24"  Name="CallHistory" AutoGenerateColumns="False">
                         <DataGrid.Columns>
@@ -285,9 +274,8 @@
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  VerticalAlignment="Top" MaxHeight="505">
                         <ScrollViewer.Content>
                             <StackPanel VerticalAlignment="Top">
-                                <local:TreeListView x:Name="treeList"
-                            Background="#FFE9E9E9" BorderBrush="#FF96DFFF" ItemsSource="{Binding ContactList}" 
-                                                    TreeViewItem.Selected="contact_Click_Selected"  PreviewMouseUp="preMouseUp">
+                                <local:TreeListView x:Name="treeList" Background="#FFE9E9E9" BorderBrush="#FF96DFFF" ItemsSource="{Binding ContactList}" 
+                                                    TreeViewItem.Selected="contact_Click_Selected" MouseDoubleClick="callout" PreviewMouseUp="preMouseUp">
                                     <local:TreeListView.ItemTemplate>
                                         <HierarchicalDataTemplate ItemsSource="{Binding memberlist}" />
                                     </local:TreeListView.ItemTemplate>

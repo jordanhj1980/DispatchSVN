@@ -167,5 +167,28 @@ namespace DispatchApp
                 tvi.IsExpanded = !tvi.IsExpanded;
             }
         }
+
+        private void callout(object sender, MouseButtonEventArgs e)
+        {
+            TreeViewItem tvi = outLineViewModel.selectedTreeItem;
+            if (tvi == null)
+            {
+                return;
+            }
+
+            PhoneItem phone = tvi.Header as PhoneItem;
+            if (phone != null)
+            {
+                // 跳转到拨号界面
+                deskTabControl.SelectedIndex = 0;
+                outLineViewModel.outLineCall.outLineNum = phone.callno;
+
+                callRel tellCall = new callRel() { fromid = outLineViewModel.outLineCall.serverNum, toid = phone.callno, trunkid = "" };
+                string strMsg = "CMD#CallOut#" + JsonConvert.SerializeObject(tellCall);
+                mainWindow.ws.Send(strMsg);
+                outLineViewModel.callBtnContent = "结束";
+                //BtnCall.Content = "结束";
+            }
+        }
     }
 }
