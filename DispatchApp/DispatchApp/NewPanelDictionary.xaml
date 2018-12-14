@@ -78,7 +78,7 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <WrapPanel Name="aa" ItemWidth="164"
+                    <WrapPanel Name="aa" ItemWidth="160"
                                    Margin="0,2,2,2" Style="{DynamicResource MyWrapPanel}"/>
                 </ItemsPanelTemplate>
             </Setter.Value>

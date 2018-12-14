@@ -870,23 +870,6 @@ namespace DispatchApp
                 Console.WriteLine("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
                 //MessageBox.Show("当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！", "呼叫信息");
             }
-            //else
-            //{
-            //    if ("0" == clientCall)
-            //    {
-            //        var view = new MessageBoxShow();
-            //        view.MsgBoxShowText.Text = "当前终端电话空\r\n请点击终端电话！";
-            //        var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
-            //        Console.WriteLine("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
-            //        //MessageBox.Show("当前终端电话空\r\n请点击终端电话！", "呼叫信息");
-            //    }
-            //    else
-            //    {
-            //        call tellCall = new call() { fromid = serverCall, toid = clientCall };
-            //        string strMsg = "CMD#Call#" + JsonConvert.SerializeObject(tellCall);
-            //        mainWindow.ws.Send(strMsg);
-            //    }
-            //}
         }
         /// <summary>
         /// add by twinkle 20181106
@@ -1023,7 +1006,7 @@ namespace DispatchApp
         /// 功能键高亮功能
         /// </summary>
         /// <param name="name"></param>
-        private void FunKeysBorderBrush(string name)
+        public void FunKeysBorderBrush(string name)
         {
             var converter = new System.Windows.Media.BrushConverter();
             if (name == "btn_call")

@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using Newtonsoft.Json;
 
 
 namespace DispatchApp
@@ -178,6 +179,15 @@ namespace DispatchApp
                     callBtnContent = "呼叫";
                     outLineCall.outLineNum = "";
                     //outLine.BtnCall.Content = callBtnContent;
+
+                    // 挂键权
+                    call callNum = new call();
+                    callNum.fromid = outLine.mainWindow.callUserCtrl.serverCall;
+                    callNum.toid = outLine.mainWindow.callUserCtrl.serverCall;
+                    string strMsg = "CMD#Clear#" + JsonConvert.SerializeObject(callNum);
+                    outLine.mainWindow.ws.Send(strMsg);
+                    outLine.mainWindow.callUserCtrl.operaState = e_OperaState.NULL;
+                    outLine.mainWindow.callUserCtrl.FunKeysBorderBrush("");
                     break;
                 default:
                     break;

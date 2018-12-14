@@ -749,8 +749,6 @@ namespace DispatchApp
                 var result = await DialogHost.Show(view, "UserOutLineDialog", ListViewClosingEventHandler1);
 
             }
-
-
         }
         private void ListViewClosingEventHandler1(object sender, DialogClosingEventArgs eventArgs)
         {

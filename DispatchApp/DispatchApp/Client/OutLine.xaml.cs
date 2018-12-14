@@ -122,7 +122,8 @@ namespace DispatchApp
                 string strMsg = "CMD#CallOut#" + JsonConvert.SerializeObject(tellCall);
                 mainWindow.ws.Send(strMsg);
                 deskTabControl.SelectedIndex = 0;
-                BtnCall.Content = "结束";
+                outLineViewModel.callBtnContent = "结束";
+                BtnCall.Content = outLineViewModel.callBtnContent;
             }
             else 
             {
