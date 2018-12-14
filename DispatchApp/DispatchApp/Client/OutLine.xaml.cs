@@ -145,7 +145,7 @@ namespace DispatchApp
             deskTabControl.SelectedIndex = 0;
             outLineViewModel.outLineCall.outLineNum = outLineViewModel.callLogSelect.num;
             outLineViewModel.callBtnContent = "呼叫";
-            BtnCall.Content = outLineViewModel.callBtnContent;
+            //BtnCall.Content = outLineViewModel.callBtnContent;
         }
 
         private void contact_Click_Selected(object sender, RoutedEventArgs e)

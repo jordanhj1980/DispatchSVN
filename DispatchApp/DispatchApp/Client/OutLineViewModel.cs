@@ -177,7 +177,7 @@ namespace DispatchApp
                 case "结束":
                     callBtnContent = "呼叫";
                     outLineCall.outLineNum = "";
-                    outLine.BtnCall.Content = callBtnContent;
+                    //outLine.BtnCall.Content = callBtnContent;
                     break;
                 default:
                     break;
