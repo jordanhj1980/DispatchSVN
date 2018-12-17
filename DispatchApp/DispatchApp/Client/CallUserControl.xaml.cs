@@ -471,7 +471,10 @@ namespace DispatchApp
                     {
                         KeyClickEvent(clientNum); // 摘机同单击
                         // 自动触发button命令事件。 
-                        nightServerCloseBtn.NightServerClose.Command.Execute(nightServerCloseBtn.NightServerClose.CommandTarget);           
+                        if ("CMD#NightServiceOn#" == keyCallDateList[i].nightState)
+                        {
+                            nightServerCloseBtn.NightServerClose.Command.Execute(nightServerCloseBtn.NightServerClose.CommandTarget);      
+                        }
                         //CommandBtn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));  // 自动触发button单击事件。
                     }
                     else if ("ALERT" == state)
@@ -616,7 +619,8 @@ namespace DispatchApp
                 {
                         UserCall temp = (UserCall)listBox.Items[jdex];  // ListBox中的一个UserCall 
 
-                        string callNum = temp.labelNumFromId.Content.ToString(); // 读取当前UserCall的本机号码                  
+                        //string callNum = temp.labelNumFromId.Content.ToString(); // 读取当前UserCall的本机号码        
+                        string callNum = temp.NameFromId.ToString();
                         // 布置本机号码对应的状态
                         if (callNum == clientNum)
                         {
@@ -636,8 +640,10 @@ namespace DispatchApp
                                     temp.CurrentState = state;
                                     temp.callNum = new call();  // 呼叫信息清零
                                     temp.timer_Stop();
-                                    temp.labelNumFromId.Content = callNum;
-                                    temp.labelNumToId.Content = "no";
+                                    //temp.labelNumFromId.Content = callNum;
+                                    temp.NameFromId = callNum;
+                                    //temp.labelNumToId.Content = "no";
+                                    temp.NameToId = "";
                                     temp.ButtonBack.Background = (Brush)new BrushConverter().ConvertFromString("#CACDDA");
                                     break;
                                 case "ONLINE":
@@ -654,25 +660,33 @@ namespace DispatchApp
                                 case "BYE":
                                     temp.CurrentState = state;
                                     temp.timer_Stop();
-                                    temp.labelNumFromId.Content = callNum;
-                                    temp.labelNumToId.Content = "no";
+                                    //temp.labelNumFromId.Content = callNum;
+                                    temp.NameFromId = callNum;
+                                    //temp.labelNumToId.Content = "no";
+                                    temp.NameToId = "no";
                                     break;
                                 case "RING":
                                     temp.CurrentState = state;
-                                    temp.labelNumFromId.Content = tempName.fromid;
-                                    temp.labelNumToId.Content = tempName.toid;
+                                    //temp.labelNumFromId.Content = tempName.fromid;
+                                    temp.NameFromId = tempName.fromid;
+                                    //temp.labelNumToId.Content = tempName.toid;
+                                    temp.NameToId = tempName.toid;
                                     break;
                                 case "ALERT":
                                     temp.CurrentState = state;
-                                    temp.labelNumFromId.Content = tempName.fromid;
-                                    temp.labelNumToId.Content = tempName.toid;
+                                    //temp.labelNumFromId.Content = tempName.fromid;
+                                    temp.NameFromId = tempName.fromid;
+                                    //temp.labelNumToId.Content = tempName.toid;
+                                    temp.NameToId = tempName.toid;
                                     break;
                                 case "ANSWER":
                                     //if (((e_OperaState.INTER != operaState) && (e_OperaState.LISTEN != operaState)) || (callNum != clientCall))
                                     if ((temp.CurrentState != "INSTER") && (temp.CurrentState != "LISTEN") || (callNum != temp.callNum.fromid))
                                     {
-                                        temp.labelNumFromId.Content = tempName.fromid;
-                                        temp.labelNumToId.Content = tempName.toid;
+                                        //temp.labelNumFromId.Content = tempName.fromid;
+                                        temp.NameFromId = tempName.fromid;
+                                        //temp.labelNumToId.Content = tempName.toid;
+                                        temp.NameToId = tempName.toid;
                                         temp.timer_Stop();
                                         temp.ShowCallTime();
                                         temp.CurrentState = state;
@@ -688,8 +702,10 @@ namespace DispatchApp
                                     //if (((e_OperaState.INTER != operaState) && (e_OperaState.LISTEN != operaState)) || (callNum != clientCall))
                                     if ((temp.CurrentState != "INSTER") && (temp.CurrentState != "LISTEN") || (callNum != temp.callNum.fromid))
                                     {
-                                        temp.labelNumFromId.Content = tempName.fromid;
-                                        temp.labelNumToId.Content = tempName.toid;
+                                        //temp.labelNumFromId.Content = tempName.fromid;
+                                        temp.NameFromId = tempName.fromid;
+                                        //temp.labelNumToId.Content = tempName.toid;
+                                        temp.NameToId = tempName.toid;
                                         temp.timer_Stop();
                                         temp.ShowCallTime();
                                         temp.CurrentState = state;
