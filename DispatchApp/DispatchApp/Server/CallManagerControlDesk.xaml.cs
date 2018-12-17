@@ -178,7 +178,7 @@ namespace DispatchApp
             // 添加成功则跳转界面
             if (ans.result == "Success")
             {
-                tabControl_mgt.SelectedIndex = 4;  // 跳转到键盘的树
+                tabControl_mgt.SelectedIndex = 5;  // 跳转到键盘的树
             }
             else
             {
