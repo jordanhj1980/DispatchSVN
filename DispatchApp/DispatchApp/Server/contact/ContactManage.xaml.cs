@@ -58,6 +58,10 @@ namespace DispatchApp
         /* 刷新电话簿列表 */
         private void freshContact(string data)
         {
+            /* 一开始隐藏软交换的基本信息 */
+            userview.Visibility = Visibility.Hidden;
+            gridMem.Visibility = Visibility.Hidden;
+
             contactDataModel.ContactList.Clear();
             PhoneBook pb = JsonConvert.DeserializeObject<PhoneBook>(data);
             if (pb != null)
@@ -137,6 +141,9 @@ namespace DispatchApp
             contactDataModel.NewContact = true;
             /* 新建一个memlist */
             //contactDataModel.gridMemList = new ObservableCollection<PhoneItem>();
+
+            userview.Visibility = Visibility.Visible;
+            gridMem.Visibility = Visibility.Visible;
         }
 
         private void del_Click(object sender, RoutedEventArgs e)
@@ -198,9 +205,14 @@ namespace DispatchApp
                     }
                     i++;
                 }
-
-                
             }
+
+            if (contactDataModel.SelectedContact != null)
+            {
+                userview.Visibility = Visibility.Visible;
+                gridMem.Visibility = Visibility.Visible;
+            }
+
         }
 
         private void Update_Click(object sender, RoutedEventArgs e)

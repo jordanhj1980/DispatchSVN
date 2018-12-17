@@ -89,6 +89,8 @@ namespace DispatchApp
         // 查询用户请求
         private void freshUser(string data)
         {
+            userview.Visibility = Visibility.Hidden;
+
             userDataModel.UserList.Clear();
             userDataModel.AdminList.Clear();
             USER_QUERYRESULT res = JsonConvert.DeserializeObject<USER_QUERYRESULT>(data);
@@ -309,6 +311,8 @@ namespace DispatchApp
             userDataModel.SelectedUser.name = "新用户";
             userDataModel.SelectedUser.privilege = "2";
             userDataModel.NewUser = true;
+
+            userview.Visibility = Visibility.Visible;
         }
 
         private void del_Click(object sender, RoutedEventArgs e)
@@ -335,6 +339,11 @@ namespace DispatchApp
                     /* 表示是否是新建用户 */
                     userDataModel.NewUser = false;
                 }                
+            }
+
+            if (userDataModel.SelectedUser != null)
+            {
+                userview.Visibility = Visibility.Visible;
             }
         }
 

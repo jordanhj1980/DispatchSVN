@@ -172,6 +172,9 @@ namespace DispatchApp
         /* 刷新软交换设备列表 */
         private void freshSwitchDevice(string data)
         {
+            /* 一开始隐藏软交换的基本信息 */
+            switchview.Visibility = Visibility.Hidden;
+
             switchDataModel.SwitchList.Clear();
             SW_QUERYRESULT res = JsonConvert.DeserializeObject<SW_QUERYRESULT>(data);
             if (res != null)
@@ -185,7 +188,7 @@ namespace DispatchApp
                     item.index = member.index;
                     item.type = member.type;
                     item.ip = member.ip;
-                    item.port = member.port.ToString();
+                    item.port = member.port;
 
                     switchDataModel.SwitchList.Add(item);
                 }
@@ -214,6 +217,8 @@ namespace DispatchApp
             switchDataModel.SelectedSwitch = new SWDEV();
             switchDataModel.SelectedSwitch.name = "新设备";
             switchDataModel.NewSwitch = true;
+
+            switchview.Visibility = Visibility.Visible;
         }
 
         private void del_Click(object sender, RoutedEventArgs e)
@@ -238,6 +243,9 @@ namespace DispatchApp
                 /* 表示是否是新建用户 */
                 switchDataModel.NewSwitch = false;
             }
+
+            if (switchDataModel.SelectedSwitch != null)
+                switchview.Visibility = Visibility.Visible;
         }
 
         private void Update_Click(object sender, RoutedEventArgs e)
