@@ -90,6 +90,7 @@ namespace DispatchApp
         private void freshUser(string data)
         {
             userDataModel.UserList.Clear();
+            userDataModel.AdminList.Clear();
             USER_QUERYRESULT res = JsonConvert.DeserializeObject<USER_QUERYRESULT>(data);
             if (res != null)
             {
