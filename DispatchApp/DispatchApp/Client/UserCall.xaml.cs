@@ -52,6 +52,64 @@ namespace DispatchApp
             }
         }
 
+
+        //public event PropertyChangedEventHandler labelNumFromIdChanged;
+        public string _nameFromId;
+        public string NameFromId
+        {
+            get { return _nameFromId; }
+            set
+            {
+                _nameFromId = value;
+              
+                
+                OnPropertyChanged(new PropertyChangedEventArgs("NameFromId"));
+                if (null != this.labelNumFromId.Content)
+                {
+                    CalculationScal(this.labelNumFromId);
+                }
+                //labelNumFromIdOnPropertyChanged(new PropertyChangedEventArgs("NameFromId"));
+            }
+        }
+
+        public void labelNumFromIdOnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            if (PropertyChanged != null)
+            {
+                //假设属性发生了改变，则触发这个事件
+                PropertyChanged(this, e);
+            }
+        }
+
+
+        //public event PropertyChangedEventHandler labelNumToIdChanged;
+        public string _nameToId;
+        public string NameToId
+        {
+            get { return _nameToId; }
+            set
+            {
+                _nameToId = value;
+             
+                
+                OnPropertyChanged(new PropertyChangedEventArgs("NameToId"));
+                if (null != this.labelNumFromId.Content)
+                {
+                    CalculationScal(this.labelNumToId);
+                }
+                //labelNumToIdOnPropertyChanged(new PropertyChangedEventArgs("NameToId"));
+            }
+        }
+
+        public void labelNumToIdOnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            if (PropertyChanged != null)
+            {
+                //假设属性发生了改变，则触发这个事件
+                PropertyChanged(this, e);
+            }
+        }
+
         /// <summary>
         /// 记录通话的信息
         /// </summary>
@@ -62,7 +120,8 @@ namespace DispatchApp
             InitializeComponent();
             DataContext = this;
             CurrentState = "OFFLINE";
-            
+            NameFromId = "";
+            NameToId = "";
 
             // 依赖项属性测试
             //StateBackgroundDependencyProperty test = new StateBackgroundDependencyProperty();
@@ -107,7 +166,8 @@ namespace DispatchApp
         /// <param name="id">输入的参数</param>
         public void setContent(string num)
         {
-            labelNumFromId.Content = num.ToString();
+            //labelNumFromId.Content = num.ToString();
+            NameFromId = num.ToString();
             phoneNum = num;
         }
 
@@ -117,7 +177,8 @@ namespace DispatchApp
         /// <param name="num"></param>
         public void SetValue(string num)
         {
-            labelNumToId.Content = num.ToString();
+            //labelNumToId.Content = num.ToString();
+            NameToId = num.ToString();
         }
 
 
@@ -199,28 +260,51 @@ namespace DispatchApp
         {
             int i = 1;
             i++;
-            CalculationScal(this.labelNumFromId);
-            this.labelNumFromId.FontSize = this.labelNumFromId.FontSize * scal;
-            CalculationScal(this.labelNumToId);
-            this.labelNumToId.FontSize = this.labelNumToId.FontSize * scal;
+            
+            
         }
 
-        double scal = 1;
+        //double scal = 1d;
         private void CalculationScal(object sender)
         {
+            double scal = 1d;
             Label item = sender as Label;
             var boxWidth = item.Width;
-            float f = (float)item.FontSize;
+            //float f = (float)item.FontSize;
+            float f = 22;
             Font font = new Font(item.FontFamily.ToString(),f);
             int size = System.Windows.Forms.TextRenderer.MeasureText(item.Content.ToString(),font).Width;
-            if (size > boxWidth)
-            {
-                scal = boxWidth / size;
-            }
-            else
+            scal = boxWidth / size;
+            if (size == 0)
             {
                 scal = 1;
             }
+            else
+            {
+                if (size > boxWidth)
+                {
+                    //item.FontSize = item.FontSize * scal;
+                    item.FontSize = f;
+                }
+                else
+                {
+                    item.FontSize = f;
+                    //scal = 1d;
+                }
+            }
+            
+        }
+
+        private void labelNumFromId_TargetUpdated(object sender, DataTransferEventArgs e)
+        {
+            CalculationScal(this.labelNumFromId);
+            //this.labelNumFromId.FontSize = this.labelNumFromId.FontSize * scal;
+        }
+
+        private void labelNumToId_TargetUpdated(object sender, DataTransferEventArgs e)
+        {
+            CalculationScal(this.labelNumToId);
+            //this.labelNumToId.FontSize = this.labelNumToId.FontSize * scal;
         }
 
 
