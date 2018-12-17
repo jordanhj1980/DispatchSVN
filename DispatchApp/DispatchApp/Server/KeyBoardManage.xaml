@@ -112,18 +112,18 @@
                     Padding="0" UniformCornerRadius="6">
                         <StackPanel Height="60">
                             <DockPanel Height="60">
-                                <TextBlock Text="名字:" Width="60" VerticalAlignment="Center" Margin="40,0,10,0"
+                                <TextBlock Text="名字：" Width="70" VerticalAlignment="Center" Margin="40,0,10,0"
                                            Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
                                 <TextBox Text="{Binding SelectedKey.name}" 
                                 Width="272" VerticalAlignment="Center"  Margin="0,0,20,0" FontSize="24"/>
-                                <TextBlock Text="IP:" Width="36" VerticalAlignment="Center" Margin="40,16,10,16"
+                                <TextBlock Text="IP：" Width="36" VerticalAlignment="Center" Margin="40,16,10,16"
                                            Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
                                 <TextBox Text="{Binding SelectedKey.ip}" 
                                 Width="300" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24" />
-                                <TextBlock Text="MAC:" Width="60" VerticalAlignment="Center" Margin="40,0,10,0"
+                                <TextBlock Text="MAC：" Width="70" VerticalAlignment="Center" Margin="40,0,10,0"
                                            Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
                                 <TextBox Text="{Binding SelectedKey.mac}"
-                                Width="272" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,11,20,11" FontSize="24"/>
+                                Width="272" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
                             </DockPanel>
                         </StackPanel>
                     </materialDesign:Card>
@@ -418,7 +418,7 @@
                                         <Button Content="添加广播" FontSize="24" Click="addbroadcast_Click" Width="126" Margin="10,0,20,0"/>
                                         <Button Content="删除广播" FontSize="24" Click="delbroadcast_Click" Width="126" />
                                         <Button Command="{Binding BroadcastViewDialogCommand}" HorizontalAlignment="Right"
-                                    Margin="10,0,10,0" Width="100">
+                                    Margin="10,0,10,0" FontSize="24" Width="126">
                                             选择成员
                                         </Button>
                                     </DockPanel>
