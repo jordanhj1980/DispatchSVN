@@ -80,7 +80,7 @@
                             登录
                         </Button>
 
-                        <Button materialDesign:ShadowAssist.ShadowDepth="Depth5" Margin="45,0,0,0"          
+                        <Button materialDesign:ShadowAssist.ShadowDepth="Depth5" Margin="0,0,0,0"          
                             Style="{StaticResource MaterialDesignRaisedButton}"
                             Click="BtExit_Click"
                             Height=" 50" Width="100" FontSize="25" FontFamily="Microsoft YaHei" >
