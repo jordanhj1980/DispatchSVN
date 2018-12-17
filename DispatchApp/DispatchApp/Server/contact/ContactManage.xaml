@@ -118,7 +118,7 @@
                         <StackPanel RenderTransformOrigin="0.458,0.499" Orientation="Horizontal">
                             <DataGrid Name="gridMem" Background="Transparent" Grid.Row="0" FontSize="24" ItemsSource="{Binding gridMemList}" 
                                       AutoGenerateColumns="False" CanUserAddRows="True" Margin="0,0,0,0.4" 
-                                      ScrollViewer.VerticalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" Width="1009">
+                                      ScrollViewer.VerticalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" Width="700">
                                 <DataGrid.Resources>
                                     <Style TargetType="DataGridColumnHeader">
                                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -127,10 +127,13 @@
                                         <Setter Property="Background" Value="Transparent"></Setter>
                                         <Setter Property="Height" Value="50" />
                                     </Style>
+                                    <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
+                                        <Setter Property="Margin" Value="80,0,0,0" />
+                                    </Style>                                    
                                 </DataGrid.Resources>
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Width="300" Header="电话号码" Binding="{Binding callno}" />
-                                    <DataGridTextColumn Width="300" Header="标识" Binding="{Binding name}" />
+                                    <DataGridTextColumn Width="350" Header="电话号码" ElementStyle="{StaticResource ColumnElementStyle}" Binding="{Binding callno}" />
+                                        <DataGridTextColumn Width="350" Header="标识" ElementStyle="{StaticResource ColumnElementStyle}" Binding="{Binding name}" />
                                 </DataGrid.Columns>
                             </DataGrid>
 
