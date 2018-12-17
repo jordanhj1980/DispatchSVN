@@ -387,7 +387,9 @@ namespace DispatchApp
                 }
             }
             
-            UserCall userNow = firstPageUserCall.Find((UserCall s) => s.labelNumFromId.Content.ToString() == word); // 当前用户电话
+            //UserCall userNow = firstPageUserCall.Find((UserCall s) => s.labelNumFromId.Content.ToString() == word); // 当前用户电话
+            //UserCall userNow = firstPageUserCall.Find((UserCall s) => s.NameToId.ToString() == word); // 当前用户电话
+            UserCall userNow = firstPageUserCall.Find((UserCall s) => s.NameFromId.ToString() == word); // 当前用户电话
             // 按键触发事件
             switch(operaState)
             {
@@ -409,16 +411,20 @@ namespace DispatchApp
                         if (serverCall == userNow.insterNum)
                         { 
                             //strMsg = "CMD#Clear#" + userNow.labelNumToId.Content;
-                            userNow.callNum.fromid = userNow.labelNumFromId.Content.ToString();
-                            userNow.callNum.toid = userNow.labelNumToId.Content.ToString();
+                            //userNow.callNum.fromid = userNow.labelNumFromId.Content.ToString();
+                            userNow.callNum.fromid = userNow.NameFromId.ToString();
+                            //userNow.callNum.toid = userNow.labelNumToId.Content.ToString();
+                            userNow.callNum.toid = userNow.NameToId.ToString();
                             strMsg = "CMD#Clear#" + JsonConvert.SerializeObject(userNow.callNum);
                             mainWindow.ws.Send(strMsg);
                             operaState = e_OperaState.NULL;
                             FunKeysBorderBrush("");
-                            mainWindow.ShowKeyLabel.Content = "键权电话强拆" + userNow.labelNumToId.Content;
+                            //mainWindow.ShowKeyLabel.Content = "键权电话强拆" + userNow.labelNumToId.Content;
+                            mainWindow.ShowKeyLabel.Content = "键权电话强拆" + userNow.NameToId;
                             mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
                             userNow.callNum.toid = serverCall;// 呼叫方变为键权电话
-                            userNow.labelNumToId.Content = userNow.callNum.toid;
+                            //userNow.labelNumToId.Content = userNow.callNum.toid;
+                            userNow.NameToId = userNow.callNum.toid;
                             Debug.WriteLine("键权电话强拆" + userNow.labelNumToId.Content);
                         }
                         else
@@ -462,7 +468,8 @@ namespace DispatchApp
                     Debug.WriteLine("键权电话监听" + clientCall);
                     break;
                 case e_OperaState.SPLIT:
-                    userNow.callNum.fromid = userNow.labelNumFromId.Content.ToString();
+                    //userNow.callNum.fromid = userNow.labelNumFromId.Content.ToString();
+                    userNow.callNum.fromid = userNow.NameFromId.ToString();
                     //userNow.callNum.toid = userNow.labelNumToId.Content.ToString();
                     userNow.callNum.toid = userNow.callNum.fromid;
                     strMsg = "CMD#Clear#" + JsonConvert.SerializeObject(userNow.callNum);
@@ -659,7 +666,7 @@ namespace DispatchApp
             {
                 var view = new MessageBoxShow();
                 view.MsgBoxShowText.Text = "当前键权电话空\r\n请点击键权电话\r\n或拿起键权电话！";
-                var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler);
+                var result = await DialogHost.Show(view, "MessageBox", ListViewClosingEventHandler1);
             }
         }
         private void ListViewClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
@@ -708,7 +715,7 @@ namespace DispatchApp
             {
                 var view2 = new MessageBoxShow();
                 view2.MsgBoxShowText.Text = "键权电话为空！";
-                var result = await DialogHost.Show(view2, "MessageBox", ListViewClosingEventHandler);
+                var result = await DialogHost.Show(view2, "MessageBox", ListViewClosingEventHandler1);
                 //MessageBox.Show("键权电话为空" +"\r\n"+"请点击键权电话");
             }
             else
