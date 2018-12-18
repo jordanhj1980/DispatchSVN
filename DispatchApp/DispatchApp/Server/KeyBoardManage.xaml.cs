@@ -60,6 +60,7 @@ namespace DispatchApp
 
         private void Keyboardlist_Selected(object sender, RoutedEventArgs e)
         {
+           
             TreeViewItem tvi = e.OriginalSource as TreeViewItem;
             if (tvi.Header is KeyBoardNew)
             {
@@ -84,6 +85,10 @@ namespace DispatchApp
                 //testdata.SelectedKey = tvii.Header as KeyBoard;
                 keyboardmanagedata.SelectedKey = ObjectCopier.Clone<KeyBoardNew>(tvii.Header as KeyBoardNew);
 
+            }
+            if (Keyboardlist.SelectedItem != null)
+            {
+                DeskBaseInfo.Visibility = Visibility.Visible;
             }
         }
 

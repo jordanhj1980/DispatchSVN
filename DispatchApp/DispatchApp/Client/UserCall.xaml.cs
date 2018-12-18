@@ -292,7 +292,6 @@ namespace DispatchApp
                     //scal = 1d;
                 }
             }
-            
         }
 
         private void labelNumFromId_TargetUpdated(object sender, DataTransferEventArgs e)

@@ -245,14 +245,20 @@ namespace DispatchApp
                     break;
                 case "user":
                     tabControl_mgt.SelectedIndex = 1;
-
                     /* 发送调度台查询命令 */
                     queryDesk();
-
                     break;                
                 case "desk":
                     //tabControl_mgt.SelectedIndex = 2;
                     tabControl_mgt.SelectedIndex = 5;
+                    if (keyboardmanagetab.Keyboardlist.SelectedItem == null)
+                    {
+                        keyboardmanagetab.DeskBaseInfo.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        keyboardmanagetab.DeskBaseInfo.Visibility = Visibility.Visible;
+                    }
                     // 查询调度键盘 20181024 xiaozi
                     //keyboardmanagetab.DataContext = keyboardmanagedata;
                     InitialDeskes();

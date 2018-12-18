@@ -86,8 +86,8 @@
                         <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
                         <ScrollViewer x:Name="scrollViewer" VerticalScrollBarVisibility="Auto" 
                               HorizontalScrollBarVisibility="Auto"
-                      VerticalAlignment="Top"
-                      PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" MaxHeight="505">
+                              VerticalAlignment="Top"
+                              PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" MaxHeight="505">
                             <ScrollViewer.Content>
                                 <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto" >
                                     <TreeView x:Name="Keyboardlist" ItemsSource="{Binding KeyboardList}" TreeViewItem.Selected="Keyboardlist_Selected" />
@@ -98,7 +98,7 @@
                 </materialDesign:Card>
                 <!--调度键盘树end-->
                 <!--调度键盘详细信息-->
-                <StackPanel Margin="0,0,0,10.8">
+                <StackPanel Name="DeskBaseInfo" Margin="0,0,0,10.8">
                     <!--基本信息-->
                     <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5"
                         Height="40" Margin="10,0"
