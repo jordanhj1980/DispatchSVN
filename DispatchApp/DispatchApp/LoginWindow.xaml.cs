@@ -177,12 +177,14 @@ namespace DispatchApp
                 isExpand = false;
                 this.loginBox.Height -= 40;
                 advBox.Visibility = Visibility.Collapsed;
+                image_adv.Source = new BitmapImage(new Uri("Resources/adv_expand.png", UriKind.RelativeOrAbsolute));
             }
             else
             {
                 isExpand = true;
                 advBox.Visibility = Visibility.Visible;
                 this.loginBox.Height += 40;
+                image_adv.Source = new BitmapImage(new Uri("Resources/adv_collapse.png", UriKind.RelativeOrAbsolute));
             }
             
         }

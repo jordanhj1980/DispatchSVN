@@ -112,7 +112,7 @@
                         </StackPanel>
                     </materialDesign:Card>
 
-                    <materialDesign:Card Grid.Row="2" materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                    <materialDesign:Card Name="contactCard" Grid.Row="2" materialDesign:ShadowAssist.ShadowDepth="Depth3"
                         Height="660" Margin="10,0"
                         UniformCornerRadius="0" FontSize="24">
                         <StackPanel RenderTransformOrigin="0.458,0.499" Orientation="Horizontal">

@@ -60,7 +60,7 @@ namespace DispatchApp
         {
             /* 一开始隐藏软交换的基本信息 */
             userview.Visibility = Visibility.Hidden;
-            gridMem.Visibility = Visibility.Hidden;
+            contactCard.Visibility = Visibility.Hidden;
 
             contactDataModel.ContactList.Clear();
             PhoneBook pb = JsonConvert.DeserializeObject<PhoneBook>(data);
@@ -143,7 +143,7 @@ namespace DispatchApp
             //contactDataModel.gridMemList = new ObservableCollection<PhoneItem>();
 
             userview.Visibility = Visibility.Visible;
-            gridMem.Visibility = Visibility.Visible;
+            contactCard.Visibility = Visibility.Visible;
         }
 
         private void del_Click(object sender, RoutedEventArgs e)
@@ -210,7 +210,7 @@ namespace DispatchApp
             if (contactDataModel.SelectedContact != null)
             {
                 userview.Visibility = Visibility.Visible;
-                gridMem.Visibility = Visibility.Visible;
+                contactCard.Visibility = Visibility.Visible;
             }
 
         }
@@ -220,6 +220,12 @@ namespace DispatchApp
             Button btn = sender as Button;
             if (btn != null)
             {
+                if (contactDataModel.SelectedContact == null)
+                {
+                    result.Content = "请选择或添加新分组";
+                    return;
+                }
+
                 string btnName = btn.Name;
 
                 /* 用于数据库协议交互 */

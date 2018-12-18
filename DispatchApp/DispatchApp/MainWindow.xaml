@@ -90,35 +90,36 @@
                         FontSize="46"
                         HorizontalContentAlignment="Center"  VerticalContentAlignment="Center"                          
                         HorizontalAlignment="Left" Width="285" />
-                    <Button x:Name="sw_button" Grid.Column="0" Height="92" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
-                            Margin="0,0" Opacity="1" BorderBrush="{x:Null}" Click="man_sw_click">
+                    <Button x:Name="sw_button" Background="Transparent" Grid.Column="0" Height="92" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
+                            Margin="0,0" Opacity="1" BorderBrush="{x:Null}" Click="man_sw_click">                        
                         <StackPanel Height="90" Width="70">
                             <!--<Image Source="Resources/settings.png" Height="58" Width="58"  VerticalAlignment="Top"/>-->
-                            <materialDesign:PackIcon Kind="ImportantDevices" Width="60" Height="60" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                            <materialDesign:PackIcon Name="icon_sw" Kind="ImportantDevices" Width="60" Height="60" VerticalAlignment="Center" Margin="5,0,0,0"/>
                             <TextBlock Block.TextAlignment="Center"  Width="100" Text="软交换" HorizontalAlignment="Center" Margin="-15,0,-15.667,0" FontSize="22" FontFamily="SimHei" VerticalAlignment="Center" Height="23"/>
                         </StackPanel>
+                        
                     </Button>
-                    <Button x:Name="user_button" Grid.Column="0" Height="92" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
+                    <Button x:Name="user_button" Background="Transparent" Grid.Column="0" Height="92" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
                             Margin="0,0" Opacity="1" BorderBrush="{x:Null}" Click="man_user_click">
                         <StackPanel Height="100" Width="69">
                             <!--<Image Source="Resources/settings.png" Height="58" Width="58"  VerticalAlignment="Top"/>-->
-                            <materialDesign:PackIcon Kind="User" Width="60" Height="60" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                            <materialDesign:PackIcon Name="icon_user"  Kind="User" Width="60" Height="60" VerticalAlignment="Center" Margin="5,0,0,0"/>
                             <TextBlock Block.TextAlignment="Center"  Width="100" Text="用户" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="22" FontFamily="SimHei" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-                    <Button x:Name="desk_button" Grid.Column="0" Height="92" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
+                    <Button x:Name="desk_button" Background="Transparent" Grid.Column="0" Height="92" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
                             Margin="0,0" Opacity="1" BorderBrush="{x:Null}" Click="man_desk_click">
                         <StackPanel Height="92" Width="69">
                             <!--<Image Source="Resources/settings.png" Height="58" Width="58"  VerticalAlignment="Top"/>-->
-                            <materialDesign:PackIcon Kind="Keyboard" Width="60" Height="60" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                            <materialDesign:PackIcon Name="icon_key"  Kind="Keyboard" Width="60" Height="60" VerticalAlignment="Center" Margin="5,0,0,0"/>
                             <TextBlock Block.TextAlignment="Center"  Width="100" Text="调度台" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="22" FontFamily="SimHei" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-                    <Button x:Name="contact_button" Grid.Column="0" Height="92" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
+                    <Button x:Name="contact_button" Background="Transparent" Grid.Column="0" Height="92" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
                             Margin="0,0" Opacity="1" BorderBrush="{x:Null}" Click="man_contact_click">
                         <StackPanel Height="92" Width="69">
                             <!--<Image Source="Resources/settings.png" Height="58" Width="58"  VerticalAlignment="Top"/>-->
-                            <materialDesign:PackIcon Kind="ContactMail" Width="60" Height="60" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                            <materialDesign:PackIcon Name="icon_contact"  Kind="ContactMail" Width="60" Height="60" VerticalAlignment="Center" Margin="5,0,0,0"/>
                             <TextBlock Block.TextAlignment="Center"  Width="100" Text="电话簿" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="22" FontFamily="SimHei" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>                    

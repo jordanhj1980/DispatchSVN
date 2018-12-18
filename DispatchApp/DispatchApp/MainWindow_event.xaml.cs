@@ -99,11 +99,21 @@ namespace DispatchApp
         private void man_sw_click(object sender, RoutedEventArgs e)
         {
             callManagerCtrl.man_header_click("sw");
+
+            icon_contact.Foreground = icon_pale;
+            icon_key.Foreground = icon_pale;
+            icon_sw.Foreground = icon_hilight;
+            icon_user.Foreground = icon_pale;
         }
 
         private void man_user_click(object sender, RoutedEventArgs e)
         {
             callManagerCtrl.man_header_click("user");
+
+            icon_contact.Foreground = icon_pale;
+            icon_key.Foreground = icon_pale;
+            icon_sw.Foreground = icon_pale;
+            icon_user.Foreground = icon_hilight;
 
             /* 发送调度台查询命令 */
             queryDesk();
@@ -112,11 +122,21 @@ namespace DispatchApp
         private void man_desk_click(object sender, RoutedEventArgs e)
         {
             callManagerCtrl.man_header_click("desk");
+
+            icon_contact.Foreground = icon_pale;
+            icon_key.Foreground = icon_hilight;
+            icon_sw.Foreground = icon_pale;
+            icon_user.Foreground = icon_pale;
         }
 
         private void man_contact_click(object sender, RoutedEventArgs e)
         {
             callManagerCtrl.man_header_click("contact");
+
+            icon_contact.Foreground = icon_hilight;
+            icon_key.Foreground = icon_pale;
+            icon_sw.Foreground = icon_pale;
+            icon_user.Foreground = icon_pale;
         }
 
         // 查询调度键盘

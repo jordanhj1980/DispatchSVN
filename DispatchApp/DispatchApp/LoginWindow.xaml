@@ -45,7 +45,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="50"/>
-                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="50"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Image Source="Resources/startup_1920x1080.jpg" Stretch="Fill" />
@@ -64,26 +64,24 @@
                     Height="80"
                     materialDesign:HintAssist.Hint="密码" FontSize="25"
                     />
-                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,40,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                        <Button  Margin="0,0,45,0" materialDesign:ShadowAssist.ShadowDepth="Depth5"               
-                            Style="{StaticResource MaterialDesignRaisedButton}"
-                            Click="BtAdvance_Click"
-                            Height="50" Width="100" FontSize="25" FontFamily="Microsoft YaHei">
-                            高级
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                        <Button Name="btn_adv" HorizontalAlignment="Left"  Margin="0,20,30,0" Click="BtAdvance_Click"
+                            FontSize="25" BorderThickness="0" Background="Transparent" Width="63">
+                            <Image Name="image_adv"  Source="Resources/adv_expand.png" HorizontalAlignment="Left" Stretch="Fill"/>
                         </Button>
 
-                        <Button  Margin="0,0,45,0" materialDesign:ShadowAssist.ShadowDepth="Depth5"               
+                        <Button  Margin="10,0,45,0" materialDesign:ShadowAssist.ShadowDepth="Depth5"               
                             Style="{StaticResource MaterialDesignRaisedButton}"
                             Click="BtLogin_Click"
                             IsDefault="True"
-                            Height="50" Width="100" FontSize="25" FontFamily="Microsoft YaHei">
+                            Height="50" Width="100" FontSize="24" FontFamily="Microsoft YaHei">
                             登录
                         </Button>
 
-                        <Button materialDesign:ShadowAssist.ShadowDepth="Depth5" Margin="0,0,0,0"          
+                        <Button materialDesign:ShadowAssist.ShadowDepth="Depth5" Margin="50,0,0,0"          
                             Style="{StaticResource MaterialDesignRaisedButton}"
                             Click="BtExit_Click"
-                            Height=" 50" Width="100" FontSize="25" FontFamily="Microsoft YaHei" >
+                            Height=" 50" Width="100" FontSize="24" FontFamily="Microsoft YaHei" >
                             退出
                         </Button>
                     </StackPanel>
@@ -93,17 +91,17 @@
                         MessageQueue="{materialDesign:MessageQueue}"
                         x:Name="SnackbarOne" 
                         />
-                    <StackPanel Name="serialBox" Orientation="Horizontal" Grid.Row="4" Height="50" HorizontalAlignment="Center">
-                        <TextBlock Text="注册码：" FontSize="24" Foreground="White" Width="106" VerticalAlignment="Center" Margin="20,0,5,0"/>
+                    <StackPanel Name="serialBox" Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Left" Margin="20,0,0,0">
+                        <TextBlock Text="注册码：" HorizontalAlignment="Right" FontSize="24" Foreground="White" Width="106" VerticalAlignment="Center" Margin="20,0,5,0"/>
                         <TextBox x:Name="serial" Foreground="White" 
                                 Width="231" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20"/>
-                        <Button Foreground="White" Content="注册" Click="register_click"
-                                Width="72" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" Margin="0,4"/>
+                        <Button Foreground="White" Content="注册" Click="register_click" Margin="10,0,0,0"
+                                Width="72" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" />
                     </StackPanel>
-                    <StackPanel Name="advBox" Orientation="Horizontal" Grid.Row="5" Height="40" HorizontalAlignment="Center">
-                        <TextBlock Text="IP地址：" FontSize="24" Foreground="White" Width="106" VerticalAlignment="Center" Margin="20,0,5,0"/>
+                    <StackPanel Name="advBox" Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Left" Margin="20,0,0,0">
+                        <TextBlock Text="IP地址：" HorizontalAlignment="Right" FontSize="24" Foreground="White" Width="106" VerticalAlignment="Center" Margin="20,0,5,0"/>
                         <TextBox x:Name="IPAddr" Foreground="White"          
-                                Width="294" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="24"/>
+                                Width="231" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="24"/>
                     </StackPanel>
                 </Grid>
             </materialDesign:Card>

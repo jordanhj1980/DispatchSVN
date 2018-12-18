@@ -253,6 +253,12 @@ namespace DispatchApp
             Button btn = sender as Button;
             if (btn != null)
             {
+                if (switchDataModel.SelectedSwitch == null)
+                {
+                    result.Content = "请选择或添加新设备";
+                    return;
+                }
+
                 /* 用于数据库协议交互 */
                 Int16 index = Convert.ToInt16(btn.Tag);
                 Debug.WriteLine("update index: " + btn.Tag);

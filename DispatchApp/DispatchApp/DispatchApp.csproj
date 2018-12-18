@@ -484,6 +484,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Design\projectGuides.guides" />
     <Fakes Include="Fakes\SuperSocket.ClientEngine.fakes" />
     <None Include="packages.config">
@@ -497,6 +498,12 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\adv_collapse.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\adv_expand.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\binding.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -352,6 +352,12 @@ namespace DispatchApp
             Button btn = sender as Button;
             if (btn != null)
             {
+                if (userDataModel.SelectedUser == null)
+                {
+                    result.Content = "请选择或添加新用户";
+                    return;
+                }
+
                 /* 用于数据库协议交互 */
                 USEREDITITEM item = new USEREDITITEM();
                 item.sequence = GlobalFunAndVar.sequenceGenerator();

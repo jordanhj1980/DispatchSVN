@@ -56,6 +56,9 @@ namespace DispatchApp
         public WebSocket ws;
         private NotifyIcon _notifyIcon = null;
         private LoginWindow logwin;
+
+        private Brush icon_hilight;
+        private Brush icon_pale;
         
         private string m_ServerIP;
         public string serverip
@@ -134,7 +137,11 @@ namespace DispatchApp
 
             DataContext = this;
             CurrentState = "RING";
- 
+
+            icon_hilight = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFFFF"));
+            icon_pale = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFC2C2C2"));
+
+
             // 最小化到系统托盘
             //Initial();
 
@@ -459,6 +466,7 @@ namespace DispatchApp
         private void Show(object sender, EventArgs e)
         {
             this.Visibility = System.Windows.Visibility.Visible;
+
             this.ShowInTaskbar = true;
             this.Activate();
         }
@@ -540,11 +548,14 @@ namespace DispatchApp
             callManagerCtrl.querySWDevice();
             callManagerCtrl.queryUSER();
 
-            /* 隐藏公共工具栏的button */
+            /* 显示公共工具栏的button */
             sw_button.Visibility = Visibility.Visible;
             user_button.Visibility = Visibility.Visible;
             desk_button.Visibility = Visibility.Visible;
             contact_button.Visibility = Visibility.Visible;
+
+            /* 初始化管理方式选择 */
+            man_sw_click(this, null);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
