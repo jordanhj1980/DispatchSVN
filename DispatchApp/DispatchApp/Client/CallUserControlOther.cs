@@ -66,6 +66,7 @@ namespace DispatchApp
         public e_OperaState operaState = e_OperaState.NULL; // 操作状态
         /* 电话List分类 start  */
         public List<s_ListUser> PageUser = new List<s_ListUser>();                  // 用户电话
+        public List<int> PageUserIndexList = new List<int>();                  
         public List<GroupData> PageKey = new List<GroupData>();                     // 键权电话
         //public List<GroupData> PageRelay = new List<GroupData>();                   // 直呼中继电话
         public List<GroupTrunk> PageRelay = new List<GroupTrunk>();                 // 直呼中继电话
@@ -360,7 +361,7 @@ namespace DispatchApp
             tab.Content = MyWrapPanel2;
             tabCtrl_User.Items.Add(tab);
             /* 默认TabControl1当前页为用户分组页的第一页 */
-            tabCtrl_User.SelectedIndex = tabCtrl_User.Items.Count - 1;          
+                      
         }
 
         /// <summary>
