@@ -283,5 +283,14 @@ namespace DispatchApp
             }
             Task.Factory.StartNew(() => messageQueue.Enqueue(msg));
         }
+
+        private void SelectAllText(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            PasswordBox pb = sender as PasswordBox;
+            if(pb!=null)
+            {
+                pb.SelectAll();
+            }
+        }
     }
 }

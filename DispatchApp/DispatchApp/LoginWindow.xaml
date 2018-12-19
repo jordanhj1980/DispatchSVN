@@ -6,7 +6,7 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         WindowStyle="None" AllowsTransparency="True"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}"
+        FontFamily="SimHei"
         Title="LoginWindow" Height="1080" Width="1920"
         Loaded="Form_Loaded">
 
@@ -30,14 +30,14 @@
                   Height="150" Width="1920"
                   Padding="8"
                   UniformCornerRadius="0">
-                <TextBlock FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Microsoft YaHei">
+                <TextBlock FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center">
                     智 能 调 度 台 客 户 端
                 </TextBlock>
             </materialDesign:Card>
 
             <materialDesign:Card x:Name="loginBox" Grid.Row="1" Width="500" Height="720" materialDesign:ShadowAssist.ShadowDepth="Depth5">
 
-                <Grid>
+                <Grid FocusManager.FocusedElement="{Binding ElementName=TxUserName}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="300" />
                         <RowDefinition Height="Auto"/>
@@ -49,34 +49,35 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Image Source="Resources/startup_1920x1080.jpg" Stretch="Fill" />
-                    <TextBox Grid.Row="1" Name="TxUserName" Foreground="WhiteSmoke" FontFamily="Microsoft YaHei" 
+                    <TextBox Grid.Row="1" Name="TxUserName" Foreground="WhiteSmoke" 
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Margin="100,20,100,0"
+                    Margin="100,10,100,0"
                     VerticalAlignment="Top"
-                    Height="80"
+                    Height="90"
                     AcceptsReturn="False"                    
-                    materialDesign:HintAssist.Hint="用户名" FontSize="25"/>
+                    materialDesign:HintAssist.Hint="用户名" FontSize="20"/>
 
-                    <PasswordBox Grid.Row="2" Name="TxPassword" Foreground="WhiteSmoke" FontFamily="Microsoft YaHei"
-                    Margin="100,20,100,0"
+                    <PasswordBox Grid.Row="2" Name="TxPassword" Foreground="WhiteSmoke" 
+                                 GotKeyboardFocus="SelectAllText"
+                    Margin="100,10,100,0"
                     Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
                     VerticalAlignment="Bottom"
-                    Height="80"
-                    materialDesign:HintAssist.Hint="密码" FontSize="25"
+                    Height="90"
+                    materialDesign:HintAssist.Hint="密码" FontSize="20"
                     />
                     <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,40,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                         <Button  Margin="0,0,45,0" materialDesign:ShadowAssist.ShadowDepth="Depth5"               
                             Style="{StaticResource MaterialDesignRaisedButton}"
                             Click="BtLogin_Click"
                             IsDefault="True"
-                            Height="50" Width="100" FontSize="24" FontFamily="Microsoft YaHei">
+                            Height="50" Width="100" FontSize="24">
                             登录
                         </Button>
 
                         <Button materialDesign:ShadowAssist.ShadowDepth="Depth5" Margin="50,0,0,0"          
                             Style="{StaticResource MaterialDesignRaisedButton}"
                             Click="BtExit_Click"
-                            Height=" 50" Width="100" FontSize="24" FontFamily="Microsoft YaHei" >
+                            Height=" 50" Width="100" FontSize="24" >
                             退出
                         </Button>
                     </StackPanel>
