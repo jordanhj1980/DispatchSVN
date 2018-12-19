@@ -152,7 +152,7 @@ namespace DispatchApp
         {
             _currentPage = 1;
 
-            _pageSize = 13;
+            _pageSize = 12;
 
 
 

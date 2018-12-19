@@ -23,7 +23,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
         <DataGrid Grid.Row="0" FontSize="24" ItemsSource="{Binding UserlogView}" AutoGenerateColumns="False" 
@@ -35,11 +35,12 @@
         </DataGrid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Name="btn_rtn" Content="返回通话" FontSize="24" Click="btn_rtn_Click" Margin="20,0"/>
+            <Button Name="btn_rtn" Content="返回通话" FontSize="24" Height="40" Click="btn_rtn_Click" Margin="20,0"/>
             
             <local:Pager TotalPage="{Binding TotalPage}"
                          CurrentPage="{Binding CurrentPage, Mode=TwoWay}" 
                          HorizontalAlignment="Center"
+                         Height="40"
                          Grid.Row="1">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="FirstPage">

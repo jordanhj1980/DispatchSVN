@@ -9,10 +9,10 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <Button x:Name="FirstPageButton" Margin="5,0" Click="FirstPageButton_Click">
+            <Button x:Name="FirstPageButton" Margin="5,0" Click="FirstPageButton_Click" Height="40">
                 <materialDesign:PackIcon Kind="SkipPrevious" Height="24" Width="24" />
             </Button>
-            <Button x:Name="PreviousPageButton" Margin="0,0,5,0" Click="PreviousPageButton_Click">
+            <Button x:Name="PreviousPageButton" Margin="0,0,5,0" Click="PreviousPageButton_Click" Height="40">
                 <materialDesign:PackIcon Kind="ArrowLeftBold" Height="24" Width="24"/>
             </Button>
             <TextBlock VerticalAlignment="Center" Foreground="White">
@@ -20,10 +20,10 @@
                 <Run x:Name="rCurrent" Text="0"/>
                 <Run Text="页"/>
             </TextBlock>
-            <Button Margin="5,0" x:Name="NextPageButton" Click="NextPageButton_Click">
+            <Button Margin="5,0" x:Name="NextPageButton" Click="NextPageButton_Click" Height="40">
                 <materialDesign:PackIcon Kind="ArrowRightBold" Height="24" Width="24"/>
             </Button>
-            <Button Margin="0,0,5,0" x:Name="LastPageButton" Click="LastPageButton_Click">
+            <Button Margin="0,0,5,0" x:Name="LastPageButton" Click="LastPageButton_Click" Height="40">
                 <materialDesign:PackIcon Kind="SkipNext" Height="24" Width="24" />
             </Button>
             <TextBlock VerticalAlignment="Center"  Foreground="White">

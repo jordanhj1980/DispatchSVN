@@ -100,8 +100,8 @@
         </ListBox>-->
         <!--  <ListBox Height="757" HorizontalAlignment="Left" Margin="284,0,0,0" Name="tabCtrl_CDR" VerticalAlignment="Top" Width="1499" Background="{x:Null}" Visibility="Hidden"/>
 -->
-        <Border Height="757" Name="LogCtrl" HorizontalAlignment="Left" Margin="289,0,0,0" VerticalAlignment="Top" Width="1631" Background="{x:Null}" BorderBrush="{x:Null}">
-            <local:DataGridPage x:Name="datagridpage" Margin="0,0,-0.333,0.333" />
+        <Border Height="750" Name="LogCtrl" HorizontalAlignment="Left" Margin="289,0,0,0" VerticalAlignment="Top" Width="1631" Background="{x:Null}" BorderBrush="{x:Null}">
+            <local:DataGridPage x:Name="datagridpage" Margin="20" />
         </Border>
 
        
