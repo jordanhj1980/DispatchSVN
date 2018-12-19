@@ -31,9 +31,23 @@ namespace DispatchApp
             }
         }
 
+        /* 管理软交换设备列表 */
+        private ObservableCollection<SWDEVMEMBER> _switchMember;
+        public ObservableCollection<SWDEVMEMBER> SwitchMember
+        {
+            get { return _switchMember; }
+            set
+            {
+                SetAndNotifyIfChanged("SwitchMember", ref _switchMember, value);
+            }
+        }
+
+
         public SwitchViewModel() 
         {
             _switchlist = new ObservableCollection<SWDEV>();
+
+            _switchMember = new ObservableCollection<SWDEVMEMBER>();
         }
 
         /// <summary>
@@ -50,7 +64,7 @@ namespace DispatchApp
                 if (_selectedSwitch != value)
                 {
                     _selectedSwitch = value;
-                    OnPropertyChanged("SelectedSwitch");
+                    OnPropertyChanged("SelectedSwitch");                    
                 }
             }
         }      

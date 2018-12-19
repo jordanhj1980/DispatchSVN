@@ -22,7 +22,6 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="3*" />
-
             </Grid.RowDefinitions>
 
             <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5"
@@ -44,6 +43,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="20"/>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="*"/>
@@ -64,13 +64,8 @@
                     Height="80"
                     materialDesign:HintAssist.Hint="密码" FontSize="25"
                     />
-                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                        <Button Name="btn_adv" HorizontalAlignment="Left"  Margin="0,20,30,0" Click="BtAdvance_Click"
-                            FontSize="25" BorderThickness="0" Background="Transparent" Width="63">
-                            <Image Name="image_adv"  Source="Resources/adv_expand.png" HorizontalAlignment="Left" Stretch="Fill"/>
-                        </Button>
-
-                        <Button  Margin="10,0,45,0" materialDesign:ShadowAssist.ShadowDepth="Depth5"               
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,40,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                        <Button  Margin="0,0,45,0" materialDesign:ShadowAssist.ShadowDepth="Depth5"               
                             Style="{StaticResource MaterialDesignRaisedButton}"
                             Click="BtLogin_Click"
                             IsDefault="True"
@@ -91,18 +86,23 @@
                         MessageQueue="{materialDesign:MessageQueue}"
                         x:Name="SnackbarOne" 
                         />
-                    <StackPanel Name="serialBox" Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Left" Margin="20,0,0,0">
+                    <Button Grid.Row="3" Name="btn_adv" HorizontalAlignment="Center" Click="BtAdvance_Click"
+                            FontSize="25" BorderThickness="0" Background="Transparent" Width="62" Height="Auto" Margin="215,86,223,45.2" Grid.RowSpan="3">
+                        <Image Name="image_adv"  Source="Resources/adv_expand.png" HorizontalAlignment="Left" Stretch="Fill"/>
+                    </Button>
+                    <StackPanel Name="advBox" Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Left" Margin="20,0,0,0">
+                        <TextBlock Text="IP地址：" HorizontalAlignment="Right" FontSize="24" Foreground="White" Width="106" VerticalAlignment="Center" Margin="20,0,5,0"/>
+                        <TextBox x:Name="IPAddr" Foreground="White"
+                                Width="231" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="24"/>
+                    </StackPanel>
+                    <StackPanel Name="serialBox" Orientation="Horizontal" Grid.Row="6" HorizontalAlignment="Left" Margin="20,0,0,0">
                         <TextBlock Text="注册码：" HorizontalAlignment="Right" FontSize="24" Foreground="White" Width="106" VerticalAlignment="Center" Margin="20,0,5,0"/>
                         <TextBox x:Name="serial" Foreground="White" 
                                 Width="231" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20"/>
                         <Button Foreground="White" Content="注册" Click="register_click" Margin="10,0,0,0"
                                 Width="72" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" />
                     </StackPanel>
-                    <StackPanel Name="advBox" Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Left" Margin="20,0,0,0">
-                        <TextBlock Text="IP地址：" HorizontalAlignment="Right" FontSize="24" Foreground="White" Width="106" VerticalAlignment="Center" Margin="20,0,5,0"/>
-                        <TextBox x:Name="IPAddr" Foreground="White"          
-                                Width="231" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="24"/>
-                    </StackPanel>
+
                 </Grid>
             </materialDesign:Card>
 

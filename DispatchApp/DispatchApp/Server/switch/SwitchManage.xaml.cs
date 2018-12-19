@@ -55,6 +55,9 @@ namespace DispatchApp
                 case "EDITSW":
                     editSwitchDevice(data);
                     break;
+                case "GETALLDEV":
+                    freshDevMember(data);
+                    break;
                 default:
                     break;
             }
@@ -195,6 +198,29 @@ namespace DispatchApp
             }
         }
 
+        /* 刷新软交换设备下面的所有电话列表 */
+        private void freshDevMember(string data)
+        {
+            switchDataModel.SwitchMember.Clear();
+            SWMEMBER_QUERYRESULT res = JsonConvert.DeserializeObject<SWMEMBER_QUERYRESULT>(data);
+            if (res != null)
+            {
+                ObservableCollection<SWDEVMEMBER> list = new ObservableCollection<SWDEVMEMBER>();
+                foreach (SWDEVMEMBER member in res.devlist)
+                {
+                    SWDEVMEMBER item = new SWDEVMEMBER();
+                    item.callno = member.callno;
+                    item.level = member.level;
+                    item.name = member.name;
+                    item.type = member.type;
+                    item.description = member.description;
+
+                    switchDataModel.SwitchMember.Add(item);
+                }
+            }
+
+        }
+
         #endregion
 
         public void delSWReq(string index)
@@ -242,6 +268,17 @@ namespace DispatchApp
                 switchDataModel.SelectedSwitch = modelkey;
                 /* 表示是否是新建用户 */
                 switchDataModel.NewSwitch = false;
+
+                /* 查询当前软交换设备下的电话 */
+                SWQUERY item = new SWQUERY();
+                item.sequence = GlobalFunAndVar.sequenceGenerator();
+                item.index = switchDataModel.SelectedSwitch.index;
+                StringBuilder sb = new StringBuilder(100);
+                sb.Append("MAN#GETALLDEV#");
+
+                sb.Append(JsonConvert.SerializeObject(item));
+                Debug.WriteLine("SEND: " + sb.ToString());
+                mainWindow.ws.Send(sb.ToString());
             }
 
             if (switchDataModel.SelectedSwitch != null)
@@ -274,10 +311,12 @@ namespace DispatchApp
                 tempobj = item;
 
                 /* 向服务器发送更新消息 */
+                bool isAddOperation = false;
                 StringBuilder sb = new StringBuilder(100);
                 if (true == switchDataModel.NewSwitch)
                 {
                     sb.Append("MAN#ADDSW#");
+                    isAddOperation = true;
                 }
                 else
                 {
@@ -287,7 +326,22 @@ namespace DispatchApp
                 sb.Append(JsonConvert.SerializeObject(item));
                 Debug.WriteLine("SEND: " + sb.ToString());
                 mainWindow.ws.Send(sb.ToString());
+
+                /* 如果是修改，则要上传所有的电话列表  */
+                if (!isAddOperation)
+                {
+                    SWMEMBER_QUERYRESULT swmember = new SWMEMBER_QUERYRESULT();
+                    swmember.sequence = GlobalFunAndVar.sequenceGenerator();
+                    swmember.index = item.index;
+                }
+
             }
+        }
+
+        private void MemberEditDialogCommand(object sender, MouseButtonEventArgs e)
+        {
+            SWDEVMEMBER item = new SWDEVMEMBER();
+
         }
     }
 }

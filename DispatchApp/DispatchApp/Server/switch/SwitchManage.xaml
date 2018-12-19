@@ -86,6 +86,7 @@
                 <Grid Margin="0,0,0,0.2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40" />
+                        <RowDefinition Height="130" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
@@ -133,9 +134,83 @@
 
                             </DockPanel>
                             <DockPanel Height="60">
+
                             </DockPanel>
                         </StackPanel>
                     </materialDesign:Card>
+
+                    <!--分组列表-->
+                    <materialDesign:Card Grid.Row="2" Height="600" x:Name="groupview" Padding="0" UniformCornerRadius="6"
+                                materialDesign:ShadowAssist.ShadowDepth="Depth5" VerticalAlignment="Top" Margin="10,0">
+                                <StackPanel>
+                                    <StackPanel>
+                                        <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5" Height="40"
+                                            Background="{DynamicResource PrimaryHueLightBrush}"
+                                            Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                                            UniformCornerRadius="0" FontSize="24" >
+                                            <TextBlock Text="调度用户" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </materialDesign:Card>
+                                    </StackPanel>
+
+                            <ListView x:Name="memberview" ItemsSource="{Binding SelectedSwitch.SwitchMember}" FontSize="24" 
+                                    SelectedItem="{Binding SelectedMember}" SelectionChanged="member_Selected" 
+                                    MaxHeight="300">
+                                        <!--横向排列Item设置-->
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel ItemWidth="180" ItemHeight="180" />
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                        <!--横向排列Item设置end-->
+                                        <!--ListView内容-->
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <!--卡片-->
+                                                <materialDesign:Card UniformCornerRadius="0" 
+                                                    MouseDoubleClick="MemberEditDialogCommand"
+                                                    Width="140" Height="160" Margin="10,0,0,0"
+                                                    HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                                                    VerticalAlignment="Center" VerticalContentAlignment="Center">
+                                                    <StackPanel>
+                                                        <StackPanel>
+                                                            <DockPanel>
+                                                                <TextBlock FontStyle="Italic"
+                                                                           Style="{StaticResource MaterialDesignSubheadingTextBlock}">
+                                                                    <DockPanel Height="50">
+                                                                        <TextBlock Text="{Binding groupname}" FontSize="18" Margin="20,0,0,0"
+                                                                            VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                    </DockPanel>  
+                                                                </TextBlock>
+                                                            </DockPanel>
+                                                        </StackPanel>
+                                                        <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                                        <StackPanel>
+                                                            <DockPanel>
+                                                                <TextBlock Text="列数"  VerticalAlignment="Center"
+                                                                           Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+                                                                <TextBlock Text="{Binding column}"  VerticalAlignment="Center" Margin="0,0,10,0"
+                                                                           Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+                                                            </DockPanel>
+                                                        </StackPanel>
+                                                        <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                                        <TextBlock Text="描述" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                       FontWeight="Bold"
+                                                                       Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+                                                        <TextBlock Text="{Binding description}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                       Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+                                                    </StackPanel>
+                                                </materialDesign:Card>
+                                                <!--卡片end-->
+                                                <!--</Button>-->
+                                                <!--Button触发分组信息编辑end-->
+
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                        <!--ListView内容end-->
+                                    </ListView>
+                                </StackPanel>
+                            </materialDesign:Card>
+
                     <!--<materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth3"
                         Height="112" Margin="10,0"                        
                         UniformCornerRadius="0" FontSize="24">
@@ -144,7 +219,7 @@
                             <Label Name="result" FontSize="24" Content=""  VerticalAlignment="Center" Margin="10,31,0,31" Width="410"/>
                         </StackPanel>
                     </materialDesign:Card>-->
-                    <StackPanel Grid.Row="2" Height="60" VerticalAlignment="Center" Orientation="Horizontal">
+                    <StackPanel Grid.Row="3" Height="60" VerticalAlignment="Center" Orientation="Horizontal">
                         <Button Content="保存" FontSize="24" Click="Update_Click"  VerticalAlignment="Center" Width="100" Margin="10,0,0,0"/>
                         <Label Name="result" FontSize="24" Content=""  VerticalAlignment="Center" Margin="10,0,0,0" Width="410"/>
                     </StackPanel>

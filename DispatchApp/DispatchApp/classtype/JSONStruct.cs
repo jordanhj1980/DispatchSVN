@@ -122,6 +122,64 @@ namespace DispatchApp
         public string index { get; set; }
     }
 
+    public class SWMEMBER_QUERYRESULT
+    {
+        public string sequence { get; set; }
+        public string index { get; set; }
+        public List<SWDEVMEMBER> devlist { get; set; }
+    }
+
+    /* 协议中软交换设备下面的电话数据结构 */
+    public class SWDEVMEMBER : NotifyObject
+    {
+        public string callno { get; set; }
+        public string type { get; set; }
+
+        private string _name;
+        public string name
+        {
+            get { return _name; }
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged("name");
+                }
+            }
+        }
+
+        private string _level;
+        public string level
+        {
+            get { return _level; }
+            set
+            {
+                if (_level != value)
+                {
+                    _level = value;
+                    OnPropertyChanged("level");
+                }
+            }
+        }
+
+        private string _description;
+        public string description
+        {
+            get { return _description; }
+            set
+            {
+                if (_description != value)
+                {
+                    _description = value;
+                    OnPropertyChanged("description");
+                }
+            }
+        }
+    }
+
+
+
     public class SW_ADDRESULT
     {
         public string sequence { get; set; }

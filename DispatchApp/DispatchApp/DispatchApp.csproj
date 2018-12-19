@@ -219,6 +219,9 @@
     <Compile Include="Server\switch\SwitchManage.xaml.cs">
       <DependentUpon>SwitchManage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Server\switch\SwitchMember.xaml.cs">
+      <DependentUpon>SwitchMember.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Server\switch\SwitchViewModel.cs" />
     <Compile Include="Server\user\BoolToVisibilityConverter.cs" />
     <Compile Include="Server\user\UserManage.xaml.cs">
@@ -376,6 +379,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Server\switch\SwitchMember.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Server\user\UserManage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -484,7 +491,6 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Design\projectGuides.guides" />
     <Fakes Include="Fakes\SuperSocket.ClientEngine.fakes" />
     <None Include="packages.config">
