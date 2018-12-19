@@ -342,26 +342,27 @@ namespace DispatchApp
             int groupNum = PageUser[idex].GroupUser.Count;      // 组员个数
             for (int i = 0; i < groupNum; i++)
             {
-                /* 一个组员的信息 */
+                /* 一个组员的信息  */
                 UserCall userCall = new UserCall();
-                string name = PageUser[idex].GroupUser[i].extid; 
+                string name = PageUser[idex].GroupUser[i].name;
                 userCall.setContent(name);                      //Id
                 userCall.SetValue("");                          //被叫号码
+                userCall.ContentFrom = PageUser[idex].GroupUser[i].extid;
+
                 /* 存放组员 */
                 MyWrapPanel2.Items.Add(userCall);
                 /* 组员被点击后的操作 */
                 userCall.ImageSouresHandle += new UserCall.ImageEventHandler(ImageEvent);
                 userCall.ImageSouresDoubleHandle += new UserCall.ImageEventHandler(ImageDoubleEvent);
                 /* 获取组员初始状态 */
-                string strMsg = "CMD#GETSTATE#" + name;         
+                string strMsg = "CMD#GETSTATE#" + userCall.ContentFrom;         
                 mainWindow.ws.Send(strMsg);
             }
 
             /* 将造好的新选项卡扔进TabControl1里 */
             tab.Content = MyWrapPanel2;
             tabCtrl_User.Items.Add(tab);
-            /* 默认TabControl1当前页为用户分组页的第一页 */
-                      
+            /* 默认TabControl1当前页为用户分组页的第一页 */                      
         }
 
         /// <summary>
@@ -378,7 +379,8 @@ namespace DispatchApp
             List<UserCall> firstPageUserCall = FindChirldHelper.FindVisualChild<UserCall>(this);
             foreach (var item in firstPageUserCall)
             {
-                if (word == item.phoneNum)
+                //if (word == item.phoneNum)
+                if (word == item.ContentFrom)
                 {
                     item.ButtonBack.BorderBrush = Brushes.Yellow;
                 }
@@ -390,7 +392,8 @@ namespace DispatchApp
             
             //UserCall userNow = firstPageUserCall.Find((UserCall s) => s.labelNumFromId.Content.ToString() == word); // 当前用户电话
             //UserCall userNow = firstPageUserCall.Find((UserCall s) => s.NameToId.ToString() == word); // 当前用户电话
-            UserCall userNow = firstPageUserCall.Find((UserCall s) => s.NameFromId.ToString() == word); // 当前用户电话
+            //UserCall userNow = firstPageUserCall.Find((UserCall s) => s.NameFromId.ToString() == word); // 当前用户电话
+            UserCall userNow = firstPageUserCall.Find((UserCall s) => s.ContentFrom.ToString() == word); // 当前用户电话
             // 按键触发事件
             switch(operaState)
             {
@@ -413,9 +416,11 @@ namespace DispatchApp
                         { 
                             //strMsg = "CMD#Clear#" + userNow.labelNumToId.Content;
                             //userNow.callNum.fromid = userNow.labelNumFromId.Content.ToString();
-                            userNow.callNum.fromid = userNow.NameFromId.ToString();
+                            //userNow.callNum.fromid = userNow.NameFromId.ToString();
+                            userNow.callNum.fromid = userNow.ContentFrom.ToString();
                             //userNow.callNum.toid = userNow.labelNumToId.Content.ToString();
-                            userNow.callNum.toid = userNow.NameToId.ToString();
+                            //userNow.callNum.toid = userNow.NameToId.ToString();
+                            userNow.callNum.toid = userNow.ContentFrom.ToString();
                             strMsg = "CMD#Clear#" + JsonConvert.SerializeObject(userNow.callNum);
                             mainWindow.ws.Send(strMsg);
                             operaState = e_OperaState.NULL;
@@ -470,7 +475,8 @@ namespace DispatchApp
                     break;
                 case e_OperaState.SPLIT:
                     //userNow.callNum.fromid = userNow.labelNumFromId.Content.ToString();
-                    userNow.callNum.fromid = userNow.NameFromId.ToString();
+                    //userNow.callNum.fromid = userNow.NameFromId.ToString();
+                    userNow.callNum.fromid = userNow.ContentFrom.ToString();
                     //userNow.callNum.toid = userNow.labelNumToId.Content.ToString();
                     userNow.callNum.toid = userNow.callNum.fromid;
                     strMsg = "CMD#Clear#" + JsonConvert.SerializeObject(userNow.callNum);

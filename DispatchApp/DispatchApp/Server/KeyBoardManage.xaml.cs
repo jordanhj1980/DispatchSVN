@@ -84,7 +84,6 @@ namespace DispatchApp
                 TreeViewItem tvii = ip.TemplatedParent as TreeViewItem;//这是父节点
                 //testdata.SelectedKey = tvii.Header as KeyBoard;
                 keyboardmanagedata.SelectedKey = ObjectCopier.Clone<KeyBoardNew>(tvii.Header as KeyBoardNew);
-
             }
             if (Keyboardlist.SelectedItem != null)
             {

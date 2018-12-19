@@ -52,6 +52,16 @@ namespace DispatchApp
             }
         }
 
+        public string _contentFrom;
+        public string ContentFrom
+        {
+            get { return _contentFrom; }
+            set
+            {
+                _contentFrom = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("ContentFrom"));
+            }
+        }
 
         //public event PropertyChangedEventHandler labelNumFromIdChanged;
         public string _nameFromId;
@@ -62,7 +72,6 @@ namespace DispatchApp
             {
                 _nameFromId = value;
               
-                
                 OnPropertyChanged(new PropertyChangedEventArgs("NameFromId"));
                 if (null != this.labelNumFromId.Content)
                 {
@@ -149,14 +158,16 @@ namespace DispatchApp
         {
             if (ImageSouresHandle != null)
             {
-                ImageSouresHandle(phoneNum);
+                //ImageSouresHandle(phoneNum);
+                ImageSouresHandle(ContentFrom);
             }
         }
         private void MouseDouble_Click(object sender, MouseButtonEventArgs e)
         {
             if (ImageSouresDoubleHandle != null)
             {
-                ImageSouresDoubleHandle(phoneNum);
+                //ImageSouresDoubleHandle(phoneNum);
+                ImageSouresDoubleHandle(ContentFrom);
             }
         }
 
@@ -168,7 +179,7 @@ namespace DispatchApp
         {
             //labelNumFromId.Content = num.ToString();
             NameFromId = num.ToString();
-            phoneNum = num;
+            //phoneNum = num;
         }
 
         /// <summary>

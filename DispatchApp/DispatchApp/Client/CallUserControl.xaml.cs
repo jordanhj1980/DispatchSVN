@@ -271,9 +271,12 @@ namespace DispatchApp
                         PageUser.Add(user);
                         c_callTypeInfo.status = e_CallType.USER;
                         SetUserCall();
+                        //tabCtrl_User.SelectedIndex = tabCtrl_User.Items.Count - 1;
+                        PageUserIndexList.Add(tabCtrl_User.Items.Count - 1);
                         break;
                 }
             }
+            tabCtrl_User.SelectedIndex = PageUserIndexList[0];
         
             int KeyNum = PageKey.Count;            // 键权电话个数
             
@@ -620,7 +623,8 @@ namespace DispatchApp
                         UserCall temp = (UserCall)listBox.Items[jdex];  // ListBox中的一个UserCall 
 
                         //string callNum = temp.labelNumFromId.Content.ToString(); // 读取当前UserCall的本机号码        
-                        string callNum = temp.NameFromId.ToString();
+                        //string callNum = temp.NameFromId.ToString();
+                        string callNum = temp.ContentFrom.ToString();
                         // 布置本机号码对应的状态
                         if (callNum == clientNum)
                         {
@@ -641,7 +645,8 @@ namespace DispatchApp
                                     temp.callNum = new call();  // 呼叫信息清零
                                     temp.timer_Stop();
                                     //temp.labelNumFromId.Content = callNum;
-                                    temp.NameFromId = callNum;
+                                    //temp.NameFromId = callNum;
+                                    temp.ContentFrom = callNum;
                                     //temp.labelNumToId.Content = "no";
                                     temp.NameToId = "";
                                     temp.ButtonBack.Background = (Brush)new BrushConverter().ConvertFromString("#CACDDA");
@@ -661,21 +666,24 @@ namespace DispatchApp
                                     temp.CurrentState = state;
                                     temp.timer_Stop();
                                     //temp.labelNumFromId.Content = callNum;
-                                    temp.NameFromId = callNum;
+                                    //temp.NameFromId = callNum;
+                                    temp.ContentFrom = callNum;
                                     //temp.labelNumToId.Content = "no";
                                     temp.NameToId = "no";
                                     break;
                                 case "RING":
                                     temp.CurrentState = state;
                                     //temp.labelNumFromId.Content = tempName.fromid;
-                                    temp.NameFromId = tempName.fromid;
+                                    //temp.NameFromId = tempName.fromid;
+                                    temp.ContentFrom = callNum;
                                     //temp.labelNumToId.Content = tempName.toid;
                                     temp.NameToId = tempName.toid;
                                     break;
                                 case "ALERT":
                                     temp.CurrentState = state;
                                     //temp.labelNumFromId.Content = tempName.fromid;
-                                    temp.NameFromId = tempName.fromid;
+                                    //temp.NameFromId = tempName.fromid;
+                                    temp.ContentFrom = callNum;
                                     //temp.labelNumToId.Content = tempName.toid;
                                     temp.NameToId = tempName.toid;
                                     break;
@@ -684,7 +692,8 @@ namespace DispatchApp
                                     if ((temp.CurrentState != "INSTER") && (temp.CurrentState != "LISTEN") || (callNum != temp.callNum.fromid))
                                     {
                                         //temp.labelNumFromId.Content = tempName.fromid;
-                                        temp.NameFromId = tempName.fromid;
+                                        //temp.NameFromId = tempName.fromid;
+                                        temp.ContentFrom = callNum;
                                         //temp.labelNumToId.Content = tempName.toid;
                                         temp.NameToId = tempName.toid;
                                         temp.timer_Stop();
@@ -703,7 +712,8 @@ namespace DispatchApp
                                     if ((temp.CurrentState != "INSTER") && (temp.CurrentState != "LISTEN") || (callNum != temp.callNum.fromid))
                                     {
                                         //temp.labelNumFromId.Content = tempName.fromid;
-                                        temp.NameFromId = tempName.fromid;
+                                        //temp.NameFromId = tempName.fromid;
+                                        temp.ContentFrom = callNum;
                                         //temp.labelNumToId.Content = tempName.toid;
                                         temp.NameToId = tempName.toid;
                                         temp.timer_Stop();
