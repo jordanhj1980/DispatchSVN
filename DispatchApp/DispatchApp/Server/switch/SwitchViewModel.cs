@@ -67,8 +67,20 @@ namespace DispatchApp
                     OnPropertyChanged("SelectedSwitch");                    
                 }
             }
-        }      
-
+        }
+        private SWDEVMEMBER _SelectedMember;
+        public SWDEVMEMBER SelectedMember
+        {
+            get { return _SelectedMember; }
+            set
+            {
+                if (_SelectedMember != value)
+                {
+                    _SelectedMember = value;
+                    OnPropertyChanged("SelectedMember");
+                }
+            }
+        }
 
     }
 }

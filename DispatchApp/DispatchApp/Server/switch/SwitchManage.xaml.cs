@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using MaterialDesignThemes.Wpf;
 
 namespace DispatchApp
 {
@@ -333,6 +334,9 @@ namespace DispatchApp
                     SWMEMBER_QUERYRESULT swmember = new SWMEMBER_QUERYRESULT();
                     swmember.sequence = GlobalFunAndVar.sequenceGenerator();
                     swmember.index = item.index;
+                    swmember.devlist = switchDataModel.SwitchMember.ToList<SWDEVMEMBER>();
+                    string editalldevstr = "MAN#EDITALLDEV#" + JsonConvert.SerializeObject(swmember);
+                    mainWindow.ws.Send(editalldevstr);
                 }
 
             }
@@ -341,6 +345,22 @@ namespace DispatchApp
         private void MemberEditDialogCommand(object sender, MouseButtonEventArgs e)
         {
             SWDEVMEMBER item = new SWDEVMEMBER();
+
+        }
+
+        private void member_Selected(object sender, SelectionChangedEventArgs e)
+        {
+            
+            if(switchDataModel.SelectedMember!=null)
+            {
+                var view = new SwitchMember();
+                view.DataContext = switchDataModel.SelectedMember;
+                var result = DialogHost.Show(view, "RootDialogSelectedMember");
+            }
+        }
+
+        private void RootDialogSelectedMember_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
 
         }
     }
