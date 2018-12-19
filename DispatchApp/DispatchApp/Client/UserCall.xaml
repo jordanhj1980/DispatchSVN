@@ -5,7 +5,7 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Name="usname" x:Class="DispatchApp.UserCall"  
             xmlns:local="clr-namespace:DispatchApp" 
-            mc:Ignorable="d" d:DesignHeight="146" d:DesignWidth="186" SizeChanged="SizeChange">
+            mc:Ignorable="d" d:DesignHeight="150" d:DesignWidth="186" SizeChanged="SizeChange">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -21,19 +21,19 @@
                 <local:DateConverter x:Key="cvtDate" />
                 <local:ImageConverter x:Key="cvtImage" />
             </Grid.Resources>
-            <Button x:Name="ButtonBack" 
+            <StackPanel Height="150" >
+
+            <Button x:Name="ButtonBack" Margin="0,2"
                 Style="{DynamicResource UserRoundedButton}"
                 BorderBrush="Gray" 
                 HorizontalAlignment="Left" 
                 Height="146" 
                 MouseDoubleClick="MouseDouble_Click" 
                 Click ="Style_click"  
-                VerticalAlignment="Bottom" 
+                VerticalAlignment="Center" 
                 Width="186" 
-                Background="#f1f4ff"
-                Margin="0,0,0,0" >
-
-                <Grid Height="141" Width="186">
+                Background="#f1f4ff">
+                    <Grid Height="141" Width="186">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="24*"/>
                         <RowDefinition Height="23*"/>
@@ -72,6 +72,7 @@
                     <!--<Path Data="M-13.181159,-14.152649 C-13.181159,-14.152649 175.3845,-14.519306 175.3845,-14.519306 175.3845,-14.519306 173.38449,71.478361 173.38449,71.478361 159.38404,71.478195 174.14239,70.811436 133.3796,70.811436 92.616815,70.811436 106.31921,34.479365 62.319104,34.479365 18.319,34.479365 -13.681161,33.812716 -13.681161,33.812716" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="87" Stretch="Fill" VerticalAlignment="Top" Width="186" Grid.ColumnSpan="2"/>-->
                 </Grid>
             </Button>
+            </StackPanel>
         </Grid>
     </Viewbox>
 </UserControl>
