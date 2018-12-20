@@ -332,7 +332,7 @@
                                         </ListView.Template>
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
-                                                <materialDesign:Card Margin="10,5,0,0" UniformCornerRadius="0" Height="60"
+                                                <materialDesign:Card Margin="5" UniformCornerRadius="0" Height="60"
                                                     VerticalAlignment="Center" >
                                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                                         <materialDesign:PackIcon Kind="Deskphone" Margin="10" Height="40" Width="40"/>
