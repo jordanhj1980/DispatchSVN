@@ -34,7 +34,7 @@
 
             <StackPanel Orientation="Horizontal" Margin="0,0" HorizontalAlignment="Left">
                 <TextBlock Text="号码:" HorizontalAlignment="Right" Margin="10,0,10,0" Width="60" VerticalAlignment="Center"/>
-                <TextBox Text="{Binding callno}" Width="184" IsReadOnly="True" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding callno}" Width="184" Margin="10,5,10,5" VerticalAlignment="Center" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
@@ -54,19 +54,19 @@
             </StackPanel>
         </StackPanel>
             
-        <StackPanel Orientation="Horizontal" Margin="0,250,0,0" VerticalAlignment="Center">
-            <Button Content="确定" Width="100" Margin="30,10,20,10" HorizontalAlignment="Left"
+        <StackPanel Orientation="Horizontal" Margin="0,250,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Content="确定" Width="100" Margin="30,10,20,10"
                     Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
                 <Button.CommandParameter>
                     <system:Boolean>True</system:Boolean>
                 </Button.CommandParameter>
             </Button>
-            <Button Content="取消" Width="100" Margin="20,10,30,10" HorizontalAlignment="Right"
+           <!-- <Button Content="取消" Width="100" Margin="20,10,30,10" HorizontalAlignment="Right"
                     Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
                 <Button.CommandParameter>
                     <system:Boolean>False</system:Boolean>
                 </Button.CommandParameter>
-            </Button>
+            </Button>-->
         </StackPanel>
     </Grid>
 </UserControl>

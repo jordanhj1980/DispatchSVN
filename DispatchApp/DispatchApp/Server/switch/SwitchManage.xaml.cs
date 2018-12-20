@@ -57,7 +57,11 @@ namespace DispatchApp
                     editSwitchDevice(data);
                     break;
                 case "GETALLDEV":
+                case "QUERYALLDEV":
                     freshDevMember(data);
+                    break;
+                case "EDITALLDEV":
+                    editSwitchMember(data);
                     break;
                 default:
                     break;
@@ -222,6 +226,37 @@ namespace DispatchApp
 
         }
 
+        /* 修改软交换成员返回结果 */
+        private void editSwitchMember(string data)
+        {
+            /* 比较临时存储的obj的sequence是否一致 */
+            SW_ADDRESULT res = JsonConvert.DeserializeObject<SW_ADDRESULT>(data);
+            if (res != null /* && swdevobj.sequence == res.sequence */)
+            {
+                if (res.result == "Fail")
+                {
+                    Debug.WriteLine(res.reason);
+                    this.result.Content = "更新调度成员失败";
+                    return;
+                }
+
+                this.result.Content = "更新调度成员成功";                
+            }
+
+
+            /* 当软交换设备被选中时，查询当前软交换设备下的电话 */
+            SWQUERY item = new SWQUERY();
+            item.sequence = GlobalFunAndVar.sequenceGenerator();
+            item.index = switchDataModel.SelectedSwitch.index;
+            StringBuilder sb = new StringBuilder(100);
+            sb.Append("MAN#GETALLDEV#");
+
+            sb.Append(JsonConvert.SerializeObject(item));
+            Debug.WriteLine("SEND: " + sb.ToString());
+            mainWindow.ws.Send(sb.ToString());
+        }
+
+
         #endregion
 
         public void delSWReq(string index)
@@ -270,7 +305,7 @@ namespace DispatchApp
                 /* 表示是否是新建用户 */
                 switchDataModel.NewSwitch = false;
 
-                /* 查询当前软交换设备下的电话 */
+                /* 当软交换设备被选中时，查询当前软交换设备下的电话 */
                 SWQUERY item = new SWQUERY();
                 item.sequence = GlobalFunAndVar.sequenceGenerator();
                 item.index = switchDataModel.SelectedSwitch.index;
@@ -340,18 +375,35 @@ namespace DispatchApp
                 }
 
             }
+        }        
+       
+        private void RootDialogSelectedMember_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            Console.WriteLine("调度用户编辑完毕");
+            if (!Equals(eventArgs.Parameter, true)) return;
+
+            else
+            {
+                if (switchDataModel.SelectedSwitch == null)
+                {
+                    result.Content = "请选择设备";
+                    return;
+                }
+
+                /* 向服务器发送修改请求 */
+                SWMEMBER_QUERYRESULT swmember = new SWMEMBER_QUERYRESULT();
+                swmember.sequence = GlobalFunAndVar.sequenceGenerator();
+                swmember.index = switchDataModel.SelectedSwitch.index;
+                swmember.devlist = switchDataModel.SwitchMember.ToList<SWDEVMEMBER>();
+                string editalldevstr = "MAN#EDITALLDEV#" + JsonConvert.SerializeObject(swmember);
+                Debug.WriteLine("SEND: " + editalldevstr);
+                mainWindow.ws.Send(editalldevstr);
+            }
         }
 
-        private void MemberEditDialogCommand(object sender, MouseButtonEventArgs e)
+        private void member_Selected(object sender, RoutedEventArgs e)
         {
-            SWDEVMEMBER item = new SWDEVMEMBER();
-
-        }
-
-        private void member_Selected(object sender, SelectionChangedEventArgs e)
-        {
-            
-            if(switchDataModel.SelectedMember!=null)
+            if (switchDataModel.SelectedMember != null)
             {
                 var view = new SwitchMember();
                 view.DataContext = switchDataModel.SelectedMember;
@@ -359,9 +411,15 @@ namespace DispatchApp
             }
         }
 
-        private void RootDialogSelectedMember_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            var item = sender as ListViewItem;
+            if (item != null /*&& item.IsSelected*/)
+            {
+                var view = new SwitchMember();
+                view.DataContext = switchDataModel.SelectedMember;
+                var result = DialogHost.Show(view, "RootDialogSelectedMember");
+            }
         }
     }
 }

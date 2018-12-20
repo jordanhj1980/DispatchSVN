@@ -12,7 +12,7 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextOptions.TextFormattingMode="Ideal" 
-        TextOptions.TextRenderingMode="Auto"        
+        TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         TextElement.FontSize="13">
@@ -20,12 +20,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DialogHost.xaml" />
+                <ResourceDictionary Source="../../MaterialDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <local:BoolToVisibilityConverter CollapseWhenInvisible="False" x:Key="BtVconverter" />
             <local:NegateConverter x:Key="NegateConverter"/>
@@ -153,9 +148,14 @@
                                     </StackPanel>
 
                             <ListView x:Name="memberview" ItemsSource="{Binding SwitchMember}" FontSize="24" 
-                                    SelectedItem="{Binding SelectedMember}" SelectionChanged="member_Selected" 
-                                    MaxHeight="560">
-                                  
+                                    SelectedItem="{Binding SelectedMember}" MaxHeight="560" SelectionChanged="member_Selected">
+
+                                <!--<ListView.Resources>
+                                    <Style TargetType="ListViewItem">
+                                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
+                                    </Style>
+                                </ListView.Resources>-->
+                                
                                 <ListView.Template>
                                     <ControlTemplate TargetType="{x:Type ListView}">
                                         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
@@ -168,15 +168,13 @@
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <!--卡片-->
-                                        <materialDesign:Card UniformCornerRadius="5" 
-                                                    MouseDoubleClick="MemberEditDialogCommand"
-                                                    Background="{DynamicResource PrimaryHueDarkBrush}"
-                                                    HorizontalAlignment="Center" HorizontalContentAlignment="Center"
-                                                    VerticalAlignment="Center" VerticalContentAlignment="Center">
+                                        <materialDesign:Card 
+                                                Background="{DynamicResource PrimaryHueDarkBrush}"
+                                                HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                                                VerticalAlignment="Center" VerticalContentAlignment="Center">
                                             <StackPanel Margin="5">
                                                 <StackPanel>
-                                                    <TextBlock Text="{Binding name}" FontSize="18" 
-                                                                            VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding name}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                 </StackPanel>
                                                 <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
                                                 <StackPanel HorizontalAlignment="Center">

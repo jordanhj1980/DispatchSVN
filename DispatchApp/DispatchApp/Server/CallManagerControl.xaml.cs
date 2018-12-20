@@ -187,6 +187,7 @@ namespace DispatchApp
                 case "DELSW":
                 case "EDITSW":
                 case "GETALLDEV":
+                case "EDITALLDEV":
                     swmanaagetab.recv(state,data);
                     break;
                 case "ADDUSER":
