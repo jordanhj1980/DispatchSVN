@@ -41,12 +41,23 @@
                 </ListView.Template>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ToggleButton Content="{Binding callno}"
-                            Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
-                            ToolTip="MaterialDesignFlatPrimaryToggleButton"
-                            IsChecked="{Binding DevSelected}">
-                        </ToggleButton>
-
+                        <StackPanel>
+                            <ToggleButton
+                                Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
+                                ToolTip="MaterialDesignFlatPrimaryToggleButton"
+                                IsChecked="{Binding DevSelected}">
+                                <materialDesign:PackIcon
+                                Kind="Phone"
+                                Height="21"
+                                Width="21" />       
+                            </ToggleButton>
+                            <!--<ToggleButton
+                                Content="+"
+                                Style="{StaticResource MaterialDesignActionLightToggleButton}"
+                                IsChecked="{Binding DevSelected}"
+                                ToolTip="MaterialDesignActionLightToggleButton" />-->
+                            <TextBlock MaxWidth="120" Text="{Binding name}" TextAlignment="Center" Foreground="Black"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

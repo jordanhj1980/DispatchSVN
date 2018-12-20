@@ -203,11 +203,18 @@
                                     SelectedItem="{Binding SelectedGroup}" SelectionChanged="grouplistgrid_Selected" 
                                     MaxHeight="300">
                                         <!--横向排列Item设置-->
-                                        <ListView.ItemsPanel>
+                                        <ListView.Template>
+                                            <ControlTemplate TargetType="{x:Type ListView}">
+                                                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                                                    <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
+                                                </ScrollViewer>
+                                            </ControlTemplate>
+                                        </ListView.Template>
+                                        <!--<ListView.ItemsPanel>
                                             <ItemsPanelTemplate>
-                                                <WrapPanel ItemWidth="180" ItemHeight="180" />
+                                                <WrapPanel />
                                             </ItemsPanelTemplate>
-                                        </ListView.ItemsPanel>
+                                        </ListView.ItemsPanel>-->
                                         <!--横向排列Item设置end-->
                                         <!--ListView内容-->
                                         <ListView.ItemTemplate>
@@ -215,14 +222,13 @@
                                                 <!--卡片-->
                                                 <materialDesign:Card UniformCornerRadius="0" 
                                                     MouseDoubleClick="RunGroupDetailDialogCommand"
-                                                    Width="140" Height="160" Margin="10,0,0,0"
+                                                    Margin="5" MaxWidth="140"
                                                     HorizontalAlignment="Center" HorizontalContentAlignment="Center"
                                                     VerticalAlignment="Center" VerticalContentAlignment="Center">
                                                     <StackPanel>
                                                         <StackPanel>
                                                             <DockPanel>
-                                                                <TextBlock FontStyle="Italic"
-                                                                           Style="{StaticResource MaterialDesignSubheadingTextBlock}">
+                                                                <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}">
                                                                     <DockPanel Height="50">   
                                                                         <materialDesign:Badged Margin="10,10,0,0"
                                                                             Badge="{Binding memberlist, Converter={StaticResource cvtMemberlist}, Mode=OneWay}">
@@ -237,21 +243,24 @@
                                                                 </TextBlock>
                                                             </DockPanel>
                                                         </StackPanel>
-                                                        <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
-                                                        <StackPanel>
+                                                        <!--<Separator Style="{StaticResource MaterialDesignLightSeparator}" />-->
+                                                        <!--<StackPanel>
                                                             <DockPanel>
                                                                 <TextBlock Text="列数"  VerticalAlignment="Center"
                                                                            Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
                                                                 <TextBlock Text="{Binding column}"  VerticalAlignment="Center" Margin="0,0,10,0"
                                                                            Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
                                                             </DockPanel>
-                                                        </StackPanel>
+                                                        </StackPanel>-->
                                                         <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
-                                                        <TextBlock Text="描述" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                                                       FontWeight="Bold"
+                                                        <DockPanel>
+                                                            <TextBlock Text="描述：" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                       FontWeight="Bold" Margin="0,0,0,5" 
                                                                        Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
-                                                        <TextBlock Text="{Binding description}" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                                                       Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+                                                            <TextBlock Text="{Binding description}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,0,5"
+                                                                       Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                                                       TextWrapping="Wrap" MaxWidth="100"/>
+                                                        </DockPanel>
                                                     </StackPanel>
                                                 </materialDesign:Card>
                                                 <!--卡片end-->
