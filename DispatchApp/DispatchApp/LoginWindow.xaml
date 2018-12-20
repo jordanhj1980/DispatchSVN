@@ -91,18 +91,18 @@
                             FontSize="25" BorderThickness="0" Background="Transparent" Width="62" Height="Auto" Margin="215,86,223,45.2" Grid.RowSpan="3">
                         <Image Name="image_adv"  Source="Resources/adv_expand.png" HorizontalAlignment="Left" Stretch="Fill"/>
                     </Button>
-                    <StackPanel Name="advBox" Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Left" Margin="20,0,0,0">
-                        <TextBlock Text="IP地址：" HorizontalAlignment="Right" FontSize="24" Foreground="White" Width="106" VerticalAlignment="Center" Margin="20,0,5,0"/>
-                        <TextBox x:Name="IPAddr" Foreground="White"
-                                Width="231" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="24"/>
-                    </StackPanel>
-                    <StackPanel Name="serialBox" Orientation="Horizontal" Grid.Row="6" HorizontalAlignment="Left" Margin="20,0,0,0">
+                    <StackPanel Name="serialBox" Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Left" Margin="20,0,0,0">
                         <TextBlock Text="注册码：" HorizontalAlignment="Right" FontSize="24" Foreground="White" Width="106" VerticalAlignment="Center" Margin="20,0,5,0"/>
                         <TextBox x:Name="serial" Foreground="White" 
                                 Width="231" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20"/>
                         <Button Foreground="White" Content="注册" Click="register_click" Margin="10,0,0,0"
                                 Width="72" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" />
                     </StackPanel>
+                    <StackPanel Name="advBox" Orientation="Horizontal" Grid.Row="6" HorizontalAlignment="Left" Margin="20,0,0,0">
+                        <TextBlock Text="IP地址：" HorizontalAlignment="Right" FontSize="24" Foreground="White" Width="106" VerticalAlignment="Center" Margin="20,0,5,0"/>
+                        <TextBox x:Name="IPAddr" Foreground="White"
+                                Width="231" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="24"/>
+                    </StackPanel>                    
 
                 </Grid>
             </materialDesign:Card>
