@@ -393,7 +393,7 @@
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <materialDesign:Card Margin="5" UniformCornerRadius="0" MaxWidth="270" Height="60"
-                                                    VerticalAlignment="Center" >
+                                                    VerticalAlignment="Center"  MouseDoubleClick="RunTrunkDetailDialogCommand">
                                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                                         <materialDesign:PackIcon Kind="UserConvert" Margin="5" Height="40" Width="40"/>
                                                         <TextBlock Text="{Binding bindingnumber}" 
