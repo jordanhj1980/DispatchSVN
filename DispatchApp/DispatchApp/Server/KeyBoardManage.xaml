@@ -40,9 +40,9 @@
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Keyboard" 
                             Width="40" Height="40" 
-                            Margin="0,0,10,0"
+                            Margin="0,0,10,0" 
                             VerticalAlignment="Center" />
-                        <TextBlock  Text="{Binding Path=name}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignDisplay1TextBlock}"/>
+                        <TextBlock  Text="{Binding Path=name}" FontFamily="SimHei" VerticalAlignment="Center" Style="{StaticResource MaterialDesignDisplay1TextBlock}"/>
                     </StackPanel>
                 </HierarchicalDataTemplate>
 
