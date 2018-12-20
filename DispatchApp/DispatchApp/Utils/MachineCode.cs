@@ -94,7 +94,7 @@ namespace DispatchApp
                     }
                 }
             }
-            Console.WriteLine("生成注册码：" + strAsciiName);
+            //Console.WriteLine("生成注册码：" + strAsciiName);
             return strAsciiName;
         }
     }
