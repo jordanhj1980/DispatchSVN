@@ -12,7 +12,7 @@ namespace DispatchApp
         public KeyBoardManageViewModel()
         {
             SelectedKey = new KeyBoardNew();
-            SelectedGroup = new GroupNew();
+            //SelectedGroup = new GroupNew();
             SelectedBroadcast = new Broadcast();
             SelectedTrunk = new TrunkDev();
             KeyboardList = new ObservableCollection<KeyBoardNew>();
