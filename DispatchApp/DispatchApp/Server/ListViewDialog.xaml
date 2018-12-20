@@ -42,21 +42,27 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <ToggleButton
+                            <ToggleButton Width="60" Height="60"
                                 Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
                                 ToolTip="MaterialDesignFlatPrimaryToggleButton"
                                 IsChecked="{Binding DevSelected}">
-                                <materialDesign:PackIcon
-                                Kind="Phone"
-                                Height="21"
-                                Width="21" />       
+                                <ToggleButton.Content>
+                                    <DockPanel>
+                                        <materialDesign:PackIcon
+                                            Kind="Phone"
+                                            Height="21"
+                                            Width="21" />  
+                                        <TextBlock Text="{Binding callno}"/>
+                                    </DockPanel>
+                                </ToggleButton.Content>
+                                      
                             </ToggleButton>
                             <!--<ToggleButton
                                 Content="+"
                                 Style="{StaticResource MaterialDesignActionLightToggleButton}"
                                 IsChecked="{Binding DevSelected}"
                                 ToolTip="MaterialDesignActionLightToggleButton" />-->
-                            <TextBlock MaxWidth="120" Text="{Binding name}" TextAlignment="Center" Foreground="Black"/>
+                            <TextBlock MaxWidth="120" Text="{Binding name}" FontSize="20" TextAlignment="Center" Foreground="Black"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
