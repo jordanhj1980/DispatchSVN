@@ -321,9 +321,8 @@
                                 materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Visible"   
                                 Padding="0" UniformCornerRadius="6" Height="323" Width="285">
                                 <StackPanel Margin="0,0,0,0">
-                                    <ListView x:Name="hotlinelistgrid" ItemsSource="{Binding SelectedKey.hotlinelist}" FontSize="24" 
-                                            SelectedItem="{Binding SelectedGroup}" SelectionChanged="grouplistgrid_Selected" 
-                                            Height="320" Margin="0,0,0,0">
+                                    <ListView x:Name="hotlinelistgrid" ItemsSource="{Binding SelectedKey.hotlinelist}" FontSize="24"               
+                                            Height="320" Margin="0,0,0,0"> <!--SelectedItem="{Binding SelectedGroup}" SelectionChanged="grouplistgrid_Selected"--> 
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <materialDesign:Card Margin="10,5,0,0" UniformCornerRadius="6" Height="60"

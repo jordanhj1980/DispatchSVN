@@ -245,7 +245,7 @@ namespace DispatchApp
         }
         private void grouplistgrid_Selected(object sender, SelectionChangedEventArgs e)
         {
-            memberlistcard.Visibility = System.Windows.Visibility.Visible;
+            //memberlistcard.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void broadcastlistgrid_Selected(object sender, SelectionChangedEventArgs e)
