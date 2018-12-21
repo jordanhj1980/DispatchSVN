@@ -171,6 +171,7 @@ namespace DispatchApp
             AnsAddKeyBoard ans = JsonConvert.DeserializeObject<AnsAddKeyBoard>(data);
             //getDesk.keyboardlist[keyBoardNum.index - 1].index = ans.index;
             Debug.WriteLine("添加键盘应答：" + data);
+            keyboardmanagetab.result.Content = ans.result;
             SearchDesk searchDesk = new SearchDesk() { sequence = GlobalFunAndVar.sequenceGenerator() };
             string strMsg = "MAN#GETALLKEYBOARD#" + JsonConvert.SerializeObject(searchDesk);
             mainWindow.ws.Send(strMsg);
@@ -178,10 +179,12 @@ namespace DispatchApp
             // 添加成功则跳转界面
             if (ans.result == "Success")
             {
+                keyboardmanagetab.result.Content = "更新/添加成功";
                 tabControl_mgt.SelectedIndex = 5;  // 跳转到键盘的树
             }
             else
             {
+                keyboardmanagetab.result.Content = "更新/添加失败";
                 MessageBox.Show("添加调度键盘失败", "提示信息");
             }
             
@@ -191,28 +194,27 @@ namespace DispatchApp
         {
             AnsDelKeyBoard ans = JsonConvert.DeserializeObject<AnsDelKeyBoard>(data);
             Debug.WriteLine("删除键盘应答："+data);
-            SearchDesk searchDesk = new SearchDesk() { sequence = GlobalFunAndVar.sequenceGenerator() };
-            string strMsg = "MAN#GETALLKEYBOARD#" + JsonConvert.SerializeObject(searchDesk);
-            mainWindow.ws.Send(strMsg);
-
+            
             if (ans.result == "Success")
             {
-                getDesk.keyboardlist.Remove(getDesk.keyboardlist[keyBoardNum.index - 1]);
-                keyBoardNum.count--;
-                string sendMsg = JsonConvert.SerializeObject(getDesk);
-                DeskImage(sendMsg);
-                tabControl_mgt.SelectedIndex = 2;  // 跳转到键盘的树
+                keyboardmanagetab.result.Content = "删除成功";
             }
             else 
             {
+                keyboardmanagetab.result.Content = "删除失败";
                 MessageBox.Show("删除调度键盘失败","提示信息");
             }
+
+            SearchDesk searchDesk = new SearchDesk() { sequence = GlobalFunAndVar.sequenceGenerator() };
+            string strMsg = "MAN#GETALLKEYBOARD#" + JsonConvert.SerializeObject(searchDesk);
+            mainWindow.ws.Send(strMsg);
         }
 
         /// <summary>
         /// 获取到的调度键盘信息
         /// </summary>
         public GetDesk getDesk = new GetDesk();
+
         public KeyBoardNum keyBoardNum = new KeyBoardNum();
         public AllKeyBoard allkeydata = new AllKeyBoard();//hj 2018.11.26
         //public KeyBoardManageViewModel keyboardmanagedata = new KeyBoardManageViewModel();
@@ -759,7 +761,7 @@ namespace DispatchApp
             MakeSure(this, null);
 
             string sendMsg = JsonConvert.SerializeObject(getDesk);
-            DeskImage(sendMsg);
+            //DeskImage(sendMsg);
 
             sendMsg = JsonConvert.SerializeObject(getDesk.keyboardlist[keyBoardNum.index - 1]);
             string strMsg = "MAN#ADDKEYBOARD#" + sendMsg;

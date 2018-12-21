@@ -30,13 +30,17 @@ namespace DispatchApp
             keyboardmanagedata = new KeyBoardManageViewModel();
             this.DataContext = keyboardmanagedata;
         }
+
+
+
         private void delkey_Click(object sender, RoutedEventArgs e)
         {
             //keyboardmanagedata.KeyboardList.Remove(keyboardmanagedata.SelectedKey);
             DelKeyBoard delkeyboard;
             delkeyboard.sequence = GlobalFunAndVar.sequenceGenerator();
             delkeyboard.index = keyboardmanagedata.SelectedKey.index;
-            string cmdstr = "MAN#DELKEYBOARD#"+JsonConvert.SerializeObject(keyboardmanagedata.SelectedKey);
+            //string cmdstr = "MAN#DELKEYBOARD#"+JsonConvert.SerializeObject(keyboardmanagedata.SelectedKey);
+            string cmdstr = "MAN#DELKEYBOARD#" + JsonConvert.SerializeObject(delkeyboard);
             mainWindow.ws.Send(cmdstr);
         }
 
@@ -44,7 +48,11 @@ namespace DispatchApp
         {
             keyboardmanagedata.SelectedKey = new KeyBoardNew();
             keyboardmanagedata.SelectedKey.name = "新增键盘";
-            keyboardmanagedata.KeyboardList.Add(keyboardmanagedata.SelectedKey);
+            
+            DeskBaseInfo.Visibility = Visibility.Visible;
+        
+            //keyboardmanagedata.KeyboardList.Add(keyboardmanagedata.SelectedKey);
+            
             //keyboardview.Visibility = System.Windows.Visibility.Visible;
         }
 
@@ -59,9 +67,9 @@ namespace DispatchApp
         }
 
         private void Keyboardlist_Selected(object sender, RoutedEventArgs e)
-        {
-           
+        {         
             TreeViewItem tvi = e.OriginalSource as TreeViewItem;
+
             if (tvi.Header is KeyBoardNew)
             {
                 var modelkey = tvi.Header as KeyBoardNew;
@@ -108,9 +116,24 @@ namespace DispatchApp
         
         private void Update_Click(object sender, RoutedEventArgs e)
         {
-            keyboardmanagedata.SelectedKey.sequence = GlobalFunAndVar.sequenceGenerator();
-            string cmdstr = "MAN#ADDKEYBOARD#" + JsonConvert.SerializeObject(keyboardmanagedata.SelectedKey);
-            mainWindow.ws.Send(cmdstr);
+            int state = 0;
+            foreach(KeyBoardNew item in keyboardmanagedata.KeyboardList) 
+            {
+                if (item.name == keyboardmanagedata.SelectedKey.name)
+                {
+                    state = 1;
+                }
+            }
+            if (state == 1)
+            {
+                result.Content = "重名键盘，更新失败";
+            }
+            else
+            {
+                keyboardmanagedata.SelectedKey.sequence = GlobalFunAndVar.sequenceGenerator();
+                string cmdstr = "MAN#ADDKEYBOARD#" + JsonConvert.SerializeObject(keyboardmanagedata.SelectedKey);
+                mainWindow.ws.Send(cmdstr);
+            }
         }
 
         //private void getalldeskbtn_Click(object sender, RoutedEventArgs e)

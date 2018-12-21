@@ -90,7 +90,7 @@
                               PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" MaxHeight="505">
                             <ScrollViewer.Content>
                                 <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto" >
-                                    <TreeView x:Name="Keyboardlist" ItemsSource="{Binding KeyboardList}" TreeViewItem.Selected="Keyboardlist_Selected" />
+                                    <TreeView x:Name="Keyboardlist" ItemsSource="{Binding KeyboardList}" TreeViewItem.Selected="Keyboardlist_Selected"/>
                                 </StackPanel>
                             </ScrollViewer.Content>
                         </ScrollViewer>
@@ -464,7 +464,7 @@
 
                     <StackPanel Height="60" VerticalAlignment="Center" Orientation="Horizontal">
                         <Button Content="更新" FontSize="24" Click="Update_Click" HorizontalAlignment="Left" 
-                                                    VerticalAlignment="Center" Width="100" Margin="10,0,0,0"/>
+                            VerticalAlignment="Center" Width="100" Margin="10,0,0,0"/>
                         <Label Name="result" FontSize="24" Content=""  VerticalAlignment="Center" Margin="10,0,0,0" Width="410"/>
                     </StackPanel>
                 </StackPanel>

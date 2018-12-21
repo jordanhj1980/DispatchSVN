@@ -181,6 +181,8 @@ namespace DispatchApp
                     break;
                 case "DELKEYBOARD":
                     AnsDelKeyBoard(data);
+                    Debug.WriteLine("删除" + data);
+                    //keyboardmanagetab.recv(state, data);
                     break;
                 case "ADDSW":
                 case "QUERYSW":

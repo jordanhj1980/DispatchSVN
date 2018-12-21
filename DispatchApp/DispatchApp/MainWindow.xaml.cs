@@ -411,7 +411,8 @@ namespace DispatchApp
                             Debug.WriteLine("状态问题？？？？？？" + word);
                             break;
                         case "MAN": // 20181024 xiaozi 调度信息
-                            callManagerCtrl.Second_State_Word(word); 
+                            callManagerCtrl.Second_State_Word(word);
+                            Debug.WriteLine("aaaaaaaaaaaaaaaaa" + word);
                             break;
                         case "CMD":
                             callUserCtrl.Second_Cmd_Word(word);
