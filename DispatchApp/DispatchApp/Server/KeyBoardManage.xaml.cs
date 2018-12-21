@@ -14,6 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
 using Newtonsoft.Json;
+
+using System.Diagnostics;
+
 namespace DispatchApp
 {
     /// <summary>
@@ -29,6 +32,145 @@ namespace DispatchApp
             this.mainWindow = mainwindow;
             keyboardmanagedata = new KeyBoardManageViewModel();
             this.DataContext = keyboardmanagedata;
+        }
+
+        public void recv(string state, string data)
+        {
+            switch (state)
+            {
+                case "ADDKEYBOARD":
+                    AnsAddKeyBoard(data);            
+                    break;
+                case "GETALLKEYBOARD":
+                    DeskImage(data);
+                    break;
+                case "DELKEYBOARD":
+                    AnsDelKeyBoard(data);
+                    break;
+            }
+        }
+
+        public AllKeyBoard allkeydata = new AllKeyBoard();//hj 2018.11.26
+        private void DeskImage(string date)
+        {
+            /* 调度台查询到的信息 */
+            allkeydata = JsonConvert.DeserializeObject<AllKeyBoard>(date);//hj 2018.11.26获取所有调度键盘
+            keyboardmanagedata.KeyboardList = allkeydata.keyboardlist;
+
+            foreach (KeyBoardNew item in Keyboardlist.Items)
+            {
+                if (item.name == keyboardmanagedata.SelectedKey.name)
+                {
+                    Debug.WriteLine("名字" + item.name);
+                }
+                
+                
+            }
+
+
+            //List<TreeViewItem> pageRelayCall = FindChirldHelper.FindVisualChild<TreeViewItem>(Keyboardlist);
+            //foreach (var item in pageRelayCall)
+            //{
+               
+                //TextBlock oB = item.Name
+                //foreach (TextBlock oB in item.Items)
+                //{
+                //    if (oB.Text == keyboardmanagedata.SelectedKey.name)
+                //    {
+                //        item.IsExpanded = true;
+                //        item.Focus();
+                //        break;
+                //    }
+                //Debug.WriteLine("名字" + item.Header);
+                //}
+                
+            //}
+        }
+
+        /// <summary>
+        /// 遍历容器内控件
+        /// </summary>
+        public static class FindChirldHelper
+        {
+            public static List<T> FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
+            {
+                try
+                {
+                    List<T> TList = new List<T> { };
+                    for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+                    {
+                        DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                        if (child != null && child is T)
+                        {
+                            TList.Add((T)child);
+                            List<T> childOfChildren = FindVisualChild<T>(child);
+                            if (childOfChildren != null)
+                            {
+                                TList.AddRange(childOfChildren);
+                            }
+                        }
+                        else
+                        {
+                            List<T> childOfChildren = FindVisualChild<T>(child);
+                            if (childOfChildren != null)
+                            {
+                                TList.AddRange(childOfChildren);
+                            }
+                        }
+                    }
+                    return TList;
+                }
+                catch (Exception ee)
+                {
+                    MessageBox.Show(ee.Message + "a");
+                    return null;
+                }
+            }
+        }
+        /// <summary>
+        /// 添加调度键盘的应答
+        /// </summary>
+        private void AnsAddKeyBoard(string data)
+        {
+            AnsAddKeyBoard ans = JsonConvert.DeserializeObject<AnsAddKeyBoard>(data);
+            //getDesk.keyboardlist[keyBoardNum.index - 1].index = ans.index;
+            Debug.WriteLine("添加键盘应答：" + data);
+            result.Content = ans.result;
+            SearchDesk searchDesk = new SearchDesk() { sequence = GlobalFunAndVar.sequenceGenerator() };
+            string strMsg = "MAN#GETALLKEYBOARD#" + JsonConvert.SerializeObject(searchDesk);
+            mainWindow.ws.Send(strMsg);
+
+            // 添加成功则跳转界面
+            if (ans.result == "Success")
+            {
+                result.Content = "更新/添加成功";
+                //tabControl_mgt.SelectedIndex = 5;  // 跳转到键盘的树
+            }
+            else
+            {
+                result.Content = "更新/添加失败";
+                //MessageBox.Show("添加调度键盘失败", "提示信息");
+            }
+        }
+
+        private void AnsDelKeyBoard(string data)
+        {
+            AnsDelKeyBoard ans = JsonConvert.DeserializeObject<AnsDelKeyBoard>(data);
+            Debug.WriteLine("删除键盘应答：" + data);
+
+            if (ans.result == "Success")
+            {
+                result.Content = "删除成功";
+            }
+            else
+            {
+                result.Content = "删除失败";
+                MessageBox.Show("删除调度键盘失败", "提示信息");
+            }
+
+            SearchDesk searchDesk = new SearchDesk() { sequence = GlobalFunAndVar.sequenceGenerator() };
+            string strMsg = "MAN#GETALLKEYBOARD#" + JsonConvert.SerializeObject(searchDesk);
+            mainWindow.ws.Send(strMsg);
         }
 
 
@@ -67,7 +209,7 @@ namespace DispatchApp
         }
 
         private void Keyboardlist_Selected(object sender, RoutedEventArgs e)
-        {         
+        {
             TreeViewItem tvi = e.OriginalSource as TreeViewItem;
 
             if (tvi.Header is KeyBoardNew)
@@ -117,11 +259,16 @@ namespace DispatchApp
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             int state = 0;
+            
             foreach(KeyBoardNew item in keyboardmanagedata.KeyboardList) 
             {
                 if (item.name == keyboardmanagedata.SelectedKey.name)
                 {
                     state = 1;
+                    if (Keyboardlist.SelectedItem != keyboardmanagedata.SelectedKey)
+                    {
+                        state = 0;
+                    }
                 }
             }
             if (state == 1)

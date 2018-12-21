@@ -174,15 +174,15 @@ namespace DispatchApp
             switch (state)
             {
                 case "ADDKEYBOARD":
-                    AnsAddKeyBoard(data);            
-                    break;
+                    //AnsAddKeyBoard(data);            
+                    //break;
                 case "GETALLKEYBOARD":
-                    DeskImage(data);
-                    break;
+                    //DeskImage(data);
+                    //break;
                 case "DELKEYBOARD":
-                    AnsDelKeyBoard(data);
-                    Debug.WriteLine("删除" + data);
-                    //keyboardmanagetab.recv(state, data);
+                    //AnsDelKeyBoard(data);
+                    //Debug.WriteLine("删除" + data);
+                    keyboardmanagetab.recv(state, data);
                     break;
                 case "ADDSW":
                 case "QUERYSW":

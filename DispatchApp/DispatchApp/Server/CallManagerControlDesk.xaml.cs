@@ -235,6 +235,7 @@ namespace DispatchApp
             getDesk = JsonConvert.DeserializeObject<GetDesk>(date); // 一个调度台
             allkeydata = JsonConvert.DeserializeObject<AllKeyBoard>(date);//hj 2018.11.26获取所有调度键盘
             keyboardmanagetab.keyboardmanagedata.KeyboardList = allkeydata.keyboardlist;
+           
 
             Debug.WriteLine("********查询的调度台消息:" + date);
             keyBoardNum.count = getDesk.keyboardlist.Count;         // 调度台里的调度键盘个数
