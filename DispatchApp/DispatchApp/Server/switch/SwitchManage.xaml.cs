@@ -111,6 +111,8 @@ namespace DispatchApp
                     item.type = tempobj.type;
 
                     switchDataModel.SwitchList.Add(item);
+                    TreeViewItem tvItemNew = (TreeViewItem)switchlist.ItemContainerGenerator.ContainerFromIndex(indexTreeViewItem);
+                    tvItemNew.IsSelected = true;
                 }
             }
             catch (System.Exception e)
@@ -321,6 +323,7 @@ namespace DispatchApp
                 switchview.Visibility = Visibility.Visible;
         }
 
+        public int indexTreeViewItem;
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -351,6 +354,9 @@ namespace DispatchApp
                 StringBuilder sb = new StringBuilder(100);
                 if (true == switchDataModel.NewSwitch)
                 {
+                    // add by xiaozi 20181224 start
+                    indexTreeViewItem = switchlist.Items.Count;
+                    // add by xiaozi 20181224 end
                     sb.Append("MAN#ADDSW#");
                     isAddOperation = true;
                 }

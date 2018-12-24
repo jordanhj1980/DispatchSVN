@@ -78,11 +78,16 @@ namespace DispatchApp
                 if (userobj.privilege == "1")
                 {
                     userDataModel.AdminList.Add(userobj);
+                    TreeViewItem tvItemNew = (TreeViewItem)adminlist.ItemContainerGenerator.ContainerFromIndex(indexTreeViewItem);
+                    tvItemNew.IsSelected = true;
                 }
                 else if ("2" == userobj.privilege)
                 {
                     userDataModel.UserList.Add(userobj);
+                    TreeViewItem tvItem = (TreeViewItem)userlist.ItemContainerGenerator.ContainerFromIndex(indexTreeViewItem);
+                    tvItem.IsSelected = true;
                 }
+                
             }
         }
 
@@ -347,6 +352,7 @@ namespace DispatchApp
             }
         }
 
+        public int indexTreeViewItem;
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -404,7 +410,20 @@ namespace DispatchApp
                 StringBuilder sb = new StringBuilder(100);
                 if (true == userDataModel.NewUser)
                 {
+                    if (item.privilege == "1")
+                    {
+                        // add by xiaozi 20181224 start
+                        indexTreeViewItem = adminlist.Items.Count;
+                        // add by xiaozi 20181224 end
+                    }
+                    else if (item.privilege == "2")
+                    {
+                        // add by xiaozi 20181224 start
+                        indexTreeViewItem = userlist.Items.Count;
+                        // add by xiaozi 20181224 end
+                    }
                     sb.Append("MAN#ADDUSER#");
+
                 }
                 else
                 {
