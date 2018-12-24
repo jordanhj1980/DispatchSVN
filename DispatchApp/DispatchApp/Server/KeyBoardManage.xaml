@@ -87,10 +87,11 @@
                         <ScrollViewer x:Name="scrollViewer" VerticalScrollBarVisibility="Auto" 
                               HorizontalScrollBarVisibility="Auto"
                               VerticalAlignment="Top"
-                              PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" MaxHeight="505">
+                              PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" MaxHeight="850">
                             <ScrollViewer.Content>
                                 <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto" >
-                                    <TreeView x:Name="Keyboardlist" ItemsSource="{Binding KeyboardList}" TreeViewItem.Selected="Keyboardlist_Selected"/>
+                                    <TreeView x:Name="Keyboardlist" ItemsSource="{Binding KeyboardList}" 
+                                              TreeViewItem.Selected="Keyboardlist_Selected"/>
                                 </StackPanel>
                             </ScrollViewer.Content>
                         </ScrollViewer>

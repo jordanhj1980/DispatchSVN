@@ -57,14 +57,33 @@ namespace DispatchApp
             allkeydata = JsonConvert.DeserializeObject<AllKeyBoard>(date);//hj 2018.11.26获取所有调度键盘
             keyboardmanagedata.KeyboardList = allkeydata.keyboardlist;
 
+            //for (int i = 0; i < Keyboardlist.Items.Count; i++)
+            //{
+            //    TreeViewItem tvItem = (TreeViewItem)Keyboardlist.ItemContainerGenerator.ContainerFromIndex(i);
+            //    KeyBoardNew item = (KeyBoardNew)tvItem.Header;
+            //    if (item.name == keyboardmanagedata.SelectedKey.name)
+            //    {
+            //        tvItem.IsSelected = true;
+            //    }
+            //    else
+            //    {
+            //        tvItem.IsSelected = false;
+            //    }
+            //}
+
+            if(Keyboardlist.SelectedItem != null)
+            {
+                TreeViewItem tvItem = (TreeViewItem)Keyboardlist.ItemContainerGenerator.ContainerFromIndex(indexTreeViewItem);
+                tvItem.IsSelected = true;
+            }
+            
+
             foreach (KeyBoardNew item in Keyboardlist.Items)
             {
                 if (item.name == keyboardmanagedata.SelectedKey.name)
                 {
                     Debug.WriteLine("名字" + item.name);
-                }
-                
-                
+                } 
             }
 
 
@@ -173,8 +192,6 @@ namespace DispatchApp
             mainWindow.ws.Send(strMsg);
         }
 
-
-
         private void delkey_Click(object sender, RoutedEventArgs e)
         {
             //keyboardmanagedata.KeyboardList.Remove(keyboardmanagedata.SelectedKey);
@@ -184,6 +201,7 @@ namespace DispatchApp
             //string cmdstr = "MAN#DELKEYBOARD#"+JsonConvert.SerializeObject(keyboardmanagedata.SelectedKey);
             string cmdstr = "MAN#DELKEYBOARD#" + JsonConvert.SerializeObject(delkeyboard);
             mainWindow.ws.Send(cmdstr);
+            indexTreeViewItem = 0;
         }
 
         private void addkey_Click(object sender, RoutedEventArgs e)
@@ -256,6 +274,7 @@ namespace DispatchApp
             scrollAlldev.RaiseEvent(eventArg);
         }
         
+        public int indexTreeViewItem;
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             int state = 0;
@@ -265,9 +284,13 @@ namespace DispatchApp
                 if (item.name == keyboardmanagedata.SelectedKey.name)
                 {
                     state = 1;
-                    if (Keyboardlist.SelectedItem != keyboardmanagedata.SelectedKey)
+                    if (Keyboardlist.SelectedItem != null)
                     {
-                        state = 0;
+                        KeyBoardNew keyBoardNew = (KeyBoardNew)Keyboardlist.SelectedItem;
+                        if (keyBoardNew.index == keyboardmanagedata.SelectedKey.index)
+                        {
+                            state = 0;
+                        }
                     }
                 }
             }
@@ -277,6 +300,23 @@ namespace DispatchApp
             }
             else
             {
+                // 确定当前选中的树节点
+                indexTreeViewItem = 0;
+                for (int i = 0; i < Keyboardlist.Items.Count; i++)
+                {
+                    TreeViewItem tvItem = (TreeViewItem)Keyboardlist.ItemContainerGenerator.ContainerFromIndex(i);
+                    KeyBoardNew item = (KeyBoardNew)tvItem.Header;
+                    if (item.name == keyboardmanagedata.SelectedKey.name)
+                    {
+                        indexTreeViewItem = i;
+                    }
+                    if ((i == Keyboardlist.Items.Count-1) && (indexTreeViewItem == 0))
+                    {
+                        indexTreeViewItem = Keyboardlist.Items.Count;
+                    }
+                    
+                }
+
                 keyboardmanagedata.SelectedKey.sequence = GlobalFunAndVar.sequenceGenerator();
                 string cmdstr = "MAN#ADDKEYBOARD#" + JsonConvert.SerializeObject(keyboardmanagedata.SelectedKey);
                 mainWindow.ws.Send(cmdstr);
