@@ -323,7 +323,8 @@
                                 Padding="0" UniformCornerRadius="0" Height="323" Width="286">
                                 <StackPanel Margin="0,0,0,0">
                                     <ListView x:Name="hotlinelistgrid" ItemsSource="{Binding SelectedKey.hotlinelist}" FontSize="24"               
-                                            Height="320" Margin="0,0,0,0"> <!--SelectedItem="{Binding SelectedGroup}" SelectionChanged="grouplistgrid_Selected"-->
+                                            Height="320" Margin="0,0,0,0">
+                                        <!--SelectedItem="{Binding SelectedGroup}" SelectionChanged="grouplistgrid_Selected"-->
                                         <ListView.Template>
                                             <ControlTemplate TargetType="{x:Type ListView}">
                                                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
@@ -366,17 +367,17 @@
                                             Width="145" HorizontalAlignment="Right" Margin="20,0,0,0" />
                                 </StackPanel>
                             </materialDesign:Card>
-                                
+
                             <materialDesign:Card x:Name="trunkview" Margin="0,0,10,0"
                                 materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Visible"   
                                 Padding="0" UniformCornerRadius="0" Height="323" Width="285">
                                 <StackPanel Margin="0,0,0,0">
-                                    
+
                                     <ListView x:Name="trunklistgrid" ItemsSource="{Binding SelectedKey.trunklist}" FontSize="18"         
                                               SelectedItem="{Binding SelectedTrunk}"
                                             Height="320" Margin="0,0,0,0">
-                                            <!--SelectedItem="{Binding SelectedTrunk}" SelectionChanged="grouplistgrid_Selected"-->
-                                            <!--横向排列Item设置-->
+                                        <!--SelectedItem="{Binding SelectedTrunk}" SelectionChanged="grouplistgrid_Selected"-->
+                                        <!--横向排列Item设置-->
                                         <ListView.Template>
                                             <ControlTemplate TargetType="{x:Type ListView}">
                                                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
@@ -404,7 +405,7 @@
                                                 </materialDesign:Card>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
-                                    </ListView>                                 
+                                    </ListView>
                                 </StackPanel>
                             </materialDesign:Card>
                         </StackPanel>
@@ -466,7 +467,7 @@
                     <StackPanel Height="60" VerticalAlignment="Center" Orientation="Horizontal">
                         <Button Content="更新" FontSize="24" Click="Update_Click" HorizontalAlignment="Left" 
                             VerticalAlignment="Center" Width="100" Margin="10,0,0,0"/>
-                        <Label Name="result" FontSize="24" Content=""  VerticalAlignment="Center" Margin="10,0,0,0" Width="410"/>
+                        <Label Name="result" FontSize="24" Content=""  VerticalAlignment="Center" Margin="10,11,0,11" Width="1265"/>
                     </StackPanel>
                 </StackPanel>
                 <!--调度键盘详细信息end-->
@@ -488,6 +489,6 @@
         <materialDesign:DialogHost Identifier="RootDialogBoardDetail" 
                                    DialogClosing="RootDialogBoardDetail_OnDialogClosing"/>
 
-     
+
     </Grid>
 </UserControl>

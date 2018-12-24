@@ -296,7 +296,7 @@ namespace DispatchApp
             }
             if (state == 1)
             {
-                result.Content = "重名键盘，更新失败";
+                result.Content = "更新失败,请选中左侧键盘更新，或更改键盘名添加";
             }
             else
             {
@@ -314,8 +314,10 @@ namespace DispatchApp
                     {
                         indexTreeViewItem = Keyboardlist.Items.Count;
                     }
-                    
                 }
+
+                //TreeViewItem tvItemNew = (TreeViewItem)Keyboardlist.ItemContainerGenerator.ContainerFromIndex(0);
+                //tvItemNew.IsSelected = true;
 
                 keyboardmanagedata.SelectedKey.sequence = GlobalFunAndVar.sequenceGenerator();
                 string cmdstr = "MAN#ADDKEYBOARD#" + JsonConvert.SerializeObject(keyboardmanagedata.SelectedKey);
