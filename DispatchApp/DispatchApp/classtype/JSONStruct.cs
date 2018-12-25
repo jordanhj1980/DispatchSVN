@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.ObjectModel;
 
 namespace DispatchApp
 {
@@ -196,6 +197,37 @@ namespace DispatchApp
     {
         public string sequence { get; set; }
         public string name { get; set; }
+    }
+
+    public class AllUser : NotifyObject
+    {
+        private string header;
+        public string Header
+        {
+            get { return header; }
+            set
+            {
+                if (header != value)
+                {
+                    header = value;
+                    OnPropertyChanged("Header");
+                }
+            }
+        }
+
+        private ObservableCollection<User> userItem;
+        public ObservableCollection<User> UserItem
+        {
+            get { return userItem; }
+            set
+            {
+                if (userItem != value)
+                {
+                    userItem = value;
+                    OnPropertyChanged("UserItem");
+                }
+            }
+        }
     }
 
     /* 用户的UI数据结构，仅仅比协议传输的USEREDITITEM多了一个index */

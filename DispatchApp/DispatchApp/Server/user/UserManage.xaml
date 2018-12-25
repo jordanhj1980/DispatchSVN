@@ -36,11 +36,22 @@
         <Grid.Resources>
             <local:MyPrivilegeToVisibilityConverter x:Key="MyValToVisibilityConverter" />
             <local:UserImageConverter x:Key="ImgConverter"/>
+    
+            <!--<Style TargetType="{x:Type TreeViewItem}">
+                <Setter Property="IsExpanded" Value="True"/>                     
+            </Style>-->
             
+            <HierarchicalDataTemplate DataType="{x:Type local:AllUser}" ItemsSource="{Binding Path=UserItem}"><!--ItemsSource="{Binding Path=UserList}"-->
+                <StackPanel Orientation="Horizontal">
+                    <!--<Separator/>-->
+                    <TextBlock Text="{Binding Path=Header}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignDisplay1TextBlock}"/>
+                </StackPanel>
+            </HierarchicalDataTemplate>
+
             <HierarchicalDataTemplate DataType="{x:Type local:User}">
                 <StackPanel Orientation="Horizontal">
                     <Image Width="40" Height="40"  Margin="0,0,10,0" VerticalAlignment="Center" 
-                           Source="{Binding Path=privilege, Converter={StaticResource ImgConverter}}"/>
+                        Source="{Binding Path=privilege, Converter={StaticResource ImgConverter}}"/>
                     <TextBlock Text="{Binding Path=name}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignDisplay1TextBlock}"/>
                 </StackPanel>
             </HierarchicalDataTemplate>            
@@ -69,13 +80,13 @@
                 <materialDesign:Card x:Name="usertreeview" Margin="10,0,0,-172.6"  Height="827"
                     materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Visible"   
                     Padding="0" UniformCornerRadius="6">
-                    <StackPanel Width="300" HorizontalAlignment="Left">
-                        <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="280">
+                    <StackPanel Width="300" HorizontalAlignment="Left"> 
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="280" Margin="0,10,0,0">
                             <Button x:Name="adduser" Content="添加用户" Width="128" FontSize="24" Click="add_Click" Margin="10,0,10,0" HorizontalAlignment="Left" />
                             <Button x:Name="deluser" Content="删除用户" Width="128" FontSize="24" Click="del_Click" Margin="10,0,10,0" HorizontalAlignment="Right" />
                         </StackPanel>
                         <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                        <!--<Separator Style="{StaticResource MaterialDesignLightSeparator}" />
                         <ScrollViewer VerticalScrollBarVisibility="Auto"  HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" MaxHeight="505">
                             <ScrollViewer.Content>
                                 <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto" >
@@ -83,11 +94,12 @@
                                 </StackPanel>
                             </ScrollViewer.Content>
                         </ScrollViewer>
-                        <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
-                        <ScrollViewer VerticalScrollBarVisibility="Auto"  HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" MaxHeight="505">
+                        <Separator Style="{StaticResource MaterialDesignLightSeparator}" />-->
+                        <ScrollViewer VerticalScrollBarVisibility="Auto"  HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" MaxHeight="760">
                             <ScrollViewer.Content>
                                 <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto" >
-                                    <TreeView x:Name="userlist" ItemsSource="{Binding UserList}" TreeViewItem.Selected="user_Click_Selected"/>
+                                    <TreeView x:Name="userlist"  ItemsSource="{Binding allUser}" Loaded="treelist_loaded" TreeViewItem.Selected="user_Click_Selected" >
+                                    </TreeView><!--ItemsSource="{Binding UserList}"-->
                                 </StackPanel>
                             </ScrollViewer.Content>
                         </ScrollViewer>
@@ -112,7 +124,7 @@
                     <materialDesign:Card Grid.Row="1" x:Name="userview" Margin="10,0,10,10"
                     materialDesign:ShadowAssist.ShadowDepth="Depth5" Visibility="Visible"   
                     Padding="0" UniformCornerRadius="6">
-                        <StackPanel Height="180" Orientation="Vertical">
+                        <StackPanel Height="120" Orientation="Vertical">
                             <DockPanel Height="60">
                                 <TextBlock Text="名字：" Width="70" VerticalAlignment="Center" Margin="40,0,10,0"
                     				Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
@@ -123,22 +135,28 @@
                     				Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
                                 <TextBox x:Name="userPass" Text="{Binding SelectedUser.password}" 
                     				Width="300" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24" />
-                                <TextBlock Text="状态：" Width="70" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                <!--<TextBlock Text="状态：" Width="70" VerticalAlignment="Center" HorizontalAlignment="Right"
                                            Margin="90,0,10,0" FontSize="24"/>
                                 <TextBox x:Name="userStatus" Text="{Binding SelectedUser.status}"
-                    				Width="260" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
-                            </DockPanel>
-                            <DockPanel Height="60">
+                    				Width="260" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>-->
                                 <TextBlock Text="权限：" Width="70" VerticalAlignment="Center" Margin="40,0,10,0"
                     				Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
                                 <ComboBox x:Name="userPriv" ItemsSource="{Binding privCandidateList}" 
                     				Width="260" HorizontalAlignment="Left"                                           
                     				SelectedValuePath="id" DisplayMemberPath="description" 
                     				SelectedValue="{Binding SelectedUser.privilege, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="24"/>
-                                <TextBlock Text="角色：" Width="70" VerticalAlignment="Center" Margin="20,16,10,16"
+                            </DockPanel>
+                            <DockPanel Height="60">
+                                <!--<TextBlock Text="权限：" Width="70" VerticalAlignment="Center" Margin="40,0,10,0"
+                    				Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+                                <ComboBox x:Name="userPriv" ItemsSource="{Binding privCandidateList}" 
+                    				Width="260" HorizontalAlignment="Left"                                           
+                    				SelectedValuePath="id" DisplayMemberPath="description" 
+                    				SelectedValue="{Binding SelectedUser.privilege, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="24"/>-->
+                                <!--<TextBlock Text="角色：" Width="70" VerticalAlignment="Center" Margin="20,16,10,16"
                     				Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
                                 <TextBox x:Name="userRole" Text="{Binding SelectedUser.role}" 
-                    				Width="300" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24" />
+                    				Width="300" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24" />-->
                                 <TextBlock Text="所属调度台：" Width="140" VerticalAlignment="Center" Margin="20,0,10,0"
                     				Style="{StaticResource MaterialDesignHeadlineTextBlock}" 
                     				Visibility="{Binding SelectedValue, Converter={StaticResource MyValToVisibilityConverter}, ElementName=userPriv, Mode=OneWay}"/>
@@ -148,13 +166,13 @@
                     				SelectedValuePath="id" DisplayMemberPath="description" 
                     				SelectedValue="{Binding SelectedUser.desk, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
                             </DockPanel>
-                            <DockPanel Height="60">
+                            <!--<DockPanel Height="60">
                                 <TextBlock Text="描述：" Width="70" VerticalAlignment="Center" Margin="40,16,10,16"
                     				Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
                                 <TextBox x:Name="userDesp" Text="{Binding SelectedUser.description}"
                     				Width="260" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="24"/>
 
-                            </DockPanel>
+                            </DockPanel>-->
                         </StackPanel>
                     </materialDesign:Card>
                     <!--<materialDesign:Card Grid.Row="2" materialDesign:ShadowAssist.ShadowDepth="Depth3"

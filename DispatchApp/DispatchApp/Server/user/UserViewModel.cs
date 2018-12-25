@@ -41,11 +41,34 @@ namespace DispatchApp
             }
         }
 
+        private ObservableCollection<AllUser> _allUser;
+        public ObservableCollection<AllUser> allUser
+        {
+            get { return _allUser; }
+            set
+            {
+                SetAndNotifyIfChanged("allUser", ref _allUser, value);
+            }
+        }
+
         public UserViewModel() 
         {
             _userlist = new ObservableCollection<User>();
             _adminlist = new ObservableCollection<User>();
             _deskList = new ObservableCollection<UserStatus>();
+            _allUser = new ObservableCollection<AllUser>();
+
+
+            AllUser item = new AllUser();
+            item.Header = "管理员";
+            item.UserItem = new ObservableCollection<User>();
+            _allUser.Add(item);
+            AllUser item2 = new AllUser();
+            item2.Header = "调度用户";
+            item2.UserItem = new ObservableCollection<User>();
+            _allUser.Add(item2);
+
+
 
             _privCandidateList = new List<UserStatus>();
             /* 初始化权限下拉列表 */
@@ -53,6 +76,8 @@ namespace DispatchApp
             _privCandidateList.Add(stat);
             stat = new UserStatus("1", "管理员");
             _privCandidateList.Add(stat);
+
+
         }
 
         /// <summary>

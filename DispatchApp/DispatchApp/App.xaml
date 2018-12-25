@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="/DispatchApp;component/Client/UserlabelResourceDictionary.xaml"/>
                 <ResourceDictionary Source="NewPanelDictionary.xaml"/>
                 <ResourceDictionary Source="/DispatchApp;component/Server/ManageStyleResource.xaml"/>
+                <ResourceDictionary Source="MaterialDictionary.xaml"/>
                 <!--  样式分离 不用的可以不引用 减少内存暂用  -->
 
                 <!--  DMSKin内置转换器 配色  -->

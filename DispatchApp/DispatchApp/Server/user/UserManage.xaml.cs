@@ -77,15 +77,47 @@ namespace DispatchApp
 
                 if (userobj.privilege == "1")
                 {
-                    userDataModel.AdminList.Add(userobj);
-                    TreeViewItem tvItemNew = (TreeViewItem)adminlist.ItemContainerGenerator.ContainerFromIndex(indexTreeViewItem);
-                    tvItemNew.IsSelected = true;
+                    //userDataModel.AdminList.Add(userobj);
+                    //TreeViewItem tvItemNew = (TreeViewItem)adminlist.ItemContainerGenerator.ContainerFromIndex(indexTreeViewItem);
+                    //tvItemNew.IsSelected = true;
+                    userDataModel.allUser[0].UserItem.Add(userobj);
+                    TreeViewItem tvItemFirst = (TreeViewItem)userlist.ItemContainerGenerator.ContainerFromIndex(0);
+                    User item = tvItemFirst.Items[indexTreeViewItem] as User;
+
+                    for (int j = 0; j < userDataModel.allUser[0].UserItem.Count; j++)
+                    {
+                        if (item.name.CompareTo(userDataModel.allUser[0].UserItem[j].name) <= 0)
+                        {
+                            userDataModel.allUser[0].UserItem.Insert(j, item);
+                            Object objUser = item as Object;
+                            TreeViewItem tvItemSecond = tvItemFirst.ItemContainerGenerator.ContainerFromItem(objUser) as TreeViewItem;
+                            tvItemSecond.IsSelected = true;
+                            break;
+                        }
+                    }
+                    
                 }
                 else if ("2" == userobj.privilege)
                 {
-                    userDataModel.UserList.Add(userobj);
-                    TreeViewItem tvItem = (TreeViewItem)userlist.ItemContainerGenerator.ContainerFromIndex(indexTreeViewItem);
-                    tvItem.IsSelected = true;
+                    //userDataModel.UserList.Add(userobj);
+                    //TreeViewItem tvItem = (TreeViewItem)userlist.ItemContainerGenerator.ContainerFromIndex(indexTreeViewItem);
+                    //tvItem.IsSelected = true;
+                    userDataModel.allUser[1].UserItem.Add(userobj);
+                    TreeViewItem tvItemFirstNew = (TreeViewItem)userlist.ItemContainerGenerator.ContainerFromIndex(1);
+                    User item = tvItemFirstNew.Items[indexTreeViewItem] as User;
+
+                    for (int j = 0; j < userDataModel.allUser[1].UserItem.Count; j++)
+                    {
+                        if (item.name.CompareTo(userDataModel.allUser[1].UserItem[j].name) <= 0)
+                        {
+                            userDataModel.allUser[1].UserItem.Insert(j, item);
+                            Object objUser = item as Object;
+                            TreeViewItem tvItemSecond = tvItemFirstNew.ItemContainerGenerator.ContainerFromItem(objUser) as TreeViewItem;
+                            tvItemSecond.IsSelected = true;
+                            break;
+                        }
+                    }
+                    
                 }
                 
             }
@@ -96,8 +128,11 @@ namespace DispatchApp
         {
             userview.Visibility = Visibility.Hidden;
 
-            userDataModel.UserList.Clear();
-            userDataModel.AdminList.Clear();
+            userDataModel.allUser[0].UserItem.Clear();
+            userDataModel.allUser[1].UserItem.Clear();
+
+            //userDataModel.UserList.Clear();
+            //userDataModel.AdminList.Clear();
             USER_QUERYRESULT res = JsonConvert.DeserializeObject<USER_QUERYRESULT>(data);
             if (res != null)
             {
@@ -115,14 +150,19 @@ namespace DispatchApp
 
                     if (item.privilege == "1")
                     {
-                        userDataModel.AdminList.Add(item);
+                        //userDataModel.AdminList.Add(item);
+                        userDataModel.allUser[0].UserItem.Add(item);  
                     }
                     else if ("2" == item.privilege)
                     {
-                        userDataModel.UserList.Add(item);
-                    }                    
+                        //userDataModel.UserList.Add(item);
+                        userDataModel.allUser[1].UserItem.Add(item);
+                    }
                 }
             }
+            
+            //TreeViewItem tvItemFirst = this.userlist.ItemContainerGenerator.ContainerFromIndex(0) as TreeViewItem;
+            //TreeViewItem tvItemSecond = this.userlist.ItemContainerGenerator.ContainerFromIndex(1) as TreeViewItem;
         }
 
         private void delUser(string data)
@@ -141,20 +181,44 @@ namespace DispatchApp
 
                 /* need consider two possible role */
                 /* 查询index */
-                for (int i = 0; i < userDataModel.UserList.Count; i++)
+                //for (int i = 0; i < userDataModel.UserList.Count; i++)
+                //{
+                //    if (userDataModel.UserList[i].name == userobj.name)
+                //    {
+                //        userDataModel.UserList.RemoveAt(i);
+                //    }
+                //}
+
+                for (int i = 0; i < userDataModel.allUser[0].UserItem.Count; i++)
                 {
-                    if (userDataModel.UserList[i].name == userobj.name)
+                    if (userDataModel.allUser[0].UserItem[i].name == userobj.name)
                     {
-                        userDataModel.UserList.RemoveAt(i);
+                        userDataModel.allUser[0].UserItem.RemoveAt(i);
+                        TreeViewItem tvItemFirst = userlist.ItemContainerGenerator.ContainerFromIndex(0) as TreeViewItem;
+                        Object user = tvItemFirst.Items[0] as Object;
+                        TreeViewItem tvItemSecond = tvItemFirst.ItemContainerGenerator.ContainerFromItem(user) as TreeViewItem;
+                        tvItemSecond.IsSelected = true;
                     }
                 }
 
                 /* 查询index */
-                for (int i = 0; i < userDataModel.AdminList.Count; i++)
+                //for (int i = 0; i < userDataModel.AdminList.Count; i++)
+                //{
+                //    if (userDataModel.AdminList[i].name == userobj.name)
+                //    {
+                //        userDataModel.AdminList.RemoveAt(i);
+                //    }
+                //}
+
+                for (int i = 0; i < userDataModel.allUser[1].UserItem.Count; i++)
                 {
-                    if (userDataModel.AdminList[i].name == userobj.name)
+                    if (userDataModel.allUser[1].UserItem[i].name == userobj.name)
                     {
-                        userDataModel.AdminList.RemoveAt(i);
+                        userDataModel.allUser[1].UserItem.RemoveAt(i);
+                        TreeViewItem tvItemFirst = userlist.ItemContainerGenerator.ContainerFromIndex(1) as TreeViewItem;
+                        Object user = tvItemFirst.Items[0] as Object;
+                        TreeViewItem tvItemSecond = tvItemFirst.ItemContainerGenerator.ContainerFromItem(user) as TreeViewItem;
+                        tvItemSecond.IsSelected = true;
                     }
                 }
             }
@@ -169,7 +233,7 @@ namespace DispatchApp
                 if (res.result == "Fail")
                 {
                     Debug.WriteLine(res.reason);
-                    this.result.Content = "保存失败";
+                    this.result.Content = "保存失败:" + res.reason;
                     return;
                 }
 
@@ -178,12 +242,12 @@ namespace DispatchApp
 
                 bool finished = false;
                 // 在swList中查询对应的item
-                for (int i = 0; i < userDataModel.UserList.Count; i++)
+                for (int i = 0; i < userDataModel.allUser[1].UserItem.Count; i++)
                 {
                     // 用户名来判断
-                    if (userDataModel.UserList[i].name == userobj.name)
+                    if (userDataModel.allUser[1].UserItem[i].name == userobj.name)
                     {
-                        User item = userDataModel.UserList[i];
+                        User item = userDataModel.allUser[1].UserItem[i];
                         item.name = userobj.name;
                         item.password = userobj.password;
 
@@ -194,22 +258,27 @@ namespace DispatchApp
                         item.desk = userobj.desk;
 
                         // 如果更改了角色
-                        if(item.privilege =="2" && "1" == userobj.privilege)
+                        if (item.privilege == "2" && "1" == userobj.privilege)
                         {
                             item.privilege = "1";
-                            userDataModel.UserList.RemoveAt(i);
+                            userDataModel.allUser[1].UserItem.RemoveAt(i);
                             // 将item添加到AdminList列表
-                            if (userDataModel.AdminList.Count == 0)
+                            if (userDataModel.allUser[0].UserItem.Count == 0)
                             {
-                                userDataModel.AdminList.Add(item);
+                                userDataModel.allUser[0].UserItem.Add(item);
                             }
                             else
                             {
-                                for (int j = 0; j < userDataModel.AdminList.Count; j++)
+                                for (int j = 0; j < userDataModel.allUser[0].UserItem.Count; j++)
                                 {
-                                    if (item.name.CompareTo(userDataModel.AdminList[j].name) <= 0)
+                                    if (item.name.CompareTo(userDataModel.allUser[0].UserItem[j].name) <= 0)
                                     {
-                                        userDataModel.AdminList.Insert(j, item);
+                                        userDataModel.allUser[0].UserItem.Insert(j, item);
+
+                                        TreeViewItem tvItemFirstNew = (TreeViewItem)userlist.ItemContainerGenerator.ContainerFromIndex(0);
+                                        Object userNew = item as Object;
+                                        TreeViewItem tvItemSecondNew = tvItemFirstNew.ItemContainerGenerator.ContainerFromItem(userNew) as TreeViewItem;
+                                        tvItemSecondNew.IsSelected = true;
                                         break;
                                     }
                                 }
@@ -229,12 +298,12 @@ namespace DispatchApp
                 }
 
                 /* 继续在admin中查找*/
-                for (int i = 0; i < userDataModel.AdminList.Count; i++)
+                for (int i = 0; i < userDataModel.allUser[0].UserItem.Count; i++)
                 {
                     // 用户名来判断
-                    if (userDataModel.AdminList[i].name == userobj.name)
+                    if (userDataModel.allUser[0].UserItem[i].name == userobj.name)
                     {
-                        User item = userDataModel.AdminList[i];
+                        User item = userDataModel.allUser[0].UserItem[i];
                         item.name = userobj.name;
                         item.password = userobj.password;
 
@@ -248,19 +317,24 @@ namespace DispatchApp
                         if (item.privilege == "1" && "2" == userobj.privilege)
                         {
                             item.privilege = "2";
-                            userDataModel.AdminList.RemoveAt(i);
+                            userDataModel.allUser[0].UserItem.RemoveAt(i);
                             // 将item添加到AdminList列表
-                            if (userDataModel.UserList.Count == 0)
+                            if (userDataModel.allUser[1].UserItem.Count == 0)
                             {
-                                userDataModel.UserList.Add(item);
+                                userDataModel.allUser[1].UserItem.Add(item);
                             }
                             else
                             {
-                                for (int j = 0; j < userDataModel.UserList.Count; j++)
+                                for (int j = 0; j < userDataModel.allUser[1].UserItem.Count; j++)
                                 {
-                                    if (item.name.CompareTo(userDataModel.UserList[j].name) <= 0)
+                                    if (item.name.CompareTo(userDataModel.allUser[1].UserItem[j].name) <= 0)
                                     {
-                                        userDataModel.UserList.Insert(j, item);
+                                        userDataModel.allUser[1].UserItem.Insert(j, item);
+
+                                        TreeViewItem tvItemFirst = (TreeViewItem)userlist.ItemContainerGenerator.ContainerFromIndex(1);
+                                        Object user = item as Object;
+                                        TreeViewItem tvItemSecond = tvItemFirst.ItemContainerGenerator.ContainerFromItem(user) as TreeViewItem;
+                                        tvItemSecond.IsSelected = true;
                                         break;
                                     }
                                 }
@@ -273,6 +347,106 @@ namespace DispatchApp
                         break;
                     }
                 }
+
+
+
+                //bool finished = false;
+                // //在swList中查询对应的item
+                //for (int i = 0; i < userDataModel.UserList.Count; i++)
+                //{
+                //    // 用户名来判断
+                //    if (userDataModel.UserList[i].name == userobj.name)
+                //    {
+                //        User item = userDataModel.UserList[i];
+                //        item.name = userobj.name;
+                //        item.password = userobj.password;
+
+                //        item.description = userobj.description;
+                //        item.role = userobj.role;
+                //        item.index = userobj.index;
+                //        item.status = userobj.status;
+                //        item.desk = userobj.desk;
+
+                //        // 如果更改了角色
+                //        if(item.privilege =="2" && "1" == userobj.privilege)
+                //        {
+                //            item.privilege = "1";
+                //            userDataModel.UserList.RemoveAt(i);
+                //            // 将item添加到AdminList列表
+                //            if (userDataModel.AdminList.Count == 0)
+                //            {
+                //                userDataModel.AdminList.Add(item);
+                //            }
+                //            else
+                //            {
+                //                for (int j = 0; j < userDataModel.AdminList.Count; j++)
+                //                {
+                //                    if (item.name.CompareTo(userDataModel.AdminList[j].name) <= 0)
+                //                    {
+                //                        userDataModel.AdminList.Insert(j, item);
+                //                        break;
+                //                    }
+                //                }
+                //            }
+
+                //        }
+
+                //        Trace.WriteLine("current selected name: " + item.name);
+                //        finished = true;
+                //        break;
+                //    }
+                //}
+
+                //if (finished)
+                //{
+                //    return;
+                //}
+
+                ///* 继续在admin中查找*/
+                //for (int i = 0; i < userDataModel.AdminList.Count; i++)
+                //{
+                //    // 用户名来判断
+                //    if (userDataModel.AdminList[i].name == userobj.name)
+                //    {
+                //        User item = userDataModel.AdminList[i];
+                //        item.name = userobj.name;
+                //        item.password = userobj.password;
+
+                //        item.description = userobj.description;
+                //        item.role = userobj.role;
+                //        item.index = userobj.index;
+                //        item.status = userobj.status;
+                //        item.desk = userobj.desk;
+
+                //        // 如果更改了角色
+                //        if (item.privilege == "1" && "2" == userobj.privilege)
+                //        {
+                //            item.privilege = "2";
+                //            userDataModel.AdminList.RemoveAt(i);
+                //            // 将item添加到AdminList列表
+                //            if (userDataModel.UserList.Count == 0)
+                //            {
+                //                userDataModel.UserList.Add(item);
+                //            }
+                //            else
+                //            {
+                //                for (int j = 0; j < userDataModel.UserList.Count; j++)
+                //                {
+                //                    if (item.name.CompareTo(userDataModel.UserList[j].name) <= 0)
+                //                    {
+                //                        userDataModel.UserList.Insert(j, item);
+                //                        break;
+                //                    }
+                //                }
+                //            }
+
+                //        }
+
+                //        Trace.WriteLine("current selected name: " + item.name);
+                //        finished = true;
+                //        break;
+                //    }
+                //}
 
 
             }
@@ -320,9 +494,11 @@ namespace DispatchApp
             userview.Visibility = Visibility.Visible;
         }
 
+        public string delPrivilege; 
         private void del_Click(object sender, RoutedEventArgs e)
         {
-            User user = userDataModel.SelectedUser; 
+            User user = userDataModel.SelectedUser;
+            delPrivilege = user.privilege;
             if (MessageBox.Show("确定是否要删除用户 " + user.name, "提示消息",
                 MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
             {
@@ -369,7 +545,7 @@ namespace DispatchApp
                 item.sequence = GlobalFunAndVar.sequenceGenerator();
                 item.name = userName.Text.Trim();
                 item.password = userPass.Text.Trim();
-                item.status = userStatus.Text.Trim();
+                //item.status = userStatus.Text.Trim();
                 //item.privilege = userPriv.Text.Trim();
                 item.privilege = userPriv.SelectedValue as string;
                 int ind = userDesk.SelectedIndex;
@@ -388,8 +564,8 @@ namespace DispatchApp
                 {
                     item.desk = "";
                 }              
-                item.role = userRole.Text.Trim();                
-                item.description = userDesp.Text.Trim();
+                //item.role = userRole.Text.Trim();                
+                //item.description = userDesp.Text.Trim();
 
                 // 用于界面显示
                 User uiUser = new User();
@@ -410,26 +586,28 @@ namespace DispatchApp
                 StringBuilder sb = new StringBuilder(100);
                 if (true == userDataModel.NewUser)
                 {
-                    if (item.privilege == "1")
-                    {
-                        // add by xiaozi 20181224 start
-                        indexTreeViewItem = adminlist.Items.Count;
-                        // add by xiaozi 20181224 end
-                    }
-                    else if (item.privilege == "2")
-                    {
-                        // add by xiaozi 20181224 start
-                        indexTreeViewItem = userlist.Items.Count;
-                        // add by xiaozi 20181224 end
-                    }
                     sb.Append("MAN#ADDUSER#");
+
+                    // add by xiaozi 20181224 start
+                    if (userobj.privilege == "1")
+                    {
+                        TreeViewItem treeViewItem = userlist.ItemContainerGenerator.ContainerFromIndex(0) as TreeViewItem;
+                        indexTreeViewItem = treeViewItem.Items.Count;
+                    }
+                    else if (userobj.privilege == "2")
+                    {
+                        TreeViewItem treeViewItem2 = userlist.ItemContainerGenerator.ContainerFromIndex(1) as TreeViewItem;
+                        indexTreeViewItem = treeViewItem2.Items.Count;
+                    }
+                    // add by xiaozi 20181224 end
+
 
                 }
                 else
                 {
                     sb.Append("MAN#EDITUSER#");
                 }
-                
+
                 sb.Append(JsonConvert.SerializeObject(item));
 
                 Debug.WriteLine("SEND: " + sb.ToString());
@@ -438,6 +616,27 @@ namespace DispatchApp
                 mainWindow.ws.Send(sb.ToString());
                 
             }
+        }
+
+        private void treelist_loaded(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem tvItemFirst = userlist.ItemContainerGenerator.ContainerFromIndex(0) as TreeViewItem;
+            if (tvItemFirst != null)
+            {
+                tvItemFirst.IsExpanded = true;
+            }
+            TreeViewItem tvItemSecond = userlist.ItemContainerGenerator.ContainerFromIndex(1) as TreeViewItem;
+            if (tvItemSecond != null)
+            {
+                tvItemSecond.IsExpanded = true;
+            }
+
+            // 选定用户时选定第一项，不显示详细信息 xiaozi20181225
+            //TreeViewItem tvItemFirst = (TreeViewItem)usermanagetab.userlist.ItemContainerGenerator.ContainerFromIndex(0);
+            //Object user = tvItemFirst.Items[0] as Object;
+            //TreeViewItem tvItemSecond = tvItemFirst.ItemContainerGenerator.ContainerFromItem(user) as TreeViewItem;
+            //tvItemSecond.IsSelected = true;
+            //usermanagetab.userview.Visibility = Visibility.Hidden;
         }
     }
 }
