@@ -84,12 +84,14 @@
                 Background="{DynamicResource PrimaryHueDarkBrush}">
                 <StackPanel
                     Orientation="Horizontal" 
-                    Width="1920">
+                    Width="1920" >
+                    <Image Source="Resources/logo.png" Margin="0"  Width="356"/>
+                    
                     <Label Name="label_Time"
                         Content="Label"  
                         FontSize="46"
-                        HorizontalContentAlignment="Center"  VerticalContentAlignment="Center"                          
-                        HorizontalAlignment="Left" Width="285" />
+                        HorizontalContentAlignment="Left"  VerticalContentAlignment="Center"                          
+                         Width="285" />
                     <Button x:Name="sw_button" Background="Transparent" Grid.Column="0" Height="92" HorizontalAlignment="Center" VerticalAlignment="Top" Width="102" 
                             Margin="0,0" Opacity="1" BorderBrush="{x:Null}" Click="man_sw_click">                        
                         <StackPanel Height="90" Width="70">
@@ -126,7 +128,7 @@
                     <Label Name="ShowKeyLabel" 
                         VerticalContentAlignment="Center" 
                         FontSize="46" 
-                        Height="98" Width="800" 
+                        Height="98" Width="444" 
                         VerticalAlignment="Bottom"/>                        
                     <Button Height="100" HorizontalAlignment="Center" Click="btn_lock_Clicked" VerticalAlignment="Top" Width="107" Margin="8,0" BorderBrush="{x:Null}">
                         <StackPanel Height="100" Width="80">
