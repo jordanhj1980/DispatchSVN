@@ -80,6 +80,7 @@ namespace DispatchApp
                     //userDataModel.AdminList.Add(userobj);
                     //TreeViewItem tvItemNew = (TreeViewItem)adminlist.ItemContainerGenerator.ContainerFromIndex(indexTreeViewItem);
                     //tvItemNew.IsSelected = true;
+
                     userDataModel.allUser[0].UserItem.Add(userobj);
                     TreeViewItem tvItemFirst = (TreeViewItem)userlist.ItemContainerGenerator.ContainerFromIndex(0);
                     User item = tvItemFirst.Items[indexTreeViewItem] as User;
@@ -102,6 +103,7 @@ namespace DispatchApp
                     //userDataModel.UserList.Add(userobj);
                     //TreeViewItem tvItem = (TreeViewItem)userlist.ItemContainerGenerator.ContainerFromIndex(indexTreeViewItem);
                     //tvItem.IsSelected = true;
+                    
                     userDataModel.allUser[1].UserItem.Add(userobj);
                     TreeViewItem tvItemFirstNew = (TreeViewItem)userlist.ItemContainerGenerator.ContainerFromIndex(1);
                     User item = tvItemFirstNew.Items[indexTreeViewItem] as User;
@@ -600,8 +602,6 @@ namespace DispatchApp
                         indexTreeViewItem = treeViewItem2.Items.Count;
                     }
                     // add by xiaozi 20181224 end
-
-
                 }
                 else
                 {

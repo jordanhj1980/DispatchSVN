@@ -105,7 +105,7 @@ namespace DispatchApp
         /* 调度usercontrol */
         //UserControl1 callUserCtrl;//weituo 20181013
         public CallUserControl callUserCtrl;
-        CallManagerControl callManagerCtrl;
+        public CallManagerControl callManagerCtrl;
 
         // 状态转换器参数绑定
         public event PropertyChangedEventHandler PropertyChanged;

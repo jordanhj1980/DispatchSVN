@@ -81,11 +81,11 @@ namespace DispatchApp
         CreateUserWindow cuw;
 
         //public KeyBoardManageViewModel keyboardmanagedata; //调度键盘界面数据
-        KeyBoardManage keyboardmanagetab;
+        public KeyBoardManage keyboardmanagetab;
         /* 软交换界面TabItem */
-        SwitchManage swmanaagetab;
+        public SwitchManage swmanaagetab;
         /* 用户界面TabItem */
-        UserManage usermanagetab;
+        public UserManage usermanagetab;
         /* 电话簿界面TabItem */
         ContactManage contactmanaagetab;
 

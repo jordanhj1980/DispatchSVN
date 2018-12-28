@@ -16,6 +16,8 @@ using MaterialDesignThemes.Wpf;
 using Newtonsoft.Json;
 
 using System.Diagnostics;
+using System.Collections.ObjectModel;
+
 
 namespace DispatchApp
 {
@@ -50,6 +52,7 @@ namespace DispatchApp
             }
         }
 
+        public KeyBoardNum keyBoardNum = new KeyBoardNum();
         public AllKeyBoard allkeydata = new AllKeyBoard();//hj 2018.11.26
         private void DeskImage(string date)
         {
@@ -57,19 +60,32 @@ namespace DispatchApp
             allkeydata = JsonConvert.DeserializeObject<AllKeyBoard>(date);//hj 2018.11.26获取所有调度键盘
             keyboardmanagedata.KeyboardList = allkeydata.keyboardlist;
 
-            //for (int i = 0; i < Keyboardlist.Items.Count; i++)
-            //{
-            //    TreeViewItem tvItem = (TreeViewItem)Keyboardlist.ItemContainerGenerator.ContainerFromIndex(i);
-            //    KeyBoardNew item = (KeyBoardNew)tvItem.Header;
-            //    if (item.name == keyboardmanagedata.SelectedKey.name)
-            //    {
-            //        tvItem.IsSelected = true;
-            //    }
-            //    else
-            //    {
-            //        tvItem.IsSelected = false;
-            //    }
-            //}
+            // add by twinkle 20181123
+            ObservableCollection<UserStatus> deskList = new ObservableCollection<UserStatus>();
+            if (mainWindow.callManagerCtrl.tabControl_mgt.SelectedIndex == 1)
+            {
+                // 首先清空调度台的列表
+                deskList.Clear();
+            }
+
+            Debug.WriteLine("********查询的调度台消息:" + date);
+            keyBoardNum.count = allkeydata.keyboardlist.Count;         // 调度台里的调度键盘个数
+            Debug.WriteLine("********查询的调度键盘个数:" + keyBoardNum.count);
+            // 遍历所有的调度键盘
+            for (int idex = 0; idex < keyBoardNum.count; idex++)
+            {
+                KeyBoardNew keyBoard = allkeydata.keyboardlist[idex];
+                // 添加调度台信息  add by twinkle 20181122
+                string keyidx = "";
+                if (keyBoard.index != null)
+                {
+                    keyidx = keyBoard.index;
+                }
+                UserStatus us = new UserStatus(keyidx, keyBoard.name);
+                deskList.Add(us);
+            }
+
+            mainWindow.callManagerCtrl.usermanagetab.freshDeskList(deskList);
 
             if(Keyboardlist.SelectedItem != null)
             {
