@@ -287,7 +287,17 @@
                     <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="广播" VerticalAlignment="Bottom" Width="80" />
                 </StackPanel>
             </Button>
-            
+            <Button Name="btn_set"
+                    Click="Setting_Click"
+
+                Width="100" 
+                Style="{DynamicResource RoundedButton}">
+                <StackPanel VerticalAlignment="Top">
+                    <Image Height="64" Source="../Resources/settings.png" Width="64" />
+                    <TextBlock Block.TextAlignment="Center" FontFamily="SimHei" FontSize="30" Grid.Column="0" Height="34" Margin="0,0,0,4" Text="设置" VerticalAlignment="Bottom" Width="80" />
+                </StackPanel>
+            </Button>
+
             <!--<Button x:Name="btn_meeting"
                     Width="100" Click="Button_Meeting" Style="{DynamicResource RoundedButton}" Margin="13,0">
                 <StackPanel VerticalAlignment="Top">
@@ -485,6 +495,11 @@
 
             <materialDesign:DialogHost Identifier="UserOutLineDialog" 
                 DialogClosing="OutLineDialogClosing" 
+                Grid.Row="2"
+                SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+            </materialDesign:DialogHost>
+            <materialDesign:DialogHost Identifier="UserSettingDetailDialog" 
+                DialogClosing="SettingDialogClosing" 
                 Grid.Row="2"
                 SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
             </materialDesign:DialogHost>

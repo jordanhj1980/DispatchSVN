@@ -50,7 +50,9 @@ namespace DispatchApp
     public partial class MainWindow 
     {
         public OutLine outLine;
+        public SettingDetail settingDetail;
 
+        //public PhoneOffHookState phoneOffHookState;
         private DispatcherTimer ShowTimer;
         public DispatcherTimer HeartBeatTimer;
 
@@ -149,12 +151,15 @@ namespace DispatchApp
             //demoUserControl.Children.Add(new UserControl1());
             //InitBitkyPoleShow();
 
+            //phoneOffHookState = new PhoneOffHookState(this);  // 查询电话未挂机状态 add by xiaozi 20190126
+
             // 初始化用户界面和管理界面
             callUserCtrl = new CallUserControl(this);
             //callUserCtrl.CtrlSwitchEvent += new CtrlSwitchHandler(CtrlSwitch_callUser);
             callManagerCtrl = new CallManagerControl(this);
             //callManagerCtrl.CtrlSwitchEvent += new CtrlSwitchHandler(CtrlSwitch_callManager);
             outLine = new OutLine(this);
+            settingDetail = new SettingDetail(this);
             //CtrlSwitch_callUser();            
 
             /* 隐藏公共工具栏的button */
@@ -256,8 +261,7 @@ namespace DispatchApp
             this.Dispatcher.Invoke(new Action(delegate
             {
                 typedata(strMsg);
-            }));
-            
+            }));  
         }
 
         private void typedata(Object date)
@@ -405,6 +409,10 @@ namespace DispatchApp
                             callUserCtrl.c_callTypeInfo.status = e_CallType.RADIO;
                             callUserCtrl.SetRadioCall();
                             Debug.WriteLine("广播分组" + word);
+                            break;
+                        case "ACTIVESTATE":
+                            callUserCtrl.Second_ActiveState_Word(word);
+                            Debug.WriteLine("主动上报状态问题？？？？？？" + word);
                             break;
                         case "STATE":
                             callUserCtrl.Second_State_Word(word);

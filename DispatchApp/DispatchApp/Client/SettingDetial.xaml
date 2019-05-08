@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="DispatchApp.SettingDetail"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DialogHost.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid>
+        <StackPanel>
+            <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5"
+                      Height="46"
+                      Background="{DynamicResource PrimaryHueDarkBrush}"
+                      Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                      UniformCornerRadius="0" 
+                      VerticalContentAlignment="Center">
+                <TextBlock Text="设置" FontSize="24" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            </materialDesign:Card>
+            <DockPanel Margin="0,10,0,0">
+                <TextBlock Text="夜服号:" Width="86" FontSize="24" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                <TextBox Text="{Binding settingDetail.nightServerId}" 
+                    Width="180" VerticalAlignment="Center" FontSize="24" />
+            </DockPanel>
+            <!--<DockPanel Margin="0,10,0,0">
+                <TextBlock Text="中继号:" Width="86" FontSize="24" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                <TextBox Text="{Binding trunkid}" 
+                    Width="180" VerticalAlignment="Center" FontSize="24"/>
+            </DockPanel>
+            <DockPanel Margin="0,10,0,0">
+                <TextBlock Text="外线号:" Width="86" FontSize="24" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                <TextBox Text="{Binding bindingnumber}" 
+                    Width="180" VerticalAlignment="Center" FontSize="24"/>
+            </DockPanel>-->
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,250,0,0" VerticalAlignment="Center">
+            <Button Content="确定" Width="100" Margin="30,10,20,10" HorizontalAlignment="Left"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                <Button.CommandParameter>
+                    <system:Boolean>True</system:Boolean>
+                </Button.CommandParameter>
+            </Button>
+            <Button Content="取消" Width="100" Margin="20,10,30,10" HorizontalAlignment="Right"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                <Button.CommandParameter>
+                    <system:Boolean>False</system:Boolean>
+                </Button.CommandParameter>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -138,7 +138,6 @@ namespace DispatchApp
                     uics.CurrentState = "ANSWER";
                     m_callQueue.RemoveAt(j);
                     m_callQueue.Insert(0, uics);
-                    
                     break;
                 }
             }

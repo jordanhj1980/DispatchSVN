@@ -54,7 +54,6 @@ namespace DispatchApp
         /// function 列表中当前选中用户
         /// </summary>
         // 当对话框打开添加软交换时，临时存储软交换的信息
-
         private SWDEV _selectedSwitch;
         public SWDEV SelectedSwitch
         {

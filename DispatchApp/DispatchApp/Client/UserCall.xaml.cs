@@ -122,8 +122,9 @@ namespace DispatchApp
         /// <summary>
         /// 记录通话的信息
         /// </summary>
-        public call callNum = new call();
+        //public call callNum = new call();
         public string insterNum;
+        public string ThreeSideCallState;   // 三方通话状态
         public UserCall()
         {
             InitializeComponent();

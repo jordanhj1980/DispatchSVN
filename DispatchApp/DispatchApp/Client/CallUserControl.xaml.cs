@@ -13,7 +13,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-
+using System.Windows.Threading;
+using System.Configuration;
 using Npgsql;
 
 using System.Windows.Interop;
@@ -25,6 +26,9 @@ using System.Threading;
 using System.Diagnostics;
 using MaterialDesignThemes.Wpf.Transitions;
 using MaterialDesignThemes.Wpf;
+
+
+
 
 // 终端用户界面
 namespace DispatchApp
@@ -118,21 +122,55 @@ namespace DispatchApp
     /* add by twinkle end */    
 
     /// <summary>
+    /// 一个电话/中继直呼/广播直呼的名称和状态
+    /// add by xiaozi 20190124
+    /// </summary>
+    public class PhoneOffHookState
+    {
+        public MainWindow mainWindow;
+        public string strState { get; set; }
+        public string strPhoneId { get; set; }
+
+        public DispatcherTimer onHookTimer;      // 呼叫点击事件定时器
+        public PhoneOffHookState(MainWindow mainWindow)
+        {
+            this.mainWindow = mainWindow;
+            onHookTimer = new DispatcherTimer();
+            string strOnHookDelay = ConfigurationManager.AppSettings["onhookdelay"];
+            int intOnHookDelay = Convert.ToInt16(strOnHookDelay);
+            onHookTimer.Tick += new EventHandler(SearchPhoneOffHookDelay);//开启监听
+            onHookTimer.Interval = new TimeSpan(0, 0, intOnHookDelay);  
+        }
+
+        /// <summary>
+        /// 开启监听方法
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SearchPhoneOffHookDelay(object sender, EventArgs e)
+        {
+            string strMessage = "CMD#GETSTATE#" + strPhoneId;
+            mainWindow.ws.Send(strMessage);
+            Debug.WriteLine("查询电话" + strPhoneId + "是否未挂机");
+        }
+    }
+
+
+    /// <summary>
     /// Interaction logic for CallUserControl.xaml
     /// </summary>
     public partial class CallUserControl : UserControl
     {
-        private MainWindow mainWindow;
-
+        public MainWindow mainWindow;
         public CallBoard callBoard;
-        //public OutLine outLine;
 
         public string serverCall = "0";
         public string clientCall = "0";
-        public string nightId = "213";
+        public string nightId = "0";
         public string trunkCall;
 
         public List<call> userTwoSidesCom = new List<call>(); // 存正在通话的用户双方，强插用
+         public List<PhoneOffHookState> phoneOffHookStateList = new List<PhoneOffHookState>();  // 存所有电话不挂线状态查询定时器
 
         public List<KeyCallDate> keyCallDateList = new List<KeyCallDate>(); // 存所有键权电话信息
         public RelayState relayState = new RelayState();
@@ -145,12 +183,9 @@ namespace DispatchApp
         public event CtrlSwitchHandler CtrlSwitchEvent;
         public LogWindow logWindow;
 
-
-
         /* add by xiaozi 20181128 start  */
         public OutLineCall outLineCall;
         /* add by xiaozi 20181128 end  */
-
 
         public CallUserControl(MainWindow mmainWindow)
         {
@@ -203,12 +238,7 @@ namespace DispatchApp
                 new SetColumn(12, "12列"),
             };
 
-            //ColComboBox.ItemsSource = colType;
-            //ColComboBox.DisplayMemberPath = "description";
-            //ColComboBox.SelectedValuePath = "col";
-            //ColComboBox.SelectedIndex = 1;
-
-
+            
         }
 
         private void ClossCDR()
@@ -301,6 +331,136 @@ namespace DispatchApp
         }
         //============================================================
 
+        /// <summary>
+        /// 对软交换主动上报的状态进行处理
+        /// </summary>
+        /// <param name="word"></param>
+        public void Second_ActiveState_Word(string word)
+        {
+            string strMsg = (string)word;
+            int indexstart = 0;
+            int indexend = 0;
+            indexend = strMsg.IndexOf('#');
+            string type = strMsg.Substring(indexstart, indexend - indexstart);
+            //去第二个#之后的数据
+            indexstart = indexend + 1;
+            string data = strMsg.Substring(indexstart);
+
+            KeyCommondWord_ActiveState(type, data);
+ 
+            CommondWord_ActiveState(type, data);
+
+        }
+
+        /// <summary>
+        /// 键权电话对主动上报的状态的反应
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="num"></param>
+        private void KeyCommondWord_ActiveState(string state, string num)
+        {
+            string clientNum;
+            call tempName = new call();
+
+            //如果num不只是数字，以下Try..Catch..读取客户端号码
+            try
+            {
+                int intNum = int.Parse(num);
+                clientNum = num;
+            }
+            catch (Exception)
+            {
+                tempName = JsonConvert.DeserializeObject<call>(num);
+                clientNum = tempName.fromid;
+            }
+
+            KeyCall item = new KeyCall();
+            for (int i = 0; i < 2; i++)
+            {
+                item = (KeyCall)KeyCallListBox.Items[i];
+                if (clientNum == item.KeyText.Text)
+                {
+                    item.CurrentState = state;
+                    
+                    if ("OFFHOOK" == state)
+                    {
+                        mainWindow.ShowKeyLabel.Content = "键权电话" + tempName.fromid + "未挂机";
+                        mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                    }
+                    else
+                    {
+                        mainWindow.ShowKeyLabel.Content = "";
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 用户电话对主动上报的状态的反应
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="num"></param>
+        private void CommondWord_ActiveState(string state, string num)
+        {
+            string clientNum = "0";
+            string clientToid = "0";
+            call tempName = new call();
+
+            //如果num不只是数字，以下Try..Catch..读取客户端号码
+            try
+            {
+                int intNum = int.Parse(num);
+                clientNum = num;
+            }
+            catch (Exception)
+            {
+                tempName = JsonConvert.DeserializeObject<call>(num);
+                clientNum = tempName.fromid;
+                clientToid = tempName.toid;
+            }
+
+            // 查找0：终端号码分布的组数，即TabItem的个数                                   
+            int pageUserTabNum = tabCtrl_User.Items.Count;
+
+            for (int idex = 0; idex < pageUserTabNum; idex++)
+            {
+                if ((idex != PageRelayIndex) && (idex != PageRadioIndex))
+                {
+                    TabItem tabItem = (TabItem)tabCtrl_User.Items[idex]; // 一个页面选项
+                    ListBox listBox = (ListBox)tabItem.Content; // 一个页面选项的内容是ListBox
+                    int pageUserBoxNum = listBox.Items.Count;   // ListBox中UserCall的个数
+                    for (int jdex = 0; jdex < pageUserBoxNum; jdex++)
+                    {
+                        UserCall temp = (UserCall)listBox.Items[jdex];  // ListBox中的一个UserCall 
+
+                        string callNum = temp.ContentFrom.ToString();
+                        // 布置本机号码对应的状态
+                        if (callNum == clientNum)
+                        {
+                            temp.CurrentState = state;
+                            switch (state)
+                            {
+                                case "OFFHOOK":
+                                    temp.CurrentState = state;
+                                    //mainWindow.ShowKeyLabel.Content = "用户电话" + callNum + "未挂机";
+                                    //mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                                    //temp.callNum = new call();          // 呼叫信息清零
+                                    temp.timer_Stop();
+                                    temp.ContentFrom = callNum;
+                                    temp.NameToId = "";
+                                    temp.ButtonBack.Background = (Brush)new BrushConverter().ConvertFromString("#CACDDA");
+                                    break;
+                                default: break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         /// =====================STATE命令字接收事件==================
         /// <summary>
@@ -437,7 +597,30 @@ namespace DispatchApp
             //}
         }
 
-      
+        private void ClearUserCallInsertState(string name)
+        {
+            List<UserCall> firstPageUserCall = FindChirldHelper.FindVisualChild<UserCall>(this);
+            foreach (UserCall item in firstPageUserCall)
+            {
+                if (item.insterNum == null)
+                {
+                    continue;
+                }
+                else
+                {
+                    if (item.insterNum.ToString() == name)
+                    {
+                        item.insterNum = "";
+                        item.ThreeSideCallState = "";
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+                
+            }
+        }
 
         /// <summary>
         /// 对键权电话状态的处理
@@ -461,15 +644,50 @@ namespace DispatchApp
                 clientNum = tempName.fromid;
             }
 
+            /* 查找到该键权电话在不在获取键权的电话号码行列 */
+            int intKeyPhoneIndex = serverCallList.Count; 
+            for (int intIndex = 0; intIndex < serverCallList.Count; intIndex++)
+            {
+                /* 在键权电话列表中，获取所在的位置索引 */
+                if (clientNum == serverCallList[intIndex])
+                {
+                    intKeyPhoneIndex = intIndex;
+                }
+
+                /* 键权电话状态空闲，在获取键权的名单里去除该键权号码 */
+                if (("IDLE" == state) && (intKeyPhoneIndex != serverCallList.Count))
+                {
+                    serverCallList.RemoveAt(intKeyPhoneIndex);
+
+                    /* 如果还有获取的键权电话 */
+                    if (serverCallList.Count != 0)
+                    {
+                        /* 先删除获取的键权电话 */
+                        int intLastNumber = serverCallList.Count - 1;
+                        string strSeverCallNow = serverCallList[intLastNumber];
+                        //serverCallList.RemoveAt(intLastNumber);
+                        /* 再选中该键权电话获取键权 */
+                        KeyClickEvent(strSeverCallNow);
+                    }
+                }
+            }
+
+
             KeyCall item = new KeyCall();
             for (int i = 0; i < 2; i++ )
             {
                 item = (KeyCall)KeyCallListBox.Items[i];
                 if (clientNum == item.KeyText.Text)
                 {
+                    //SearchOffHookState(state,clientNum);    // 查询电话不挂线状态
+
                     item.CurrentState = state;
                     mainWindow.CurrentState = state;
                     keyCallDateList[i].state = state;
+                    if ("IDLE" == state)
+                    {
+                        ClearUserCallInsertState(clientNum);// 清除被该键权强插或监听的用户电话的强插监听状态。
+                    }
                     if ("BUSY" == state)
                     {
                         KeyClickEvent(clientNum); // 摘机同单击
@@ -506,6 +724,11 @@ namespace DispatchApp
                             mainWindow.ShowKeyLabel.Content = "键权电话与" + tempName.toid + "正在通话";
                             mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
                         }
+                    }
+                    else if ("OFFHOOK" == state)
+                    {
+                        mainWindow.ShowKeyLabel.Content = "键权电话" + tempName.fromid + "未挂机";
+                        mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
                     }
                     else
                     {
@@ -628,6 +851,8 @@ namespace DispatchApp
                         // 布置本机号码对应的状态
                         if (callNum == clientNum)
                         {
+                            //SearchOffHookState(state,clientNum);     // 查找该电话是否在不在线状态
+
                             switch (state)
                             {
                                 case "Ready":
@@ -642,7 +867,7 @@ namespace DispatchApp
                                     break;
                                 case "IDLE":
                                     temp.CurrentState = state;
-                                    temp.callNum = new call();  // 呼叫信息清零
+                                    //temp.callNum = new call();  // 呼叫信息清零
                                     temp.timer_Stop();
                                     //temp.labelNumFromId.Content = callNum;
                                     //temp.NameFromId = callNum;
@@ -672,12 +897,25 @@ namespace DispatchApp
                                     temp.NameToId = "no";
                                     break;
                                 case "RING":
+                                    //if (UserPhoneClickStateList.Count != 0)
+                                    //{
+                                    //    for (int intIndex = 0; intIndex <= UserPhoneClickStateList.Count; intIndex++)
+                                    //    {
+                                    //        if (UserPhoneClickStateList[intIndex].name == clientCall)
+                                    //        {
+                                    //            UserPhoneClickStateList.RemoveAt(intIndex);
+                                    //        }
+                                    //    }
+                                    //}
                                     temp.CurrentState = state;
                                     //temp.labelNumFromId.Content = tempName.fromid;
                                     //temp.NameFromId = tempName.fromid;
                                     temp.ContentFrom = callNum;
                                     //temp.labelNumToId.Content = tempName.toid;
-                                    temp.NameToId = tempName.toid;
+                                    if (tempName.toid != null)
+                                    {
+                                        temp.NameToId = tempName.toid;
+                                    }
                                     break;
                                 case "ALERT":
                                     temp.CurrentState = state;
@@ -688,18 +926,16 @@ namespace DispatchApp
                                     temp.NameToId = tempName.toid;
                                     break;
                                 case "ANSWER":
-                                    //if (((e_OperaState.INTER != operaState) && (e_OperaState.LISTEN != operaState)) || (callNum != clientCall))
-                                    if ((temp.CurrentState != "INSTER") && (temp.CurrentState != "LISTEN") || (callNum != temp.callNum.fromid))
+                                    if ((temp.ThreeSideCallState != "INSTER") && (temp.ThreeSideCallState != "LISTEN"))
                                     {
-                                        //temp.labelNumFromId.Content = tempName.fromid;
-                                        //temp.NameFromId = tempName.fromid;
                                         temp.ContentFrom = callNum;
-                                        //temp.labelNumToId.Content = tempName.toid;
-                                        temp.NameToId = tempName.toid;
+                                        if (tempName.toid != null)
+                                        {
+                                            temp.NameToId = tempName.toid;
+                                        }
                                         temp.timer_Stop();
                                         temp.ShowCallTime();
-                                        temp.CurrentState = state;
-                                        temp.callNum = tempName;
+                                        temp.CurrentState = state;                                        
                                     }
                                     else
                                     {
@@ -707,30 +943,51 @@ namespace DispatchApp
                                     }
                                     break;
                                 case "ANSWERED":
-                                    //if ((("Insert" != stateUser.state) && ("Monitor" != stateUser.state)) || (num != stateUser.num))
-                                    //if (((e_OperaState.INTER != operaState) && (e_OperaState.LISTEN != operaState)) || (callNum != clientCall))
-                                    if ((temp.CurrentState != "INSTER") && (temp.CurrentState != "LISTEN") || (callNum != temp.callNum.fromid))
+                                    if ((temp.CurrentState != "INSTER") && (temp.CurrentState != "LISTEN"))
                                     {
-                                        //temp.labelNumFromId.Content = tempName.fromid;
-                                        //temp.NameFromId = tempName.fromid;
                                         temp.ContentFrom = callNum;
-                                        //temp.labelNumToId.Content = tempName.toid;
                                         temp.NameToId = tempName.toid;
                                         temp.timer_Stop();
                                         temp.ShowCallTime();
                                         temp.CurrentState = state;
-                                        temp.callNum = tempName;
-                                        //stateUser.state = "";
-                                        //stateUser.num = num;
                                     }
                                     else
                                     {
                                         Debug.WriteLine(callNum + "当前状态" + temp.CurrentState);
                                     }
                                     break;
+                                //case "OFFHOOK":
+                                //    temp.CurrentState = state;
+                                //    mainWindow.ShowKeyLabel.Content = "用户电话" + callNum + "未挂机";
+                                //    mainWindow.ShowKeyLabel.Foreground = Brushes.Black;
+                                //    break;
                                 default: break;
                             }
                         }
+                    }
+                }
+            }
+        }
+
+       
+        /// <summary>
+        /// 查询电话未挂线状态
+        /// </summary>
+        /// <param name="strState"></param>
+        /// <param name="strPhoneId"></param>
+        private void SearchOffHookState(string strState,string strPhoneId)
+        {
+            foreach (var item in phoneOffHookStateList)
+            {
+                if (item.strPhoneId == strPhoneId)
+                {
+                    //if (strState == "IDLE")
+                    //{
+                    //    //item.onHookTimer.Stop();
+                    //}
+                    //else
+                    {
+                        item.onHookTimer.Start();
                     }
                 }
             }
@@ -787,6 +1044,18 @@ namespace DispatchApp
                     }
                     break;
                 case "Call":
+                    //if (UserPhoneClickStateList.Count != 0)
+                    //{
+                    //    for (int intIndex = 0; intIndex <= UserPhoneClickStateList.Count; intIndex++)
+                    //    {
+                    //        if (UserPhoneClickStateList[intIndex].name == clientCall)
+                    //        {
+                    //            UserPhoneClickStateList.RemoveAt(intIndex);
+                    //        }
+                    //    }
+                    //}
+                    //ShowKeyLabelScreen(type, data);
+                    //break;
                 case "CallOut":
                 case "Visitor":
                 case "Bargein":
@@ -808,6 +1077,8 @@ namespace DispatchApp
                 switch (type)
                 {
                     case "Call":
+                        mainWindow.ShowKeyLabel.Content = "键权电话呼叫失败：" + reply.reason;
+                        break;
                     case "CallOut":
                         mainWindow.ShowKeyLabel.Content = "键权电话呼叫失败：" + reply.reason;
                         break;
@@ -1036,45 +1307,50 @@ namespace DispatchApp
         {
             var converter = new System.Windows.Media.BrushConverter();
             if (name == "btn_call")
-                btn_call.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
+                btn_call.Background = (Brush)converter.ConvertFromString("#1CA2F6");
             else
                 btn_call.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_trans")
-                btn_trans.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
+                btn_trans.Background = (Brush)converter.ConvertFromString("#1CA2F6");
             else
                 btn_trans.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_insert")
-                btn_insert.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
+                btn_insert.Background = (Brush)converter.ConvertFromString("#1CA2F6");
             else
                 btn_insert.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_split")
-                btn_split.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
+                btn_split.Background = (Brush)converter.ConvertFromString("#1CA2F6");
             else
                 btn_split.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_monitor")
-                btn_monitor.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
+                btn_monitor.Background = (Brush)converter.ConvertFromString("#1CA2F6");
             else
                 btn_monitor.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_outline")
-                btn_outline.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
+                btn_outline.Background = (Brush)converter.ConvertFromString("#1CA2F6");
             else
                 btn_outline.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_relay")
-                btn_relay.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
+                btn_relay.Background = (Brush)converter.ConvertFromString("#1CA2F6");
             else
                 btn_relay.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_radio")
-                btn_radio.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
+                btn_radio.Background = (Brush)converter.ConvertFromString("#1CA2F6");
             else
                 btn_radio.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
+            if (name == "btn_set")
+                btn_set.Background = (Brush)converter.ConvertFromString("#1CA2F6");
+            else
+                btn_set.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_night")
-                btn_night.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
+                btn_night.Background = (Brush)converter.ConvertFromString("#1CA2F6");
             else
                 btn_night.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
             if (name == "btn_log")
-                btn_log.Background = (Brush)converter.ConvertFromString("#FFDCDCB8");
+                btn_log.Background = (Brush)converter.ConvertFromString("#1CA2F6");
             else
                 btn_log.Background = (Brush)converter.ConvertFromString("#FFDDDDDD");
+
         }
 
         //=========================================================================
@@ -1255,6 +1531,9 @@ namespace DispatchApp
                 
             }
         }
+
+
+
 
 
      

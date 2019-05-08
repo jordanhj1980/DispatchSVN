@@ -17,10 +17,14 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <ExpressionBlendVersion>12.0.60617.0</ExpressionBlendVersion>
-    <SccProjectName>Svn</SccProjectName>
-    <SccLocalPath>Svn</SccLocalPath>
-    <SccAuxPath>Svn</SccAuxPath>
-    <SccProvider>SubversionScc</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>发布\</PublishUrl>
     <Install>true</Install>
@@ -175,6 +179,10 @@
     <Compile Include="Client\OutLineViewModel.cs" />
     <Compile Include="Client\TreeListControls\LevelToIndentConverter.cs" />
     <Compile Include="Client\TreeListControls\TreeListView.cs" />
+    <Compile Include="Client\SettingDetial.xaml.cs">
+      <DependentUpon>SettingDetial.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\SettingDetialViewModel.cs" />
     <Compile Include="Client\UserRadio.xaml.cs">
       <DependentUpon>UserRadio.xaml</DependentUpon>
     </Compile>
@@ -328,6 +336,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Client\TreeListControls\TreeListViewTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Client\SettingDetial.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -541,9 +553,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\closeWhite.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\user_normal.png">

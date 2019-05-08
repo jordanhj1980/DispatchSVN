@@ -53,7 +53,8 @@ namespace DispatchApp
             //let's set up a little MVVM, cos that's what the cool kids are doing:
             ListViewDialogViewModel data = new ListViewDialogViewModel();
             List<ExtDevice> selectedgroupmemberlist = new List<ExtDevice>(this.SelectedGroup.memberlist.ToList());
-            List<ExtDevice> alldevlist = new List<ExtDevice>(this.AllDevList.ToList());
+            //List<ExtDevice> alldevlist = new List<ExtDevice>(this.AllDevList.ToList());
+            List<ExtDevice> alldevlist = new List<ExtDevice>(this.AllPhoneList.ToList());
             //选中已有成员
             foreach(ExtDevice e in alldevlist)
             {
@@ -73,8 +74,10 @@ namespace DispatchApp
                 orderby n.DevSelected descending, n.callno
                 select n;
             alldevlist = queryresults.ToList();
-            this.AllDevList = new ObservableCollection<ExtDevice>(alldevlist);
-            data.AllDevList = this.AllDevList;
+            //this.AllDevList = new ObservableCollection<ExtDevice>(alldevlist);
+            //data.AllDevList = this.AllDevList;
+            this.AllPhoneList = new ObservableCollection<ExtDevice>(alldevlist);
+            data.AllDevList = this.AllPhoneList;
 
             var view = new ListViewDialog();
             view.DataContext = data;

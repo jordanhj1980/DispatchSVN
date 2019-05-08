@@ -46,6 +46,9 @@ namespace DispatchApp
                 case "OFFLINE":
                     bru_return = ((Brush)new BrushConverter().ConvertFromString("#4D4D4F")); //4D4D4F
                     break;
+                case "OFFHOOK":
+                    bru_return = ((Brush)new BrushConverter().ConvertFromString("#E60416")); //4D4D4F
+                    break;
                 default: break;
             }
             return (bru_return);
@@ -92,6 +95,7 @@ namespace DispatchApp
                         break;
                     case "FAILED":
                     case "OFFLINE":
+                    case "OFFHOOK":
                         img = (new BitmapImage(new Uri("../Resources/dianhuaOFF.png", UriKind.RelativeOrAbsolute)));
                         break;
                     default: break;
@@ -144,6 +148,7 @@ namespace DispatchApp
                     // 红色标识故障。不可操作
                     case "FAILED":
                     case "OFFLINE":
+                    case "OFFHOOK":
                         img = (new BitmapImage(new Uri("../Resources/dianhuaFailed.png", UriKind.RelativeOrAbsolute)));
                         break;
                     default:

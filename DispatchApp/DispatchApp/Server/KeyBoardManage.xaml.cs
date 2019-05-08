@@ -215,8 +215,12 @@ namespace DispatchApp
             delkeyboard.sequence = GlobalFunAndVar.sequenceGenerator();
             delkeyboard.index = keyboardmanagedata.SelectedKey.index;
             //string cmdstr = "MAN#DELKEYBOARD#"+JsonConvert.SerializeObject(keyboardmanagedata.SelectedKey);
-            string cmdstr = "MAN#DELKEYBOARD#" + JsonConvert.SerializeObject(delkeyboard);
-            mainWindow.ws.Send(cmdstr);
+            if (MessageBox.Show("确定是否要删除该键盘 ", "提示消息",
+                MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+            {
+                string cmdstr = "MAN#DELKEYBOARD#" + JsonConvert.SerializeObject(delkeyboard);
+                mainWindow.ws.Send(cmdstr);
+            }
             indexTreeViewItem = 0;
         }
 
@@ -322,13 +326,18 @@ namespace DispatchApp
                 {
                     TreeViewItem tvItem = (TreeViewItem)Keyboardlist.ItemContainerGenerator.ContainerFromIndex(i);
                     KeyBoardNew item = (KeyBoardNew)tvItem.Header;
-                    if (item.name == keyboardmanagedata.SelectedKey.name)
+                    //if (item.name == keyboardmanagedata.SelectedKey.name)
+                    if (item.index == keyboardmanagedata.SelectedKey.index)
                     {
                         indexTreeViewItem = i;
+                        break;
                     }
-                    if ((i == Keyboardlist.Items.Count-1) && (indexTreeViewItem == 0))
+                    else
                     {
-                        indexTreeViewItem = Keyboardlist.Items.Count;
+                        if ((i == Keyboardlist.Items.Count-1) && (indexTreeViewItem == 0))
+                        {
+                            indexTreeViewItem = Keyboardlist.Items.Count;
+                        }
                     }
                 }
 

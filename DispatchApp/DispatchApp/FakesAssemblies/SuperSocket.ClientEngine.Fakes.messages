@@ -1,0 +1,21 @@
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.ConnectedCallback 生成存根: 类型已密封。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.ConnectAsyncExtension 生成存根: 类型已密封。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.Extensions 生成存根: 类型已密封。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.Proxy.ReceiveState 生成存根: 类型对 exported or assembly(SuperSocket.ClientEngine.Fakes) 不可见。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 <PrivateImplementationDetails> 生成存根: 类型已密封。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.ConcurrentBatchQueue`1+<>c 生成填充码: 类型不受支持，因为存在内部限制。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.ConcurrentBatchQueue`1+Entity 生成填充码: 类型对 exported or assembly(SuperSocket.ClientEngine.Fakes) 不可见。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.ConnectedCallback 生成填充码: 类型是一个委托。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.ConnectAsyncExtension+ConnectToken 生成填充码: 类型对 exported or assembly(SuperSocket.ClientEngine.Fakes) 不可见。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.IBatchQueue`1 生成填充码: 类型是一个接口。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.IProxyConnector 生成填充码: 类型是一个接口。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.IPosList`1 生成填充码: 类型是一个接口。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.AuthenticatedStreamTcpSession+StreamAsyncState 生成填充码: 类型对 exported or assembly(SuperSocket.ClientEngine.Fakes) 不可见。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.IBufferSetter 生成填充码: 类型是一个接口。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.IClientSession 生成填充码: 类型是一个接口。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.TcpClientSession+<>c 生成填充码: 类型不受支持，因为存在内部限制。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.Proxy.HttpConnectProxy+ConnectContext 生成填充码: 类型对 exported or assembly(SuperSocket.ClientEngine.Fakes) 不可见。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.Proxy.ReceiveState 生成填充码: 类型对 exported or assembly(SuperSocket.ClientEngine.Fakes) 不可见。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.Proxy.Socks5Connector+SocksContext 生成填充码: 类型对 exported or assembly(SuperSocket.ClientEngine.Fakes) 不可见。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 SuperSocket.ClientEngine.Proxy.Socks5Connector+SocksState 生成填充码: 类型是一个枚举。
+D:\WuGang\DispatchLast\DispatchApp\Fakes\SuperSocket.ClientEngine.fakes : warning : 无法为 <PrivateImplementationDetails> 生成填充码: 类型不受支持，因为存在内部限制。

@@ -44,7 +44,6 @@
                         <StackPanel>
                             <ToggleButton Width="60" Height="60"
                                 Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
-                                ToolTip="MaterialDesignFlatPrimaryToggleButton"
                                 IsChecked="{Binding DevSelected}">
                                 <ToggleButton.Content>
                                     <DockPanel>

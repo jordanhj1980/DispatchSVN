@@ -73,40 +73,40 @@
                             </Grid.RowDefinitions>
                             <Button Grid.Row="1" Grid.Column="1" Content="1" Click="CallAddText"
                     			Style="{StaticResource MaterialDesignFloatingActionButton}"
-                    			ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
+                    			FontSize="24"/>
                             <Button Grid.Row="1" Grid.Column="2" Content="2" Click="CallAddText"
                     			Style="{StaticResource MaterialDesignFloatingActionButton}"
-                    			ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
+                    		    FontSize="24"/>
                             <Button Grid.Row="1" Grid.Column="3" Content="3" Click="CallAddText"
                     			Style="{StaticResource MaterialDesignFloatingActionButton}"
-                    			ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
+                    			FontSize="24"/>
                             <Button Grid.Row="2" Grid.Column="1" Content="4" Click="CallAddText"
                     			Style="{StaticResource MaterialDesignFloatingActionButton}"
-                    			ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
+                    			FontSize="24"/>
                             <Button Grid.Row="2" Grid.Column="2" Content="5" Click="CallAddText"
                     			Style="{StaticResource MaterialDesignFloatingActionButton}"
-                    			ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
+                    			FontSize="24"/>
                             <Button Grid.Row="2" Grid.Column="3" Content="6" Click="CallAddText"
                     			Style="{StaticResource MaterialDesignFloatingActionButton}"
-                    			ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
+                    			FontSize="24"/>
                             <Button Grid.Row="3" Grid.Column="1" Content="7" Click="CallAddText"
                     			Style="{StaticResource MaterialDesignFloatingActionButton}"
-                    			ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
+                    			FontSize="24"/>
                             <Button Grid.Row="3" Grid.Column="2" Content="8" Click="CallAddText"
                     			Style="{StaticResource MaterialDesignFloatingActionButton}"
-                    			ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
+                    			FontSize="24"/>
                             <Button Grid.Row="3" Grid.Column="3" Content="9" Click="CallAddText"
                     			Style="{StaticResource MaterialDesignFloatingActionButton}"
-                    			ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
+                    			FontSize="24"/>
                             <Button Grid.Row="4" Grid.Column="1" Content="*" Click="CallAddText" 
                     			Style="{StaticResource MaterialDesignFloatingActionButton}"
-                    			ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
+                    			FontSize="24"/>
                             <Button Grid.Row="4" Grid.Column="2" Content="0" Click="CallAddText"
                     			Style="{StaticResource MaterialDesignFloatingActionButton}"
-                    			ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
+                    			FontSize="24"/>
                             <Button Grid.Row="4" Grid.Column="3" Content="#" Click="CallAddText"
                     			Style="{StaticResource MaterialDesignFloatingActionButton}"
-                    			ToolTip="MaterialDesignFloatingActionButton" FontSize="24"/>
+                    			FontSize="24"/>
                             <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Width="40"
                                     Height="40"
@@ -154,8 +154,7 @@
                                 Command="{Binding ParamCommand}"
                                 CommandParameter="{Binding ElementName=CallText,Path=Text}"                                                           
                                 FontSize="20"
-                    			Style="{StaticResource MaterialDesignFloatingActionButton}"
-                    			ToolTip="MaterialDesignFloatingActionButton"  />
+                    			Style="{StaticResource MaterialDesignFloatingActionButton}"/>
                         </Grid>
                     </StackPanel>
                 </TabItem>
@@ -194,17 +193,7 @@
                                         Background="{Binding Path=strRelayState, Converter={StaticResource cvtRelayState}}" 
                                         Style="{StaticResource MaterialDesignActionLightToggleButton}"
                                         Click="RelayClick"
-                                        IsChecked="{Binding isSelected}"
-                                        ToolTip="MaterialDesignActionLightToggleButton" />
-                                    <!--<ToggleButton Content="{Binding relayNum}"
-                                        Foreground="{Binding Path=strRelayState, Converter={StaticResource cvtRelayState}}" 
-                                        Background="{Binding Path=strRelayState, Converter={StaticResource cvtRelayState}}" 
-                                        Click="RelayClick"
-                                        Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
-                                        ToolTip="MaterialDesignFlatPrimaryToggleButton"
-                                        IsChecked="{Binding isSelected}">
-                                    </ToggleButton>-->
-
+                                        IsChecked="{Binding isSelected}"/>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>

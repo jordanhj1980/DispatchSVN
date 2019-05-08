@@ -281,6 +281,29 @@ namespace DispatchApp
             bmemberlist = new ObservableCollection<BroadcastMember>();
         }
     }
+
+    public class Setting : NotifyObject
+    {
+        private string _nightServerId;
+        public string nightServerId
+        {
+            get { return _nightServerId; }
+            set
+            {
+                if (_nightServerId != value)
+                {
+                    _nightServerId = value;
+                    OnPropertyChanged("nightServerId");
+                }
+            }
+        }
+    }
+
+
+
+    /// <summary>
+    /// 中继直呼详细信息页面参数类
+    /// </summary>
     public class TrunkDev : NotifyObject
     {
         private bool _ischecked = false;
